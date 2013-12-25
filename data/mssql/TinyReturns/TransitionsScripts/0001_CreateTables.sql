@@ -34,7 +34,6 @@ GO
 
 CREATE TABLE [dbo].[MonthlyReturn](
 	[ReturnSeriesId] [int] NOT NULL,
-	[EntityNumber] [int] NOT NULL,
 	[Year] [int] NOT NULL,
 	[Month] [int] NOT NULL,
 	[ReturnValue] [decimal](18, 8) NOT NULL,
@@ -50,6 +49,7 @@ GO
 
 CREATE TABLE [dbo].[ReturnSeries](
 	[ReturnSeriesId] [int] NOT NULL,
+	[EntityNumber] [int] NOT NULL,
 	[Description] [nvarchar](255) NOT NULL,
 	[FeeTypeCode] [char](1) NOT NULL,
  CONSTRAINT [PK_ReturnSeries] PRIMARY KEY CLUSTERED 
@@ -79,6 +79,10 @@ REFERENCES [dbo].[FeeType] ([FeeTypeCode])
 GO
 
 ALTER TABLE [dbo].[ReturnSeries] CHECK CONSTRAINT [FK_ReturnSeries_FeeType]
+GO
+
+ALTER TABLE [dbo].[ReturnSeries]  WITH CHECK ADD  CONSTRAINT [FK_ReturnSeries_Entity] FOREIGN KEY([EntityNumber])
+REFERENCES [dbo].[Entity] ([EntityNumber])
 GO
 
 
