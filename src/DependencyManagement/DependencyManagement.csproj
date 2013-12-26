@@ -51,6 +51,10 @@
       <Project>{1C8320F8-DD40-4716-9128-B139EDFFCE5F}</Project>
       <Name>Database</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FileIo\FileIo.csproj">
+      <Project>{BDED245A-AC49-4207-BFCE-EA60D00FAC7A}</Project>
+      <Name>FileIo</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

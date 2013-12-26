@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CitiReturnsFileReaderTests.cs" />
     <Compile Include="DatabaseSettings.cs" />
     <Compile Include="DatabaseTestBase.cs" />
     <Compile Include="IntegrationTestBase.cs" />
@@ -75,6 +76,10 @@
     <ProjectReference Include="..\DependencyManagement\DependencyManagement.csproj">
       <Project>{36DE3A59-1A39-4680-B5A5-83E1F933D0A6}</Project>
       <Name>DependencyManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileIo\FileIo.csproj">
+      <Project>{BDED245A-AC49-4207-BFCE-EA60D00FAC7A}</Project>
+      <Name>FileIo</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

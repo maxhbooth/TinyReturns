@@ -35,6 +35,8 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CitiReturnsRecord.cs" />
+    <Compile Include="ICitiReturnsFileReader.cs" />
     <Compile Include="IReturnsSeriesRepository.cs" />
     <Compile Include="ISystemLog.cs" />
     <Compile Include="ITinyReturnsDatabaseSettings.cs" />
