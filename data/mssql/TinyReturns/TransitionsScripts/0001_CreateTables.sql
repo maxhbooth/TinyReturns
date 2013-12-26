@@ -48,7 +48,7 @@ CREATE TABLE [dbo].[MonthlyReturn](
 GO
 
 CREATE TABLE [dbo].[ReturnSeries](
-	[ReturnSeriesId] [int] NOT NULL,
+	[ReturnSeriesId] [int] IDENTITY(1,1) NOT NULL,
 	[EntityNumber] [int] NOT NULL,
 	[Description] [nvarchar](255) NOT NULL,
 	[FeeTypeCode] [char](1) NOT NULL,
