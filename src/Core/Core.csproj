@@ -35,9 +35,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IReturnsSeriesRepository.cs" />
     <Compile Include="ISystemLog.cs" />
     <Compile Include="ITinyReturnsDatabaseSettings.cs" />
     <Compile Include="MasterFactory.cs" />
+    <Compile Include="MonthlyReturn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReturnSeries.cs" />
   </ItemGroup>

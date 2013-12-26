@@ -11,7 +11,7 @@ namespace Dimensional.TinyReturns.IntegrationTests
 
         public DatabaseTestBase()
         {
-            SystemLog = MasterFactory.SystemLog;
+            SystemLog = MasterFactory.GetSystemLog();
         }
 
         protected void ConnectionExecuteWithLog(

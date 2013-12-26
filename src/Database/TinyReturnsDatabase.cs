@@ -4,7 +4,7 @@ using Dimensional.TinyReturns.Core;
 
 namespace Dimensional.TinyReturns.Database
 {
-    public class TinyReturnsDatabase : BaseDatabase
+    public class TinyReturnsDatabase : BaseDatabase, IReturnsSeriesRepository
     {
         private readonly ITinyReturnsDatabaseSettings _tinyReturnsDatabaseSettings;
 
@@ -70,6 +70,84 @@ SELECT [ReturnSeriesId]
                 sql);
 
             return result;
+        }
+
+        public void DeleteReturnSeries(int returnSeriesId)
+        {
+            const string deleteSqlTemplate = "DELETE FROM ReturnSeries WHERE ReturnSeriesId = @ReturnSeriesId";
+
+            var paramObject = new { ReturnSeriesId = returnSeriesId };
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    connection.Execute(deleteSqlTemplate, paramObject);
+                },
+                deleteSqlTemplate,
+                paramObject);
+        }
+
+        public void InsertMonthlyReturns(MonthlyReturn[] monthlyReturns)
+        {
+            const string sql = @"
+INSERT INTO [MonthlyReturn]
+           ([ReturnSeriesId]
+           ,[Year]
+           ,[Month]
+           ,[ReturnValue])
+     VALUES
+           (@ReturnSeriesId
+           ,@Year
+           ,@Month
+           ,@ReturnValue)
+";
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    connection.Execute(sql, monthlyReturns);
+                },
+                sql,
+                monthlyReturns);
+        }
+
+        public MonthlyReturn[] GetMonthlyReturns(int returnSeriesId)
+        {
+            const string sql = @"
+SELECT [ReturnSeriesId]
+      ,[Year]
+      ,[Month]
+      ,[ReturnValue]
+  FROM [MonthlyReturn]
+    WHERE ReturnSeriesId = @ReturnSeriesId";
+
+            MonthlyReturn[] result = null;
+
+            var paramObject = new { ReturnSeriesId = returnSeriesId };
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    result = connection.Query<MonthlyReturn>(sql, paramObject).ToArray();
+                },
+                sql);
+
+            return result;
+        }
+
+        public void DeleteMonthlyReturns(int returnSeriesId)
+        {
+            const string deleteSqlTemplate = "DELETE FROM MonthlyReturn WHERE ReturnSeriesId = @ReturnSeriesId";
+
+            var paramObject = new { ReturnSeriesId = returnSeriesId };
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    connection.Execute(deleteSqlTemplate, paramObject);
+                },
+                deleteSqlTemplate,
+                paramObject);
         }
     }
 }

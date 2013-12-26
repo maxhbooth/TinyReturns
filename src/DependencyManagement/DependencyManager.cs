@@ -1,4 +1,5 @@
 ﻿using Dimensional.TinyReturns.Core;
+using Dimensional.TinyReturns.Database;
 
 namespace Dimensional.TinyReturns.DependencyManagement
 {
@@ -10,6 +11,7 @@ namespace Dimensional.TinyReturns.DependencyManagement
         {
             MasterFactory.SystemLog = systemLog;
             MasterFactory.TinyReturnsDatabaseSettings = tinyReturnsDatabaseSettings;
+            MasterFactory.ReturnsSeriesRepository = new TinyReturnsDatabase(tinyReturnsDatabaseSettings, systemLog);
         }
     }
 }
