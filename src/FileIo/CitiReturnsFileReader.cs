@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using Dimensional.TinyReturns.Core;
+using Dimensional.TinyReturns.Core.CitiFileImport;
 using Microsoft.VisualBasic.FileIO;
 
 namespace Dimensional.TinyReturns.FileIo
 {
     public class CitiReturnsFileReader : ICitiReturnsFileReader
     {
-        public CitiReturnsRecord[] ReadFile(
+        public CitiMonthlyReturnsDataFileRecord[] ReadFile(
             string filePath)
         {
             var parser = SetupParserForCsv(filePath);
 
-            var records = new List<CitiReturnsRecord>();
+            var records = new List<CitiMonthlyReturnsDataFileRecord>();
 
             SkipHeaderRow(parser);
 
@@ -27,10 +28,10 @@ namespace Dimensional.TinyReturns.FileIo
             return records.ToArray();
         }
 
-        private CitiReturnsRecord CreateCheckModel(
+        private CitiMonthlyReturnsDataFileRecord CreateCheckModel(
             string[] parseFields)
         {
-            var r = new CitiReturnsRecord();
+            var r = new CitiMonthlyReturnsDataFileRecord();
 
             r.ExternalId = parseFields[2];
             r.EndDate = parseFields[3];

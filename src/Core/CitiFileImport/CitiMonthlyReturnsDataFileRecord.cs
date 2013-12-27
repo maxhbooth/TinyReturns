@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Dimensional.TinyReturns.Core
+namespace Dimensional.TinyReturns.Core.CitiFileImport
 {
-    public class CitiReturnsRecord
+    public class CitiMonthlyReturnsDataFileRecord
     {
         public string ExternalId { get; set; }
         public string EndDate { get; set; }

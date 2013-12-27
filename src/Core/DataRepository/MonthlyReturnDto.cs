@@ -1,6 +1,6 @@
-﻿namespace Dimensional.TinyReturns.Core
+﻿namespace Dimensional.TinyReturns.Core.DataRepository
 {
-    public class MonthlyReturn
+    public class MonthlyReturnDto
     {
         public int ReturnSeriesId { get; set; }
         public int Year { get; set; }

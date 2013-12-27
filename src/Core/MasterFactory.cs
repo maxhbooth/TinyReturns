@@ -1,4 +1,7 @@
-﻿namespace Dimensional.TinyReturns.Core
+﻿using Dimensional.TinyReturns.Core.CitiFileImport;
+using Dimensional.TinyReturns.Core.DataRepository;
+
+namespace Dimensional.TinyReturns.Core
 {
     public static class MasterFactory
     {

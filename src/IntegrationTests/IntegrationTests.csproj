@@ -48,8 +48,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\CitiReturnSeriesImporterTests.cs" />
-    <Compile Include="Core\CitiReturnsFileReaderTests.cs" />
+    <Compile Include="Core\CitiFileImport\CitiReturnSeriesImporterTests.cs" />
+    <Compile Include="Core\CitiFileImport\CitiReturnsFileReaderTests.cs" />
     <Compile Include="DatabaseSettings.cs" />
     <Compile Include="DatabaseTestBase.cs" />
     <Compile Include="IntegrationTestBase.cs" />
@@ -63,6 +63,9 @@
     </Content>
     <None Include="App.config" />
     <Content Include="Core\TestNetReturnsForEntity100_101_102.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Core\TestIndexReturnsForEntity10000.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
@@ -85,7 +88,9 @@
       <Name>FileIo</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\DataRepository\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

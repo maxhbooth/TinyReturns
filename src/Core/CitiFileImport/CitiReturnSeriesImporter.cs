@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using Dimensional.TinyReturns.Core.DataRepository;
 
-namespace Dimensional.TinyReturns.Core
+namespace Dimensional.TinyReturns.Core.CitiFileImport
 {
     public class CitiReturnSeriesImporter
     {
@@ -16,15 +17,16 @@ namespace Dimensional.TinyReturns.Core
             _returnsSeriesRepository = returnsSeriesRepository;
         }
 
-        public void ImportPortfolioNetReturnSeriesFiles(
-            string filePath)
+        public void ImportMonthlyReturnsFile(
+            string filePath,
+            FeeType feeType)
         {
             var sourceMonthlyReturns = _citiReturnsFileReader.ReadFile(filePath);
 
             var entityNumbers = GetDistEntityNumbers(sourceMonthlyReturns);
 
             var returnSeries = entityNumbers
-                .Select(CreateReturnSeries)
+                .Select(n => CreateReturnSeries(n, feeType.Code))
                 .ToArray();
 
             returnSeries = InsertReturnSeries(returnSeries);
@@ -33,8 +35,8 @@ namespace Dimensional.TinyReturns.Core
         }
 
         private void InsertMonthlyReturns(
-            ReturnSeries[] returnSeries,
-            CitiReturnsRecord[] sourceMonthlyReturns)
+            ReturnSeriesDto[] returnSeries,
+            CitiMonthlyReturnsDataFileRecord[] sourceMonthlyReturns)
         {
             foreach (var series in returnSeries)
             {
@@ -49,11 +51,11 @@ namespace Dimensional.TinyReturns.Core
             }
         }
 
-        private static MonthlyReturn CreateMonthlyReturn(
-            ReturnSeries series,
-            CitiReturnsRecord sourceMonthlyReturn)
+        private MonthlyReturnDto CreateMonthlyReturn(
+            ReturnSeriesDto series,
+            CitiMonthlyReturnsDataFileRecord sourceMonthlyReturn)
         {
-            var monthlyReturn = new MonthlyReturn();
+            var monthlyReturn = new MonthlyReturnDto();
 
             monthlyReturn.ReturnSeriesId = series.ReturnSeriesId;
             monthlyReturn.Month = sourceMonthlyReturn.GetMonth();
@@ -63,8 +65,8 @@ namespace Dimensional.TinyReturns.Core
             return monthlyReturn;
         }
 
-        private ReturnSeries[] InsertReturnSeries(
-            ReturnSeries[] returnSeries)
+        private ReturnSeriesDto[] InsertReturnSeries(
+            ReturnSeriesDto[] returnSeries)
         {
             foreach (var series in returnSeries)
                 series.ReturnSeriesId = _returnsSeriesRepository.InsertReturnSeries(series);
@@ -72,18 +74,19 @@ namespace Dimensional.TinyReturns.Core
             return returnSeries;
         }
 
-        private static ReturnSeries CreateReturnSeries
-            (int entityNumber)
+        private ReturnSeriesDto CreateReturnSeries(
+            int entityNumber,
+            char feeTypeCode)
         {
-            return new ReturnSeries()
+            return new ReturnSeriesDto()
             {
                 EntityNumber = entityNumber,
-                FeeTypeCode = 'N'
+                FeeTypeCode = feeTypeCode
             };
         }
 
         private IEnumerable<int> GetDistEntityNumbers(
-            IEnumerable<CitiReturnsRecord> sourceMonthlyReturns)
+            IEnumerable<CitiMonthlyReturnsDataFileRecord> sourceMonthlyReturns)
         {
             var entityNumbers = sourceMonthlyReturns
                 .Select(s => s.GetConvertedExternalId())

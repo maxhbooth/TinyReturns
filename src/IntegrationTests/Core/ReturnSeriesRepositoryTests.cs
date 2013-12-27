@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Dimensional.TinyReturns.Core;
+using Dimensional.TinyReturns.Core.DataRepository;
 using Xunit;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Core
@@ -44,7 +45,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core
         }
 
         private void AssertMonthlyReturnsAreValid(
-            MonthlyReturn[] savedMonthlyReturns,
+            MonthlyReturnDto[] savedMonthlyReturns,
             int returnSeriesId)
         {
             Assert.Equal(savedMonthlyReturns.Length, 3);
@@ -58,8 +59,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core
         }
 
         private void AssertReturnSeriesRecordIsValid(
-            ReturnSeries savedReturnSeries,
-            ReturnSeries expectedReturnSeries)
+            ReturnSeriesDto savedReturnSeries,
+            ReturnSeriesDto expectedReturnSeries)
         {
             Assert.NotNull(savedReturnSeries);
 
@@ -68,26 +69,26 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core
             Assert.Equal(savedReturnSeries.FeeTypeCode, expectedReturnSeries.FeeTypeCode);
         }
 
-        private static MonthlyReturn[] CreateTestMonthlyReturns(
-            ReturnSeries returnSeries)
+        private static MonthlyReturnDto[] CreateTestMonthlyReturns(
+            ReturnSeriesDto returnSeries)
         {
-            var monthlyReturnList = new List<MonthlyReturn>();
+            var monthlyReturnList = new List<MonthlyReturnDto>();
 
-            monthlyReturnList.Add(new MonthlyReturn()
+            monthlyReturnList.Add(new MonthlyReturnDto()
             {
                 Year = 2000,
                 Month = 1,
                 ReturnValue = 0.1m,
                 ReturnSeriesId = returnSeries.ReturnSeriesId
             });
-            monthlyReturnList.Add(new MonthlyReturn()
+            monthlyReturnList.Add(new MonthlyReturnDto()
             {
                 Year = 2000,
                 Month = 2,
                 ReturnValue = 0.2m,
                 ReturnSeriesId = returnSeries.ReturnSeriesId
             });
-            monthlyReturnList.Add(new MonthlyReturn()
+            monthlyReturnList.Add(new MonthlyReturnDto()
             {
                 Year = 2000,
                 Month = 3,
@@ -99,9 +100,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core
             return monthlyReturns;
         }
 
-        private ReturnSeries InsertTestReturnSeries()
+        private ReturnSeriesDto InsertTestReturnSeries()
         {
-            var returnSeries = new ReturnSeries();
+            var returnSeries = new ReturnSeriesDto();
 
             returnSeries.EntityNumber = 100;
             returnSeries.FeeTypeCode = 'N';

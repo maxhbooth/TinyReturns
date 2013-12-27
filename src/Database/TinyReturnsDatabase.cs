@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Dapper;
 using Dimensional.TinyReturns.Core;
+using Dimensional.TinyReturns.Core.DataRepository;
 
 namespace Dimensional.TinyReturns.Database
 {
@@ -20,7 +21,7 @@ namespace Dimensional.TinyReturns.Database
             get { return _tinyReturnsDatabaseSettings.ReturnsDatabaseConnectionString; }
         }
 
-        public int InsertReturnSeries(ReturnSeries returnSeries)
+        public int InsertReturnSeries(ReturnSeriesDto returnSeries)
         {
             const string sql = @"
 INSERT INTO [ReturnSeries]
@@ -46,7 +47,7 @@ SELECT CAST(SCOPE_IDENTITY() as int)
             return newId;
         }
 
-        public ReturnSeries GetReturnSeries(int returnSeriesId)
+        public ReturnSeriesDto GetReturnSeries(int returnSeriesId)
         {
             const string sql = @"
 SELECT
@@ -58,21 +59,21 @@ SELECT
     WHERE
         ReturnSeriesId = @ReturnSeriesId";
 
-            ReturnSeries result = null;
+            ReturnSeriesDto result = null;
 
             var paramObject = new { ReturnSeriesId = returnSeriesId };
 
             ConnectionExecuteWithLog(
                 connection =>
                 {
-                    result = connection.Query<ReturnSeries>(sql, paramObject).FirstOrDefault();
+                    result = connection.Query<ReturnSeriesDto>(sql, paramObject).FirstOrDefault();
                 },
                 sql);
 
             return result;
         }
 
-        public ReturnSeries[] GetReturnSeries(int[] entityNumbers)
+        public ReturnSeriesDto[] GetReturnSeries(int[] entityNumbers)
         {
             const string sqlTemplate = @"
 SELECT
@@ -90,12 +91,12 @@ SELECT
 
             var sql = string.Format(sqlTemplate, commaSepNumbers);
 
-            ReturnSeries[] result = null;
+            ReturnSeriesDto[] result = null;
 
             ConnectionExecuteWithLog(
                 connection =>
                 {
-                    result = connection.Query<ReturnSeries>(sql).ToArray();
+                    result = connection.Query<ReturnSeriesDto>(sql).ToArray();
                 },
                 sqlTemplate);
 
@@ -117,7 +118,7 @@ SELECT
                 paramObject);
         }
 
-        public void InsertMonthlyReturns(MonthlyReturn[] monthlyReturns)
+        public void InsertMonthlyReturns(MonthlyReturnDto[] monthlyReturns)
         {
             const string sql = @"
 INSERT INTO [MonthlyReturn]
@@ -141,7 +142,7 @@ INSERT INTO [MonthlyReturn]
                 monthlyReturns);
         }
 
-        public MonthlyReturn[] GetMonthlyReturns(int returnSeriesId)
+        public MonthlyReturnDto[] GetMonthlyReturns(int returnSeriesId)
         {
             const string sql = @"
 SELECT [ReturnSeriesId]
@@ -151,14 +152,14 @@ SELECT [ReturnSeriesId]
   FROM [MonthlyReturn]
     WHERE ReturnSeriesId = @ReturnSeriesId";
 
-            MonthlyReturn[] result = null;
+            MonthlyReturnDto[] result = null;
 
             var paramObject = new { ReturnSeriesId = returnSeriesId };
 
             ConnectionExecuteWithLog(
                 connection =>
                 {
-                    result = connection.Query<MonthlyReturn>(sql, paramObject).ToArray();
+                    result = connection.Query<MonthlyReturnDto>(sql, paramObject).ToArray();
                 },
                 sql);
 

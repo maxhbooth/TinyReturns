@@ -2,9 +2,10 @@
 using System.Linq;
 using Dapper;
 using Dimensional.TinyReturns.Core;
+using Dimensional.TinyReturns.Core.DataRepository;
 using Xunit;
 
-namespace Dimensional.TinyReturns.IntegrationTests.Core
+namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 {
     public class CitiReturnSeriesImporterTests : DatabaseTestBase
     {
@@ -41,7 +42,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core
                 new[] { 100 });
 
             Assert.Equal(series[0].EntityNumber, 100);
-            Assert.Equal(series[0].FeeTypeCode, 'N');
+            Assert.Equal(series[0].FeeTypeCode, FeeType.NetOfFees.Code);
 
             DeleteTestData();
         }
@@ -77,7 +78,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core
             DeleteTestData();
         }
 
-        private MonthlyReturn[] GetMonthlyReturnSeries(int entityNumber)
+        private MonthlyReturnDto[] GetMonthlyReturnSeries(int entityNumber)
         {
             var returnSeries = _returnsSeriesRepository.GetReturnSeries(new[] {entityNumber}).First();
             var monthlyReturns = _returnsSeriesRepository.GetMonthlyReturns(returnSeries.ReturnSeriesId);
@@ -90,7 +91,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core
 
             var filePath = GetNetReturnsTestFilePath();
 
-            importer.ImportPortfolioNetReturnSeriesFiles(filePath);
+            importer.ImportMonthlyReturnsFile(filePath, FeeType.NetOfFees);
         }
 
         private void DeleteTestData()
