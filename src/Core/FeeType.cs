@@ -23,5 +23,19 @@ namespace Dimensional.TinyReturns.Core
         {
             get { return _code; }
         }
+
+        public static FeeType GetFeeTypeForFileName(
+            string filePath)
+        {
+            var feeType = None;
+
+            if (filePath.Contains("Net"))
+                feeType = NetOfFees;
+
+            if (filePath.Contains("Gross"))
+                feeType = GrossOfFees;
+
+            return feeType;
+        }
     }
 }

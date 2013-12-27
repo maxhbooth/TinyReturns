@@ -18,23 +18,45 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
         }
 
         public void ImportMonthlyReturnsFile(
-            string filePath,
+            string filePath)
+        {
+            var feeType = FeeType.GetFeeTypeForFileName(filePath);
+
+            var citiMonthlyReturns = _citiReturnsFileReader.ReadFile(filePath);
+
+            var returnSeries = SaveReturnSeries(feeType, citiMonthlyReturns);
+
+            SaveMonthlyReturns(returnSeries, citiMonthlyReturns);
+        }
+
+        private ReturnSeriesDto[] SaveReturnSeries(
+            FeeType feeType,
+            CitiMonthlyReturnsDataFileRecord[] citiMonthlyReturns)
+        {
+            var uniqueEntityNumbers = citiMonthlyReturns
+                .Select(s => s.GetConvertedExternalId())
+                .Distinct();
+
+            var returnSeries = ConvertEntityNumbersToReturnSeries(uniqueEntityNumbers, feeType);
+
+            foreach (var series in returnSeries)
+                series.ReturnSeriesId = _returnsSeriesRepository.InsertReturnSeries(series);
+
+            return returnSeries;
+        }
+
+        private ReturnSeriesDto[] ConvertEntityNumbersToReturnSeries(
+            IEnumerable<int> entityNumbers,
             FeeType feeType)
         {
-            var sourceMonthlyReturns = _citiReturnsFileReader.ReadFile(filePath);
-
-            var entityNumbers = GetDistEntityNumbers(sourceMonthlyReturns);
-
             var returnSeries = entityNumbers
                 .Select(n => CreateReturnSeries(n, feeType.Code))
                 .ToArray();
 
-            returnSeries = InsertReturnSeries(returnSeries);
-
-            InsertMonthlyReturns(returnSeries, sourceMonthlyReturns);
+            return returnSeries;
         }
 
-        private void InsertMonthlyReturns(
+        private void SaveMonthlyReturns(
             ReturnSeriesDto[] returnSeries,
             CitiMonthlyReturnsDataFileRecord[] sourceMonthlyReturns)
         {
@@ -65,15 +87,6 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             return monthlyReturn;
         }
 
-        private ReturnSeriesDto[] InsertReturnSeries(
-            ReturnSeriesDto[] returnSeries)
-        {
-            foreach (var series in returnSeries)
-                series.ReturnSeriesId = _returnsSeriesRepository.InsertReturnSeries(series);
-
-            return returnSeries;
-        }
-
         private ReturnSeriesDto CreateReturnSeries(
             int entityNumber,
             char feeTypeCode)
@@ -83,15 +96,6 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
                 EntityNumber = entityNumber,
                 FeeTypeCode = feeTypeCode
             };
-        }
-
-        private IEnumerable<int> GetDistEntityNumbers(
-            IEnumerable<CitiMonthlyReturnsDataFileRecord> sourceMonthlyReturns)
-        {
-            var entityNumbers = sourceMonthlyReturns
-                .Select(s => s.GetConvertedExternalId())
-                .Distinct();
-            return entityNumbers;
         }
     }
 }

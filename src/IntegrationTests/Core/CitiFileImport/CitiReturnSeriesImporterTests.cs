@@ -17,11 +17,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
         }
 
         [Fact]
-        public void ImportPortfolioNetReturnSeriesFilesShouldInsertCorrectNumberOfSeriesWhenGivenValidFile()
+        public void ImportMonthlyReturnsFileShouldInsertCorrectNumberOfSeriesWhenGivenValidFile()
         {
             DeleteTestData();
             
-            ImportTestFile();
+            ImportTestFile(GetNetReturnsTestFilePath());
 
             var series = _returnsSeriesRepository.GetReturnSeries(
                 new[] {100, 101, 102});
@@ -32,11 +32,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
         }
 
         [Fact]
-        public void ImportPortfolioNetReturnSeriesFilesShouldInsertCorrectSeriesWhenGivenValidFile()
+        public void ImportMonthlyReturnsFileShouldInsertCorrectSeriesWhenGivenValidNetOfFeesFile()
         {
             DeleteTestData();
 
-            ImportTestFile();
+            ImportTestFile(GetNetReturnsTestFilePath());
 
             var series = _returnsSeriesRepository.GetReturnSeries(
                 new[] { 100 });
@@ -48,11 +48,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
         }
 
         [Fact]
-        public void ImportPortfolioNetReturnSeriesFilesShouldInsertCorrectNumberOfMonthlyReturns()
+        public void ImportMonthlyReturnsFileShouldInsertCorrectNumberOfMonthlyReturns()
         {
             DeleteTestData();
 
-            ImportTestFile();
+            ImportTestFile(GetNetReturnsTestFilePath());
 
             var monthlyReturns = GetMonthlyReturnSeries(100);
 
@@ -62,11 +62,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
         }
 
         [Fact]
-        public void ImportPortfolioNetReturnSeriesFilesShouldCorrectlyMapMonthlyReturns()
+        public void ImportMonthlyReturnsFileShouldCorrectlyMapMonthlyReturns()
         {
             DeleteTestData();
 
-            ImportTestFile();
+            ImportTestFile(GetNetReturnsTestFilePath());
 
             var monthlyReturns = GetMonthlyReturnSeries(100);
 
@@ -85,13 +85,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             return monthlyReturns;
         }
 
-        private void ImportTestFile()
+        private void ImportTestFile(string filePath)
         {
             var importer = MasterFactory.GetCitiReturnSeriesImporter();
 
-            var filePath = GetNetReturnsTestFilePath();
-
-            importer.ImportMonthlyReturnsFile(filePath, FeeType.NetOfFees);
+            importer.ImportMonthlyReturnsFile(filePath);
         }
 
         private void DeleteTestData()
@@ -126,6 +124,5 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 
             return targetFile;
         }
-
     }
 }
