@@ -5,6 +5,7 @@ namespace Dimensional.TinyReturns.Core
         int InsertReturnSeries(ReturnSeries returnSeries);
         ReturnSeries GetReturnSeries(int returnSeriesId);
         void DeleteReturnSeries(int returnSeriesId);
+        ReturnSeries[] GetReturnSeries(int[] entityNumbers);
 
         void InsertMonthlyReturns(MonthlyReturn[] monthlyReturns);
         MonthlyReturn[] GetMonthlyReturns(int returnSeriesId);

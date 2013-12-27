@@ -17,5 +17,12 @@
         private static ICitiReturnsFileReader _citiReturnsFileReader;
         public static ICitiReturnsFileReader CitiReturnsFileReader { set { _citiReturnsFileReader = value; } }
         public static ICitiReturnsFileReader GetCitiReturnsFileReader() { return _citiReturnsFileReader; }
+
+        public static CitiReturnSeriesImporter GetCitiReturnSeriesImporter()
+        {
+            return new CitiReturnSeriesImporter(
+                _returnsSeriesRepository,
+                _citiReturnsFileReader);
+        }
     }
 }

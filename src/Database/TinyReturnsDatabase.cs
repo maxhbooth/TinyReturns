@@ -25,11 +25,9 @@ namespace Dimensional.TinyReturns.Database
             const string sql = @"
 INSERT INTO [ReturnSeries]
            ([EntityNumber]
-           ,[Description]
            ,[FeeTypeCode])
      VALUES
            (@EntityNumber
-           ,@Description
            ,@FeeTypeCode)
 
 SELECT CAST(SCOPE_IDENTITY() as int)
@@ -51,12 +49,14 @@ SELECT CAST(SCOPE_IDENTITY() as int)
         public ReturnSeries GetReturnSeries(int returnSeriesId)
         {
             const string sql = @"
-SELECT [ReturnSeriesId]
-      ,[EntityNumber]
-      ,[Description]
-      ,[FeeTypeCode]
-  FROM [ReturnSeries]
-    WHERE ReturnSeriesId = @ReturnSeriesId";
+SELECT
+        [ReturnSeriesId]
+        ,[EntityNumber]
+        ,[FeeTypeCode]
+    FROM
+        [ReturnSeries]
+    WHERE
+        ReturnSeriesId = @ReturnSeriesId";
 
             ReturnSeries result = null;
 
@@ -68,6 +68,36 @@ SELECT [ReturnSeriesId]
                     result = connection.Query<ReturnSeries>(sql, paramObject).FirstOrDefault();
                 },
                 sql);
+
+            return result;
+        }
+
+        public ReturnSeries[] GetReturnSeries(int[] entityNumbers)
+        {
+            const string sqlTemplate = @"
+SELECT
+        [ReturnSeriesId]
+        ,[EntityNumber]
+        ,[FeeTypeCode]
+    FROM
+        [ReturnSeries]
+    WHERE
+        EntityNumber IN ({0})";
+
+            var commaSepNumbers = entityNumbers
+                .Select(n => n.ToString())
+                .Aggregate((f, s) => f + "," + s);
+
+            var sql = string.Format(sqlTemplate, commaSepNumbers);
+
+            ReturnSeries[] result = null;
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    result = connection.Query<ReturnSeries>(sql).ToArray();
+                },
+                sqlTemplate);
 
             return result;
         }

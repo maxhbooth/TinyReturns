@@ -48,20 +48,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CitiReturnsFileReaderTests.cs" />
+    <Compile Include="Core\CitiReturnSeriesImporterTests.cs" />
+    <Compile Include="Core\CitiReturnsFileReaderTests.cs" />
     <Compile Include="DatabaseSettings.cs" />
     <Compile Include="DatabaseTestBase.cs" />
     <Compile Include="IntegrationTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReturnSeriesImporterTests.cs" />
     <Compile Include="Core\ReturnSeriesRepositoryTests.cs" />
     <Compile Include="SystemLogForIntegrationTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="NetReturns.csv">
+    <Content Include="Core\TestNetReturnsForEntity100.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
+    <Content Include="Core\TestNetReturnsForEntity100_101_102.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

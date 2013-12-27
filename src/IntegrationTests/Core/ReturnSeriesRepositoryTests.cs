@@ -8,7 +8,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core
     public class ReturnSeriesRepositoryTests : DatabaseTestBase
     {
         private readonly IReturnsSeriesRepository _tinyReturnsDatabase;
-        private const string TestSeriesDescription = "Test Series 999";
 
         public ReturnSeriesRepositoryTests()
         {
@@ -66,7 +65,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core
 
             Assert.Equal(savedReturnSeries.ReturnSeriesId, expectedReturnSeries.ReturnSeriesId);
             Assert.Equal(savedReturnSeries.EntityNumber, expectedReturnSeries.EntityNumber);
-            Assert.Equal(savedReturnSeries.Description, expectedReturnSeries.Description);
             Assert.Equal(savedReturnSeries.FeeTypeCode, expectedReturnSeries.FeeTypeCode);
         }
 
@@ -106,7 +104,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core
             var returnSeries = new ReturnSeries();
 
             returnSeries.EntityNumber = 100;
-            returnSeries.Description = TestSeriesDescription;
             returnSeries.FeeTypeCode = 'N';
 
             var newId = _tinyReturnsDatabase.InsertReturnSeries(returnSeries);

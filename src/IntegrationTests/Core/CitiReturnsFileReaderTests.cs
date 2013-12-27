@@ -2,7 +2,7 @@
 using Dimensional.TinyReturns.Core;
 using Xunit;
 
-namespace Dimensional.TinyReturns.IntegrationTests
+namespace Dimensional.TinyReturns.IntegrationTests.Core
 {
     public class CitiReturnsFileReaderTests : IntegrationTestBase
     {
@@ -37,7 +37,7 @@ namespace Dimensional.TinyReturns.IntegrationTests
             var currentDirectory = Directory.GetCurrentDirectory();
 
             var targetFile = currentDirectory
-                 + @"\NetReturns.csv";
+                 + @"\Core\TestNetReturnsForEntity100.csv";
 
             return targetFile;
         }

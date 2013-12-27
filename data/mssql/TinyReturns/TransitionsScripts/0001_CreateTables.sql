@@ -50,7 +50,6 @@ GO
 CREATE TABLE [dbo].[ReturnSeries](
 	[ReturnSeriesId] [int] IDENTITY(1,1) NOT NULL,
 	[EntityNumber] [int] NOT NULL,
-	[Description] [nvarchar](255) NOT NULL,
 	[FeeTypeCode] [char](1) NOT NULL,
  CONSTRAINT [PK_ReturnSeries] PRIMARY KEY CLUSTERED 
 (
