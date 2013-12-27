@@ -11,6 +11,8 @@ namespace Dimensional.TinyReturns.CitiFileImporterConsole
 
             var importer = MasterFactory.GetCitiReturnSeriesImporter();
 
+            importer.DeleteAllReturns();
+
             importer.ImportMonthlyReturnsFile(args[0]);
         }
     }

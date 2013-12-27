@@ -103,6 +103,15 @@ SELECT
             return result;
         }
 
+        public void DeleteAllReturnSeries()
+        {
+            const string deleteReturnSeriesSql = "DELETE FROM [ReturnSeries]";
+
+            ConnectionExecuteWithLog(
+                connection => connection.Execute(deleteReturnSeriesSql),
+                deleteReturnSeriesSql);
+        }
+
         public void DeleteReturnSeries(int returnSeriesId)
         {
             const string deleteSqlTemplate = "DELETE FROM ReturnSeries WHERE ReturnSeriesId = @ReturnSeriesId";
@@ -179,6 +188,15 @@ SELECT [ReturnSeriesId]
                 },
                 deleteSqlTemplate,
                 paramObject);
+        }
+
+        public void DeleteAllMonthlyReturns()
+        {
+            const string deleteMonthlyReturnsSql = "DELETE FROM [MonthlyReturn]";
+
+            ConnectionExecuteWithLog(
+                connection => connection.Execute(deleteMonthlyReturnsSql),
+                deleteMonthlyReturnsSql);
         }
     }
 }

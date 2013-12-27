@@ -17,6 +17,12 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             _returnsSeriesRepository = returnsSeriesRepository;
         }
 
+        public void DeleteAllReturns()
+        {
+            _returnsSeriesRepository.DeleteAllMonthlyReturns();
+            _returnsSeriesRepository.DeleteAllReturnSeries();
+        }
+        
         public void ImportMonthlyReturnsFile(
             string filePath)
         {
