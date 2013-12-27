@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{36DE3A59-1A39-4680-B5A5-83E1F933D0A6}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{BEFE7756-36BB-43B1-92A4-7C119BDC43C5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dimensional.TinyReturns.DependencyManagement</RootNamespace>
-    <AssemblyName>Dimensional.TinyReturns.DependencyManagement</AssemblyName>
+    <RootNamespace>CitiConsoleImporter</RootNamespace>
+    <AssemblyName>CitiConsoleImporter</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -39,26 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DependencyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{2ADCFC94-E855-4AD1-A873-C125B8DA96E7}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Database\Database.csproj">
-      <Project>{1C8320F8-DD40-4716-9128-B139EDFFCE5F}</Project>
-      <Name>Database</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FileIo\FileIo.csproj">
-      <Project>{BDED245A-AC49-4207-BFCE-EA60D00FAC7A}</Project>
-      <Name>FileIo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logging\Logging.csproj">
-      <Project>{E9CC8D2A-EA18-4BCB-A572-334DF1B68B7E}</Project>
-      <Name>Logging</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

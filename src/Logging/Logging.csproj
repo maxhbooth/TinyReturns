@@ -4,13 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{36DE3A59-1A39-4680-B5A5-83E1F933D0A6}</ProjectGuid>
+    <ProjectGuid>{E9CC8D2A-EA18-4BCB-A572-334DF1B68B7E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dimensional.TinyReturns.DependencyManagement</RootNamespace>
-    <AssemblyName>Dimensional.TinyReturns.DependencyManagement</AssemblyName>
+    <RootNamespace>Dimensional.TinyReturns.Logging</RootNamespace>
+    <AssemblyName>Dimensional.TinyReturns.Logging</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DependencyManager.cs" />
+    <Compile Include="LoggingBootstrapper.cs" />
+    <Compile Include="LogForNetSystemLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -47,20 +53,17 @@
       <Project>{2ADCFC94-E855-4AD1-A873-C125B8DA96E7}</Project>
       <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Database\Database.csproj">
-      <Project>{1C8320F8-DD40-4716-9128-B139EDFFCE5F}</Project>
-      <Name>Database</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FileIo\FileIo.csproj">
-      <Project>{BDED245A-AC49-4207-BFCE-EA60D00FAC7A}</Project>
-      <Name>FileIo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logging\Logging.csproj">
-      <Project>{E9CC8D2A-EA18-4BCB-A572-334DF1B68B7E}</Project>
-      <Name>Logging</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Log4NetConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

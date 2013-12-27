@@ -10,7 +10,7 @@ namespace Dimensional.TinyReturns.IntegrationTests
         {
             if (!_isBootstrapped)
             {
-                DependencyManager.Bootstrap(
+                DependencyManager.BootstrapForTests(
                     new SystemLogForIntegrationTests(),
                     new DatabaseSettings());
 
