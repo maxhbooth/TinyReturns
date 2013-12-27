@@ -7,7 +7,7 @@ namespace Dimensional.TinyReturns.CitiFileImporterConsole
     {
         static void Main(string[] args)
         {
-            DependencyManager.BootstrapForSystem(new DatabaseSettings());
+            DependencyManager.BootstrapForSystem("Console", new DatabaseSettings());
 
             var importer = MasterFactory.GetCitiReturnSeriesImporter();
 

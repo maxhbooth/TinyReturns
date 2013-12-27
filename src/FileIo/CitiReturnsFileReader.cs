@@ -1,12 +1,21 @@
 ﻿using System.Collections.Generic;
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.CitiFileImport;
+using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.FileIO;
 
 namespace Dimensional.TinyReturns.FileIo
 {
     public class CitiReturnsFileReader : ICitiReturnsFileReader
     {
+        private ISystemLog _systemLog;
+
+        public CitiReturnsFileReader(
+            ISystemLog systemLog)
+        {
+            _systemLog = systemLog;
+        }
+
         public CitiMonthlyReturnsDataFileRecord[] ReadFile(
             string filePath)
         {
@@ -24,6 +33,8 @@ namespace Dimensional.TinyReturns.FileIo
 
                 records.Add(r);
             }
+
+            _systemLog.Info(string.Format("Closing file: '{0}'", filePath));
 
             return records.ToArray();
         }
@@ -43,6 +54,8 @@ namespace Dimensional.TinyReturns.FileIo
         private TextFieldParser SetupParserForCsv(
             string filePath)
         {
+            _systemLog.Info(string.Format("Opening file: '{0}'", filePath));
+            
             var parser = new TextFieldParser(filePath);
             parser.TextFieldType = FieldType.Delimited;
             parser.SetDelimiters(new[] { "," });

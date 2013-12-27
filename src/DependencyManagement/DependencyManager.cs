@@ -15,21 +15,24 @@ namespace Dimensional.TinyReturns.DependencyManagement
         }
 
         public static void BootstrapForSystem(
+            string logName,
             ITinyReturnsDatabaseSettings tinyReturnsDatabaseSettings)
         {
-            LoggingBootstrapper.StartupLog();
+            LoggingBootstrapper.StartupLog(logName);
 
             var logForNetSystemLog = new LogForNetSystemLog();
 
             BootstrapAll(logForNetSystemLog, tinyReturnsDatabaseSettings);
         }
 
-        private static void BootstrapAll(ISystemLog systemLog, ITinyReturnsDatabaseSettings tinyReturnsDatabaseSettings)
+        private static void BootstrapAll(
+            ISystemLog systemLog,
+            ITinyReturnsDatabaseSettings tinyReturnsDatabaseSettings)
         {
             MasterFactory.SystemLog = systemLog;
             MasterFactory.TinyReturnsDatabaseSettings = tinyReturnsDatabaseSettings;
             MasterFactory.ReturnsSeriesRepository = new TinyReturnsDatabase(tinyReturnsDatabaseSettings, systemLog);
-            MasterFactory.CitiReturnsFileReader = new CitiReturnsFileReader();
+            MasterFactory.CitiReturnsFileReader = new CitiReturnsFileReader(systemLog);
         }
     }
 }

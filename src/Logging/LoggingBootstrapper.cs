@@ -5,10 +5,12 @@ namespace Dimensional.TinyReturns.Logging
 {
     public static class LoggingBootstrapper
     {
-        public static void StartupLog()
+        public static void StartupLog(
+            string logName)
         {
             var configFile = new FileInfo(GetLogConfigFile());
 
+            log4net.GlobalContext.Properties["LogName"] = logName;
             XmlConfigurator.Configure(configFile);
         }
 
