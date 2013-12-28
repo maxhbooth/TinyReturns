@@ -5,7 +5,7 @@ using Dimensional.TinyReturns.Core.DataRepository;
 
 namespace Dimensional.TinyReturns.Database
 {
-    public class TinyReturnsDatabase : BaseDatabase, IReturnsSeriesRepository
+    public class TinyReturnsDatabase : BaseDatabase, IReturnsSeriesDataRepository
     {
         private readonly ITinyReturnsDatabaseSettings _tinyReturnsDatabaseSettings;
 

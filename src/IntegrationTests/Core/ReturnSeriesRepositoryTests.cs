@@ -8,7 +8,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core
 {
     public class ReturnSeriesRepositoryTests : DatabaseTestBase
     {
-        private readonly IReturnsSeriesRepository _tinyReturnsDatabase;
+        private readonly IReturnsSeriesDataRepository _tinyReturnsDatabase;
 
         public ReturnSeriesRepositoryTests()
         {

@@ -8,11 +8,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 {
     public class CitiReturnSeriesImporterTests : DatabaseTestBase
     {
-        private readonly IReturnsSeriesRepository _returnsSeriesRepository;
+        private readonly IReturnsSeriesDataRepository _returnsSeriesDataRepository;
 
         public CitiReturnSeriesImporterTests()
         {
-            _returnsSeriesRepository = MasterFactory.GetReturnsSeriesRepository();
+            _returnsSeriesDataRepository = MasterFactory.GetReturnsSeriesRepository();
         }
 
         [Fact]
@@ -22,7 +22,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             
             ImportTestFile(GetNetReturnsTestFilePath());
 
-            var series = _returnsSeriesRepository.GetReturnSeries(
+            var series = _returnsSeriesDataRepository.GetReturnSeries(
                 new[] {100, 101, 102});
 
             Assert.Equal(series.Length, 3);
@@ -37,7 +37,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 
             ImportTestFile(GetNetReturnsTestFilePath());
 
-            var series = _returnsSeriesRepository.GetReturnSeries(
+            var series = _returnsSeriesDataRepository.GetReturnSeries(
                 new[] { 100 });
 
             Assert.Equal(series[0].EntityNumber, 100);
@@ -79,8 +79,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 
         private MonthlyReturnDto[] GetMonthlyReturnSeries(int entityNumber)
         {
-            var returnSeries = _returnsSeriesRepository.GetReturnSeries(new[] {entityNumber}).First();
-            var monthlyReturns = _returnsSeriesRepository.GetMonthlyReturns(returnSeries.ReturnSeriesId);
+            var returnSeries = _returnsSeriesDataRepository.GetReturnSeries(new[] {entityNumber}).First();
+            var monthlyReturns = _returnsSeriesDataRepository.GetMonthlyReturns(returnSeries.ReturnSeriesId);
             return monthlyReturns;
         }
 

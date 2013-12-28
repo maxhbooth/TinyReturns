@@ -13,9 +13,9 @@ namespace Dimensional.TinyReturns.Core
         public static ITinyReturnsDatabaseSettings TinyReturnsDatabaseSettings { set { _tinyReturnsDatabaseSettings = value; } }
         public static ITinyReturnsDatabaseSettings GetTinyReturnsDatabaseSettings() { return _tinyReturnsDatabaseSettings; }
 
-        private static IReturnsSeriesRepository _returnsSeriesRepository;
-        public static IReturnsSeriesRepository ReturnsSeriesRepository { set { _returnsSeriesRepository = value; } }
-        public static IReturnsSeriesRepository GetReturnsSeriesRepository() { return _returnsSeriesRepository; }
+        private static IReturnsSeriesDataRepository _returnsSeriesDataRepository;
+        public static IReturnsSeriesDataRepository ReturnsSeriesDataRepository { set { _returnsSeriesDataRepository = value; } }
+        public static IReturnsSeriesDataRepository GetReturnsSeriesRepository() { return _returnsSeriesDataRepository; }
 
         private static ICitiReturnsFileReader _citiReturnsFileReader;
         public static ICitiReturnsFileReader CitiReturnsFileReader { set { _citiReturnsFileReader = value; } }
@@ -24,7 +24,7 @@ namespace Dimensional.TinyReturns.Core
         public static CitiReturnSeriesImporter GetCitiReturnSeriesImporter()
         {
             return new CitiReturnSeriesImporter(
-                _returnsSeriesRepository,
+                _returnsSeriesDataRepository,
                 _citiReturnsFileReader);
         }
     }

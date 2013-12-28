@@ -40,7 +40,7 @@
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
     <Compile Include="FeeType.cs" />
-    <Compile Include="DataRepository\IReturnsSeriesRepository.cs" />
+    <Compile Include="DataRepository\IReturnsSeriesDataRepository.cs" />
     <Compile Include="Headspring\Enumeration.cs" />
     <Compile Include="ISystemLog.cs" />
     <Compile Include="ITinyReturnsDatabaseSettings.cs" />

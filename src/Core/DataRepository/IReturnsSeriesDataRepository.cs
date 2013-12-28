@@ -1,6 +1,6 @@
 namespace Dimensional.TinyReturns.Core.DataRepository
 {
-    public interface IReturnsSeriesRepository
+    public interface IReturnsSeriesDataRepository
     {
         int InsertReturnSeries(ReturnSeriesDto returnSeries);
         ReturnSeriesDto GetReturnSeries(int returnSeriesId);

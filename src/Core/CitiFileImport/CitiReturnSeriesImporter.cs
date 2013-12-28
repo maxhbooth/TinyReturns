@@ -6,21 +6,21 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
 {
     public class CitiReturnSeriesImporter
     {
-        private readonly IReturnsSeriesRepository _returnsSeriesRepository;
+        private readonly IReturnsSeriesDataRepository _returnsSeriesDataRepository;
         private readonly ICitiReturnsFileReader _citiReturnsFileReader;
 
         public CitiReturnSeriesImporter(
-            IReturnsSeriesRepository returnsSeriesRepository,
+            IReturnsSeriesDataRepository returnsSeriesDataRepository,
             ICitiReturnsFileReader citiReturnsFileReader)
         {
             _citiReturnsFileReader = citiReturnsFileReader;
-            _returnsSeriesRepository = returnsSeriesRepository;
+            _returnsSeriesDataRepository = returnsSeriesDataRepository;
         }
 
         public void DeleteAllReturns()
         {
-            _returnsSeriesRepository.DeleteAllMonthlyReturns();
-            _returnsSeriesRepository.DeleteAllReturnSeries();
+            _returnsSeriesDataRepository.DeleteAllMonthlyReturns();
+            _returnsSeriesDataRepository.DeleteAllReturnSeries();
         }
         
         public void ImportMonthlyReturnsFile(
@@ -46,7 +46,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             var returnSeries = ConvertEntityNumbersToReturnSeries(uniqueEntityNumbers, feeType);
 
             foreach (var series in returnSeries)
-                series.ReturnSeriesId = _returnsSeriesRepository.InsertReturnSeries(series);
+                series.ReturnSeriesId = _returnsSeriesDataRepository.InsertReturnSeries(series);
 
             return returnSeries;
         }
@@ -75,7 +75,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
                     .Select(sourceMonthlyReturn => CreateMonthlyReturn(series, sourceMonthlyReturn))
                     .ToArray();
 
-                _returnsSeriesRepository.InsertMonthlyReturns(monthlyReturns);
+                _returnsSeriesDataRepository.InsertMonthlyReturns(monthlyReturns);
             }
         }
 
