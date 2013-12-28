@@ -1,4 +1,5 @@
 ﻿using Dimensional.TinyReturns.Core;
+using Dimensional.TinyReturns.Core.CitiFileImport;
 using Dimensional.TinyReturns.DependencyManagement;
 
 namespace Dimensional.TinyReturns.CitiFileImporterConsole
@@ -13,7 +14,15 @@ namespace Dimensional.TinyReturns.CitiFileImporterConsole
 
             importer.DeleteAllReturns();
 
-            importer.ImportMonthlyReturnsFile(args[0]);
+            ImportAllFilesFromCommandLine(args, importer);
+        }
+
+        private static void ImportAllFilesFromCommandLine(
+            string[] commandLineArgs,
+            CitiReturnSeriesImporter importer)
+        {
+            foreach (var filePath in commandLineArgs)
+                importer.ImportMonthlyReturnsFile(filePath);
         }
     }
 }

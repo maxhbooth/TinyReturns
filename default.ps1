@@ -1,9 +1,14 @@
 properties {
 	$projectName = "TinyReturns"
 	$baseDir = resolve-path .
+	$buildConfig = "Release"
 	$databaseChangeOwner = "Paul Herrera"
 
 	$buildFolder = "$baseDir\package"
+	$srcFolder = "$baseDir\src"
+	$docsFolder = "$baseDir\docs"
+	
+	$buildTargetFolder = "$buildFolder\$buildConfig"
 
 	$databaseServer = "(local)\sqlexpress"
 	$databaseName = $projectName
@@ -15,9 +20,13 @@ properties {
 
 	$doDatabaseScriptPath = "$buildFolder\DatabaseUpgrade_GIPS_Local_$dateStamp.sql"
 	$undoDatabaseScriptPath = "$buildFolder\DatabaseRollback_GIPS_Local_$dateStamp.sql"
+	
+	$solutionFile = "$srcFolder\TinyReturns.sln"
+
+	$packageNunitExec = "$srcFolder\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
 }
 
-task default -depends CleanSolution, RebuildDatabase
+task default -depends CleanSolution, BuildSolution, RebuildDatabase, RunUnitTests, RunIntegrationTests, PopulateDatabase
 
 formatTaskName {
 	param($taskName)
@@ -30,6 +39,14 @@ task CleanSolution {
 	}
 
 	mkdir $buildFolder | out-null
+
+	Exec { msbuild "$solutionFile" /t:Clean /p:Configuration=$buildConfig /v:quiet }
+}
+
+task BuildSolution -depends CleanSolution {
+	Exec { msbuild "$solutionFile" /t:Build /p:Configuration=Release /v:quiet /p:OutDir="$buildTargetFolder\" }
+	
+	Copy-Item "$srcFolder\Logging\Log4NetConfig.xml" "$buildTargetFolder"
 }
 
 task RebuildDatabase {
@@ -50,4 +67,28 @@ task RebuildDatabase {
 	}
 	
 	ExecuteSqlFile $databaseServer $databaseName $doDatabaseScriptPath
+}
+
+task RunUnitTests -depends BuildSolution {
+	Exec { &$packageNunitExec "$buildTargetFolder\Dimensional.TinyReturns.UnitTests.dll" /html "$buildFolder\Dimensional.TinyReturns.UnitTests.dll.html" }
+}
+
+task RunIntegrationTests -depends BuildSolution {
+	Exec { &$packageNunitExec "$buildTargetFolder\Dimensional.TinyReturns.IntegrationTests.dll" /html "$buildFolder\Dimensional.TinyReturns.IntegrationTests.dll.html" }
+}
+
+task PopulateDatabase -depends RebuildDatabase {
+	$consoleExec = "$buildTargetFolder\Dimensional.TinyReturns.CitiFileImporterConsole.exe"
+	
+	$netOfFeesFile = "$docsFolder\CitiFileFullNetOfFees.csv"
+	$grossOfFeesFile = "$docsFolder\CitiFileFullGrossOfFees.csv"
+	$indexFile = "$docsFolder\CitiFileFullIndex.csv"
+	
+	Write-Host "Executing: $consoleExec $netOfFeesFile $grossOfFeesFile $indexFile"
+	
+	cd "$buildTargetFolder"
+	
+	Exec { &$consoleExec "$netOfFeesFile" "$grossOfFeesFile" "$indexFile" }
+	
+	cd "$baseDir"
 }

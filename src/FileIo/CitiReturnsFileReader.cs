@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.CitiFileImport;
-using Microsoft.VisualBasic;
 using Microsoft.VisualBasic.FileIO;
 
 namespace Dimensional.TinyReturns.FileIo
@@ -29,7 +28,7 @@ namespace Dimensional.TinyReturns.FileIo
             {
                 var parseFields = parser.ReadFields();
 
-                var r = CreateCheckModel(parseFields);
+                var r = CreateFileRecordModel(parseFields);
 
                 records.Add(r);
             }
@@ -39,7 +38,7 @@ namespace Dimensional.TinyReturns.FileIo
             return records.ToArray();
         }
 
-        private CitiMonthlyReturnsDataFileRecord CreateCheckModel(
+        private CitiMonthlyReturnsDataFileRecord CreateFileRecordModel(
             string[] parseFields)
         {
             var r = new CitiMonthlyReturnsDataFileRecord();
