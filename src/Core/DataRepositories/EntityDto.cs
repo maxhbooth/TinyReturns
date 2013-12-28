@@ -4,6 +4,6 @@
     {
         public int EntityNumber { get; set; }
         public string Name { get; set; }
-        public string EntityTypeCode { get; set; }
+        public char EntityTypeCode { get; set; }
     }
 }

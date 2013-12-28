@@ -27,7 +27,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
 
             Assert.NotNull(target);
 
-            Assert.Equal(target.EntityTypeCode, "P");
+            Assert.Equal(target.EntityTypeCode, 'P');
             Assert.Equal(target.Name, "Portfolio 100 - Large");
         }
     }

@@ -41,6 +41,8 @@
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
     <Compile Include="DataRepositories\EntityDto.cs" />
     <Compile Include="DataRepositories\IEntityDataRepository.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="EntityType.cs" />
     <Compile Include="FeeType.cs" />
     <Compile Include="DataRepositories\IReturnsSeriesDataRepository.cs" />
     <Compile Include="Headspring\Enumeration.cs" />
