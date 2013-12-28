@@ -40,14 +40,14 @@
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
     <Compile Include="FeeType.cs" />
-    <Compile Include="DataRepository\IReturnsSeriesDataRepository.cs" />
+    <Compile Include="DataRepositories\IReturnsSeriesDataRepository.cs" />
     <Compile Include="Headspring\Enumeration.cs" />
     <Compile Include="ISystemLog.cs" />
     <Compile Include="ITinyReturnsDatabaseSettings.cs" />
     <Compile Include="MasterFactory.cs" />
-    <Compile Include="DataRepository\MonthlyReturnDto.cs" />
+    <Compile Include="DataRepositories\MonthlyReturnDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataRepository\ReturnSeriesDto.cs" />
+    <Compile Include="DataRepositories\ReturnSeriesDto.cs" />
     <Compile Include="CitiFileImport\CitiReturnSeriesImporter.cs" />
   </ItemGroup>
   <ItemGroup>

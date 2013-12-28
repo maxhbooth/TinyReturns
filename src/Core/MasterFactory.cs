@@ -1,5 +1,5 @@
 ﻿using Dimensional.TinyReturns.Core.CitiFileImport;
-using Dimensional.TinyReturns.Core.DataRepository;
+using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.Core
 {

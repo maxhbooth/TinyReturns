@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Dapper;
 using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.DataRepository;
+using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.Database
 {
