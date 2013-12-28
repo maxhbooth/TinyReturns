@@ -5,7 +5,7 @@ using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.Database
 {
-    public class TinyReturnsDatabase : BaseDatabase, IReturnsSeriesDataRepository
+    public class TinyReturnsDatabase : BaseDatabase, IReturnsSeriesDataRepository, IEntityDataRepository
     {
         private readonly ITinyReturnsDatabaseSettings _tinyReturnsDatabaseSettings;
 
@@ -170,7 +170,8 @@ SELECT [ReturnSeriesId]
                 {
                     result = connection.Query<MonthlyReturnDto>(sql, paramObject).ToArray();
                 },
-                sql);
+                sql,
+                paramObject);
 
             return result;
         }
@@ -197,6 +198,28 @@ SELECT [ReturnSeriesId]
             ConnectionExecuteWithLog(
                 connection => connection.Execute(deleteMonthlyReturnsSql),
                 deleteMonthlyReturnsSql);
+        }
+
+        public EntityDto[] GetAllEntities()
+        {
+            const string sql = @"
+SELECT
+        [EntityNumber]
+        ,[Name]
+        ,[EntityTypeCode]
+    FROM
+        [Entity]";
+
+            EntityDto[] result = null;
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    result = connection.Query<EntityDto>(sql).ToArray();
+                },
+                sql);
+
+            return result;
         }
     }
 }

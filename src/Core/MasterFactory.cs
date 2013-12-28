@@ -27,5 +27,9 @@ namespace Dimensional.TinyReturns.Core
                 _returnsSeriesDataRepository,
                 _citiReturnsFileReader);
         }
+
+        private static IEntityDataRepository _entityDataRepository;
+        public static IEntityDataRepository EntityDataRepository { set { _entityDataRepository = value; } }
+        public static IEntityDataRepository GetEntityDataRepository() { return _entityDataRepository; }
     }
 }

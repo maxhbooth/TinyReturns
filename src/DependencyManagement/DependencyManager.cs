@@ -29,10 +29,14 @@ namespace Dimensional.TinyReturns.DependencyManagement
             ISystemLog systemLog,
             ITinyReturnsDatabaseSettings tinyReturnsDatabaseSettings)
         {
+            var returnsSeriesDataRepository = new TinyReturnsDatabase(tinyReturnsDatabaseSettings, systemLog);
+
             MasterFactory.SystemLog = systemLog;
             MasterFactory.TinyReturnsDatabaseSettings = tinyReturnsDatabaseSettings;
-            MasterFactory.ReturnsSeriesDataRepository = new TinyReturnsDatabase(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.ReturnsSeriesDataRepository = returnsSeriesDataRepository;
             MasterFactory.CitiReturnsFileReader = new CitiReturnsFileReader(systemLog);
+            MasterFactory.EntityDataRepository = returnsSeriesDataRepository;
+
         }
     }
 }

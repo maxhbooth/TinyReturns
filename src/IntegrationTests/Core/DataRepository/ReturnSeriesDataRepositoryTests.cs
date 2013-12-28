@@ -4,13 +4,13 @@ using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.DataRepositories;
 using Xunit;
 
-namespace Dimensional.TinyReturns.IntegrationTests.Core
+namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
 {
-    public class ReturnSeriesRepositoryTests : DatabaseTestBase
+    public class ReturnSeriesDataRepositoryTests : DatabaseTestBase
     {
         private readonly IReturnsSeriesDataRepository _tinyReturnsDatabase;
 
-        public ReturnSeriesRepositoryTests()
+        public ReturnSeriesDataRepositoryTests()
         {
             _tinyReturnsDatabase = MasterFactory.GetReturnsSeriesRepository();
         }
