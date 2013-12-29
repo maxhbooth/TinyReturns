@@ -21,23 +21,13 @@ namespace Dimensional.TinyReturns.Core
             var entityDtos = _entityDataRepository.GetAllEntities();
 
             var allReturnSeriesDtos = GetReturnSeriesDtos(entityDtos);
+            var allMonthlyReturnDtos = GetMonthlyReturns(allReturnSeriesDtos);
+
+            var dtosSource = new EntityFactory(allReturnSeriesDtos, allMonthlyReturnDtos);
 
             return entityDtos
-                .Select(entityDto => CreateReturnSeries(entityDto, allReturnSeriesDtos))
+                .Select(dtosSource.CreateEntity)
                 .ToArray();
-        }
-
-        private Entity CreateReturnSeries(
-            EntityDto entityDto,
-            ReturnSeriesDto[] allReturnSeriesDtos)
-        {
-            var entity = CreateEntityForDto(entityDto);
-
-            var returnSeries = CreateReturnSeriesForEntity(allReturnSeriesDtos, entityDto);
-
-            entity.ReturnSeries = returnSeries;
-
-            return entity;
         }
 
         private ReturnSeriesDto[] GetReturnSeriesDtos(
@@ -54,39 +44,18 @@ namespace Dimensional.TinyReturns.Core
             return returnSeriesDtos;
         }
 
-        private static Entity CreateEntityForDto(
-            EntityDto entityDto)
+        private MonthlyReturnDto[] GetMonthlyReturns(
+            ReturnSeriesDto[] returnSeries)
         {
-            return new Entity
-            {
-                EntityNumber = entityDto.EntityNumber,
-                Name = entityDto.Name,
-                EntityType = EntityType.FromCode(entityDto.EntityTypeCode)
-            };
-        }
-
-        private ReturnSeries[] CreateReturnSeriesForEntity(
-            ReturnSeriesDto[] returnSeriesDtos,
-            EntityDto entityDto)
-        {
-            var seriesForEntity = returnSeriesDtos
-                .Where(d => d.EntityNumber == entityDto.EntityNumber);
-
-            var returnSeries = seriesForEntity
-                .Select(CreateReturnSeries)
+            var distinctReturnSeriesIds = returnSeries
+                .Select(d => d.ReturnSeriesId)
+                .Distinct()
                 .ToArray();
 
-            return returnSeries;
-        }
+            var monthlyReturnDtos = _returnsSeriesDataRepository
+                .GetMonthlyReturns(distinctReturnSeriesIds);
 
-        private ReturnSeries CreateReturnSeries(
-            ReturnSeriesDto r)
-        {
-            return new ReturnSeries()
-            {
-                ReturnSeriesId = r.ReturnSeriesId,
-                FeeType = FeeType.FromCode(r.FeeTypeCode)
-            };
+            return monthlyReturnDtos;
         }
     }
 }

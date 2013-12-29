@@ -48,6 +48,9 @@
     <Compile Include="Core\EntityReturnsRepositoryTests.cs" />
     <Compile Include="Core\EntityTypeTests.cs" />
     <Compile Include="Core\FeeTypeTests.cs" />
+    <Compile Include="Core\IntArrayEqualityComparer.cs" />
+    <Compile Include="Core\MonthlyReturnDtoCollectionForTests.cs" />
+    <Compile Include="Core\ReturnSeriesDtoCollectionForTests.cs" />
     <Compile Include="Core\ReturnsSeriesDataRepositoryStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

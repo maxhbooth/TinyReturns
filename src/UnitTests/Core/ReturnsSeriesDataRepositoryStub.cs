@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.UnitTests.Core
@@ -8,70 +7,23 @@ namespace Dimensional.TinyReturns.UnitTests.Core
     public class ReturnsSeriesDataRepositoryStub : IReturnsSeriesDataRepository
     {
         private readonly Dictionary<int[], ReturnSeriesDto[]> _getReturnSeriesSetups;
+        private Dictionary<int[], MonthlyReturnDto[]> _getMonthlyReturnsSetups;
 
         public ReturnsSeriesDataRepositoryStub()
         {
-            _getReturnSeriesSetups = new Dictionary<int[], ReturnSeriesDto[]>(new IntArrayCompare());
+            _getReturnSeriesSetups = new Dictionary<int[], ReturnSeriesDto[]>(new IntArrayEqualityComparer());
+            _getMonthlyReturnsSetups = new Dictionary<int[], MonthlyReturnDto[]>(new IntArrayEqualityComparer());
         }
 
         public void SetupGetReturnSeries(
             int[] entityNumbers,
-            Action<ReturnSeriesDtoCollection> listAction)
+            Action<ReturnSeriesDtoCollectionForTests> listAction)
         {
-            var col = new ReturnSeriesDtoCollection();
+            var col = new ReturnSeriesDtoCollectionForTests();
 
             listAction(col);
 
             _getReturnSeriesSetups.Add(entityNumbers, col.GetReturnSeriesDtos());
-        }
-
-        private class IntArrayCompare : IEqualityComparer<int[]>
-        {
-            public bool Equals(int[] x, int[] y)
-            {
-                var sequenceEqual = x.SequenceEqual(y);
-                return sequenceEqual;
-            }
-
-            public int GetHashCode(int[] obj)
-            {
-                return 0;
-            }
-        }
-
-        public class ReturnSeriesDtoCollection
-        {
-            private readonly List<ReturnSeriesDto> _returnSeriesDtoList;
-
-            public ReturnSeriesDtoCollection()
-            {
-                _returnSeriesDtoList = new List<ReturnSeriesDto>();
-            }
-
-            public ReturnSeriesDtoCollection AddNetOfFeesReturnSeries(
-                int returnSeriesId,
-                int entityNumber)
-            {
-                var n = ReturnSeriesDto.CreateForNetOfFees(returnSeriesId, entityNumber);
-                _returnSeriesDtoList.Add(n);
-
-                return this;
-            }
-
-            public ReturnSeriesDtoCollection AddNetOfGrossReturnSeries(
-                int returnSeriesId,
-                int entityNumber)
-            {
-                var n = ReturnSeriesDto.CreateForGrossOfFees(returnSeriesId, entityNumber);
-                _returnSeriesDtoList.Add(n);
-
-                return this;
-            }
-
-            public ReturnSeriesDto[] GetReturnSeriesDtos()
-            {
-                return _returnSeriesDtoList.ToArray();
-            }
         }
 
         public ReturnSeriesDto[] GetReturnSeries(int[] entityNumbers)
@@ -80,6 +32,27 @@ namespace Dimensional.TinyReturns.UnitTests.Core
                 return _getReturnSeriesSetups[entityNumbers];
 
             return new ReturnSeriesDto[0];
+        }
+
+        // **
+
+        public void SetupGetMonthlyReturns(
+            int[] returnSeriesIds,
+            Action<MonthlyReturnDtoCollectionForTests> listAction)
+        {
+            var col = new MonthlyReturnDtoCollectionForTests();
+
+            listAction(col);
+
+            _getMonthlyReturnsSetups.Add(returnSeriesIds, col.GetReturnSeriesDtos());
+        }
+
+        public MonthlyReturnDto[] GetMonthlyReturns(int[] returnSeriesIds)
+        {
+            if (_getMonthlyReturnsSetups.ContainsKey(returnSeriesIds))
+                return _getMonthlyReturnsSetups[returnSeriesIds];
+
+            return new MonthlyReturnDto[0];
         }
 
         // **

@@ -154,12 +154,15 @@ INSERT INTO [MonthlyReturn]
         public MonthlyReturnDto[] GetMonthlyReturns(int returnSeriesId)
         {
             const string sql = @"
-SELECT [ReturnSeriesId]
-      ,[Year]
-      ,[Month]
-      ,[ReturnValue]
-  FROM [MonthlyReturn]
-    WHERE ReturnSeriesId = @ReturnSeriesId";
+SELECT
+        [ReturnSeriesId]
+        ,[Year]
+        ,[Month]
+        ,[ReturnValue]
+    FROM
+        [MonthlyReturn]
+    WHERE
+        ReturnSeriesId = @ReturnSeriesId";
 
             MonthlyReturnDto[] result = null;
 
@@ -172,6 +175,38 @@ SELECT [ReturnSeriesId]
                 },
                 sql,
                 paramObject);
+
+            return result;
+        }
+
+        public MonthlyReturnDto[] GetMonthlyReturns(
+            int[] returnSeriesIds)
+        {
+            const string sqlTemplate = @"
+SELECT
+        [ReturnSeriesId]
+        ,[Year]
+        ,[Month]
+        ,[ReturnValue]
+    FROM
+        [MonthlyReturn]
+    WHERE
+        ReturnSeriesId IN {0}";
+
+            var commaSep = returnSeriesIds
+                .Select(s => s.ToString())
+                .Aggregate((f, s) => f + ", " + s);
+
+            var sql = string.Format(sqlTemplate, commaSep);
+
+            MonthlyReturnDto[] result = null;
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    result = connection.Query<MonthlyReturnDto>(sql).ToArray();
+                },
+                sql);
 
             return result;
         }

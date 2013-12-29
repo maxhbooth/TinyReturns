@@ -4,6 +4,6 @@
     {
         public int ReturnSeriesId { get; set; }
         public FeeType FeeType { get; set; }
-         
+        public MonthlyReturn[] MonthlyReturns { get; set; }
     }
 }

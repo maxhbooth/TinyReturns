@@ -1,6 +1,8 @@
-﻿namespace Dimensional.TinyReturns.Core.DataRepositories
+﻿using Dimensional.TinyReturns.Core.DateExtend;
+
+namespace Dimensional.TinyReturns.Core.DataRepositories
 {
-    public class MonthlyReturnDto
+    public class MonthlyReturnDto : IMonthAndYear
     {
         public int ReturnSeriesId { get; set; }
         public int Year { get; set; }
