@@ -1,4 +1,5 @@
-﻿using Headspring;
+﻿using System.Linq;
+using Headspring;
 
 namespace Dimensional.TinyReturns.Core
 {
@@ -21,6 +22,13 @@ namespace Dimensional.TinyReturns.Core
         public char Code
         {
             get { return _code; }
+        }
+
+        public static EntityType FromCode(char code)
+        {
+            var entityTypes = GetAll();
+
+            return entityTypes.FirstOrDefault(e => e.Code == code);
         }
     }
 }

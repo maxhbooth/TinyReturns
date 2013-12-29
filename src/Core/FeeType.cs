@@ -1,4 +1,5 @@
-﻿using Headspring;
+﻿using System.Linq;
+using Headspring;
 
 namespace Dimensional.TinyReturns.Core
 {
@@ -8,7 +9,7 @@ namespace Dimensional.TinyReturns.Core
         public static FeeType NetOfFees = new FeeType(2, "Net of Fees", 'N');
         public static FeeType GrossOfFees = new FeeType(2, "Net of Fees", 'G');
 
-        private char _code;
+        private readonly char _code;
 
         public FeeType(
             int value,
@@ -22,6 +23,14 @@ namespace Dimensional.TinyReturns.Core
         public char Code
         {
             get { return _code; }
+        }
+
+        public static FeeType FromCode(
+            char code)
+        {
+            var feeTypes = GetAll();
+
+            return feeTypes.FirstOrDefault(e => e.Code == code);
         }
 
         public static FeeType GetFeeTypeForFileName(

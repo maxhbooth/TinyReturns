@@ -22,5 +22,17 @@ namespace Dimensional.TinyReturns.UnitTests.Core
         {
             Assert.Equal(FeeType.GetFeeTypeForFileName("FileNameGross"), FeeType.GrossOfFees);
         }
+
+        [Fact]
+        public void FromCodeShouldReturnTypeGivenValidCode()
+        {
+            Assert.Equal(FeeType.FromCode(FeeType.GrossOfFees.Code), FeeType.GrossOfFees);
+        }
+
+        [Fact]
+        public void FromCodeShouldReturnNullGivenInvalidCode()
+        {
+            Assert.Equal(FeeType.FromCode('X'), null);
+        }
     }
 }
