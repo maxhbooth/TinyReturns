@@ -27,7 +27,7 @@ namespace Dimensional.TinyReturns.Core
                 EntityType = EntityType.FromCode(entityDto.EntityTypeCode)
             };
 
-            entity.ReturnSeries = CreateReturnSeriesForEntity(entityDto);
+            entity.AddReturnSeries(CreateReturnSeriesForEntity(entityDto));
 
             return entity;
         }
@@ -57,9 +57,8 @@ namespace Dimensional.TinyReturns.Core
             var returnsForSeries = _monthlyReturnDtos
                 .Where(d => d.ReturnSeriesId == r.ReturnSeriesId);
 
-            returnSeries.MonthlyReturns = returnsForSeries
-                .Select(CreateMonthlyReturn)
-                .ToArray();
+            returnSeries.AddReturns(
+                returnsForSeries.Select(CreateMonthlyReturn));
 
             return returnSeries;
         }

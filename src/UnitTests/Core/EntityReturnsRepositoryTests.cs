@@ -1,6 +1,7 @@
 ﻿using System;
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.DataRepositories;
+using Dimensional.TinyReturns.Core.DateExtend;
 using Xunit;
 
 namespace Dimensional.TinyReturns.UnitTests.Core
@@ -87,9 +88,12 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var results = repository.GetEntitiesWithReturnSeries();
 
-            Assert.Equal(results[0].ReturnSeries.Length, 1);
-            Assert.Equal(results[0].ReturnSeries[0].ReturnSeriesId, 1000);
-            Assert.Equal(results[0].ReturnSeries[0].FeeType, FeeType.NetOfFees);
+            Assert.Equal(results[0].ReturnSeriesCount, 1);
+
+            var allReturnSeries = results[0].GetAllReturnSeries();
+
+            Assert.Equal(allReturnSeries[0].ReturnSeriesId, 1000);
+            Assert.Equal(allReturnSeries[0].FeeType, FeeType.NetOfFees);
         }
 
         [Fact]
@@ -111,9 +115,12 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var results = repository.GetEntitiesWithReturnSeries();
 
-            Assert.Equal(results[0].ReturnSeries.Length, 2);
-            Assert.Equal(results[0].ReturnSeries[1].ReturnSeriesId, 1001);
-            Assert.Equal(results[0].ReturnSeries[1].FeeType, FeeType.GrossOfFees);
+            Assert.Equal(results[0].ReturnSeriesCount, 2);
+
+            var allReturnSeries = results[0].GetAllReturnSeries();
+
+            Assert.Equal(allReturnSeries[1].ReturnSeriesId, 1001);
+            Assert.Equal(allReturnSeries[1].FeeType, FeeType.GrossOfFees);
         }
 
         [Fact]
@@ -136,7 +143,15 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var results = repository.GetEntitiesWithReturnSeries();
 
-            Assert.Equal(results[0].ReturnSeries[0].MonthlyReturns.Length, 1);
+            var allReturnSeries = results[0].GetAllReturnSeries();
+
+            Assert.Equal(allReturnSeries[0].MonthlyReturnsCount, 1);
+
+            var allMonthlyReturns = allReturnSeries[0].GetAllMonthlyReturns();
+
+            Assert.Equal(allMonthlyReturns[0].ReturnSeriesId, 1000);
+            Assert.Equal(allMonthlyReturns[0].MonthYear, new MonthYear(2000, 1));
+            Assert.Equal(allMonthlyReturns[0].ReturnValue, 0.1m);
         }
 
     }
