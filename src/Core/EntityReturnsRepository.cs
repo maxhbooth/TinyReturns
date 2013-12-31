@@ -7,11 +7,14 @@ namespace Dimensional.TinyReturns.Core
     {
         private readonly IEntityDataRepository _entityDataRepository;
         private readonly IReturnsSeriesDataRepository _returnsSeriesDataRepository;
+        private readonly IMonthlyReturnsDataRepository _monthlyReturnsDataRepository;
 
         public EntityReturnsRepository(
             IEntityDataRepository entityDataRepository,
-            IReturnsSeriesDataRepository returnsSeriesDataRepository)
+            IReturnsSeriesDataRepository returnsSeriesDataRepository,
+            IMonthlyReturnsDataRepository monthlyReturnsDataRepository)
         {
+            _monthlyReturnsDataRepository = monthlyReturnsDataRepository;
             _returnsSeriesDataRepository = returnsSeriesDataRepository;
             _entityDataRepository = entityDataRepository;
         }
@@ -52,7 +55,7 @@ namespace Dimensional.TinyReturns.Core
                 .Distinct()
                 .ToArray();
 
-            var monthlyReturnDtos = _returnsSeriesDataRepository
+            var monthlyReturnDtos = _monthlyReturnsDataRepository
                 .GetMonthlyReturns(distinctReturnSeriesIds);
 
             return monthlyReturnDtos;

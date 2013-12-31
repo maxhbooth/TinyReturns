@@ -12,17 +12,21 @@ namespace Dimensional.TinyReturns.UnitTests.Core
         {
             private readonly EntityDataRepositoryStub _entityDataRepositoryStub;
             private readonly ReturnsSeriesDataRepositoryStub _returnsSeriesDataRepositoryStub;
+            private readonly MonthlyReturnsDataRepositoryStub _monthlyReturnsDataRepositoryStub;
 
             public TestHelper()
             {
                 _entityDataRepositoryStub = new EntityDataRepositoryStub();
                 _returnsSeriesDataRepositoryStub = new ReturnsSeriesDataRepositoryStub();
+                _monthlyReturnsDataRepositoryStub = new MonthlyReturnsDataRepositoryStub();
             }
 
             public EntityReturnsRepository CreateEntityReturnsRepository()
             {
                 var repository = new EntityReturnsRepository(
-                    _entityDataRepositoryStub, _returnsSeriesDataRepositoryStub);                
+                    _entityDataRepositoryStub,
+                    _returnsSeriesDataRepositoryStub,
+                    _monthlyReturnsDataRepositoryStub);
 
                 return repository;
             }
@@ -45,9 +49,8 @@ namespace Dimensional.TinyReturns.UnitTests.Core
                 int[] returnSeriesIds,
                 Action<MonthlyReturnDtoCollectionForTests> listAction)
             {
-                _returnsSeriesDataRepositoryStub
+                _monthlyReturnsDataRepositoryStub
                     .SetupGetMonthlyReturns(returnSeriesIds, listAction);
-                
             }
         }
 

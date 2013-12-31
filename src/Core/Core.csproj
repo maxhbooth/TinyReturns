@@ -41,6 +41,7 @@
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
     <Compile Include="DataRepositories\EntityDto.cs" />
     <Compile Include="DataRepositories\IEntityDataRepository.cs" />
+    <Compile Include="DataRepositories\IMonthlyReturnsDataRepository.cs" />
     <Compile Include="DateExtend\DateTimeExtensions.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityFactory.cs" />

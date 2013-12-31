@@ -34,6 +34,7 @@ namespace Dimensional.TinyReturns.DependencyManagement
             MasterFactory.SystemLog = systemLog;
             MasterFactory.TinyReturnsDatabaseSettings = tinyReturnsDatabaseSettings;
             MasterFactory.ReturnsSeriesDataRepository = returnsSeriesDataRepository;
+            MasterFactory.MonthlyReturnsDataRepository = returnsSeriesDataRepository;
             MasterFactory.CitiReturnsFileReader = new CitiReturnsFileReader(systemLog);
             MasterFactory.EntityDataRepository = returnsSeriesDataRepository;
 

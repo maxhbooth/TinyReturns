@@ -9,10 +9,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
     public class CitiReturnSeriesImporterTests : DatabaseTestBase
     {
         private readonly IReturnsSeriesDataRepository _returnsSeriesDataRepository;
+        private IMonthlyReturnsDataRepository _monthlyReturnsDataRepository;
 
         public CitiReturnSeriesImporterTests()
         {
             _returnsSeriesDataRepository = MasterFactory.GetReturnsSeriesRepository();
+            _monthlyReturnsDataRepository = MasterFactory.GetMonthlyReturnsDataRepository();
         }
 
         [Fact]
@@ -80,7 +82,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
         private MonthlyReturnDto[] GetMonthlyReturnSeries(int entityNumber)
         {
             var returnSeries = _returnsSeriesDataRepository.GetReturnSeries(new[] {entityNumber}).First();
-            var monthlyReturns = _returnsSeriesDataRepository.GetMonthlyReturns(returnSeries.ReturnSeriesId);
+            var monthlyReturns = _monthlyReturnsDataRepository.GetMonthlyReturns(returnSeries.ReturnSeriesId);
             return monthlyReturns;
         }
 
