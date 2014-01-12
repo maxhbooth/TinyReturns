@@ -50,7 +50,10 @@
     <Compile Include="Core\FeeTypeTests.cs" />
     <Compile Include="Core\IntArrayEqualityComparer.cs" />
     <Compile Include="Core\MonthlyReturnDtoCollectionForTests.cs" />
+    <Compile Include="Core\MonthlyReturnsDataRepositoryDummy.cs" />
+    <Compile Include="Core\MonthlyReturnsDataRepositoryStub.cs" />
     <Compile Include="Core\ReturnSeriesDtoCollectionForTests.cs" />
+    <Compile Include="Core\ReturnsSeriesDataRepositoryDummy.cs" />
     <Compile Include="Core\ReturnsSeriesDataRepositoryStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

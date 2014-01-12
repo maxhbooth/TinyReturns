@@ -8,18 +8,21 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
     {
         private readonly IReturnsSeriesDataRepository _returnsSeriesDataRepository;
         private readonly ICitiReturnsFileReader _citiReturnsFileReader;
+        private readonly IMonthlyReturnsDataRepository _monthlyReturnsDataRepository;
 
         public CitiReturnSeriesImporter(
             IReturnsSeriesDataRepository returnsSeriesDataRepository,
-            ICitiReturnsFileReader citiReturnsFileReader)
+            ICitiReturnsFileReader citiReturnsFileReader,
+            IMonthlyReturnsDataRepository monthlyReturnsDataRepository)
         {
+            _monthlyReturnsDataRepository = monthlyReturnsDataRepository;
             _citiReturnsFileReader = citiReturnsFileReader;
             _returnsSeriesDataRepository = returnsSeriesDataRepository;
         }
 
         public void DeleteAllReturns()
         {
-            _returnsSeriesDataRepository.DeleteAllMonthlyReturns();
+            _monthlyReturnsDataRepository.DeleteAllMonthlyReturns();
             _returnsSeriesDataRepository.DeleteAllReturnSeries();
         }
         
@@ -75,7 +78,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
                     .Select(sourceMonthlyReturn => CreateMonthlyReturn(series, sourceMonthlyReturn))
                     .ToArray();
 
-                _returnsSeriesDataRepository.InsertMonthlyReturns(monthlyReturns);
+                _monthlyReturnsDataRepository.InsertMonthlyReturns(monthlyReturns);
             }
         }
 

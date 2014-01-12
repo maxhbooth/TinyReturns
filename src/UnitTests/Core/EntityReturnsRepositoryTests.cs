@@ -8,21 +8,25 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 {
     public class EntityReturnsRepositoryTests
     {
-        private class TestHelper
+        private class EntityReturnsRepositoryTestHelper
         {
             private readonly EntityDataRepositoryStub _entityDataRepositoryStub;
             private readonly ReturnsSeriesDataRepositoryStub _returnsSeriesDataRepositoryStub;
+            private readonly MonthlyReturnsDataRepositoryStub _monthlyReturnsDataRepositoryStub;
 
-            public TestHelper()
+            public EntityReturnsRepositoryTestHelper()
             {
                 _entityDataRepositoryStub = new EntityDataRepositoryStub();
                 _returnsSeriesDataRepositoryStub = new ReturnsSeriesDataRepositoryStub();
+                _monthlyReturnsDataRepositoryStub = new MonthlyReturnsDataRepositoryStub();
             }
 
             public EntityReturnsRepository CreateEntityReturnsRepository()
             {
                 var repository = new EntityReturnsRepository(
-                    _entityDataRepositoryStub, _returnsSeriesDataRepositoryStub);                
+                    _entityDataRepositoryStub,
+                    _returnsSeriesDataRepositoryStub,
+                    _monthlyReturnsDataRepositoryStub);
 
                 return repository;
             }
@@ -45,16 +49,15 @@ namespace Dimensional.TinyReturns.UnitTests.Core
                 int[] returnSeriesIds,
                 Action<MonthlyReturnDtoCollectionForTests> listAction)
             {
-                _returnsSeriesDataRepositoryStub
+                _monthlyReturnsDataRepositoryStub
                     .SetupGetMonthlyReturns(returnSeriesIds, listAction);
-                
             }
         }
 
         [Fact]
         public void GetEntitiesWithReturnSeriesShouldMapSingleEntity()
         {
-            var testHelper = new TestHelper();
+            var testHelper = new EntityReturnsRepositoryTestHelper();
 
             testHelper
                 .SetupGetAllEntities(c => c.AddPortfolio(100, "Port100"));
@@ -65,15 +68,20 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             Assert.Equal(results.Length, 1);
 
-            Assert.Equal(results[0].EntityNumber, 100);
-            Assert.Equal(results[0].Name, "Port100");
-            Assert.Equal(results[0].EntityType, EntityType.Portfolio);
+            var expectedEntity = new Entity()
+            {
+                EntityNumber = 100,
+                Name = "Port100",
+                EntityType = EntityType.Portfolio
+            };
+
+            Assert.Equal(results[0], expectedEntity);
         }
 
         [Fact]
         public void GetEntitiesWithReturnSeriesShouldMapSingleEntityAndSingleReturnSeries()
         {
-            var testHelper = new TestHelper();
+            var testHelper = new EntityReturnsRepositoryTestHelper();
 
             testHelper
                 .SetupGetAllEntities(c => c.AddPortfolio(100, "Port100"));
@@ -81,25 +89,28 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             testHelper
                 .SetupGetReturnSeries(
                     new []{ 100 },
-                    c => c
-                        .AddNetOfFeesReturnSeries(1000, 100));
+                    c => c.AddNetOfFeesReturnSeries(1000, 100));
 
             var repository = testHelper.CreateEntityReturnsRepository();
 
             var results = repository.GetEntitiesWithReturnSeries();
 
-            Assert.Equal(results[0].ReturnSeriesCount, 1);
+            var expectedEntity = new Entity()
+            {
+                EntityNumber = 100,
+                Name = "Port100",
+                EntityType = EntityType.Portfolio
+            };
 
-            var allReturnSeries = results[0].GetAllReturnSeries();
+            expectedEntity.AddReturnSeries(new ReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees } );
 
-            Assert.Equal(allReturnSeries[0].ReturnSeriesId, 1000);
-            Assert.Equal(allReturnSeries[0].FeeType, FeeType.NetOfFees);
+            Assert.Equal(results[0], expectedEntity);
         }
 
         [Fact]
         public void GetEntitiesWithReturnSeriesShouldMapSingleEntityAndMultipleReturnSeries()
         {
-            var testHelper = new TestHelper();
+            var testHelper = new EntityReturnsRepositoryTestHelper();
 
             testHelper
                 .SetupGetAllEntities(c => c.AddPortfolio(100, "Port100"));
@@ -115,18 +126,23 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var results = repository.GetEntitiesWithReturnSeries();
 
-            Assert.Equal(results[0].ReturnSeriesCount, 2);
+            var expectedEntity = new Entity()
+            {
+                EntityNumber = 100,
+                Name = "Port100",
+                EntityType = EntityType.Portfolio
+            };
 
-            var allReturnSeries = results[0].GetAllReturnSeries();
+            expectedEntity.AddReturnSeries(new ReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees });
+            expectedEntity.AddReturnSeries(new ReturnSeries() { ReturnSeriesId = 1001, FeeType = FeeType.GrossOfFees });
 
-            Assert.Equal(allReturnSeries[1].ReturnSeriesId, 1001);
-            Assert.Equal(allReturnSeries[1].FeeType, FeeType.GrossOfFees);
+            Assert.Equal(results[0], expectedEntity);
         }
 
         [Fact]
         public void GetEntitiesWithReturnSeriesShouldMapSingleEntityAndSingleReturn()
         {
-            var testHelper = new TestHelper();
+            var testHelper = new EntityReturnsRepositoryTestHelper();
 
             testHelper
                 .SetupGetAllEntities(c => c.AddPortfolio(100, "Port100"));
@@ -143,15 +159,19 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var results = repository.GetEntitiesWithReturnSeries();
 
-            var allReturnSeries = results[0].GetAllReturnSeries();
+            var expectedEntity = new Entity()
+            {
+                EntityNumber = 100,
+                Name = "Port100",
+                EntityType = EntityType.Portfolio
+            };
 
-            Assert.Equal(allReturnSeries[0].MonthlyReturnsCount, 1);
+            var returnSeries = new ReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees };
+            expectedEntity.AddReturnSeries(returnSeries);
 
-            var allMonthlyReturns = allReturnSeries[0].GetAllMonthlyReturns();
-
-            Assert.Equal(allMonthlyReturns[0].ReturnSeriesId, 1000);
-            Assert.Equal(allMonthlyReturns[0].MonthYear, new MonthYear(2000, 1));
-            Assert.Equal(allMonthlyReturns[0].ReturnValue, 0.1m);
+            returnSeries.AddReturn(new MonthYear(2000, 1), 0.1m);
+            
+            Assert.Equal(results[0], expectedEntity);
         }
 
     }
