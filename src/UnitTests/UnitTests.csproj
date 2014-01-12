@@ -44,17 +44,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\InvestmentVehicleDataRepositoryStub.cs" />
-    <Compile Include="Core\EntityReturnsRepositoryTests.cs" />
-    <Compile Include="Core\EntityTypeTests.cs" />
+    <Compile Include="Core\DataRepositories\InvestmentVehicleDataRepositoryStub.cs" />
+    <Compile Include="Core\InvestmentVehicleReturnsRepositoryTests.cs" />
+    <Compile Include="Core\InvestmentVehicleTypeTests.cs" />
     <Compile Include="Core\FeeTypeTests.cs" />
     <Compile Include="Core\IntArrayEqualityComparer.cs" />
-    <Compile Include="Core\MonthlyReturnDtoCollectionForTests.cs" />
-    <Compile Include="Core\MonthlyReturnsDataRepositoryDummy.cs" />
-    <Compile Include="Core\MonthlyReturnsDataRepositoryStub.cs" />
-    <Compile Include="Core\ReturnSeriesDtoCollectionForTests.cs" />
-    <Compile Include="Core\ReturnsSeriesDataRepositoryDummy.cs" />
-    <Compile Include="Core\ReturnsSeriesDataRepositoryStub.cs" />
+    <Compile Include="Core\DataRepositories\MonthlyReturnDtoCollectionForTests.cs" />
+    <Compile Include="Core\DataRepositories\MonthlyReturnsDataRepositoryDummy.cs" />
+    <Compile Include="Core\DataRepositories\MonthlyReturnsDataRepositoryStub.cs" />
+    <Compile Include="Core\DataRepositories\ReturnSeriesDtoCollectionForTests.cs" />
+    <Compile Include="Core\DataRepositories\ReturnsSeriesDataRepositoryDummy.cs" />
+    <Compile Include="Core\DataRepositories\ReturnsSeriesDataRepositoryStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

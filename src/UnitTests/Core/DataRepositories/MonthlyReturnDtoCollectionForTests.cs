@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Dimensional.TinyReturns.Core.DataRepositories;
 
-namespace Dimensional.TinyReturns.UnitTests.Core
+namespace Dimensional.TinyReturns.UnitTests.Core.DataRepositories
 {
-    //MonthlyReturnDto
     public class MonthlyReturnDtoCollectionForTests
     {
         private readonly List<MonthlyReturnDto> _monthlyReturnsList;

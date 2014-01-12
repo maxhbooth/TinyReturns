@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Dimensional.TinyReturns.UnitTests.Core
 {
-    public class EntityTypeTests
+    public class InvestmentVehicleTypeTests
     {
         [Fact]
         public void FromCodeShouldReturnEntityTypeWhenGivenMatchingCode()

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Dimensional.TinyReturns.Core.DataRepositories;
 
-namespace Dimensional.TinyReturns.UnitTests.Core
+namespace Dimensional.TinyReturns.UnitTests.Core.DataRepositories
 {
     public class ReturnSeriesDtoCollectionForTests
     {

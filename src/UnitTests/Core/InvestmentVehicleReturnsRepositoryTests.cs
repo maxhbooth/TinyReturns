@@ -2,11 +2,12 @@
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.DataRepositories;
 using Dimensional.TinyReturns.Core.DateExtend;
+using Dimensional.TinyReturns.UnitTests.Core.DataRepositories;
 using Xunit;
 
 namespace Dimensional.TinyReturns.UnitTests.Core
 {
-    public class EntityReturnsRepositoryTests
+    public class InvestmentVehicleReturnsRepositoryTests
     {
         private class EntityReturnsRepositoryTestHelper
         {
