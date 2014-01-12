@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Dimensional.TinyReturns.Core.DateExtend;
 
 namespace Dimensional.TinyReturns.Core
 {
     public class InvestmentVehicle
     {
-        private readonly List<ReturnSeries> _returnSeries;
+        private readonly List<MonthlyReturnSeries> _returnSeries;
 
         public InvestmentVehicle()
         {
-            _returnSeries = new List<ReturnSeries>();
+            _returnSeries = new List<MonthlyReturnSeries>();
         }
 
         public int EntityNumber { get; set; }
@@ -17,18 +18,18 @@ namespace Dimensional.TinyReturns.Core
         public InvestmentVehicleType InvestmentVehicleType { get; set; }
 
         public void AddReturnSeries(
-            IEnumerable<ReturnSeries> a)
+            IEnumerable<MonthlyReturnSeries> a)
         {
             _returnSeries.AddRange(a);
         }
 
         public void AddReturnSeries(
-            ReturnSeries a)
+            MonthlyReturnSeries a)
         {
             _returnSeries.Add(a);
         }
 
-        public ReturnSeries[] GetAllReturnSeries()
+        public MonthlyReturnSeries[] GetAllReturnSeries()
         {
             return _returnSeries.ToArray();
         }
@@ -76,6 +77,5 @@ namespace Dimensional.TinyReturns.Core
         {
             return !Equals(left, right);
         }
-
     }
 }

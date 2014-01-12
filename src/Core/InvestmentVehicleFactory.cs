@@ -32,7 +32,7 @@ namespace Dimensional.TinyReturns.Core
             return entity;
         }
 
-        private ReturnSeries[] CreateReturnSeriesForEntity(
+        private MonthlyReturnSeries[] CreateReturnSeriesForEntity(
             InvestmentVehicleDto investmentVehicleDto)
         {
             var seriesForEntity = _returnSeriesDtos
@@ -45,10 +45,10 @@ namespace Dimensional.TinyReturns.Core
             return returnSeries;
         }
 
-        private ReturnSeries CreateReturnSeries(
+        private MonthlyReturnSeries CreateReturnSeries(
             ReturnSeriesDto r)
         {
-            var returnSeries = new ReturnSeries()
+            var returnSeries = new MonthlyReturnSeries()
             {
                 ReturnSeriesId = r.ReturnSeriesId,
                 FeeType = FeeType.FromCode(r.FeeTypeCode)

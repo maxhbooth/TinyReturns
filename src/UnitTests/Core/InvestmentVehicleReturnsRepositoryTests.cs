@@ -103,7 +103,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
                 InvestmentVehicleType = InvestmentVehicleType.Portfolio
             };
 
-            expectedEntity.AddReturnSeries(new ReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees } );
+            expectedEntity.AddReturnSeries(new MonthlyReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees } );
 
             Assert.Equal(results[0], expectedEntity);
         }
@@ -134,8 +134,8 @@ namespace Dimensional.TinyReturns.UnitTests.Core
                 InvestmentVehicleType = InvestmentVehicleType.Portfolio
             };
 
-            expectedEntity.AddReturnSeries(new ReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees });
-            expectedEntity.AddReturnSeries(new ReturnSeries() { ReturnSeriesId = 1001, FeeType = FeeType.GrossOfFees });
+            expectedEntity.AddReturnSeries(new MonthlyReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees });
+            expectedEntity.AddReturnSeries(new MonthlyReturnSeries() { ReturnSeriesId = 1001, FeeType = FeeType.GrossOfFees });
 
             Assert.Equal(results[0], expectedEntity);
         }
@@ -167,7 +167,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
                 InvestmentVehicleType = InvestmentVehicleType.Portfolio
             };
 
-            var returnSeries = new ReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees };
+            var returnSeries = new MonthlyReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees };
             expectedEntity.AddReturnSeries(returnSeries);
 
             returnSeries.AddReturn(new MonthYear(2000, 1), 0.1m);

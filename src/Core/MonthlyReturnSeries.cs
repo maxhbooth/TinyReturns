@@ -4,11 +4,11 @@ using Dimensional.TinyReturns.Core.DateExtend;
 
 namespace Dimensional.TinyReturns.Core
 {
-    public class ReturnSeries
+    public class MonthlyReturnSeries
     {
         private readonly List<MonthlyReturn> _monthlyReturns;
 
-        public ReturnSeries()
+        public MonthlyReturnSeries()
         {
             _monthlyReturns = new List<MonthlyReturn>();
         }
@@ -50,9 +50,24 @@ namespace Dimensional.TinyReturns.Core
             get { return _monthlyReturns.Count; }
         }
 
+        public ReturnResult CalculateReturn(
+            MonthYear monthYear)
+        {
+            var monthlyReturn = _monthlyReturns.FirstOrDefault(r => r.MonthYear == monthYear);
+
+            var result = new ReturnResult();
+
+            if (monthlyReturn == null)
+                result.SetAsError();
+            else
+                result.SetValue(monthlyReturn.ReturnValue);
+
+            return result;
+        }
+
         // ** Equality
 
-        protected bool Equals(ReturnSeries other)
+        protected bool Equals(MonthlyReturnSeries other)
         {
             if (!_monthlyReturns.SequenceEqual(other._monthlyReturns))
                 return false;
@@ -66,7 +81,7 @@ namespace Dimensional.TinyReturns.Core
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
 
-            return Equals((ReturnSeries)obj);
+            return Equals((MonthlyReturnSeries)obj);
         }
 
         public override int GetHashCode()
@@ -77,12 +92,12 @@ namespace Dimensional.TinyReturns.Core
             }
         }
 
-        public static bool operator ==(ReturnSeries left, ReturnSeries right)
+        public static bool operator ==(MonthlyReturnSeries left, MonthlyReturnSeries right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(ReturnSeries left, ReturnSeries right)
+        public static bool operator !=(MonthlyReturnSeries left, MonthlyReturnSeries right)
         {
             return !Equals(left, right);
         }
