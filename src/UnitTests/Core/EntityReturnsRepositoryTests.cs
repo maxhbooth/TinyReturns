@@ -10,21 +10,21 @@ namespace Dimensional.TinyReturns.UnitTests.Core
     {
         private class EntityReturnsRepositoryTestHelper
         {
-            private readonly EntityDataRepositoryStub _entityDataRepositoryStub;
+            private readonly InvestmentVehicleDataRepositoryStub _investmentVehicleDataRepositoryStub;
             private readonly ReturnsSeriesDataRepositoryStub _returnsSeriesDataRepositoryStub;
             private readonly MonthlyReturnsDataRepositoryStub _monthlyReturnsDataRepositoryStub;
 
             public EntityReturnsRepositoryTestHelper()
             {
-                _entityDataRepositoryStub = new EntityDataRepositoryStub();
+                _investmentVehicleDataRepositoryStub = new InvestmentVehicleDataRepositoryStub();
                 _returnsSeriesDataRepositoryStub = new ReturnsSeriesDataRepositoryStub();
                 _monthlyReturnsDataRepositoryStub = new MonthlyReturnsDataRepositoryStub();
             }
 
-            public EntityReturnsRepository CreateEntityReturnsRepository()
+            public InvestmentVehicleReturnsRepository CreateEntityReturnsRepository()
             {
-                var repository = new EntityReturnsRepository(
-                    _entityDataRepositoryStub,
+                var repository = new InvestmentVehicleReturnsRepository(
+                    _investmentVehicleDataRepositoryStub,
                     _returnsSeriesDataRepositoryStub,
                     _monthlyReturnsDataRepositoryStub);
 
@@ -32,9 +32,9 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             }
 
             public void SetupGetAllEntities(
-                Action<EntityDataRepositoryStub.EntityDtoCollectionForTest> a)
+                Action<InvestmentVehicleDataRepositoryStub.EntityDtoCollectionForTest> a)
             {
-                _entityDataRepositoryStub.SetupGetAllEntities(a);
+                _investmentVehicleDataRepositoryStub.SetupGetAllEntities(a);
             }
 
             public void SetupGetReturnSeries(
@@ -68,11 +68,11 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             Assert.Equal(results.Length, 1);
 
-            var expectedEntity = new Entity()
+            var expectedEntity = new InvestmentVehicle()
             {
                 EntityNumber = 100,
                 Name = "Port100",
-                EntityType = EntityType.Portfolio
+                InvestmentVehicleType = InvestmentVehicleType.Portfolio
             };
 
             Assert.Equal(results[0], expectedEntity);
@@ -95,11 +95,11 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var results = repository.GetEntitiesWithReturnSeries();
 
-            var expectedEntity = new Entity()
+            var expectedEntity = new InvestmentVehicle()
             {
                 EntityNumber = 100,
                 Name = "Port100",
-                EntityType = EntityType.Portfolio
+                InvestmentVehicleType = InvestmentVehicleType.Portfolio
             };
 
             expectedEntity.AddReturnSeries(new ReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees } );
@@ -126,11 +126,11 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var results = repository.GetEntitiesWithReturnSeries();
 
-            var expectedEntity = new Entity()
+            var expectedEntity = new InvestmentVehicle()
             {
                 EntityNumber = 100,
                 Name = "Port100",
-                EntityType = EntityType.Portfolio
+                InvestmentVehicleType = InvestmentVehicleType.Portfolio
             };
 
             expectedEntity.AddReturnSeries(new ReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees });
@@ -159,11 +159,11 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var results = repository.GetEntitiesWithReturnSeries();
 
-            var expectedEntity = new Entity()
+            var expectedEntity = new InvestmentVehicle()
             {
                 EntityNumber = 100,
                 Name = "Port100",
-                EntityType = EntityType.Portfolio
+                InvestmentVehicleType = InvestmentVehicleType.Portfolio
             };
 
             var returnSeries = new ReturnSeries() { ReturnSeriesId = 1000, FeeType = FeeType.NetOfFees };

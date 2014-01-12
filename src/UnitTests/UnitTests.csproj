@@ -44,7 +44,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\EntityDataRepositoryStub.cs" />
+    <Compile Include="Core\InvestmentVehicleDataRepositoryStub.cs" />
     <Compile Include="Core\EntityReturnsRepositoryTests.cs" />
     <Compile Include="Core\EntityTypeTests.cs" />
     <Compile Include="Core\FeeTypeTests.cs" />

@@ -1,21 +1,21 @@
-CREATE TABLE [dbo].[Entity](
-	[EntityNumber] [int] NOT NULL,
+CREATE TABLE [dbo].[InvestmentVehicle](
+	[InvestmentVehicleNumber] [int] NOT NULL,
 	[Name] [nvarchar](255) NOT NULL,
-	[EntityTypeCode] [char](1) NOT NULL,
- CONSTRAINT [PK_Entity] PRIMARY KEY CLUSTERED 
+	[InvestmentVehicleTypeCode] [char](1) NOT NULL,
+ CONSTRAINT [PK_InvestmentVehicle] PRIMARY KEY CLUSTERED 
 (
-	[EntityNumber] ASC
+	[InvestmentVehicleNumber] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 
-CREATE TABLE [dbo].[EntityType](
-	[EntityTypeCode] [char](1) NOT NULL,
+CREATE TABLE [dbo].[InvestmentVehicleType](
+	[InvestmentVehicleTypeCode] [char](1) NOT NULL,
 	[Name] [nvarchar](64) NOT NULL,
- CONSTRAINT [PK_EntityType] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_InvestmentVehicleType] PRIMARY KEY CLUSTERED 
 (
-	[EntityTypeCode] ASC
+	[InvestmentVehicleTypeCode] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -49,7 +49,7 @@ GO
 
 CREATE TABLE [dbo].[ReturnSeries](
 	[ReturnSeriesId] [int] IDENTITY(1,1) NOT NULL,
-	[EntityNumber] [int] NOT NULL,
+	[InvestmentVehicleNumber] [int] NOT NULL,
 	[FeeTypeCode] [char](1) NOT NULL,
  CONSTRAINT [PK_ReturnSeries] PRIMARY KEY CLUSTERED 
 (
@@ -59,11 +59,11 @@ CREATE TABLE [dbo].[ReturnSeries](
 
 GO
 
-ALTER TABLE [dbo].[Entity]  WITH CHECK ADD  CONSTRAINT [FK_Entity_EntityType] FOREIGN KEY([EntityTypeCode])
-REFERENCES [dbo].[EntityType] ([EntityTypeCode])
+ALTER TABLE [dbo].[InvestmentVehicle]  WITH CHECK ADD  CONSTRAINT [FK_InvestmentVehicle_InvestmentVehicleType] FOREIGN KEY([InvestmentVehicleTypeCode])
+REFERENCES [dbo].[InvestmentVehicleType] ([InvestmentVehicleTypeCode])
 GO
 
-ALTER TABLE [dbo].[Entity] CHECK CONSTRAINT [FK_Entity_EntityType]
+ALTER TABLE [dbo].[InvestmentVehicle] CHECK CONSTRAINT [FK_InvestmentVehicle_InvestmentVehicleType]
 GO
 
 ALTER TABLE [dbo].[MonthlyReturn]  WITH CHECK ADD  CONSTRAINT [FK_MonthlyReturn_ReturnSeries] FOREIGN KEY([ReturnSeriesId])
@@ -80,8 +80,8 @@ GO
 ALTER TABLE [dbo].[ReturnSeries] CHECK CONSTRAINT [FK_ReturnSeries_FeeType]
 GO
 
-ALTER TABLE [dbo].[ReturnSeries]  WITH CHECK ADD  CONSTRAINT [FK_ReturnSeries_Entity] FOREIGN KEY([EntityNumber])
-REFERENCES [dbo].[Entity] ([EntityNumber])
+ALTER TABLE [dbo].[ReturnSeries]  WITH CHECK ADD  CONSTRAINT [FK_ReturnSeries_InvestmentVehicle] FOREIGN KEY([InvestmentVehicleNumber])
+REFERENCES [dbo].[InvestmentVehicle] ([InvestmentVehicleNumber])
 GO
 
 

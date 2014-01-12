@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
 {
-    public class EntityDataRepositoryTests : DatabaseTestBase
+    public class InvestmentVehicleDataRepositoryTests : DatabaseTestBase
     {
         [Fact]
         public void GetAllEntitiesShouldReturnCorrectNumberOfEntities()
@@ -23,11 +23,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
 
             var results = entityDataRepository.GetAllEntities();
 
-            var target = results.FirstOrDefault(r => r.EntityNumber == 100);
+            var target = results.FirstOrDefault(r => r.InvestmentVehicleNumber == 100);
 
             Assert.NotNull(target);
 
-            Assert.Equal(target.EntityTypeCode, 'P');
+            Assert.Equal(target.InvestmentVehicleTypeCode, 'P');
             Assert.Equal(target.Name, "Portfolio 100 - Large");
         }
     }

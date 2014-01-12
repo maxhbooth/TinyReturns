@@ -39,14 +39,14 @@
   <ItemGroup>
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
-    <Compile Include="DataRepositories\EntityDto.cs" />
-    <Compile Include="DataRepositories\IEntityDataRepository.cs" />
+    <Compile Include="DataRepositories\InvestmentVehicleDto.cs" />
+    <Compile Include="DataRepositories\IInvestmentVehicleDataRepository.cs" />
     <Compile Include="DataRepositories\IMonthlyReturnsDataRepository.cs" />
     <Compile Include="DateExtend\DateTimeExtensions.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="EntityFactory.cs" />
-    <Compile Include="EntityReturnsRepository.cs" />
-    <Compile Include="EntityType.cs" />
+    <Compile Include="InvestmentVehicle.cs" />
+    <Compile Include="InvestmentVehicleFactory.cs" />
+    <Compile Include="InvestmentVehicleReturnsRepository.cs" />
+    <Compile Include="InvestmentVehicleType.cs" />
     <Compile Include="FeeType.cs" />
     <Compile Include="DataRepositories\IReturnsSeriesDataRepository.cs" />
     <Compile Include="Headspring\Enumeration.cs" />

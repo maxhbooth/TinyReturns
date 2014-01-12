@@ -8,14 +8,14 @@ namespace Dimensional.TinyReturns.UnitTests.Core
         [Fact]
         public void FromCodeShouldReturnEntityTypeWhenGivenMatchingCode()
         {
-            var entityType = EntityType.FromCode(EntityType.Portfolio.Code);
-            Assert.Equal(entityType, EntityType.Portfolio);
+            var entityType = InvestmentVehicleType.FromCode(InvestmentVehicleType.Portfolio.Code);
+            Assert.Equal(entityType, InvestmentVehicleType.Portfolio);
         }
 
         [Fact]
         public void FromCodeShouldReturnNullWhenGivenNonMatchingCode()
         {
-            var entityType = EntityType.FromCode('3');
+            var entityType = InvestmentVehicleType.FromCode('3');
             Assert.Equal(entityType, null);
         }
     }

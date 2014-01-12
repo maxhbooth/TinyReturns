@@ -33,8 +33,8 @@ namespace Dimensional.TinyReturns.Core
                 _monthlyReturnsDataRepository);
         }
 
-        private static IEntityDataRepository _entityDataRepository;
-        public static IEntityDataRepository EntityDataRepository { set { _entityDataRepository = value; } }
-        public static IEntityDataRepository GetEntityDataRepository() { return _entityDataRepository; }
+        private static IInvestmentVehicleDataRepository _investmentVehicleDataRepository;
+        public static IInvestmentVehicleDataRepository InvestmentVehicleDataRepository { set { _investmentVehicleDataRepository = value; } }
+        public static IInvestmentVehicleDataRepository GetEntityDataRepository() { return _investmentVehicleDataRepository; }
     }
 }

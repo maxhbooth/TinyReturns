@@ -3,30 +3,30 @@ using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.Core
 {
-    public class EntityReturnsRepository
+    public class InvestmentVehicleReturnsRepository
     {
-        private readonly IEntityDataRepository _entityDataRepository;
+        private readonly IInvestmentVehicleDataRepository _investmentVehicleDataRepository;
         private readonly IReturnsSeriesDataRepository _returnsSeriesDataRepository;
         private readonly IMonthlyReturnsDataRepository _monthlyReturnsDataRepository;
 
-        public EntityReturnsRepository(
-            IEntityDataRepository entityDataRepository,
+        public InvestmentVehicleReturnsRepository(
+            IInvestmentVehicleDataRepository investmentVehicleDataRepository,
             IReturnsSeriesDataRepository returnsSeriesDataRepository,
             IMonthlyReturnsDataRepository monthlyReturnsDataRepository)
         {
             _monthlyReturnsDataRepository = monthlyReturnsDataRepository;
             _returnsSeriesDataRepository = returnsSeriesDataRepository;
-            _entityDataRepository = entityDataRepository;
+            _investmentVehicleDataRepository = investmentVehicleDataRepository;
         }
 
-        public Entity[] GetEntitiesWithReturnSeries()
+        public InvestmentVehicle[] GetEntitiesWithReturnSeries()
         {
-            var entityDtos = _entityDataRepository.GetAllEntities();
+            var entityDtos = _investmentVehicleDataRepository.GetAllEntities();
 
             var allReturnSeriesDtos = GetReturnSeriesDtos(entityDtos);
             var allMonthlyReturnDtos = GetMonthlyReturns(allReturnSeriesDtos);
 
-            var dtosSource = new EntityFactory(allReturnSeriesDtos, allMonthlyReturnDtos);
+            var dtosSource = new InvestmentVehicleFactory(allReturnSeriesDtos, allMonthlyReturnDtos);
 
             return entityDtos
                 .Select(dtosSource.CreateEntity)
@@ -34,10 +34,10 @@ namespace Dimensional.TinyReturns.Core
         }
 
         private ReturnSeriesDto[] GetReturnSeriesDtos(
-            EntityDto[] entityDtos)
+            InvestmentVehicleDto[] investmentVehicleDtos)
         {
-            var distinctEntityNumbers = entityDtos
-                .Select(d => d.EntityNumber)
+            var distinctEntityNumbers = investmentVehicleDtos
+                .Select(d => d.InvestmentVehicleNumber)
                 .Distinct()
                 .ToArray();
 

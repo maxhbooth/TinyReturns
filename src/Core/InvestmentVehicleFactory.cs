@@ -4,12 +4,12 @@ using Dimensional.TinyReturns.Core.DateExtend;
 
 namespace Dimensional.TinyReturns.Core
 {
-    public class EntityFactory
+    public class InvestmentVehicleFactory
     {
         private readonly ReturnSeriesDto[] _returnSeriesDtos;
         private readonly MonthlyReturnDto[] _monthlyReturnDtos;
 
-        public EntityFactory(
+        public InvestmentVehicleFactory(
             ReturnSeriesDto[] returnSeriesDtos,
             MonthlyReturnDto[] monthlyReturnDtos)
         {
@@ -17,26 +17,26 @@ namespace Dimensional.TinyReturns.Core
             _returnSeriesDtos = returnSeriesDtos;
         }
 
-        public Entity CreateEntity(
-            EntityDto entityDto)
+        public InvestmentVehicle CreateEntity(
+            InvestmentVehicleDto investmentVehicleDto)
         {
-            var entity = new Entity
+            var entity = new InvestmentVehicle
             {
-                EntityNumber = entityDto.EntityNumber,
-                Name = entityDto.Name,
-                EntityType = EntityType.FromCode(entityDto.EntityTypeCode)
+                EntityNumber = investmentVehicleDto.InvestmentVehicleNumber,
+                Name = investmentVehicleDto.Name,
+                InvestmentVehicleType = InvestmentVehicleType.FromCode(investmentVehicleDto.InvestmentVehicleTypeCode)
             };
 
-            entity.AddReturnSeries(CreateReturnSeriesForEntity(entityDto));
+            entity.AddReturnSeries(CreateReturnSeriesForEntity(investmentVehicleDto));
 
             return entity;
         }
 
         private ReturnSeries[] CreateReturnSeriesForEntity(
-            EntityDto entityDto)
+            InvestmentVehicleDto investmentVehicleDto)
         {
             var seriesForEntity = _returnSeriesDtos
-                .Where(d => d.EntityNumber == entityDto.EntityNumber);
+                .Where(d => d.InvestmentVehicleNumber == investmentVehicleDto.InvestmentVehicleNumber);
 
             var returnSeries = seriesForEntity
                 .Select(CreateReturnSeries)

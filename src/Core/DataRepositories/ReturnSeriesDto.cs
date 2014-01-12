@@ -9,7 +9,7 @@
             return new ReturnSeriesDto()
             {
                 ReturnSeriesId = returnSeriesId,
-                EntityNumber = entityNumber,
+                InvestmentVehicleNumber = entityNumber,
                 FeeTypeCode = FeeType.NetOfFees.Code
             };
         }
@@ -21,13 +21,13 @@
             return new ReturnSeriesDto()
             {
                 ReturnSeriesId = returnSeriesId,
-                EntityNumber = entityNumber,
+                InvestmentVehicleNumber = entityNumber,
                 FeeTypeCode = FeeType.GrossOfFees.Code
             };
         }
 
         public int ReturnSeriesId { get; set; }
-        public int EntityNumber { get; set; }
+        public int InvestmentVehicleNumber { get; set; }
         public char FeeTypeCode { get; set; }
     }
 }

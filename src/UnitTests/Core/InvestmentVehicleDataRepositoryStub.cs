@@ -4,11 +4,11 @@ using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.UnitTests.Core
 {
-    public class EntityDataRepositoryStub : IEntityDataRepository
+    public class InvestmentVehicleDataRepositoryStub : IInvestmentVehicleDataRepository
     {
         private readonly EntityDtoCollectionForTest _entityDtoCollectionForTest;
 
-        public EntityDataRepositoryStub()
+        public InvestmentVehicleDataRepositoryStub()
         {
             _entityDtoCollectionForTest = new EntityDtoCollectionForTest();
         }
@@ -19,38 +19,38 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             a(_entityDtoCollectionForTest);
         }
         
-        public EntityDto[] GetAllEntities()
+        public InvestmentVehicleDto[] GetAllEntities()
         {
             return _entityDtoCollectionForTest.GetEntities();
         }
 
         public class EntityDtoCollectionForTest
         {
-            private readonly List<EntityDto> _entities;
+            private readonly List<InvestmentVehicleDto> _entities;
 
             public EntityDtoCollectionForTest()
             {
-                _entities = new List<EntityDto>();
+                _entities = new List<InvestmentVehicleDto>();
             }
 
             public EntityDtoCollectionForTest AddPortfolio(
                 int number,
                 string name)
             {
-                _entities.Add(EntityDto.CreateForPortfolio(number, name));
+                _entities.Add(InvestmentVehicleDto.CreateForPortfolio(number, name));
 
                 return this;
             }
 
             public EntityDtoCollectionForTest AddPortfolio(
-                EntityDto entity)
+                InvestmentVehicleDto investmentVehicle)
             {
-                _entities.Add(entity);
+                _entities.Add(investmentVehicle);
 
                 return this;
             }
 
-            public EntityDto[] GetEntities()
+            public InvestmentVehicleDto[] GetEntities()
             {
                 return _entities.ToArray();
             }

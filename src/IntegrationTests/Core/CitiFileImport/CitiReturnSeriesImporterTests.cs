@@ -42,7 +42,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             var series = _returnsSeriesDataRepository.GetReturnSeries(
                 new[] { 100 });
 
-            Assert.Equal(series[0].EntityNumber, 100);
+            Assert.Equal(series[0].InvestmentVehicleNumber, 100);
             Assert.Equal(series[0].FeeTypeCode, FeeType.NetOfFees.Code);
 
             DeleteTestData();

@@ -67,7 +67,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
             Assert.NotNull(savedReturnSeries);
 
             Assert.Equal(savedReturnSeries.ReturnSeriesId, expectedReturnSeries.ReturnSeriesId);
-            Assert.Equal(savedReturnSeries.EntityNumber, expectedReturnSeries.EntityNumber);
+            Assert.Equal(savedReturnSeries.InvestmentVehicleNumber, expectedReturnSeries.InvestmentVehicleNumber);
             Assert.Equal(savedReturnSeries.FeeTypeCode, expectedReturnSeries.FeeTypeCode);
         }
 
@@ -106,7 +106,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
         {
             var returnSeries = new ReturnSeriesDto();
 
-            returnSeries.EntityNumber = 100;
+            returnSeries.InvestmentVehicleNumber = 100;
             returnSeries.FeeTypeCode = 'N';
 
             var newId = _returnsSeriesDataRepository.InsertReturnSeries(returnSeries);

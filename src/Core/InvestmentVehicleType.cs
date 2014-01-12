@@ -3,14 +3,14 @@ using Headspring;
 
 namespace Dimensional.TinyReturns.Core
 {
-    public class EntityType : Enumeration<EntityType>
+    public class InvestmentVehicleType : Enumeration<InvestmentVehicleType>
     {
-        public static EntityType Portfolio = new EntityType(1, "Portfolio", 'P');
-        public static EntityType Benchmark = new EntityType(2, "Benchmark", 'B');
+        public static InvestmentVehicleType Portfolio = new InvestmentVehicleType(1, "Portfolio", 'P');
+        public static InvestmentVehicleType Benchmark = new InvestmentVehicleType(2, "Benchmark", 'B');
 
         private readonly char _code;
 
-        public EntityType(
+        public InvestmentVehicleType(
             int value,
             string displayName,
             char code)
@@ -24,7 +24,7 @@ namespace Dimensional.TinyReturns.Core
             get { return _code; }
         }
 
-        public static EntityType FromCode(char code)
+        public static InvestmentVehicleType FromCode(char code)
         {
             var entityTypes = GetAll();
 

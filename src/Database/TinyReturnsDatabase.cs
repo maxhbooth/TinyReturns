@@ -5,7 +5,7 @@ using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.Database
 {
-    public class TinyReturnsDatabase : BaseDatabase, IReturnsSeriesDataRepository, IMonthlyReturnsDataRepository, IEntityDataRepository
+    public class TinyReturnsDatabase : BaseDatabase, IReturnsSeriesDataRepository, IMonthlyReturnsDataRepository, IInvestmentVehicleDataRepository
     {
         private readonly ITinyReturnsDatabaseSettings _tinyReturnsDatabaseSettings;
 
@@ -25,10 +25,10 @@ namespace Dimensional.TinyReturns.Database
         {
             const string sql = @"
 INSERT INTO [ReturnSeries]
-           ([EntityNumber]
+           ([InvestmentVehicleNumber]
            ,[FeeTypeCode])
      VALUES
-           (@EntityNumber
+           (@InvestmentVehicleNumber
            ,@FeeTypeCode)
 
 SELECT CAST(SCOPE_IDENTITY() as int)
@@ -52,7 +52,7 @@ SELECT CAST(SCOPE_IDENTITY() as int)
             const string sql = @"
 SELECT
         [ReturnSeriesId]
-        ,[EntityNumber]
+        ,[InvestmentVehicleNumber]
         ,[FeeTypeCode]
     FROM
         [ReturnSeries]
@@ -78,12 +78,12 @@ SELECT
             const string sqlTemplate = @"
 SELECT
         [ReturnSeriesId]
-        ,[EntityNumber]
+        ,[InvestmentVehicleNumber]
         ,[FeeTypeCode]
     FROM
         [ReturnSeries]
     WHERE
-        EntityNumber IN ({0})";
+        InvestmentVehicleNumber IN ({0})";
 
             var commaSepNumbers = entityNumbers
                 .Select(n => n.ToString())
@@ -235,22 +235,22 @@ SELECT
                 deleteMonthlyReturnsSql);
         }
 
-        public EntityDto[] GetAllEntities()
+        public InvestmentVehicleDto[] GetAllEntities()
         {
             const string sql = @"
 SELECT
-        [EntityNumber]
+        [InvestmentVehicleNumber]
         ,[Name]
-        ,[EntityTypeCode]
+        ,[InvestmentVehicleTypeCode]
     FROM
-        [Entity]";
+        [InvestmentVehicle]";
 
-            EntityDto[] result = null;
+            InvestmentVehicleDto[] result = null;
 
             ConnectionExecuteWithLog(
                 connection =>
                 {
-                    result = connection.Query<EntityDto>(sql).ToArray();
+                    result = connection.Query<InvestmentVehicleDto>(sql).ToArray();
                 },
                 sql);
 

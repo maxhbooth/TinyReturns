@@ -50,7 +50,7 @@
   <ItemGroup>
     <Compile Include="Core\CitiFileImport\CitiReturnSeriesImporterTests.cs" />
     <Compile Include="Core\CitiFileImport\CitiReturnsFileReaderTests.cs" />
-    <Compile Include="Core\DataRepository\EntityDataRepositoryTests.cs" />
+    <Compile Include="Core\DataRepository\InvestmentVehicleDataRepositoryTests.cs" />
     <Compile Include="DatabaseSettings.cs" />
     <Compile Include="DatabaseTestBase.cs" />
     <Compile Include="IntegrationTestBase.cs" />
