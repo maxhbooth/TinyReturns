@@ -51,16 +51,38 @@ namespace Dimensional.TinyReturns.Core
         }
 
         public ReturnResult CalculateReturn(
-            MonthYear monthYear)
+            MonthYear endMonth,
+            int numberOfMonths,
+            AnnualizeActionEnum annualizeAction = AnnualizeActionEnum.Annualize)
         {
-            var monthlyReturn = _monthlyReturns.FirstOrDefault(r => r.MonthYear == monthYear);
+            var monthRange = MonthYearRange.CreateForEndMonthAndMonthsBack(endMonth, numberOfMonths);
+
+            var returnsInRange = _monthlyReturns.GetMonthsInRange(monthRange).ToArray();
 
             var result = new ReturnResult();
 
-            if (monthlyReturn == null)
-                result.SetAsError();
+            if (returnsInRange.Any())
+            {
+                if (!returnsInRange.HasExactlyOneReturnPerMonth(monthRange))
+                {
+                    result.SetError("Could not find a complete / unique set of months.");
+                    return result;
+                }
+
+                var linkingResult = returnsInRange.PerformGeometricLiking();
+
+                result.SetValue(linkingResult.Value, linkingResult.Calculation);
+
+                if ((numberOfMonths > 12) && (annualizeAction == AnnualizeActionEnum.Annualize))
+                {
+                    var financialMath = new FinancialMath();
+                    var annualizedResult = financialMath.AnnualizeByMonth(linkingResult.Value, numberOfMonths);
+
+                    result.AppendCalculation(annualizedResult.Value, annualizedResult.Calculation);
+                }
+            }
             else
-                result.SetValue(monthlyReturn.ReturnValue);
+                result.SetError("Could not find return(s) for month(s).");
 
             return result;
         }
