@@ -60,7 +60,7 @@
             _calculation = calculation;
         }
 
-        public void AppendCalculation(
+        public void AppendToCalculation(
             decimal newValue,
             string moreCalculation)
         {

@@ -29,7 +29,7 @@ namespace Dimensional.TinyReturns.Core
             return financialMath.PerformGeometricLinking(returnValues);
         }
 
-        public static bool HasExactlyOneReturnPerMonth(
+        public static bool WeDoNotHaveExactlyOneReturnPerMonth(
             this IEnumerable<MonthlyReturn> allReturns,
             MonthYearRange monthYearRange)
         {
@@ -42,7 +42,7 @@ namespace Dimensional.TinyReturns.Core
                         exactlyOneMonth = false;
                 });
 
-            return exactlyOneMonth;
+            return !exactlyOneMonth;
         }
     }
 }

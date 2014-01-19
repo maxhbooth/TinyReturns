@@ -63,22 +63,13 @@ namespace Dimensional.TinyReturns.Core
 
             if (returnsInRange.Any())
             {
-                if (!returnsInRange.HasExactlyOneReturnPerMonth(monthRange))
+                if (returnsInRange.WeDoNotHaveExactlyOneReturnPerMonth(monthRange))
                 {
                     result.SetError("Could not find a complete / unique set of months.");
                     return result;
                 }
 
-                var linkingResult = returnsInRange.PerformGeometricLiking();
-
-                result.SetValue(linkingResult.Value, linkingResult.Calculation);
-
-                if (MonthsIsMoreThanYearAndAnnualizeActionSet(request.NumberOfMonths, request.AnnualizeAction))
-                {
-                    var annualizedResult = _financialMath.AnnualizeByMonth(linkingResult.Value, request.NumberOfMonths);
-
-                    result.AppendCalculation(annualizedResult.Value, annualizedResult.Calculation);
-                }
+                result = PerformReturnCalculation(request, returnsInRange, result);
             }
             else
                 result.SetError("Could not find return(s) for month(s).");
@@ -86,11 +77,32 @@ namespace Dimensional.TinyReturns.Core
             return result;
         }
 
-        private bool MonthsIsMoreThanYearAndAnnualizeActionSet(
-            int numberOfMonths,
-            AnnualizeActionEnum annualizeAction)
+        private ReturnResult PerformReturnCalculation(
+            CalculateReturnRequest request,
+            MonthlyReturn[] returnsInRange,
+            ReturnResult result)
         {
-            return (numberOfMonths > 12) && (annualizeAction == AnnualizeActionEnum.Annualize);
+            var linkingResult = returnsInRange.PerformGeometricLiking();
+
+            result.SetValue(linkingResult.Value, linkingResult.Calculation);
+
+            result = AnnaulizeIfNeeded(request, result);
+
+            return result;
+        }
+
+        private ReturnResult AnnaulizeIfNeeded(
+            CalculateReturnRequest request,
+            ReturnResult result)
+        {
+            if (request.MonthsIsMoreThanYearAndAnnualizeActionSet())
+            {
+                var annualizedResult = _financialMath.AnnualizeByMonth(result.Value, request.NumberOfMonths);
+
+                result.AppendToCalculation(annualizedResult.Value, annualizedResult.Calculation);
+            }
+
+            return result;
         }
 
         // ** Equality

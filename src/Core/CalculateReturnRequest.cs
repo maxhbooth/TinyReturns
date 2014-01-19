@@ -20,5 +20,10 @@ namespace Dimensional.TinyReturns.Core
         public MonthYear EndMonth { get; set; }
         public int NumberOfMonths { get; set; }
         public AnnualizeActionEnum AnnualizeAction { get; set; }
+
+        public bool MonthsIsMoreThanYearAndAnnualizeActionSet()
+        {
+            return (NumberOfMonths > 12) && (AnnualizeAction == AnnualizeActionEnum.Annualize);
+        }
     }
 }
