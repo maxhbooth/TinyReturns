@@ -19,7 +19,7 @@ namespace Dimensional.TinyReturns.Core
             _investmentVehicleDataRepository = investmentVehicleDataRepository;
         }
 
-        public InvestmentVehicle[] GetEntitiesWithReturnSeries()
+        public virtual InvestmentVehicle[] GetEntitiesWithReturnSeries()
         {
             var entityDtos = _investmentVehicleDataRepository.GetAllEntities();
 
