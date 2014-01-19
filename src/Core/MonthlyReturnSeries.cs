@@ -7,10 +7,12 @@ namespace Dimensional.TinyReturns.Core
     public class MonthlyReturnSeries
     {
         private readonly List<MonthlyReturn> _monthlyReturns;
+        private readonly FinancialMath _financialMath;
 
         public MonthlyReturnSeries()
         {
             _monthlyReturns = new List<MonthlyReturn>();
+            _financialMath = new FinancialMath();
         }
 
         public int ReturnSeriesId { get; set; }
@@ -73,10 +75,9 @@ namespace Dimensional.TinyReturns.Core
 
                 result.SetValue(linkingResult.Value, linkingResult.Calculation);
 
-                if ((numberOfMonths > 12) && (annualizeAction == AnnualizeActionEnum.Annualize))
+                if (MonthsIsMoreThanYearAndAnnualizeActionSet(numberOfMonths, annualizeAction))
                 {
-                    var financialMath = new FinancialMath();
-                    var annualizedResult = financialMath.AnnualizeByMonth(linkingResult.Value, numberOfMonths);
+                   var annualizedResult = _financialMath.AnnualizeByMonth(linkingResult.Value, numberOfMonths);
 
                     result.AppendCalculation(annualizedResult.Value, annualizedResult.Calculation);
                 }
@@ -85,6 +86,13 @@ namespace Dimensional.TinyReturns.Core
                 result.SetError("Could not find return(s) for month(s).");
 
             return result;
+        }
+
+        private bool MonthsIsMoreThanYearAndAnnualizeActionSet(
+            int numberOfMonths,
+            AnnualizeActionEnum annualizeAction)
+        {
+            return (numberOfMonths > 12) && (annualizeAction == AnnualizeActionEnum.Annualize);
         }
 
         // ** Equality
