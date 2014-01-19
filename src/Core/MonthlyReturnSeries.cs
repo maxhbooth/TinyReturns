@@ -53,11 +53,9 @@ namespace Dimensional.TinyReturns.Core
         }
 
         public ReturnResult CalculateReturn(
-            MonthYear endMonth,
-            int numberOfMonths,
-            AnnualizeActionEnum annualizeAction = AnnualizeActionEnum.Annualize)
+            CalculateReturnRequest request)
         {
-            var monthRange = MonthYearRange.CreateForEndMonthAndMonthsBack(endMonth, numberOfMonths);
+            var monthRange = MonthYearRange.CreateForEndMonthAndMonthsBack(request.EndMonth, request.NumberOfMonths);
 
             var returnsInRange = _monthlyReturns.GetMonthsInRange(monthRange).ToArray();
 
@@ -75,9 +73,9 @@ namespace Dimensional.TinyReturns.Core
 
                 result.SetValue(linkingResult.Value, linkingResult.Calculation);
 
-                if (MonthsIsMoreThanYearAndAnnualizeActionSet(numberOfMonths, annualizeAction))
+                if (MonthsIsMoreThanYearAndAnnualizeActionSet(request.NumberOfMonths, request.AnnualizeAction))
                 {
-                   var annualizedResult = _financialMath.AnnualizeByMonth(linkingResult.Value, numberOfMonths);
+                    var annualizedResult = _financialMath.AnnualizeByMonth(linkingResult.Value, request.NumberOfMonths);
 
                     result.AppendCalculation(annualizedResult.Value, annualizedResult.Calculation);
                 }

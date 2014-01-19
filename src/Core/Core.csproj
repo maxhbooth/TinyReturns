@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnnualizeActionEnum.cs" />
+    <Compile Include="CalculateReturnRequest.cs" />
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
     <Compile Include="DataRepositories\InvestmentVehicleDto.cs" />
