@@ -7,6 +7,17 @@ namespace Dimensional.TinyReturns.Core
     {
         private readonly List<MonthlyReturnSeries> _returnSeries;
 
+        public static InvestmentVehicle CreatePortfolio(
+            int number, string name)
+        {
+            return new InvestmentVehicle()
+            {
+                EntityNumber = number,
+                Name = name,
+                InvestmentVehicleType = InvestmentVehicleType.Portfolio
+            };
+        }
+
         public InvestmentVehicle()
         {
             _returnSeries = new List<MonthlyReturnSeries>();

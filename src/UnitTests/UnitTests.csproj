@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Core\DataRepositories\InvestmentVehicleDataRepositoryStub.cs" />
     <Compile Include="Core\FinancialMathTests.cs" />
+    <Compile Include="Core\FlatFiles\FlatFileIoSpy.cs" />
     <Compile Include="Core\InvestmentVehicleReturnsRepositoryTests.cs" />
     <Compile Include="Core\MonthlyReturnSeriesTests.cs" />
     <Compile Include="Core\InvestmentVehicleTypeTests.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Core\DataRepositories\ReturnSeriesDtoCollectionForTests.cs" />
     <Compile Include="Core\DataRepositories\ReturnsSeriesDataRepositoryDummy.cs" />
     <Compile Include="Core\DataRepositories\ReturnsSeriesDataRepositoryStub.cs" />
+    <Compile Include="Core\OmniFileExport\OmniDataFileCreatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
