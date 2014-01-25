@@ -33,21 +33,21 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
                 {
                     lineFactory.SetCurrentPortfolio(portfolio);
 
-                    models.AddRange(lineFactory.GetMonthlyLineModels(FeeType.NetOfFees));
-                    models.AddRange(lineFactory.GetMonthlyLineModels(FeeType.GrossOfFees));
+                    models.AddRange(lineFactory.CreateMonthLineModels(FeeType.NetOfFees));
+                    models.AddRange(lineFactory.CreateMonthLineModels(FeeType.GrossOfFees));
 
-                    models.AddRange(lineFactory.GetQuarterLineModels(FeeType.GrossOfFees));
-                    models.AddRange(lineFactory.GetQuarterLineModels(FeeType.NetOfFees));
+                    models.AddRange(lineFactory.CreateQuarterLineModels(FeeType.GrossOfFees));
+                    models.AddRange(lineFactory.CreateQuarterLineModels(FeeType.NetOfFees));
 
-                    var grossYearToDate = lineFactory.GetYearToDateLineModel(FeeType.GrossOfFees);
+                    var grossYearToDateLineModel = lineFactory.CreateYearToDateLineModel(FeeType.GrossOfFees);
 
-                    if (grossYearToDate != null)
-                        models.Add(grossYearToDate);
+                    if (grossYearToDateLineModel != null)
+                        models.Add(grossYearToDateLineModel);
 
-                    var netYearToDate = lineFactory.GetYearToDateLineModel(FeeType.NetOfFees);
+                    var netYearToDateLineModel = lineFactory.CreateYearToDateLineModel(FeeType.NetOfFees);
 
-                    if (netYearToDate != null)
-                        models.Add(netYearToDate);
+                    if (netYearToDateLineModel != null)
+                        models.Add(netYearToDateLineModel);
                 }
             }
             

@@ -24,15 +24,15 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
             _portfolio = portfolio;
         }
 
-        public IEnumerable<OmniDataFileLineModel> GetMonthlyLineModels(
+        public IEnumerable<OmniDataFileLineModel> CreateMonthLineModels(
             FeeType feeType)
         {
             var netMonthlyReturns = _portfolio.GetReturnsInRange(_januaryToGivenMonth, feeType);
 
-            return netMonthlyReturns.Select(r => CreateMonthFileLineModel(r, feeType));
+            return netMonthlyReturns.Select(r => CreateMonthModel(r, feeType));
         }
 
-        public IEnumerable<OmniDataFileLineModel> GetQuarterLineModels(FeeType feeType)
+        public IEnumerable<OmniDataFileLineModel> CreateQuarterLineModels(FeeType feeType)
         {
             var models = new List<OmniDataFileLineModel>();
 
@@ -46,14 +46,14 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
                         var netQuarterResult = _portfolio.CalculateReturn(calculateQuarterRequest, feeType);
 
                         if (!netQuarterResult.HasError)
-                            models.Add(CreateQuarterFileLineModel(m, netQuarterResult, feeType));
+                            models.Add(CreateQuarterModel(m, netQuarterResult, feeType));
                     }
                 });
 
             return models;
         }
 
-        public OmniDataFileLineModel GetYearToDateLineModel(
+        public OmniDataFileLineModel CreateYearToDateLineModel(
             FeeType feeType)
         {
             var yearToDateRequest = CalculateReturnRequestFactory.YearToDate(_endMonth);
@@ -63,10 +63,10 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
             if (yearToDateResult.HasError)
                 return null;
 
-            return CreateYearToDateFileLineModel(_endMonth, yearToDateResult, feeType);
+            return CreateYearToDateModel(_endMonth, yearToDateResult, feeType);
         }
 
-        private OmniDataFileLineModel CreateMonthFileLineModel(
+        private OmniDataFileLineModel CreateMonthModel(
             MonthlyReturn r,
             FeeType feeType)
         {
@@ -80,7 +80,7 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
             return m;
         }
 
-        private OmniDataFileLineModel CreateQuarterFileLineModel(
+        private OmniDataFileLineModel CreateQuarterModel(
             MonthYear monthYear,
             ReturnResult result,
             FeeType feeType)
@@ -95,7 +95,7 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
             return m;
         }
 
-        private OmniDataFileLineModel CreateYearToDateFileLineModel(
+        private OmniDataFileLineModel CreateYearToDateModel(
             MonthYear monthYear,
             ReturnResult result,
             FeeType feeType)
