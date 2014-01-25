@@ -46,6 +46,13 @@ namespace Dimensional.TinyReturns.Core
         {
             return _monthlyReturns.ToArray();
         }
+        
+        public MonthlyReturn[] GetReturnsInRange(
+            MonthYearRange monthRange)
+        {
+            return _monthlyReturns
+                .GetMonthsInRange(monthRange).ToArray(); ;
+        }
 
         public int MonthlyReturnsCount
         {

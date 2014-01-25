@@ -19,36 +19,43 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
         }
 
         public void CreateFile(
-            MonthYear monthYear)
+            MonthYear endMonth)
         {
-            var entitiesWithReturnSeries = _investmentVehicleReturnsRepository.GetEntitiesWithReturnSeries();
+            var portfolios = _investmentVehicleReturnsRepository.GetPortfolios();
 
             var models = new List<OmniDataFileLineModel>();
 
-            if (entitiesWithReturnSeries.Any())
+            var lineFactory = new OmniDataFileLineModelFactory(endMonth);
+
+            if (portfolios.Any())
             {
-                foreach (var portfolio in entitiesWithReturnSeries)
+                foreach (var portfolio in portfolios)
                 {
-                    var monthlyReturnSeries = portfolio.GetAllReturnSeries().FirstOrDefault(s => s.FeeType == FeeType.NetOfFees);
+                    lineFactory.SetCurrentPortfolio(portfolio);
 
-                    var allMonthlyReturns = monthlyReturnSeries.GetAllMonthlyReturns();
+                    models.AddRange(lineFactory.GetMonthlyLineModels(FeeType.NetOfFees));
+                    models.AddRange(lineFactory.GetMonthlyLineModels(FeeType.GrossOfFees));
 
-                    foreach (var r in allMonthlyReturns)
-                    {
-                        models.Add(new OmniDataFileLineModel()
-                        {
-                            InvestmentVehicleId = portfolio.EntityNumber.ToString(),
-                            Type = "Portfolio",
-                            Name = portfolio.Name,
-                            FeeType = FeeType.NetOfFees.Code.ToString(),
-                            Duration = "M",
-                            EndDate = r.MonthYear.LastDayOfMonth.ToString("yyyy-M-d"),
-                            ReturnValue = r.ReturnValue.ToString()
-                        });
-                    }
+                    models.AddRange(lineFactory.GetQuarterLineModels(FeeType.GrossOfFees));
+                    models.AddRange(lineFactory.GetQuarterLineModels(FeeType.NetOfFees));
+
+                    var grossYearToDate = lineFactory.GetYearToDateLineModel(FeeType.GrossOfFees);
+
+                    if (grossYearToDate != null)
+                        models.Add(grossYearToDate);
+
+                    var netYearToDate = lineFactory.GetYearToDateLineModel(FeeType.NetOfFees);
+
+                    if (netYearToDate != null)
+                        models.Add(netYearToDate);
                 }
             }
             
+            CreateDataFile(models);
+        }
+
+        private void CreateDataFile(List<OmniDataFileLineModel> models)
+        {
             var flatFile = new FlatFile<OmniDataFileLineModel>(_flatFileIo);
 
             flatFile

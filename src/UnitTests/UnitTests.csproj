@@ -42,11 +42,16 @@
     <Reference Include="xunit">
       <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
     </Reference>
+    <Reference Include="xunit.extensions">
+      <HintPath>..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\CalculateReturnRequestFactoryTests.cs" />
     <Compile Include="Core\DataRepositories\InvestmentVehicleDataRepositoryStub.cs" />
     <Compile Include="Core\FinancialMathTests.cs" />
     <Compile Include="Core\FlatFiles\FlatFileIoSpy.cs" />
+    <Compile Include="Core\InvestmentVehicleFactoryForTests.cs" />
     <Compile Include="Core\InvestmentVehicleReturnsRepositoryTests.cs" />
     <Compile Include="Core\MonthlyReturnSeriesTests.cs" />
     <Compile Include="Core\InvestmentVehicleTypeTests.cs" />

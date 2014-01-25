@@ -19,7 +19,7 @@ namespace Dimensional.TinyReturns.Core
             _investmentVehicleDataRepository = investmentVehicleDataRepository;
         }
 
-        public virtual InvestmentVehicle[] GetEntitiesWithReturnSeries()
+        public virtual InvestmentVehicle[] GetAllInvestmentVehicles()
         {
             var entityDtos = _investmentVehicleDataRepository.GetAllEntities();
 
@@ -59,6 +59,17 @@ namespace Dimensional.TinyReturns.Core
                 .GetMonthlyReturns(distinctReturnSeriesIds);
 
             return monthlyReturnDtos;
+        }
+    }
+
+    public static class InvestmentVehicleReturnsRepositoryExtensions
+    {
+        public static InvestmentVehicle[] GetPortfolios(
+            this InvestmentVehicleReturnsRepository repository)
+        {
+            var allVehicles = repository.GetAllInvestmentVehicles();
+
+            return allVehicles.Where(v => v.InvestmentVehicleType == InvestmentVehicleType.Portfolio).ToArray();
         }
     }
 }

@@ -65,13 +65,13 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var repository = testHelper.CreateEntityReturnsRepository();
 
-            var results = repository.GetEntitiesWithReturnSeries();
+            var results = repository.GetAllInvestmentVehicles();
 
             Assert.Equal(results.Length, 1);
 
             var expectedEntity = new InvestmentVehicle()
             {
-                EntityNumber = 100,
+                Number = 100,
                 Name = "Port100",
                 InvestmentVehicleType = InvestmentVehicleType.Portfolio
             };
@@ -94,11 +94,11 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var repository = testHelper.CreateEntityReturnsRepository();
 
-            var results = repository.GetEntitiesWithReturnSeries();
+            var results = repository.GetAllInvestmentVehicles();
 
             var expectedEntity = new InvestmentVehicle()
             {
-                EntityNumber = 100,
+                Number = 100,
                 Name = "Port100",
                 InvestmentVehicleType = InvestmentVehicleType.Portfolio
             };
@@ -125,11 +125,11 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var repository = testHelper.CreateEntityReturnsRepository();
 
-            var results = repository.GetEntitiesWithReturnSeries();
+            var results = repository.GetAllInvestmentVehicles();
 
             var expectedEntity = new InvestmentVehicle()
             {
-                EntityNumber = 100,
+                Number = 100,
                 Name = "Port100",
                 InvestmentVehicleType = InvestmentVehicleType.Portfolio
             };
@@ -158,11 +158,11 @@ namespace Dimensional.TinyReturns.UnitTests.Core
 
             var repository = testHelper.CreateEntityReturnsRepository();
 
-            var results = repository.GetEntitiesWithReturnSeries();
+            var results = repository.GetAllInvestmentVehicles();
 
             var expectedEntity = new InvestmentVehicle()
             {
-                EntityNumber = 100,
+                Number = 100,
                 Name = "Port100",
                 InvestmentVehicleType = InvestmentVehicleType.Portfolio
             };

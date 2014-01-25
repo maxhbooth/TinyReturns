@@ -7,7 +7,7 @@ namespace Dimensional.TinyReturns.Core
     {
         public static FeeType None = new FeeType(1, "Not Applicable", '0');
         public static FeeType NetOfFees = new FeeType(2, "Net of Fees", 'N');
-        public static FeeType GrossOfFees = new FeeType(2, "Net of Fees", 'G');
+        public static FeeType GrossOfFees = new FeeType(3, "Gross of Fees", 'G');
 
         private readonly char _code;
 

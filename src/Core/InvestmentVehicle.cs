@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Dimensional.TinyReturns.Core.DateExtend;
 
 namespace Dimensional.TinyReturns.Core
 {
@@ -12,9 +13,20 @@ namespace Dimensional.TinyReturns.Core
         {
             return new InvestmentVehicle()
             {
-                EntityNumber = number,
+                Number = number,
                 Name = name,
                 InvestmentVehicleType = InvestmentVehicleType.Portfolio
+            };
+        }
+
+        public static InvestmentVehicle CreateBenchmark(
+            int number, string name)
+        {
+            return new InvestmentVehicle()
+            {
+                Number = number,
+                Name = name,
+                InvestmentVehicleType = InvestmentVehicleType.Benchmark
             };
         }
 
@@ -23,7 +35,7 @@ namespace Dimensional.TinyReturns.Core
             _returnSeries = new List<MonthlyReturnSeries>();
         }
 
-        public int EntityNumber { get; set; }
+        public int Number { get; set; }
         public string Name { get; set; }
         public InvestmentVehicleType InvestmentVehicleType { get; set; }
 
@@ -37,6 +49,52 @@ namespace Dimensional.TinyReturns.Core
             MonthlyReturnSeries a)
         {
             _returnSeries.Add(a);
+        }
+
+        public MonthlyReturn[] GetNetReturnsInRange(
+            MonthYearRange monthRange)
+        {
+            return GetReturnsInRange(monthRange, FeeType.NetOfFees);
+        }
+
+        public MonthlyReturn[] GetGrossReturnsInRange(
+            MonthYearRange monthRange)
+        {
+            return GetReturnsInRange(monthRange, FeeType.GrossOfFees);
+        }
+
+        public MonthlyReturn[] GetReturnsInRange(
+            MonthYearRange monthRange,
+            FeeType feeType)
+        {
+            var netReturnSeries = GetReturnSeries(feeType);
+
+            if (netReturnSeries == null)
+                return new MonthlyReturn[0];
+
+            return netReturnSeries.GetReturnsInRange(monthRange);
+        }
+
+        public MonthlyReturnSeries GetReturnSeries(FeeType feeType)
+        {
+            return _returnSeries
+                .FirstOrDefault(s => { return s.FeeType == feeType; });
+        }
+
+        public ReturnResult CalculateReturn(
+            CalculateReturnRequest request,
+            FeeType feeType)
+        {
+            var netSeries = GetReturnSeries(feeType);
+
+            if (netSeries == null)
+            {
+                var errorMessage = string.Format("Could not find '{0}' return series.", feeType.DisplayName);
+
+                return ReturnResult.CreateWithError(errorMessage);
+            }
+
+            return netSeries.CalculateReturn(request);
         }
 
         public MonthlyReturnSeries[] GetAllReturnSeries()
@@ -56,7 +114,7 @@ namespace Dimensional.TinyReturns.Core
             if (!_returnSeries.SequenceEqual(other._returnSeries))
                 return false;
 
-            return EntityNumber == other.EntityNumber && string.Equals(Name, other.Name) && Equals(InvestmentVehicleType, other.InvestmentVehicleType);
+            return Number == other.Number && string.Equals(Name, other.Name) && Equals(InvestmentVehicleType, other.InvestmentVehicleType);
         }
 
         public override bool Equals(object obj)
@@ -71,7 +129,7 @@ namespace Dimensional.TinyReturns.Core
         {
             unchecked
             {
-                var hashCode = EntityNumber;
+                var hashCode = Number;
                 hashCode = (hashCode * 397) ^ (Name != null ? Name.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (InvestmentVehicleType != null ? InvestmentVehicleType.GetHashCode() : 0);
                 return hashCode;

@@ -22,7 +22,7 @@ namespace Dimensional.TinyReturns.Core
         {
             var entity = new InvestmentVehicle
             {
-                EntityNumber = investmentVehicleDto.InvestmentVehicleNumber,
+                Number = investmentVehicleDto.InvestmentVehicleNumber,
                 Name = investmentVehicleDto.Name,
                 InvestmentVehicleType = InvestmentVehicleType.FromCode(investmentVehicleDto.InvestmentVehicleTypeCode)
             };
