@@ -1,5 +1,7 @@
 ﻿using Dimensional.TinyReturns.Core.CitiFileImport;
 using Dimensional.TinyReturns.Core.DataRepositories;
+using Dimensional.TinyReturns.Core.FlatFiles;
+using Dimensional.TinyReturns.Core.OmniFileExport;
 
 namespace Dimensional.TinyReturns.Core
 {
@@ -25,6 +27,14 @@ namespace Dimensional.TinyReturns.Core
         public static ICitiReturnsFileReader CitiReturnsFileReader { set { _citiReturnsFileReader = value; } }
         public static ICitiReturnsFileReader GetCitiReturnsFileReader() { return _citiReturnsFileReader; }
 
+        private static IInvestmentVehicleDataRepository _investmentVehicleDataRepository;
+        public static IInvestmentVehicleDataRepository InvestmentVehicleDataRepository { set { _investmentVehicleDataRepository = value; } }
+        public static IInvestmentVehicleDataRepository GetInvestmentVehicleDataRepository() { return _investmentVehicleDataRepository; }
+
+        private static IFlatFileIo _flatFileIo;
+        public static IFlatFileIo FlatFileIo { set { _flatFileIo = value; } }
+        public static IFlatFileIo GetFlatFileIo() { return _flatFileIo; }
+
         public static CitiReturnSeriesImporter GetCitiReturnSeriesImporter()
         {
             return new CitiReturnSeriesImporter(
@@ -33,8 +43,15 @@ namespace Dimensional.TinyReturns.Core
                 _monthlyReturnsDataRepository);
         }
 
-        private static IInvestmentVehicleDataRepository _investmentVehicleDataRepository;
-        public static IInvestmentVehicleDataRepository InvestmentVehicleDataRepository { set { _investmentVehicleDataRepository = value; } }
-        public static IInvestmentVehicleDataRepository GetEntityDataRepository() { return _investmentVehicleDataRepository; }
+        public static OmniDataFileCreator GetOmniDataFileCreator()
+        {
+            var r = new InvestmentVehicleReturnsRepository(
+                GetInvestmentVehicleDataRepository(),
+                GetReturnsSeriesRepository(),
+                GetMonthlyReturnsDataRepository());
+            
+            return new OmniDataFileCreator(
+                r, GetFlatFileIo());
+        }
     }
 }

@@ -30,6 +30,7 @@ namespace Dimensional.TinyReturns.DependencyManagement
             ITinyReturnsDatabaseSettings tinyReturnsDatabaseSettings)
         {
             var returnsSeriesDataRepository = new TinyReturnsDatabase(tinyReturnsDatabaseSettings, systemLog);
+            var flatFileIo = new FlatFileIo();
 
             MasterFactory.SystemLog = systemLog;
             MasterFactory.TinyReturnsDatabaseSettings = tinyReturnsDatabaseSettings;
@@ -37,6 +38,7 @@ namespace Dimensional.TinyReturns.DependencyManagement
             MasterFactory.MonthlyReturnsDataRepository = returnsSeriesDataRepository;
             MasterFactory.CitiReturnsFileReader = new CitiReturnsFileReader(systemLog);
             MasterFactory.InvestmentVehicleDataRepository = returnsSeriesDataRepository;
+            MasterFactory.FlatFileIo = flatFileIo;
 
         }
     }

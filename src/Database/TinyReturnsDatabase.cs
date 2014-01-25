@@ -191,7 +191,7 @@ SELECT
     FROM
         [MonthlyReturn]
     WHERE
-        ReturnSeriesId IN {0}";
+        ReturnSeriesId IN ({0})";
 
             var commaSep = returnSeriesIds
                 .Select(s => s.ToString())
