@@ -2,6 +2,7 @@
 using Dimensional.TinyReturns.Core.DataRepositories;
 using Dimensional.TinyReturns.Core.FlatFiles;
 using Dimensional.TinyReturns.Core.OmniFileExport;
+using Dimensional.TinyReturns.Core.PublicWebSite;
 
 namespace Dimensional.TinyReturns.Core
 {
@@ -45,13 +46,24 @@ namespace Dimensional.TinyReturns.Core
 
         public static OmniDataFileCreator GetOmniDataFileCreator()
         {
+            return new OmniDataFileCreator(
+                GetInvestmentVehicleReturnsRepository(),
+                GetFlatFileIo());
+        }
+
+        public static InvestmentVehicleReturnsRepository GetInvestmentVehicleReturnsRepository()
+        {
             var r = new InvestmentVehicleReturnsRepository(
                 GetInvestmentVehicleDataRepository(),
                 GetReturnsSeriesRepository(),
                 GetMonthlyReturnsDataRepository());
-            
-            return new OmniDataFileCreator(
-                r, GetFlatFileIo());
+
+            return r;
+        }
+
+        public static PortfolioListPageAdapter GetPortfolioListPageAdapter()
+        {
+            return new PortfolioListPageAdapter(GetInvestmentVehicleReturnsRepository());
         }
     }
 }

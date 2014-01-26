@@ -8,7 +8,24 @@ namespace Dimensional.TinyReturns.UnitTests.Core
     public class CalculateReturnRequestFactoryTests
     {
         [Fact]
-        public void ThreeMonthShouldReturnRequestForTheeBeforeTheGivenEndDate()
+        public void OneMonthShouldReturnRequestForBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 5);
+
+            var request = CalculateReturnRequestFactory.OneMonth(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 1
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void ThreeMonthShouldReturnRequestForThreeBeforeTheGivenEndDate()
         {
             var monthYear = new MonthYear(2000, 5);
 

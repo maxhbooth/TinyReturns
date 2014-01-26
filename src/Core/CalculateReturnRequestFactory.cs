@@ -4,6 +4,13 @@ namespace Dimensional.TinyReturns.Core
 {
     public class CalculateReturnRequestFactory
     {
+        public static CalculateReturnRequest OneMonth(
+            MonthYear endMonth)
+        {
+            return new CalculateReturnRequest(
+                endMonth, 1);
+        }
+
         public static CalculateReturnRequest ThreeMonth(
             MonthYear endMonth)
         {

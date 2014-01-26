@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Dimensional.TinyReturns.Core;
+﻿using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.DateExtend;
 using Dimensional.TinyReturns.Core.OmniFileExport;
 using Dimensional.TinyReturns.UnitTests.Core.FlatFiles;
@@ -210,27 +209,6 @@ namespace Dimensional.TinyReturns.UnitTests.Core.OmniFileExport
         {
             var omniDataFileCreator = new OmniDataFileCreator(_investmentVehicleReturnsRepositoryStub, _flatFileIoSpy);
             return omniDataFileCreator;
-        }
-
-        public class InvestmentVehicleReturnsRepositoryStub : InvestmentVehicleReturnsRepository
-        {
-            private readonly List<InvestmentVehicle> _investmentVehicleList;
-
-            public InvestmentVehicleReturnsRepositoryStub(): base(null, null, null)
-            {
-                _investmentVehicleList = new List<InvestmentVehicle>();
-            }
-
-            public void AddInvestmentVehicle(
-                InvestmentVehicle i)
-            {
-                _investmentVehicleList.Add(i);
-            }
-
-            public override InvestmentVehicle[] GetAllInvestmentVehicles()
-            {
-                return _investmentVehicleList.ToArray();
-            }
         }
     }
 }
