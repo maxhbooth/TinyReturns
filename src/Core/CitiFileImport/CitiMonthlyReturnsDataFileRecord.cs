@@ -25,7 +25,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
 
         public decimal GetDecimalValue()
         {
-            return decimal.Parse(Value);
+            return decimal.Parse(Value) / 100;
         }
     }
 }

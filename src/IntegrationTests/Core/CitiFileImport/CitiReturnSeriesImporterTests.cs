@@ -9,7 +9,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
     public class CitiReturnSeriesImporterTests : DatabaseTestBase
     {
         private readonly IReturnsSeriesDataRepository _returnsSeriesDataRepository;
-        private IMonthlyReturnsDataRepository _monthlyReturnsDataRepository;
+        private readonly IMonthlyReturnsDataRepository _monthlyReturnsDataRepository;
 
         public CitiReturnSeriesImporterTests()
         {
@@ -74,7 +74,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             var target = monthlyReturns.FirstOrDefault(r => r.Month == 10 && r.Year == 2013);
 
             Assert.NotNull(target);
-            Assert.Equal(target.ReturnValue, 4.40055m);
+            Assert.Equal(target.ReturnValue, 0.0440055m);
 
             DeleteTestData();
         }
