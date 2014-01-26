@@ -18,13 +18,14 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
         }
 
         public void CreateFile(
-            MonthYear endMonth)
+            MonthYear endMonth,
+            string fullFilePath)
         {
             var portfolios = _investmentVehicleReturnsRepository.GetPortfolios();
 
             var models = CreateFileLineModels(endMonth, portfolios);
 
-            CreateDataFile(models);
+            CreateDataFile(models, fullFilePath);
         }
 
         private List<OmniDataFileLineModel> CreateFileLineModels(
@@ -59,7 +60,9 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
             return models;
         }
 
-        private void CreateDataFile(List<OmniDataFileLineModel> models)
+        private void CreateDataFile(
+            List<OmniDataFileLineModel> models,
+            string fullFilePath)
         {
             var flatFile = new FlatFile<OmniDataFileLineModel>(_flatFileIo);
 
@@ -72,7 +75,7 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
                 .AddColumn(c => c.Duration)
                 .AddColumn(c => c.EndDate, o => o.Heading("End Date"))
                 .AddColumn(c => c.ReturnValue, o => o.Heading("Return Value"))
-                .WriteFile("c:\\temp\\OmniFile.dat", models.ToArray());
+                .WriteFile(fullFilePath, models.ToArray());
         }
     }
 }
