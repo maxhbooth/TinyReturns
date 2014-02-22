@@ -1,20 +1,9 @@
-﻿using System.Linq;
-
-namespace Dimensional.TinyReturns.Core.PerformanceReport
+﻿namespace Dimensional.TinyReturns.Core.PerformanceReport
 {
     public class PerformanceReportExcelReportModel
     {
         public string MonthText { get; set; }
         public PerformanceReportExcelReportRecordModel[] Records { get; set; }
-
-        public PerformanceReportExcelReportRecordModel[] GetPortfolioFeeRecords(
-            string portfolioName,
-            string feeType)
-        {
-            return Records
-                .Where(r => r.Name == portfolioName && r.FeeType == feeType)
-                .ToArray();
-        }
     }
 
     public class PerformanceReportExcelReportRecordModel

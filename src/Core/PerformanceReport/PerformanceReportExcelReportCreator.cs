@@ -17,16 +17,11 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
             _returnsRepository = returnsRepository;
         }
 
-        public void CreateReport(
-            MonthYear monthYear)
+        public void CreateReport(MonthYear monthYear)
         {
             var investmentVehicles = _returnsRepository.GetAllInvestmentVehicles();
 
-            var portfolio = investmentVehicles.First(i => i.InvestmentVehicleType == InvestmentVehicleType.Portfolio);
-
-            var recordModels = new List<PerformanceReportExcelReportRecordModel>();
-
-            recordModels.Add(CreateRecordModel(portfolio, monthYear, FeeType.NetOfFees));
+            var recordModels = CreatePortfolioRecords(monthYear, investmentVehicles);
 
             var reportModel = new PerformanceReportExcelReportModel();
 
@@ -34,6 +29,23 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
             reportModel.Records = recordModels.ToArray();
 
             _view.RenderReport(reportModel);
+        }
+
+        private IEnumerable<PerformanceReportExcelReportRecordModel> CreatePortfolioRecords(
+            MonthYear monthYear,
+            IEnumerable<InvestmentVehicle> investmentVehicles)
+        {
+            var recordModels = new List<PerformanceReportExcelReportRecordModel>();
+
+            var portfolios = investmentVehicles.Where(i => i.InvestmentVehicleType == InvestmentVehicleType.Portfolio);
+
+            foreach (var portfolio in portfolios)
+            {
+                recordModels.Add(CreateRecordModel(portfolio, monthYear, FeeType.NetOfFees));
+                recordModels.Add(CreateRecordModel(portfolio, monthYear, FeeType.GrossOfFees));
+            }
+
+            return recordModels;
         }
 
         private PerformanceReportExcelReportRecordModel CreateRecordModel(
