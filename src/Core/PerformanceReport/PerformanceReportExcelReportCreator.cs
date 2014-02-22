@@ -26,12 +26,7 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
 
             var recordModels = new List<PerformanceReportExcelReportRecordModel>();
 
-            recordModels.Add(new PerformanceReportExcelReportRecordModel()
-            {
-                Name = portfolio.Name,
-                Type = "Portfolio",
-                FeeType = FeeType.NetOfFees.DisplayName
-            } );
+            recordModels.Add(CreateRecordModel(portfolio, monthYear));
 
             var reportModel = new PerformanceReportExcelReportModel();
 
@@ -39,6 +34,36 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
             reportModel.Records = recordModels.ToArray();
 
             _view.RenderReport(reportModel);
+        }
+
+        private PerformanceReportExcelReportRecordModel CreateRecordModel(
+            InvestmentVehicle portfolio,
+            MonthYear monthYear)
+        {
+            var recordModel = new PerformanceReportExcelReportRecordModel()
+            {
+                Name = portfolio.Name,
+                Type = "Portfolio",
+                FeeType = FeeType.NetOfFees.DisplayName,
+            };
+
+            var oneMonthRequest = CalculateReturnRequestFactory.OneMonth(monthYear);
+            var oneMonthResult = portfolio.CalculateReturn(oneMonthRequest, FeeType.NetOfFees);
+            recordModel.OneMonth = oneMonthResult.Value;
+
+            var threeMonthRequest = CalculateReturnRequestFactory.ThreeMonth(monthYear);
+            var threeMonthResult = portfolio.CalculateReturn(threeMonthRequest, FeeType.NetOfFees);
+            recordModel.ThreeMonths = threeMonthResult.Value;
+
+            var twelveMonthRequest = CalculateReturnRequestFactory.TwelveMonth(monthYear);
+            var twelveMonthResult = portfolio.CalculateReturn(twelveMonthRequest, FeeType.NetOfFees);
+            recordModel.TwelveMonths = twelveMonthResult.Value;
+
+            var yearToDateRequest = CalculateReturnRequestFactory.YearToDate(monthYear);
+            var yearToDateResult = portfolio.CalculateReturn(yearToDateRequest, FeeType.NetOfFees);
+            recordModel.YearToDate = yearToDateResult.Value;
+
+            return recordModel;
         }
     }
 }

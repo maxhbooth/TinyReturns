@@ -65,7 +65,7 @@
     <Compile Include="Core\DataRepositories\ReturnsSeriesDataRepositoryStub.cs" />
     <Compile Include="Core\InvestmentVehicleReturnsRepositoryStub.cs" />
     <Compile Include="Core\OmniFileExport\OmniDataFileCreatorTests.cs" />
-    <Compile Include="Core\PerformanceReport\PerformanceReportExcelCreatorTests.cs" />
+    <Compile Include="Core\PerformanceReport\PerformanceReportExcelReportCreatorTests.cs" />
     <Compile Include="Core\PublicWebSite\PortfolioListPageAdapterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

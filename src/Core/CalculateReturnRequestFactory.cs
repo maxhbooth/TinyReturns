@@ -28,5 +28,11 @@ namespace Dimensional.TinyReturns.Core
             return new CalculateReturnRequest(
                 endMonth, diffMonths);
         }
+
+        public static CalculateReturnRequest TwelveMonth(MonthYear endMonth)
+        {
+            return new CalculateReturnRequest(
+                endMonth, 12);
+        }
     }
 }

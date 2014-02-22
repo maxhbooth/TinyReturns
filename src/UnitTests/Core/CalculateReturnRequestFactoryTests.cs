@@ -41,6 +41,23 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             AssertRequestAreEqual(request, expected);
         }
 
+        [Fact]
+        public void TwelveMonthShouldReturnRequestForThreeBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 5);
+
+            var request = CalculateReturnRequestFactory.TwelveMonth(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 12
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
         [Theory]
         [InlineData(2000, 5, 5)]
         [InlineData(2000, 1, 1)]
