@@ -13,6 +13,13 @@ namespace Dimensional.TinyReturns.Core
             return allReturns.Where(r => monthYearRange.IsMonthInRange(r.MonthYear));
         }
 
+        public static MonthlyReturn GetMonth(
+            this IEnumerable<MonthlyReturn> allReturns,
+            MonthYear monthYear)
+        {
+            return allReturns.FirstOrDefault(r => r.MonthYear == monthYear);
+        }
+
         public static decimal[] GetReturnValues(
             this IEnumerable<MonthlyReturn> allReturns)
         {

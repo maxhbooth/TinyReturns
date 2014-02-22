@@ -26,6 +26,19 @@ namespace Dimensional.TinyReturns.UnitTests.Core
         }
 
         [Fact]
+        public void RemoveReturnShouldRemoveTheReturnWithTheGivenMonth()
+        {
+            var month = new MonthYear(2013, 1);
+            _returnSeries.AddReturn(month, 0.1m);
+
+            _returnSeries.RemoveReturn(month);
+
+            var returnsInRange = _returnSeries.GetReturnsInRange(new MonthYearRange(month, month));
+
+            Assert.Equal(0, returnsInRange.Length);
+        }
+
+        [Fact]
         public void CalculateReturnShouldReturnValueWhenMonthFound()
         {
             var month = new MonthYear(2013, 1);

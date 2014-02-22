@@ -26,7 +26,7 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
 
             var recordModels = new List<PerformanceReportExcelReportRecordModel>();
 
-            recordModels.Add(CreateRecordModel(portfolio, monthYear));
+            recordModels.Add(CreateRecordModel(portfolio, monthYear, FeeType.NetOfFees));
 
             var reportModel = new PerformanceReportExcelReportModel();
 
@@ -38,30 +38,32 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
 
         private PerformanceReportExcelReportRecordModel CreateRecordModel(
             InvestmentVehicle portfolio,
-            MonthYear monthYear)
+            MonthYear monthYear,
+            FeeType feeType)
         {
             var recordModel = new PerformanceReportExcelReportRecordModel()
             {
+                EntityNumber = portfolio.Number,
                 Name = portfolio.Name,
                 Type = "Portfolio",
-                FeeType = FeeType.NetOfFees.DisplayName,
+                FeeType = feeType.DisplayName,
             };
 
             var oneMonthRequest = CalculateReturnRequestFactory.OneMonth(monthYear);
-            var oneMonthResult = portfolio.CalculateReturn(oneMonthRequest, FeeType.NetOfFees);
-            recordModel.OneMonth = oneMonthResult.Value;
+            var oneMonthResult = portfolio.CalculateReturn(oneMonthRequest, feeType);
+            recordModel.OneMonth = oneMonthResult.GetValueNullOnError();
 
             var threeMonthRequest = CalculateReturnRequestFactory.ThreeMonth(monthYear);
-            var threeMonthResult = portfolio.CalculateReturn(threeMonthRequest, FeeType.NetOfFees);
-            recordModel.ThreeMonths = threeMonthResult.Value;
+            var threeMonthResult = portfolio.CalculateReturn(threeMonthRequest, feeType);
+            recordModel.ThreeMonths = threeMonthResult.GetValueNullOnError();
 
             var twelveMonthRequest = CalculateReturnRequestFactory.TwelveMonth(monthYear);
-            var twelveMonthResult = portfolio.CalculateReturn(twelveMonthRequest, FeeType.NetOfFees);
-            recordModel.TwelveMonths = twelveMonthResult.Value;
+            var twelveMonthResult = portfolio.CalculateReturn(twelveMonthRequest, feeType);
+            recordModel.TwelveMonths = twelveMonthResult.GetValueNullOnError();
 
             var yearToDateRequest = CalculateReturnRequestFactory.YearToDate(monthYear);
-            var yearToDateResult = portfolio.CalculateReturn(yearToDateRequest, FeeType.NetOfFees);
-            recordModel.YearToDate = yearToDateResult.Value;
+            var yearToDateResult = portfolio.CalculateReturn(yearToDateRequest, feeType);
+            recordModel.YearToDate = yearToDateResult.GetValueNullOnError();
 
             return recordModel;
         }

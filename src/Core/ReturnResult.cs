@@ -68,5 +68,13 @@
             _value = newValue;
             _calculation += System.Environment.NewLine + moreCalculation;
         }
+
+        public decimal? GetValueNullOnError()
+        {
+            if (_hasError)
+                return null;
+
+            return _value;
+        }
     }
 }

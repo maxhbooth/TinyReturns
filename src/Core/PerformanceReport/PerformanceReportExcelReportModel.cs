@@ -19,6 +19,7 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
 
     public class PerformanceReportExcelReportRecordModel
     {
+        public int EntityNumber { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public string FeeType { get; set; }

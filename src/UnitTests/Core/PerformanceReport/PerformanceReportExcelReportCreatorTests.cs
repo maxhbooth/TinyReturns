@@ -20,11 +20,11 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
         [Fact]
         public void CreateReportShouldPopulateMonthText()
         {
+            var monthYear = new MonthYear(2000, 4);
+
             SetupPortfolioAndBenchmark();
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
-
-            var monthYear = new MonthYear(2000, 4);
 
             performanceReportExcelCreator.CreateReport(monthYear);
 
@@ -32,17 +32,18 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
         }
 
         [Fact]
-        public void CreateReportShouldSetPropertiesOnPortfolioNetRecords()
+        public void CreateReportShouldSetPropertiesOnPortfolioNetRecordsWhenAllDataIsPopulated()
         {
+            var monthYear = new MonthYear(2000, 4);
+
             SetupPortfolioAndBenchmark();
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
-            var monthYear = new MonthYear(2000, 4);
-
             performanceReportExcelCreator.CreateReport(monthYear);
 
             var expectedRecordModel = new PerformanceReportExcelReportRecordModel();
+            expectedRecordModel.EntityNumber = 100;
             expectedRecordModel.Name = "Portfolio000";
             expectedRecordModel.Type = "Portfolio";
             expectedRecordModel.FeeType = FeeType.NetOfFees.DisplayName;
@@ -55,6 +56,44 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
 
             var portfolioRecord = portfolioRecords.FirstOrDefault();
             Assert.NotNull(portfolioRecord);
+
+            AssertRecordIsEqual(expectedRecordModel, portfolioRecord);
+        }
+
+        [Fact]
+        public void CreateReportShouldSetPropertiesOnPortfolioNetRecordsWhenAllCalculationsHaveErrored()
+        {
+            var monthYear = new MonthYear(2000, 4);
+
+            SetupPortfolioAndBenchmark(monthYear, monthYear);
+
+            var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
+
+            performanceReportExcelCreator.CreateReport(monthYear);
+
+            var expectedRecordModel = new PerformanceReportExcelReportRecordModel();
+            expectedRecordModel.EntityNumber = 100;
+            expectedRecordModel.Name = "Portfolio000";
+            expectedRecordModel.Type = "Portfolio";
+            expectedRecordModel.FeeType = FeeType.NetOfFees.DisplayName;
+            expectedRecordModel.OneMonth = null;
+            expectedRecordModel.ThreeMonths = null;
+            expectedRecordModel.TwelveMonths = null;
+            expectedRecordModel.YearToDate = null;
+
+            var portfolioRecords = _viewStub.RenderReportModel.GetPortfolioFeeRecords(expectedRecordModel.Name, expectedRecordModel.FeeType);
+
+            var portfolioRecord = portfolioRecords.FirstOrDefault();
+            Assert.NotNull(portfolioRecord);
+
+            AssertRecordIsEqual(expectedRecordModel, portfolioRecord);
+        }
+
+        private void AssertRecordIsEqual(
+            PerformanceReportExcelReportRecordModel expectedRecordModel,
+            PerformanceReportExcelReportRecordModel portfolioRecord)
+        {
+            Assert.Equal(expectedRecordModel.EntityNumber, portfolioRecord.EntityNumber);
             Assert.Equal(expectedRecordModel.Name, portfolioRecord.Name);
             Assert.Equal(expectedRecordModel.Type, portfolioRecord.Type);
             Assert.Equal(expectedRecordModel.FeeType, portfolioRecord.FeeType);
@@ -66,22 +105,31 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
 
         private void SetupPortfolioAndBenchmark()
         {
-            var portfolio000 = CreateTestPortfolio();
-            _returnsRepository.AddInvestmentVehicle(portfolio000);
-
-            var benchmark000 = CreateTestBenchmark();
-            _returnsRepository.AddInvestmentVehicle(benchmark000);
+            SetupPortfolioAndBenchmark(null, null);
         }
 
+        private void SetupPortfolioAndBenchmark(
+            MonthYear portfolioExcludeMonth,
+            MonthYear benchmarkExcludeMonth)
+        {
+            var portfolio000 = CreateTestPortfolio(portfolioExcludeMonth);
+            _returnsRepository.AddInvestmentVehicle(portfolio000);
+
+            var benchmark000 = CreateTestBenchmark(benchmarkExcludeMonth);
+            _returnsRepository.AddInvestmentVehicle(benchmark000);
+        }
+        
         private PerformanceReportExcelReportCreator CreatePerformanceReportExcelCreator()
         {
             return new PerformanceReportExcelReportCreator(_returnsRepository, _viewStub);
         }
 
-        private InvestmentVehicle CreateTestPortfolio()
+        private InvestmentVehicle CreateTestPortfolio(
+            MonthYear excludeMonth = null)
         {
             var portfolio000 = new InvestmentVehicle();
 
+            portfolio000.Number = 100;
             portfolio000.Name = "Portfolio000";
             portfolio000.InvestmentVehicleType = InvestmentVehicleType.Portfolio;
 
@@ -99,6 +147,10 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             port000NetSeries.AddReturn(new MonthYear(2000, 2), 0.02m);
             port000NetSeries.AddReturn(new MonthYear(2000, 3), 0.03m);
             port000NetSeries.AddReturn(new MonthYear(2000, 4), 0.04m);
+
+            if (excludeMonth != null)
+                port000NetSeries.RemoveReturn(excludeMonth);
+
             portfolio000.AddReturnSeries(port000NetSeries);
 
             var port000GrossSeries = new MonthlyReturnSeries();
@@ -115,14 +167,20 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             port000GrossSeries.AddReturn(new MonthYear(2000, 2), 0.06m);
             port000GrossSeries.AddReturn(new MonthYear(2000, 3), 0.07m);
             port000GrossSeries.AddReturn(new MonthYear(2000, 4), 0.08m);
+
+            if (excludeMonth != null)
+                port000GrossSeries.RemoveReturn(excludeMonth);
+
             portfolio000.AddReturnSeries(port000GrossSeries);
 
             return portfolio000;
         }
 
-        private InvestmentVehicle CreateTestBenchmark()
+        private InvestmentVehicle CreateTestBenchmark(
+            MonthYear excludeMonth = null)
         {
             var benchmark000 = new InvestmentVehicle();
+            benchmark000.Number = 10000;
             benchmark000.Name = "Benchmark000";
             benchmark000.InvestmentVehicleType = InvestmentVehicleType.Benchmark;
 
@@ -140,6 +198,10 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             bench000Series.AddReturn(new MonthYear(2000, 2), 0.012m);
             bench000Series.AddReturn(new MonthYear(2000, 3), 0.013m);
             bench000Series.AddReturn(new MonthYear(2000, 4), 0.014m);
+
+            if (excludeMonth != null)
+                bench000Series.RemoveReturn(excludeMonth);
+
             benchmark000.AddReturnSeries(bench000Series);
 
             return benchmark000;

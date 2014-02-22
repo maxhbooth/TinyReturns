@@ -46,7 +46,7 @@ namespace Dimensional.TinyReturns.Core
         {
             return _monthlyReturns.ToArray();
         }
-        
+
         public MonthlyReturn[] GetReturnsInRange(
             MonthYearRange monthRange)
         {
@@ -110,6 +110,14 @@ namespace Dimensional.TinyReturns.Core
             }
 
             return result;
+        }
+
+        public void RemoveReturn(MonthYear monthYear)
+        {
+            var monthlyReturn = _monthlyReturns.GetMonth(monthYear);
+
+            if (monthlyReturn != null)
+                _monthlyReturns.Remove(monthlyReturn);
         }
 
         // ** Equality
