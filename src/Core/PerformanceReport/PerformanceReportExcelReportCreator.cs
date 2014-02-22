@@ -21,13 +21,14 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
         {
             var investmentVehicles = _returnsRepository.GetAllInvestmentVehicles();
 
-            var recordModels = CreatePortfolioRecords(monthYear, investmentVehicles);
+            var portfolioRecords = CreatePortfolioRecords(monthYear, investmentVehicles);
+            var benchmarkRecords = CreateBenchmarkRecords(monthYear, investmentVehicles);
 
             var reportModel = new PerformanceReportExcelReportModel();
 
             reportModel.MonthText = string.Format("Month: {0}/{1}", monthYear.Month, monthYear.Year);
-            reportModel.Records = recordModels.ToArray();
-
+            reportModel.Records = portfolioRecords.Union(benchmarkRecords).ToArray();
+            
             _view.RenderReport(reportModel);
         }
 
@@ -41,9 +42,23 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
 
             foreach (var portfolio in portfolios)
             {
-                recordModels.Add(CreateRecordModel(portfolio, monthYear, FeeType.NetOfFees));
-                recordModels.Add(CreateRecordModel(portfolio, monthYear, FeeType.GrossOfFees));
+                recordModels.Add(CreateRecordModel(portfolio, monthYear, FeeType.NetOfFees, "Portfolio"));
+                recordModels.Add(CreateRecordModel(portfolio, monthYear, FeeType.GrossOfFees, "Portfolio"));
             }
+
+            return recordModels;
+        }
+
+        private IEnumerable<PerformanceReportExcelReportRecordModel> CreateBenchmarkRecords(
+            MonthYear monthYear,
+            IEnumerable<InvestmentVehicle> investmentVehicles)
+        {
+            var recordModels = new List<PerformanceReportExcelReportRecordModel>();
+
+            var benchmarks = investmentVehicles.Where(i => i.InvestmentVehicleType == InvestmentVehicleType.Benchmark);
+
+            foreach (var benchmark in benchmarks)
+                recordModels.Add(CreateRecordModel(benchmark, monthYear, FeeType.None, "Benchmark"));
 
             return recordModels;
         }
@@ -51,13 +66,14 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
         private PerformanceReportExcelReportRecordModel CreateRecordModel(
             InvestmentVehicle portfolio,
             MonthYear monthYear,
-            FeeType feeType)
+            FeeType feeType,
+            string entityType)
         {
             var recordModel = new PerformanceReportExcelReportRecordModel()
             {
                 EntityNumber = portfolio.Number,
                 Name = portfolio.Name,
-                Type = "Portfolio",
+                Type = entityType,
                 FeeType = feeType.DisplayName,
             };
 

@@ -42,7 +42,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
 
             performanceReportExcelCreator.CreateReport(monthYear);
 
-            Assert.Equal(4, _viewStub.RenderReportModel.Records.Length);
+            Assert.Equal(6, _viewStub.RenderReportModel.Records.Length);
         }
 
         [Fact]
@@ -118,6 +118,31 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             AssertRecrodIsInResult(expectedRecordModel, _viewStub.RenderReportModel.Records);
         }
 
+        [Fact]
+        public void CreateReportShouldAddBenchmarksToRecords()
+        {
+            var monthYear = new MonthYear(2000, 4);
+
+            SetupPortfolioAndBenchmark();
+
+            var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
+
+            performanceReportExcelCreator.CreateReport(monthYear);
+
+            var expectedRecordModel = new PerformanceReportExcelReportRecordModel();
+            expectedRecordModel.EntityNumber = 10000;
+            expectedRecordModel.Name = "Benchmark10000";
+            expectedRecordModel.Type = "Benchmark";
+            expectedRecordModel.FeeType = FeeType.None.DisplayName;
+            expectedRecordModel.OneMonth = 0.014m;
+            expectedRecordModel.ThreeMonths = 0.039508184m;
+            expectedRecordModel.TwelveMonths = 0.1046235760557993151483255264m;
+            expectedRecordModel.YearToDate = 0.050942774024m;
+
+            AssertRecrodIsInResult(expectedRecordModel, _viewStub.RenderReportModel.Records);
+        }
+
+
         private void AssertRecrodIsInResult(
             PerformanceReportExcelReportRecordModel expectedRecordModel,
             PerformanceReportExcelReportRecordModel[] portfolioRecords)
@@ -160,8 +185,11 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             var portfolio101 = CreateTestPortfolio(101, portfolioExcludeMonth);
             _returnsRepository.AddInvestmentVehicle(portfolio101);
 
-            var benchmark000 = CreateTestBenchmark(10000, benchmarkExcludeMonth);
-            _returnsRepository.AddInvestmentVehicle(benchmark000);
+            var benchmark10000 = CreateTestBenchmark(10000, benchmarkExcludeMonth);
+            _returnsRepository.AddInvestmentVehicle(benchmark10000);
+
+            var benchmark10001 = CreateTestBenchmark(10001, benchmarkExcludeMonth);
+            _returnsRepository.AddInvestmentVehicle(benchmark10001);
         }
         
         private PerformanceReportExcelReportCreator CreatePerformanceReportExcelCreator()
