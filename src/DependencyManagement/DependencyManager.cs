@@ -1,5 +1,6 @@
 ﻿using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Database;
+using Dimensional.TinyReturns.ExcelRendering;
 using Dimensional.TinyReturns.FileIo;
 using Dimensional.TinyReturns.Logging;
 
@@ -31,14 +32,17 @@ namespace Dimensional.TinyReturns.DependencyManagement
         {
             var returnsSeriesDataRepository = new TinyReturnsDatabase(tinyReturnsDatabaseSettings, systemLog);
             var flatFileIo = new FlatFileIo();
+            var citiReturnsFileReader = new CitiReturnsFileReader(systemLog);
+            var performanceReportExcelReportView = new PerformanceReportExcelReportView();
 
             MasterFactory.SystemLog = systemLog;
             MasterFactory.TinyReturnsDatabaseSettings = tinyReturnsDatabaseSettings;
             MasterFactory.ReturnsSeriesDataRepository = returnsSeriesDataRepository;
             MasterFactory.MonthlyReturnsDataRepository = returnsSeriesDataRepository;
-            MasterFactory.CitiReturnsFileReader = new CitiReturnsFileReader(systemLog);
+            MasterFactory.CitiReturnsFileReader = citiReturnsFileReader;
             MasterFactory.InvestmentVehicleDataRepository = returnsSeriesDataRepository;
             MasterFactory.FlatFileIo = flatFileIo;
+            MasterFactory.PerformanceReportExcelReportView = performanceReportExcelReportView;
 
         }
     }

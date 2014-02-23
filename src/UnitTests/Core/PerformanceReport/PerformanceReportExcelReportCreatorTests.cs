@@ -10,11 +10,13 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
     {
         private readonly PerformanceReportExcelReportViewStub _viewStub;
         private readonly InvestmentVehicleReturnsRepositoryStub _returnsRepository;
+        private readonly string _testFileName;
 
         public PerformanceReportExcelReportCreatorTests()
         {
             _viewStub = new PerformanceReportExcelReportViewStub();
             _returnsRepository = new InvestmentVehicleReturnsRepositoryStub();
+            _testFileName = "c:\\temp\\foo.xlsx";
         }
 
         [Fact]
@@ -26,7 +28,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
-            performanceReportExcelCreator.CreateReport(monthYear);
+            performanceReportExcelCreator.CreateReport(monthYear, _testFileName);
 
             Assert.Equal("Month: 4/2000", _viewStub.RenderReportModel.MonthText);
         }
@@ -40,9 +42,23 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
-            performanceReportExcelCreator.CreateReport(monthYear);
+            performanceReportExcelCreator.CreateReport(monthYear, _testFileName);
 
             Assert.Equal(6, _viewStub.RenderReportModel.Records.Length);
+        }
+
+        [Fact]
+        public void CreateReportShouldSetCorrectFileNameToView()
+        {
+            var monthYear = new MonthYear(2000, 4);
+
+            SetupPortfolioAndBenchmark();
+
+            var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
+
+            performanceReportExcelCreator.CreateReport(monthYear, _testFileName);
+
+            Assert.Equal(_viewStub.RenderReportFullFilePath, _testFileName);
         }
 
         [Fact]
@@ -54,7 +70,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
-            performanceReportExcelCreator.CreateReport(monthYear);
+            performanceReportExcelCreator.CreateReport(monthYear, _testFileName);
 
             var expectedRecordModel = new PerformanceReportExcelReportRecordModel();
             expectedRecordModel.EntityNumber = 100;
@@ -78,7 +94,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
-            performanceReportExcelCreator.CreateReport(monthYear);
+            performanceReportExcelCreator.CreateReport(monthYear, _testFileName);
 
             var expectedRecordModel = new PerformanceReportExcelReportRecordModel();
             expectedRecordModel.EntityNumber = 100;
@@ -103,7 +119,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
-            performanceReportExcelCreator.CreateReport(monthYear);
+            performanceReportExcelCreator.CreateReport(monthYear, _testFileName);
 
             var expectedRecordModel = new PerformanceReportExcelReportRecordModel();
             expectedRecordModel.EntityNumber = 100;
@@ -127,7 +143,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
-            performanceReportExcelCreator.CreateReport(monthYear);
+            performanceReportExcelCreator.CreateReport(monthYear, _testFileName);
 
             var expectedRecordModel = new PerformanceReportExcelReportRecordModel();
             expectedRecordModel.EntityNumber = 10000;
@@ -285,15 +301,23 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
         private class PerformanceReportExcelReportViewStub : IPerformanceReportExcelReportView
         {
             private PerformanceReportExcelReportModel _renderReportModel;
+            private string _renderReportFullFilePath;
 
             public PerformanceReportExcelReportModel RenderReportModel
             {
                 get { return _renderReportModel; }
             }
 
-            public void RenderReport(
-                PerformanceReportExcelReportModel model)
+            public string RenderReportFullFilePath
             {
+                get { return _renderReportFullFilePath; }
+            }
+
+            public void RenderReport(
+                PerformanceReportExcelReportModel model,
+                string fullFilePath)
+            {
+                _renderReportFullFilePath = fullFilePath;
                 _renderReportModel = model;
             }
         }

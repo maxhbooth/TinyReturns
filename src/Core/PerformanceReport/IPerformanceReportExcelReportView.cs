@@ -2,6 +2,8 @@
 {
     public interface IPerformanceReportExcelReportView
     {
-        void RenderReport(PerformanceReportExcelReportModel model);
+        void RenderReport(
+            PerformanceReportExcelReportModel model,
+            string fullFilePath);
     }
 }

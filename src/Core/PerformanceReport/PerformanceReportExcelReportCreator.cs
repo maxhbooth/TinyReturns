@@ -17,7 +17,9 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
             _returnsRepository = returnsRepository;
         }
 
-        public void CreateReport(MonthYear monthYear)
+        public void CreateReport(
+            MonthYear monthYear,
+            string fullFilePath)
         {
             var investmentVehicles = _returnsRepository.GetAllInvestmentVehicles();
 
@@ -29,7 +31,7 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
             reportModel.MonthText = string.Format("Month: {0}/{1}", monthYear.Month, monthYear.Year);
             reportModel.Records = portfolioRecords.Union(benchmarkRecords).ToArray();
             
-            _view.RenderReport(reportModel);
+            _view.RenderReport(reportModel, fullFilePath);
         }
 
         private IEnumerable<PerformanceReportExcelReportRecordModel> CreatePortfolioRecords(

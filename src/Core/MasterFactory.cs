@@ -2,6 +2,7 @@
 using Dimensional.TinyReturns.Core.DataRepositories;
 using Dimensional.TinyReturns.Core.FlatFiles;
 using Dimensional.TinyReturns.Core.OmniFileExport;
+using Dimensional.TinyReturns.Core.PerformanceReport;
 using Dimensional.TinyReturns.Core.PublicWebSite;
 
 namespace Dimensional.TinyReturns.Core
@@ -32,6 +33,10 @@ namespace Dimensional.TinyReturns.Core
         public static IInvestmentVehicleDataRepository InvestmentVehicleDataRepository { set { _investmentVehicleDataRepository = value; } }
         public static IInvestmentVehicleDataRepository GetInvestmentVehicleDataRepository() { return _investmentVehicleDataRepository; }
 
+        private static IPerformanceReportExcelReportView _performanceReportExcelReportView;
+        public static IPerformanceReportExcelReportView PerformanceReportExcelReportView { set { _performanceReportExcelReportView = value; } }
+        public static IPerformanceReportExcelReportView GetPerformanceReportExcelReportView() { return _performanceReportExcelReportView; }
+
         private static IFlatFileIo _flatFileIo;
         public static IFlatFileIo FlatFileIo { set { _flatFileIo = value; } }
         public static IFlatFileIo GetFlatFileIo() { return _flatFileIo; }
@@ -59,6 +64,13 @@ namespace Dimensional.TinyReturns.Core
                 GetMonthlyReturnsDataRepository());
 
             return r;
+        }
+
+        public static PerformanceReportExcelReportCreator GetPerformanceReportExcelReportCreator()
+        {
+            return new PerformanceReportExcelReportCreator(
+                GetInvestmentVehicleReturnsRepository(),
+                GetPerformanceReportExcelReportView());
         }
 
         public static PortfolioListPageAdapter GetPortfolioListPageAdapter()
