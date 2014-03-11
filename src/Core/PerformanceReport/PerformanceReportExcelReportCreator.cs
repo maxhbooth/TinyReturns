@@ -23,8 +23,8 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
         {
             var investmentVehicles = _returnsRepository.GetAllInvestmentVehicles();
 
-            var portfolioRecords = CreatePortfolioRecords(monthYear, investmentVehicles);
-            var benchmarkRecords = CreateBenchmarkRecords(monthYear, investmentVehicles);
+            var portfolioRecords = CreatePortfolioExcelRecords(monthYear, investmentVehicles);
+            var benchmarkRecords = CreateBenchmarkExcelRecords(monthYear, investmentVehicles);
 
             var reportModel = new PerformanceReportExcelReportModel();
 
@@ -34,38 +34,38 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
             _view.RenderReport(reportModel, fullFilePath);
         }
 
-        private IEnumerable<PerformanceReportExcelReportRecordModel> CreatePortfolioRecords(
+        private IEnumerable<PerformanceReportExcelReportRecordModel> CreatePortfolioExcelRecords(
             MonthYear monthYear,
             IEnumerable<InvestmentVehicle> investmentVehicles)
         {
             var recordModels = new List<PerformanceReportExcelReportRecordModel>();
 
-            var portfolios = investmentVehicles.Where(i => i.InvestmentVehicleType == InvestmentVehicleType.Portfolio);
+            var portfolios = investmentVehicles.GetPortfolios();
 
             foreach (var portfolio in portfolios)
             {
-                recordModels.Add(CreateRecordModel(portfolio, monthYear, FeeType.NetOfFees, "Portfolio"));
-                recordModels.Add(CreateRecordModel(portfolio, monthYear, FeeType.GrossOfFees, "Portfolio"));
+                recordModels.Add(CreateExcelRecord(portfolio, monthYear, FeeType.NetOfFees, "Portfolio"));
+                recordModels.Add(CreateExcelRecord(portfolio, monthYear, FeeType.GrossOfFees, "Portfolio"));
             }
 
             return recordModels;
         }
 
-        private IEnumerable<PerformanceReportExcelReportRecordModel> CreateBenchmarkRecords(
+        private IEnumerable<PerformanceReportExcelReportRecordModel> CreateBenchmarkExcelRecords(
             MonthYear monthYear,
             IEnumerable<InvestmentVehicle> investmentVehicles)
         {
             var recordModels = new List<PerformanceReportExcelReportRecordModel>();
 
-            var benchmarks = investmentVehicles.Where(i => i.InvestmentVehicleType == InvestmentVehicleType.Benchmark);
+            var benchmarks = investmentVehicles.GetBenchmarks();
 
             foreach (var benchmark in benchmarks)
-                recordModels.Add(CreateRecordModel(benchmark, monthYear, FeeType.None, "Benchmark"));
+                recordModels.Add(CreateExcelRecord(benchmark, monthYear, FeeType.None, "Benchmark"));
 
             return recordModels;
         }
 
-        private PerformanceReportExcelReportRecordModel CreateRecordModel(
+        private PerformanceReportExcelReportRecordModel CreateExcelRecord(
             InvestmentVehicle portfolio,
             MonthYear monthYear,
             FeeType feeType,

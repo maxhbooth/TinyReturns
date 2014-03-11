@@ -146,4 +146,19 @@ namespace Dimensional.TinyReturns.Core
             return !Equals(left, right);
         }
     }
+
+    public static class InvestmentVehicleExtensions
+    {
+        public static IEnumerable<InvestmentVehicle> GetPortfolios(
+            this IEnumerable<InvestmentVehicle> investmentVehicles)
+        {
+            return investmentVehicles.Where(i => i.InvestmentVehicleType == InvestmentVehicleType.Portfolio);
+        }
+
+        public static IEnumerable<InvestmentVehicle> GetBenchmarks(
+            this IEnumerable<InvestmentVehicle> investmentVehicles)
+        {
+            return investmentVehicles.Where(i => i.InvestmentVehicleType == InvestmentVehicleType.Benchmark);
+        }
+    }
 }
