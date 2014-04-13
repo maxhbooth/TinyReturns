@@ -4,11 +4,11 @@ using Xunit;
 
 namespace Dimensional.TinyReturns.UnitTests.Core
 {
-    public class MonthlyReturnSeriesTests
+    public class MonthlyReturnSeriesForCalculateReturnTests
     {
         private readonly MonthlyReturnSeries _returnSeries;
 
-        public MonthlyReturnSeriesTests()
+        public MonthlyReturnSeriesForCalculateReturnTests()
         {
             _returnSeries = new MonthlyReturnSeries();
         }

@@ -53,7 +53,7 @@
     <Compile Include="Core\FlatFiles\FlatFileIoSpy.cs" />
     <Compile Include="Core\InvestmentVehicleFactoryForTests.cs" />
     <Compile Include="Core\InvestmentVehicleReturnsRepositoryTests.cs" />
-    <Compile Include="Core\MonthlyReturnSeriesTests.cs" />
+    <Compile Include="Core\MonthlyReturnSeriesForCalculateReturnTests.cs" />
     <Compile Include="Core\InvestmentVehicleTypeTests.cs" />
     <Compile Include="Core\FeeTypeTests.cs" />
     <Compile Include="Core\IntArrayEqualityComparer.cs" />
