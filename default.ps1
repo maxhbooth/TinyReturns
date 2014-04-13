@@ -1,4 +1,7 @@
+
 properties {
+	Framework '4.0'
+
 	$projectName = "TinyReturns"
 	$baseDir = resolve-path .
 	$buildConfig = "Release"

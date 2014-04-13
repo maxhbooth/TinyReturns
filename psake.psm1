@@ -87,9 +87,7 @@ function Invoke-Task
                         Assert ((test-path "variable:$variable") -and ((get-variable $variable).Value -ne $null)) ($msgs.required_variable_not_set -f $variable, $taskName)
                     }
 
-                    Exec $task.Action `
-                        -maxRetries               $task.MaxRetries `
-                        -retryTriggerErrorPattern $task.RetryTriggerErrorPattern
+					& $task.Action
 
                     if ($task.PostAction) {
                         & $task.PostAction
@@ -298,6 +296,7 @@ function Framework {
         [Parameter(Position=0,Mandatory=1)][string]$framework
     )
     $psake.context.Peek().config.framework = $framework
+	ConfigureBuildEnvironment
 }
 
 # .ExternalHelp  psake.psm1-help.xml
@@ -318,9 +317,12 @@ function Invoke-psake {
             "psake version {0}`nCopyright (c) 2010 James Kovacs`n" -f $psake.version
         }
 
-        # If the default.ps1 file exists and the given "buildfile" isn 't found assume that the given
-        # $buildFile is actually the target Tasks to execute in the default.ps1 script.
-        if ($buildFile -and !(test-path $buildFile -pathType Leaf) -and (test-path $psake.config_default.buildFileName -pathType Leaf)) {
+        if (!$buildFile) {
+          $buildFile = $psake.config_default.buildFileName
+        }
+        elseif (!(test-path $buildFile -pathType Leaf) -and (test-path $psake.config_default.buildFileName -pathType Leaf)) {
+            # If the $config.buildFileName file exists and the given "buildfile" isn 't found assume that the given
+            # $buildFile is actually the target Tasks to execute in the $config.buildFileName script.
             $taskList = $buildFile.Split(', ')
             $buildFile = $psake.config_default.buildFileName
         }
@@ -349,11 +351,11 @@ function Invoke-psake {
 
         LoadConfiguration $psake.build_script_dir
 
-        LoadModules
-
         $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
 
         set-location $psake.build_script_dir
+
+        LoadModules
 
         $frameworkOldValue = $framework
         . $psake.build_script_file.FullName
@@ -442,9 +444,9 @@ function Invoke-psake {
         if ( $inNestedScope ) {
             throw $_
         } else {
-	        if (!$psake.run_by_psake_build_tester) {
-	            WriteColoredOutput $error_message -foregroundcolor Red
-	        }
+            if (!$psake.run_by_psake_build_tester) {
+                WriteColoredOutput $error_message -foregroundcolor Red
+            }
         }
     } finally {
         CleanupEnvironment
@@ -557,6 +559,7 @@ function ConfigureBuildEnvironment {
         throw ($msgs.error_invalid_framework -f $framework)
     }
     $versions = $null
+    $buildToolsVersions = $null
     switch ($versionPart) {
         '1.0' {
             $versions = @('v1.0.3705')
@@ -617,6 +620,7 @@ function ConfigureBuildEnvironment {
             }
         }
     }
+    $frameworkDirs = @()
     if ($buildToolsVersions -ne $null) {
         $frameworkDirs = @($buildToolsVersions | foreach { (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\MSBuild\ToolsVersions\$_" -Name $buildToolsKey).$buildToolsKey })
     }
@@ -760,7 +764,7 @@ function WriteDocumentation {
             "Depends On" = $task.DependsOn -join ", "
             Default = if ($defaultTaskDependencies -contains $task.Name) { $true }
         }
-    } | sort 'Name' | format-list -property Name,Alias,Description,"Depends On",Default
+    } | sort 'Name' | format-table -autoSize -wrap -property Name,Alias,"Depends On",Default,Description
 }
 
 function WriteTaskTimeSummary($invokePsakeDuration) {
@@ -821,7 +825,7 @@ convertfrom-stringdata @'
 import-localizeddata -bindingvariable msgs -erroraction silentlycontinue
 
 $script:psake = @{}
-$psake.version = "4.3.1" # contains the current version of psake
+$psake.version = "4.3.2" # contains the current version of psake
 $psake.context = new-object system.collections.stack # holds onto the current state of all variables
 $psake.run_by_psake_build_tester = $false # indicates that build is being run by psake-BuildTester
 $psake.config_default = new-object psobject -property @{
