@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Dimensional.TinyReturns.Core.DateExtend;
 
@@ -83,6 +85,37 @@ namespace Dimensional.TinyReturns.Core
 
             return result;
         }
+
+        public ReturnResult CalculateStandardDeviation(
+            MonthYearRange monthYearRange)
+        {
+            var result = new ReturnResult();
+
+            if (monthYearRange.NumberOfMonthsInRange > 1)
+            {
+                var returnsInRange = _monthlyReturns
+                    .GetMonthsInRange(monthYearRange)
+                    .ToArray();
+
+                if (returnsInRange.Count() == monthYearRange.NumberOfMonthsInRange)
+                {
+                    var returnValues = returnsInRange.Select(r => r.ReturnValue).ToArray();
+
+                    var standardDeviation = _financialMath.CalculateStandardDeviation(returnValues);
+
+                    result.SetValue(standardDeviation.Value, standardDeviation.Calculation);
+                }
+                else
+                {
+                    result.SetError("Could not find the correct number months in the given range.");
+                }
+            }
+            else
+                result.SetError("Given range much have more than one month to calculate standard deviation.");
+
+            return result;
+        }
+
 
         private ReturnResult PerformReturnCalculation(
             CalculateReturnRequest request,

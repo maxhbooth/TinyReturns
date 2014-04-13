@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Dimensional.TinyReturns.Core
 {
@@ -46,6 +47,62 @@ namespace Dimensional.TinyReturns.Core
             return result;
         }
 
+        public FinancialMathResult CalculateStandardDeviation(
+            decimal[] values)
+        {
+            var standardDeviationCalculation = "";
+
+            var mean = values.Average();
+            var meanCaluclation = GetMeanCalculation(values);
+
+            var sumOfSquaredDiffs = 0m;
+
+            foreach (var ret in values)
+            {
+                var diff = ret - mean;
+                var diffCalculation = string.Format("{0} - {1}", ret, meanCaluclation);
+
+                var squarOfDiff = diff * diff;
+                var squarOfDiffCalc = string.Format("({0})^2", diffCalculation);
+
+                sumOfSquaredDiffs += squarOfDiff;
+
+                if (string.IsNullOrEmpty(standardDeviationCalculation))
+                    standardDeviationCalculation = squarOfDiffCalc;
+                else
+                    standardDeviationCalculation = string.Format("{0} + {1}", standardDeviationCalculation, squarOfDiffCalc);
+            }
+
+            var divideSumOfSqares = sumOfSquaredDiffs / (values.Length - 1);
+            var standardDeviationValue = SqareRoot(divideSumOfSqares);
+
+            var numeratorCalculation = string.Format("({0} - 1)", values.Length);
+            standardDeviationCalculation = string.Format("Sqrt({0} / {1})", standardDeviationCalculation, numeratorCalculation);
+
+            var result = new FinancialMathResult();
+
+            result.Value = standardDeviationValue;
+            result.Calculation = standardDeviationCalculation;
+
+            return result;
+        }
+
+        private decimal SqareRoot(decimal d)
+        {
+            return Convert.ToDecimal(Math.Sqrt(Convert.ToDouble(d)));
+        }
+
+        private string GetMeanCalculation(
+            decimal[] values)
+        {
+            var addAllValuesCalculation = values
+                .Select(r => r.ToString())
+                .Aggregate((f, s) => string.Format("({0} + {1})", f, s));
+
+            var meanCaluclation = string.Format("({0} / {1})", addAllValuesCalculation, values.Length);
+
+            return meanCaluclation;
+        }
     }
 
     public class FinancialMathResult

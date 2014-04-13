@@ -64,9 +64,11 @@
     <Compile Include="Core\DataRepositories\ReturnsSeriesDataRepositoryDummy.cs" />
     <Compile Include="Core\DataRepositories\ReturnsSeriesDataRepositoryStub.cs" />
     <Compile Include="Core\InvestmentVehicleReturnsRepositoryStub.cs" />
+    <Compile Include="Core\MonthlyReturnSeriesForStandardDeviationTests.cs" />
     <Compile Include="Core\OmniFileExport\OmniDataFileCreatorTests.cs" />
     <Compile Include="Core\PerformanceReport\PerformanceReportExcelReportCreatorTests.cs" />
     <Compile Include="Core\PublicWebSite\PortfolioListPageAdapterTests.cs" />
+    <Compile Include="Core\ReturnResultTestExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
