@@ -22,7 +22,8 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             var expectedResult = ReturnResult.CreateWithError("Could not find return(s) for month(s).");
 
             Assert.NotNull(result);
-            AssetResultMatches(result, expectedResult);
+
+            result.ShouldBeSameAs(expectedResult);
         }
 
         [Fact]
@@ -49,7 +50,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             var expectedResult = ReturnResult.CreateWithValue(0.03m, "0.03 = 0.03");
 
             Assert.NotNull(result);
-            AssetResultMatches(result, expectedResult);
+            result.ShouldBeSameAs(expectedResult);
         }
 
         [Fact]
@@ -66,7 +67,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             var expectedResult = ReturnResult.CreateWithValue(0.32m, "((1 + 0.2) * (1 + 0.1) - 1) = 0.32");
 
             Assert.NotNull(result);
-            AssetResultMatches(result, expectedResult);
+            result.ShouldBeSameAs(expectedResult);
         }
 
         [Fact]
@@ -85,7 +86,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             var expectedResult = ReturnResult.CreateWithError("Could not find a complete / unique set of months.");
 
             Assert.NotNull(result);
-            AssetResultMatches(result, expectedResult);
+            result.ShouldBeSameAs(expectedResult);
         }
 
         [Fact]
@@ -105,7 +106,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             var expectedResult = ReturnResult.CreateWithError("Could not find a complete / unique set of months.");
 
             Assert.NotNull(result);
-            AssetResultMatches(result, expectedResult);
+            result.ShouldBeSameAs(expectedResult);
         }
 
         [Fact]
@@ -135,7 +136,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             var expectedResult = ReturnResult.CreateWithValue(37.2358830610463m, expectedCalculation);
 
             Assert.NotNull(result);
-            AssetResultMatches(result, expectedResult);
+            result.ShouldBeSameAs(expectedResult);
         }
 
         [Fact]
@@ -167,16 +168,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             var expectedResult = ReturnResult.CreateWithValue(50.80166493428326400m, expectedCalculation);
 
             Assert.NotNull(result);
-            AssetResultMatches(result, expectedResult);
-        }
-
-        private void AssetResultMatches(
-            ReturnResult result, ReturnResult expected)
-        {
-            Assert.Equal(result.Value, expected.Value);
-            Assert.Equal(result.Calculation, expected.Calculation);
-            Assert.Equal(result.HasError, expected.HasError);
-            Assert.Equal(result.ErrorMessage, expected.ErrorMessage);
+            result.ShouldBeSameAs(expectedResult);
         }
     }
 }

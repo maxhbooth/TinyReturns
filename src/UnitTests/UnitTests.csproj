@@ -67,6 +67,7 @@
     <Compile Include="Core\OmniFileExport\OmniDataFileCreatorTests.cs" />
     <Compile Include="Core\PerformanceReport\PerformanceReportExcelReportCreatorTests.cs" />
     <Compile Include="Core\PublicWebSite\PortfolioListPageAdapterTests.cs" />
+    <Compile Include="Core\ReturnResultTestExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
