@@ -7,7 +7,7 @@ namespace Dimensional.TinyReturns.FileIo
 {
     public class CitiReturnsFileReader : ICitiReturnsFileReader
     {
-        private ISystemLog _systemLog;
+        private readonly ISystemLog _systemLog;
 
         public CitiReturnsFileReader(
             ISystemLog systemLog)
