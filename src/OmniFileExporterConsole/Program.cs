@@ -5,7 +5,7 @@ using Dimensional.TinyReturns.DependencyManagement;
 
 namespace Dimensional.TinyReturns.OmniFileExporterConsole
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
