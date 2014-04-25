@@ -15,7 +15,6 @@ namespace Dimensional.TinyReturns.CitiFileImporterConsole
             var requestModel = new CitiFileImportRequestModel(args);
 
             interactor.ImportFiles(requestModel);
-
         }
     }
 }
