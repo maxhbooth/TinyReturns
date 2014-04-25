@@ -41,6 +41,11 @@ namespace Dimensional.TinyReturns.Core
         public static IFlatFileIo FlatFileIo { set { _flatFileIo = value; } }
         public static IFlatFileIo GetFlatFileIo() { return _flatFileIo; }
 
+        public static ICitiFileImportInteractor GetCitiFileImportInteractor()
+        {
+            return new CitiFileImportInteractor(GetCitiReturnSeriesImporter());
+        }
+        
         public static CitiReturnSeriesImporter GetCitiReturnSeriesImporter()
         {
             return new CitiReturnSeriesImporter(

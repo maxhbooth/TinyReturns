@@ -8,13 +8,13 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
 {
     public class PerformanceReportExcelReportCreatorTests
     {
-        private readonly PerformanceReportExcelReportViewStub _viewStub;
+        private readonly PerformanceReportExcelReportViewSpy _excelViewSpy;
         private readonly InvestmentVehicleReturnsRepositoryStub _returnsRepository;
         private readonly string _testFileName;
 
         public PerformanceReportExcelReportCreatorTests()
         {
-            _viewStub = new PerformanceReportExcelReportViewStub();
+            _excelViewSpy = new PerformanceReportExcelReportViewSpy();
             _returnsRepository = new InvestmentVehicleReturnsRepositoryStub();
             _testFileName = "c:\\temp\\foo.xlsx";
         }
@@ -24,13 +24,13 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
         {
             var monthYear = new MonthYear(2000, 4);
 
-            SetupPortfolioAndBenchmark();
+            SetupPortfolioAndBenchmarkTestData();
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
             performanceReportExcelCreator.CreateReport(monthYear, _testFileName);
 
-            Assert.Equal("Month: 4/2000", _viewStub.RenderReportModel.MonthText);
+            Assert.Equal("Month: 4/2000", _excelViewSpy.RenderReportModel.MonthText);
         }
 
         [Fact]
@@ -38,13 +38,13 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
         {
             var monthYear = new MonthYear(2000, 4);
 
-            SetupPortfolioAndBenchmark();
+            SetupPortfolioAndBenchmarkTestData();
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
             performanceReportExcelCreator.CreateReport(monthYear, _testFileName);
 
-            Assert.Equal(6, _viewStub.RenderReportModel.Records.Length);
+            Assert.Equal(6, _excelViewSpy.RenderReportModel.Records.Length);
         }
 
         [Fact]
@@ -52,13 +52,13 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
         {
             var monthYear = new MonthYear(2000, 4);
 
-            SetupPortfolioAndBenchmark();
+            SetupPortfolioAndBenchmarkTestData();
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
             performanceReportExcelCreator.CreateReport(monthYear, _testFileName);
 
-            Assert.Equal(_viewStub.RenderReportFullFilePath, _testFileName);
+            Assert.Equal(_excelViewSpy.RenderReportFullFilePath, _testFileName);
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
         {
             var monthYear = new MonthYear(2000, 4);
 
-            SetupPortfolioAndBenchmark();
+            SetupPortfolioAndBenchmarkTestData();
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
@@ -82,7 +82,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             expectedRecordModel.TwelveMonths = -0.238239267167793646673920m;
             expectedRecordModel.YearToDate = 0.10355024m;
 
-            AssertRecrodIsInResult(expectedRecordModel, _viewStub.RenderReportModel.Records);
+            AssertRecrodIsInResult(expectedRecordModel, _excelViewSpy.RenderReportModel.Records);
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
         {
             var monthYear = new MonthYear(2000, 4);
 
-            SetupPortfolioAndBenchmark();
+            SetupPortfolioAndBenchmarkTestData();
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
@@ -106,7 +106,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             expectedRecordModel.TwelveMonths = 0.282327761824448188129280m;
             expectedRecordModel.YearToDate = 0.28618280m;
 
-            AssertRecrodIsInResult(expectedRecordModel, _viewStub.RenderReportModel.Records);
+            AssertRecrodIsInResult(expectedRecordModel, _excelViewSpy.RenderReportModel.Records);
         }
 
 
@@ -115,7 +115,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
         {
             var monthYear = new MonthYear(2000, 4);
 
-            SetupPortfolioAndBenchmark(monthYear, monthYear);
+            SetupPortfolioAndBenchmarkTestData(monthYear, monthYear);
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
@@ -131,7 +131,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             expectedRecordModel.TwelveMonths = null;
             expectedRecordModel.YearToDate = null;
 
-            AssertRecrodIsInResult(expectedRecordModel, _viewStub.RenderReportModel.Records);
+            AssertRecrodIsInResult(expectedRecordModel, _excelViewSpy.RenderReportModel.Records);
         }
 
         [Fact]
@@ -139,7 +139,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
         {
             var monthYear = new MonthYear(2000, 4);
 
-            SetupPortfolioAndBenchmark();
+            SetupPortfolioAndBenchmarkTestData();
 
             var performanceReportExcelCreator = CreatePerformanceReportExcelCreator();
 
@@ -155,7 +155,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             expectedRecordModel.TwelveMonths = 0.1046235760557993151483255264m;
             expectedRecordModel.YearToDate = 0.050942774024m;
 
-            AssertRecrodIsInResult(expectedRecordModel, _viewStub.RenderReportModel.Records);
+            AssertRecrodIsInResult(expectedRecordModel, _excelViewSpy.RenderReportModel.Records);
         }
 
 
@@ -186,12 +186,12 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             Assert.Equal(expectedRecordModel.YearToDate, portfolioRecord.YearToDate);
         }
 
-        private void SetupPortfolioAndBenchmark()
+        private void SetupPortfolioAndBenchmarkTestData()
         {
-            SetupPortfolioAndBenchmark(null, null);
+            SetupPortfolioAndBenchmarkTestData(null, null);
         }
 
-        private void SetupPortfolioAndBenchmark(
+        private void SetupPortfolioAndBenchmarkTestData(
             MonthYear portfolioExcludeMonth,
             MonthYear benchmarkExcludeMonth)
         {
@@ -210,7 +210,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
         
         private PerformanceReportExcelReportCreator CreatePerformanceReportExcelCreator()
         {
-            return new PerformanceReportExcelReportCreator(_returnsRepository, _viewStub);
+            return new PerformanceReportExcelReportCreator(_returnsRepository, _excelViewSpy);
         }
 
         private InvestmentVehicle CreateTestPortfolio(
@@ -298,7 +298,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             return benchmark000;
         }
 
-        private class PerformanceReportExcelReportViewStub : IPerformanceReportExcelReportView
+        private class PerformanceReportExcelReportViewSpy : IPerformanceReportExcelReportView
         {
             private PerformanceReportExcelReportModel _renderReportModel;
             private string _renderReportFullFilePath;

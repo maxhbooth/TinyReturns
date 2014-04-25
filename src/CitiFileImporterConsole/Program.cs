@@ -4,25 +4,17 @@ using Dimensional.TinyReturns.DependencyManagement;
 
 namespace Dimensional.TinyReturns.CitiFileImporterConsole
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
             DependencyManager.BootstrapForSystem("Console", new DatabaseSettings());
 
-            var importer = MasterFactory.GetCitiReturnSeriesImporter();
+            var interactor = MasterFactory.GetCitiFileImportInteractor();
 
-            importer.DeleteAllReturns();
+            var requestModel = new CitiFileImportRequestModel(args);
 
-            ImportAllFilesFromCommandLine(args, importer);
-        }
-
-        private static void ImportAllFilesFromCommandLine(
-            string[] commandLineArgs,
-            CitiReturnSeriesImporter importer)
-        {
-            foreach (var filePath in commandLineArgs)
-                importer.ImportMonthlyReturnsFile(filePath);
+            interactor.ImportFiles(requestModel);
         }
     }
 }

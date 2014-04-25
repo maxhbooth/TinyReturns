@@ -22,6 +22,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             var expectedResult = ReturnResult.CreateWithError("Could not find return(s) for month(s).");
 
             Assert.NotNull(result);
+
             result.ShouldBeSameAs(expectedResult);
         }
 
@@ -167,7 +168,6 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             var expectedResult = ReturnResult.CreateWithValue(50.80166493428326400m, expectedCalculation);
 
             Assert.NotNull(result);
-
             result.ShouldBeSameAs(expectedResult);
         }
     }
