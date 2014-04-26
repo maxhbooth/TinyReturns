@@ -95,7 +95,18 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
             var yearToDateResult = portfolio.CalculateReturn(yearToDateRequest, feeType);
             recordModel.YearToDate = yearToDateResult.GetValueNullOnError();
 
+            var oneYearRange = CreateOneYearRange(monthYear);
+            var oneYearStandardDeviationResult = portfolio.CalculationStandardDeviation(oneYearRange, feeType);
+            recordModel.OneYearStandardDeviation = oneYearStandardDeviationResult.GetValueNullOnError();
+
             return recordModel;
+        }
+
+        private MonthYearRange CreateOneYearRange(MonthYear monthYear)
+        {
+            var previousYear = monthYear.AddMonths(-11);
+            var oneYearRange = new MonthYearRange(previousYear, monthYear);
+            return oneYearRange;
         }
     }
 }

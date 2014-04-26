@@ -35,6 +35,7 @@ namespace Dimensional.TinyReturns.ExcelRendering
                     worksheet.Cells[rowIndex, 6].Value = record.ThreeMonths;
                     worksheet.Cells[rowIndex, 7].Value = record.TwelveMonths;
                     worksheet.Cells[rowIndex, 8].Value = record.YearToDate;
+                    worksheet.Cells[rowIndex, 9].Value = record.OneYearStandardDeviation;
 
                     rowIndex++;
                 }

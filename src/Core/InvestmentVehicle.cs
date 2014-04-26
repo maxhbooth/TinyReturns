@@ -85,16 +85,32 @@ namespace Dimensional.TinyReturns.Core
             CalculateReturnRequest request,
             FeeType feeType)
         {
-            var netSeries = GetReturnSeries(feeType);
+            var series = GetReturnSeries(feeType);
 
-            if (netSeries == null)
+            if (series == null)
             {
                 var errorMessage = string.Format("Could not find '{0}' return series.", feeType.DisplayName);
 
                 return ReturnResult.CreateWithError(errorMessage);
             }
 
-            return netSeries.CalculateReturn(request);
+            return series.CalculateReturn(request);
+        }
+
+        public ReturnResult CalculationStandardDeviation(
+            MonthYearRange monthYearRange,
+            FeeType feeType)
+        {
+            var series = GetReturnSeries(feeType);
+
+            if (series == null)
+            {
+                var errorMessage = string.Format("Could not find '{0}' return series.", feeType.DisplayName);
+
+                return ReturnResult.CreateWithError(errorMessage);
+            }
+
+            return series.CalculateStandardDeviation(monthYearRange);
         }
 
         public MonthlyReturnSeries[] GetAllReturnSeries()

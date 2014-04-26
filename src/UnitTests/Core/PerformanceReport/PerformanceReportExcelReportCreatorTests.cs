@@ -81,6 +81,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             expectedRecordModel.ThreeMonths = 0.092624m;
             expectedRecordModel.TwelveMonths = -0.238239267167793646673920m;
             expectedRecordModel.YearToDate = 0.10355024m;
+            expectedRecordModel.OneYearStandardDeviation = 0.0401889476740996m;
 
             AssertRecrodIsInResult(expectedRecordModel, _excelViewSpy.RenderReportModel.Records);
         }
@@ -105,6 +106,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             expectedRecordModel.ThreeMonths = 0.224936m;
             expectedRecordModel.TwelveMonths = 0.282327761824448188129280m;
             expectedRecordModel.YearToDate = 0.28618280m;
+            expectedRecordModel.OneYearStandardDeviation = 0.0401889476740996m;
 
             AssertRecrodIsInResult(expectedRecordModel, _excelViewSpy.RenderReportModel.Records);
         }
@@ -130,6 +132,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             expectedRecordModel.ThreeMonths = null;
             expectedRecordModel.TwelveMonths = null;
             expectedRecordModel.YearToDate = null;
+            expectedRecordModel.OneYearStandardDeviation = null;
 
             AssertRecrodIsInResult(expectedRecordModel, _excelViewSpy.RenderReportModel.Records);
         }
@@ -154,6 +157,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             expectedRecordModel.ThreeMonths = 0.039508184m;
             expectedRecordModel.TwelveMonths = 0.1046235760557993151483255264m;
             expectedRecordModel.YearToDate = 0.050942774024m;
+            expectedRecordModel.OneYearStandardDeviation = 0.00386906926400872m;
 
             AssertRecrodIsInResult(expectedRecordModel, _excelViewSpy.RenderReportModel.Records);
         }
@@ -184,6 +188,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             Assert.Equal(expectedRecordModel.ThreeMonths, portfolioRecord.ThreeMonths);
             Assert.Equal(expectedRecordModel.TwelveMonths, portfolioRecord.TwelveMonths);
             Assert.Equal(expectedRecordModel.YearToDate, portfolioRecord.YearToDate);
+            Assert.Equal(expectedRecordModel.OneYearStandardDeviation, portfolioRecord.OneYearStandardDeviation);
         }
 
         private void SetupPortfolioAndBenchmarkTestData()
