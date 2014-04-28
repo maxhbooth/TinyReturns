@@ -29,7 +29,7 @@ properties {
 	$packageNunitExec = "$srcFolder\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
 }
 
-task default -depends CleanSolution, BuildSolution, RebuildDatabase, RunUnitTests, RunIntegrationTests, PopulateDatabase
+task default -depends CleanSolution, UpdateNuGetPackages, BuildSolution, RebuildDatabase, RunUnitTests, RunIntegrationTests, PopulateDatabase
 
 formatTaskName {
 	param($taskName)
@@ -44,6 +44,12 @@ task CleanSolution {
 	mkdir $buildFolder | out-null
 
 	Exec { msbuild "$solutionFile" /t:Clean /p:Configuration=$buildConfig /v:quiet }
+}
+
+task UpdateNuGetPackages {
+	$nuGetExec = "$baseDir\lib\nuget\NuGet.exe"	
+	
+	&$nuGetExec restore "$solutionFile"
 }
 
 task BuildSolution -depends CleanSolution {
