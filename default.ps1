@@ -47,9 +47,9 @@ task CleanSolution {
 }
 
 task UpdateNuGetPackages {
-	$nuGetExec = "$baseDir\lib\nuget\NuGet.exe"	
+	$nuGetExec = "$baseDir\src\.nuget\NuGet.exe"
 	
-	&$nuGetExec restore "$solutionFile"
+	&$nuGetExec restore "$baseDir\src\.nuget\packages.config" -PackagesDirectory "$baseDir\src\packages"
 }
 
 task BuildSolution -depends CleanSolution {
