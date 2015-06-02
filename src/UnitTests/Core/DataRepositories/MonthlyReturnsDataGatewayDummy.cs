@@ -2,7 +2,7 @@
 
 namespace Dimensional.TinyReturns.UnitTests.Core.DataRepositories
 {
-    public class MonthlyReturnsDataRepositoryDummy : IMonthlyReturnsDataRepository
+    public class MonthlyReturnsDataGatewayDummy : IMonthlyReturnsDataGateway
     {
         public virtual void InsertMonthlyReturns(MonthlyReturnDto[] monthlyReturns)
         {

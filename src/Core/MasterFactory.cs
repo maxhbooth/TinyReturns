@@ -21,15 +21,15 @@ namespace Dimensional.TinyReturns.Core
 
         // **
 
-        private static IReturnsSeriesDataRepository _returnsSeriesDataRepository;
-        public static IReturnsSeriesDataRepository ReturnsSeriesDataRepository { set { _returnsSeriesDataRepository = value; } }
-        public static IReturnsSeriesDataRepository GetReturnsSeriesRepository() { return _returnsSeriesDataRepository; }
+        private static IReturnsSeriesDataGateway _returnsSeriesDataGateway;
+        public static IReturnsSeriesDataGateway ReturnsSeriesDataGateway { set { _returnsSeriesDataGateway = value; } }
+        public static IReturnsSeriesDataGateway GetReturnsSeriesRepository() { return _returnsSeriesDataGateway; }
 
         // **
 
-        private static IMonthlyReturnsDataRepository _monthlyReturnsDataRepository;
-        public static IMonthlyReturnsDataRepository MonthlyReturnsDataRepository { set { _monthlyReturnsDataRepository = value; } }
-        public static IMonthlyReturnsDataRepository GetMonthlyReturnsDataRepository() { return _monthlyReturnsDataRepository; }
+        private static IMonthlyReturnsDataGateway _monthlyReturnsDataGateway;
+        public static IMonthlyReturnsDataGateway MonthlyReturnsDataGateway { set { _monthlyReturnsDataGateway = value; } }
+        public static IMonthlyReturnsDataGateway GetMonthlyReturnsDataRepository() { return _monthlyReturnsDataGateway; }
 
         // **
 
@@ -65,9 +65,9 @@ namespace Dimensional.TinyReturns.Core
         public static CitiReturnSeriesImporter GetCitiReturnSeriesImporter()
         {
             return new CitiReturnSeriesImporter(
-                _returnsSeriesDataRepository,
+                _returnsSeriesDataGateway,
                 _citiReturnsFileReader,
-                _monthlyReturnsDataRepository);
+                _monthlyReturnsDataGateway);
         }
 
         public static OmniDataFileCreator GetOmniDataFileCreator()

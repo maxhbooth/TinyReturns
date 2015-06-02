@@ -12,22 +12,22 @@ namespace Dimensional.TinyReturns.UnitTests.Core
         private class EntityReturnsRepositoryTestHelper
         {
             private readonly InvestmentVehicleDataRepositoryStub _investmentVehicleDataRepositoryStub;
-            private readonly ReturnsSeriesDataRepositoryStub _returnsSeriesDataRepositoryStub;
-            private readonly MonthlyReturnsDataRepositoryStub _monthlyReturnsDataRepositoryStub;
+            private readonly ReturnsSeriesDataGatewayStub _returnsSeriesDataGatewayStub;
+            private readonly MonthlyReturnsDataGatewayStub _monthlyReturnsDataGatewayStub;
 
             public EntityReturnsRepositoryTestHelper()
             {
                 _investmentVehicleDataRepositoryStub = new InvestmentVehicleDataRepositoryStub();
-                _returnsSeriesDataRepositoryStub = new ReturnsSeriesDataRepositoryStub();
-                _monthlyReturnsDataRepositoryStub = new MonthlyReturnsDataRepositoryStub();
+                _returnsSeriesDataGatewayStub = new ReturnsSeriesDataGatewayStub();
+                _monthlyReturnsDataGatewayStub = new MonthlyReturnsDataGatewayStub();
             }
 
             public InvestmentVehicleReturnsRepository CreateEntityReturnsRepository()
             {
                 var repository = new InvestmentVehicleReturnsRepository(
                     _investmentVehicleDataRepositoryStub,
-                    _returnsSeriesDataRepositoryStub,
-                    _monthlyReturnsDataRepositoryStub);
+                    _returnsSeriesDataGatewayStub,
+                    _monthlyReturnsDataGatewayStub);
 
                 return repository;
             }
@@ -42,7 +42,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
                 int[] entityNumbers,
                 Action<ReturnSeriesDtoCollectionForTests> a)
             {
-                _returnsSeriesDataRepositoryStub
+                _returnsSeriesDataGatewayStub
                     .SetupGetReturnSeries(entityNumbers, a);
             }
 
@@ -50,7 +50,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
                 int[] returnSeriesIds,
                 Action<MonthlyReturnDtoCollectionForTests> listAction)
             {
-                _monthlyReturnsDataRepositoryStub
+                _monthlyReturnsDataGatewayStub
                     .SetupGetMonthlyReturns(returnSeriesIds, listAction);
             }
         }

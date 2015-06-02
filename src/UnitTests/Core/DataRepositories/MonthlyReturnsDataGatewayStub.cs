@@ -4,11 +4,11 @@ using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.UnitTests.Core.DataRepositories
 {
-    public class MonthlyReturnsDataRepositoryStub : MonthlyReturnsDataRepositoryDummy
+    public class MonthlyReturnsDataGatewayStub : MonthlyReturnsDataGatewayDummy
     {
         private readonly Dictionary<int[], MonthlyReturnDto[]> _getMonthlyReturnsSetups;
 
-        public MonthlyReturnsDataRepositoryStub()
+        public MonthlyReturnsDataGatewayStub()
         {
             _getMonthlyReturnsSetups = new Dictionary<int[], MonthlyReturnDto[]>(new IntArrayEqualityComparer());
         }

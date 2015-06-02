@@ -59,11 +59,11 @@
     <Compile Include="Core\FeeTypeTests.cs" />
     <Compile Include="Core\IntArrayEqualityComparer.cs" />
     <Compile Include="Core\DataRepositories\MonthlyReturnDtoCollectionForTests.cs" />
-    <Compile Include="Core\DataRepositories\MonthlyReturnsDataRepositoryDummy.cs" />
-    <Compile Include="Core\DataRepositories\MonthlyReturnsDataRepositoryStub.cs" />
+    <Compile Include="Core\DataRepositories\MonthlyReturnsDataGatewayDummy.cs" />
+    <Compile Include="Core\DataRepositories\MonthlyReturnsDataGatewayStub.cs" />
     <Compile Include="Core\DataRepositories\ReturnSeriesDtoCollectionForTests.cs" />
-    <Compile Include="Core\DataRepositories\ReturnsSeriesDataRepositoryDummy.cs" />
-    <Compile Include="Core\DataRepositories\ReturnsSeriesDataRepositoryStub.cs" />
+    <Compile Include="Core\DataRepositories\ReturnsSeriesDataGatewayDummy.cs" />
+    <Compile Include="Core\DataRepositories\ReturnsSeriesDataGatewayStub.cs" />
     <Compile Include="Core\InvestmentVehicleReturnsRepositoryStub.cs" />
     <Compile Include="Core\OmniFileExport\OmniDataFileCreatorTests.cs" />
     <Compile Include="Core\PerformanceReport\PerformanceReportExcelReportCreatorTests.cs" />

@@ -2,7 +2,7 @@
 
 namespace Dimensional.TinyReturns.UnitTests.Core.DataRepositories
 {
-    public class ReturnsSeriesDataRepositoryDummy : IReturnsSeriesDataRepository
+    public class ReturnsSeriesDataGatewayDummy : IReturnsSeriesDataGateway
     {
         public virtual int InsertReturnSeries(ReturnSeriesDto returnSeries)
         {

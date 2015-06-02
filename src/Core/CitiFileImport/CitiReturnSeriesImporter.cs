@@ -6,24 +6,24 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
 {
     public class CitiReturnSeriesImporter
     {
-        private readonly IReturnsSeriesDataRepository _returnsSeriesDataRepository;
+        private readonly IReturnsSeriesDataGateway _returnsSeriesDataGateway;
         private readonly ICitiReturnsFileReader _citiReturnsFileReader;
-        private readonly IMonthlyReturnsDataRepository _monthlyReturnsDataRepository;
+        private readonly IMonthlyReturnsDataGateway _monthlyReturnsDataGateway;
 
         public CitiReturnSeriesImporter(
-            IReturnsSeriesDataRepository returnsSeriesDataRepository,
+            IReturnsSeriesDataGateway returnsSeriesDataGateway,
             ICitiReturnsFileReader citiReturnsFileReader,
-            IMonthlyReturnsDataRepository monthlyReturnsDataRepository)
+            IMonthlyReturnsDataGateway monthlyReturnsDataGateway)
         {
-            _monthlyReturnsDataRepository = monthlyReturnsDataRepository;
+            _monthlyReturnsDataGateway = monthlyReturnsDataGateway;
             _citiReturnsFileReader = citiReturnsFileReader;
-            _returnsSeriesDataRepository = returnsSeriesDataRepository;
+            _returnsSeriesDataGateway = returnsSeriesDataGateway;
         }
 
         public virtual void DeleteAllReturns()
         {
-            _monthlyReturnsDataRepository.DeleteAllMonthlyReturns();
-            _returnsSeriesDataRepository.DeleteAllReturnSeries();
+            _monthlyReturnsDataGateway.DeleteAllMonthlyReturns();
+            _returnsSeriesDataGateway.DeleteAllReturnSeries();
         }
 
         public virtual void ImportMonthlyReturnsFile(
@@ -49,7 +49,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             var returnSeries = ConvertEntityNumbersToReturnSeries(uniqueEntityNumbers, feeType);
 
             foreach (var series in returnSeries)
-                series.ReturnSeriesId = _returnsSeriesDataRepository.InsertReturnSeries(series);
+                series.ReturnSeriesId = _returnsSeriesDataGateway.InsertReturnSeries(series);
 
             return returnSeries;
         }
@@ -78,7 +78,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
                     .Select(sourceMonthlyReturn => CreateMonthlyReturn(series, sourceMonthlyReturn))
                     .ToArray();
 
-                _monthlyReturnsDataRepository.InsertMonthlyReturns(monthlyReturns);
+                _monthlyReturnsDataGateway.InsertMonthlyReturns(monthlyReturns);
             }
         }
 
