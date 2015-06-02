@@ -39,9 +39,9 @@ namespace Dimensional.TinyReturns.Core
 
         // **
 
-        private static IInvestmentVehicleDataRepository _investmentVehicleDataRepository;
-        public static IInvestmentVehicleDataRepository InvestmentVehicleDataRepository { set { _investmentVehicleDataRepository = value; } }
-        public static IInvestmentVehicleDataRepository GetInvestmentVehicleDataRepository() { return _investmentVehicleDataRepository; }
+        private static IInvestmentVehicleDataGateway _investmentVehicleDataGateway;
+        public static IInvestmentVehicleDataGateway InvestmentVehicleDataGateway { set { _investmentVehicleDataGateway = value; } }
+        public static IInvestmentVehicleDataGateway GetInvestmentVehicleDataRepository() { return _investmentVehicleDataGateway; }
 
         // **
 

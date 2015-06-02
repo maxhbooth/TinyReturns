@@ -9,7 +9,7 @@ namespace Dimensional.TinyReturns.Database
         BaseDatabase,
         IReturnsSeriesDataGateway,
         IMonthlyReturnsDataGateway,
-        IInvestmentVehicleDataRepository
+        IInvestmentVehicleDataGateway
     {
         private readonly ITinyReturnsDatabaseSettings _tinyReturnsDatabaseSettings;
 

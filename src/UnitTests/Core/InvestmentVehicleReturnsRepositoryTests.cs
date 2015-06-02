@@ -11,13 +11,13 @@ namespace Dimensional.TinyReturns.UnitTests.Core
     {
         private class EntityReturnsRepositoryTestHelper
         {
-            private readonly InvestmentVehicleDataRepositoryStub _investmentVehicleDataRepositoryStub;
+            private readonly InvestmentVehicleDataGatewayStub _investmentVehicleDataGatewayStub;
             private readonly ReturnsSeriesDataGatewayStub _returnsSeriesDataGatewayStub;
             private readonly MonthlyReturnsDataGatewayStub _monthlyReturnsDataGatewayStub;
 
             public EntityReturnsRepositoryTestHelper()
             {
-                _investmentVehicleDataRepositoryStub = new InvestmentVehicleDataRepositoryStub();
+                _investmentVehicleDataGatewayStub = new InvestmentVehicleDataGatewayStub();
                 _returnsSeriesDataGatewayStub = new ReturnsSeriesDataGatewayStub();
                 _monthlyReturnsDataGatewayStub = new MonthlyReturnsDataGatewayStub();
             }
@@ -25,7 +25,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             public InvestmentVehicleReturnsRepository CreateEntityReturnsRepository()
             {
                 var repository = new InvestmentVehicleReturnsRepository(
-                    _investmentVehicleDataRepositoryStub,
+                    _investmentVehicleDataGatewayStub,
                     _returnsSeriesDataGatewayStub,
                     _monthlyReturnsDataGatewayStub);
 
@@ -33,9 +33,9 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             }
 
             public void SetupGetAllEntities(
-                Action<InvestmentVehicleDataRepositoryStub.EntityDtoCollectionForTest> a)
+                Action<InvestmentVehicleDataGatewayStub.EntityDtoCollectionForTest> a)
             {
-                _investmentVehicleDataRepositoryStub.SetupGetAllEntities(a);
+                _investmentVehicleDataGatewayStub.SetupGetAllEntities(a);
             }
 
             public void SetupGetReturnSeries(

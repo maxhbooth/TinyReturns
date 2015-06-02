@@ -5,23 +5,23 @@ namespace Dimensional.TinyReturns.Core
 {
     public class InvestmentVehicleReturnsRepository
     {
-        private readonly IInvestmentVehicleDataRepository _investmentVehicleDataRepository;
+        private readonly IInvestmentVehicleDataGateway _investmentVehicleDataGateway;
         private readonly IReturnsSeriesDataGateway _returnsSeriesDataGateway;
         private readonly IMonthlyReturnsDataGateway _monthlyReturnsDataGateway;
 
         public InvestmentVehicleReturnsRepository(
-            IInvestmentVehicleDataRepository investmentVehicleDataRepository,
+            IInvestmentVehicleDataGateway investmentVehicleDataGateway,
             IReturnsSeriesDataGateway returnsSeriesDataGateway,
             IMonthlyReturnsDataGateway monthlyReturnsDataGateway)
         {
             _monthlyReturnsDataGateway = monthlyReturnsDataGateway;
             _returnsSeriesDataGateway = returnsSeriesDataGateway;
-            _investmentVehicleDataRepository = investmentVehicleDataRepository;
+            _investmentVehicleDataGateway = investmentVehicleDataGateway;
         }
 
         public virtual InvestmentVehicle[] GetAllInvestmentVehicles()
         {
-            var entityDtos = _investmentVehicleDataRepository.GetAllEntities();
+            var entityDtos = _investmentVehicleDataGateway.GetAllEntities();
 
             var allReturnSeriesDtos = GetReturnSeriesDtos(entityDtos);
             var allMonthlyReturnDtos = GetMonthlyReturns(allReturnSeriesDtos);

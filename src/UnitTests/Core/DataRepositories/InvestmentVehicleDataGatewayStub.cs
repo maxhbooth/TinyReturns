@@ -4,11 +4,11 @@ using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.UnitTests.Core
 {
-    public class InvestmentVehicleDataRepositoryStub : IInvestmentVehicleDataRepository
+    public class InvestmentVehicleDataGatewayStub : IInvestmentVehicleDataGateway
     {
         private readonly EntityDtoCollectionForTest _entityDtoCollectionForTest;
 
-        public InvestmentVehicleDataRepositoryStub()
+        public InvestmentVehicleDataGatewayStub()
         {
             _entityDtoCollectionForTest = new EntityDtoCollectionForTest();
         }

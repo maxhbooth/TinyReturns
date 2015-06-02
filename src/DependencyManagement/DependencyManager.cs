@@ -40,7 +40,7 @@ namespace Dimensional.TinyReturns.DependencyManagement
             MasterFactory.ReturnsSeriesDataGateway = returnsSeriesDataRepository;
             MasterFactory.MonthlyReturnsDataGateway = returnsSeriesDataRepository;
             MasterFactory.CitiReturnsFileReader = citiReturnsFileReader;
-            MasterFactory.InvestmentVehicleDataRepository = returnsSeriesDataRepository;
+            MasterFactory.InvestmentVehicleDataGateway = returnsSeriesDataRepository;
             MasterFactory.FlatFileIo = flatFileIo;
             MasterFactory.PerformanceReportExcelReportView = performanceReportExcelReportView;
 

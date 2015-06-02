@@ -44,7 +44,7 @@
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
     <Compile Include="DataRepositories\InvestmentVehicleDto.cs" />
-    <Compile Include="DataRepositories\IInvestmentVehicleDataRepository.cs" />
+    <Compile Include="DataRepositories\IInvestmentVehicleDataGateway.cs" />
     <Compile Include="DataRepositories\IMonthlyReturnsDataGateway.cs" />
     <Compile Include="DateExtend\DateTimeExtensions.cs" />
     <Compile Include="DateExtend\MonthYearRange.cs" />

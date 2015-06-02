@@ -1,6 +1,6 @@
 ﻿namespace Dimensional.TinyReturns.Core.DataRepositories
 {
-    public interface IInvestmentVehicleDataRepository
+    public interface IInvestmentVehicleDataGateway
     {
         InvestmentVehicleDto[] GetAllEntities();
     }

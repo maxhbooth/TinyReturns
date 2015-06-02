@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="Core\CalculateReturnRequestFactoryTests.cs" />
     <Compile Include="Core\CitiFileImport\CitiFileImportInteractorTests.cs" />
-    <Compile Include="Core\DataRepositories\InvestmentVehicleDataRepositoryStub.cs" />
+    <Compile Include="Core\DataRepositories\InvestmentVehicleDataGatewayStub.cs" />
     <Compile Include="Core\FinancialMathTests.cs" />
     <Compile Include="Core\FlatFiles\FlatFileIoSpy.cs" />
     <Compile Include="Core\InvestmentVehicleFactoryForTests.cs" />
