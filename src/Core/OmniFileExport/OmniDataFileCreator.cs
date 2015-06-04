@@ -7,10 +7,10 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
     public class OmniDataFileCreator
     {
         private readonly IFlatFileIo _flatFileIo;
-        private readonly InvestmentVehicleReturnsRepository _investmentVehicleReturnsRepository;
+        private readonly IInvestmentVehicleReturnsRepository _investmentVehicleReturnsRepository;
 
         public OmniDataFileCreator(
-            InvestmentVehicleReturnsRepository investmentVehicleReturnsRepository,
+            IInvestmentVehicleReturnsRepository investmentVehicleReturnsRepository,
             IFlatFileIo flatFileIo)
         {
             _investmentVehicleReturnsRepository = investmentVehicleReturnsRepository;

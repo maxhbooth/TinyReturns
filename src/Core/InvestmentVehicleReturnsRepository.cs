@@ -3,7 +3,12 @@ using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.Core
 {
-    public class InvestmentVehicleReturnsRepository
+    public interface IInvestmentVehicleReturnsRepository
+    {
+        InvestmentVehicle[] GetAllInvestmentVehicles();
+    }
+
+    public class InvestmentVehicleReturnsRepository : IInvestmentVehicleReturnsRepository
     {
         private readonly IInvestmentVehicleDataGateway _investmentVehicleDataGateway;
         private readonly IReturnsSeriesDataGateway _returnsSeriesDataGateway;
@@ -19,7 +24,7 @@ namespace Dimensional.TinyReturns.Core
             _investmentVehicleDataGateway = investmentVehicleDataGateway;
         }
 
-        public virtual InvestmentVehicle[] GetAllInvestmentVehicles()
+        public InvestmentVehicle[] GetAllInvestmentVehicles()
         {
             var entityDtos = _investmentVehicleDataGateway.GetAllEntities();
 
@@ -65,7 +70,7 @@ namespace Dimensional.TinyReturns.Core
     public static class InvestmentVehicleReturnsRepositoryExtensions
     {
         public static InvestmentVehicle[] GetPortfolios(
-            this InvestmentVehicleReturnsRepository repository)
+            this IInvestmentVehicleReturnsRepository repository)
         {
             var allVehicles = repository.GetAllInvestmentVehicles();
 

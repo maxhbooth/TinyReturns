@@ -6,11 +6,11 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
 {
     public class PerformanceReportExcelReportCreator
     {
-        private readonly InvestmentVehicleReturnsRepository _returnsRepository;
+        private readonly IInvestmentVehicleReturnsRepository _returnsRepository;
         private readonly IPerformanceReportExcelReportView _view;
 
         public PerformanceReportExcelReportCreator(
-            InvestmentVehicleReturnsRepository returnsRepository,
+            IInvestmentVehicleReturnsRepository returnsRepository,
             IPerformanceReportExcelReportView view)
         {
             _view = view;

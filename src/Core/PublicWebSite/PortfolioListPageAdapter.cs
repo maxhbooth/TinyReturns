@@ -5,10 +5,10 @@ namespace Dimensional.TinyReturns.Core.PublicWebSite
 {
     public class PortfolioListPageAdapter
     {
-        private readonly InvestmentVehicleReturnsRepository _investmentVehicleReturnsRepository;
+        private readonly IInvestmentVehicleReturnsRepository _investmentVehicleReturnsRepository;
 
         public PortfolioListPageAdapter(
-            InvestmentVehicleReturnsRepository investmentVehicleReturnsRepository)
+            IInvestmentVehicleReturnsRepository investmentVehicleReturnsRepository)
         {
             _investmentVehicleReturnsRepository = investmentVehicleReturnsRepository;
         }

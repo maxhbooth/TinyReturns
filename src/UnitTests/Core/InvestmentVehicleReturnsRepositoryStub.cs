@@ -3,12 +3,11 @@ using Dimensional.TinyReturns.Core;
 
 namespace Dimensional.TinyReturns.UnitTests.Core
 {
-    public class InvestmentVehicleReturnsRepositoryStub : InvestmentVehicleReturnsRepository
+    public class InvestmentVehicleReturnsRepositoryStub : IInvestmentVehicleReturnsRepository
     {
         private readonly List<InvestmentVehicle> _investmentVehicleList;
 
         public InvestmentVehicleReturnsRepositoryStub()
-            : base(null, null, null)
         {
             _investmentVehicleList = new List<InvestmentVehicle>();
         }
@@ -19,7 +18,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             _investmentVehicleList.Add(i);
         }
 
-        public override InvestmentVehicle[] GetAllInvestmentVehicles()
+        public InvestmentVehicle[] GetAllInvestmentVehicles()
         {
             return _investmentVehicleList.ToArray();
         }
