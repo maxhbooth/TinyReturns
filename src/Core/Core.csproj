@@ -53,7 +53,7 @@
     <Compile Include="FlatFiles\IFlatFileIo.cs" />
     <Compile Include="FlatFiles\ReflectionHelper.cs" />
     <Compile Include="InvestmentVehicle.cs" />
-    <Compile Include="InvestmentVehicleDataAdapter.cs" />
+    <Compile Include="InvestmentVehicleDataMapper.cs" />
     <Compile Include="InvestmentVehicleReturnsRepository.cs" />
     <Compile Include="InvestmentVehicleType.cs" />
     <Compile Include="FeeType.cs" />

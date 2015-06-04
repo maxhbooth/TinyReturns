@@ -26,7 +26,7 @@ namespace Dimensional.TinyReturns.Core
             var allReturnSeriesDtos = GetReturnSeriesDtos(entityDtos);
             var allMonthlyReturnDtos = GetMonthlyReturns(allReturnSeriesDtos);
 
-            var dtosSource = new InvestmentVehicleDataAdapter(allReturnSeriesDtos, allMonthlyReturnDtos);
+            var dtosSource = new InvestmentVehicleDataMapper(allReturnSeriesDtos, allMonthlyReturnDtos);
 
             return entityDtos
                 .Select(dtosSource.CreateEntity)

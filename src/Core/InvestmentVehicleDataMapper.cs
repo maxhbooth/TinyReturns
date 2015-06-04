@@ -4,12 +4,12 @@ using Dimensional.TinyReturns.Core.DateExtend;
 
 namespace Dimensional.TinyReturns.Core
 {
-    public class InvestmentVehicleDataAdapter
+    public class InvestmentVehicleDataMapper
     {
         private readonly ReturnSeriesDto[] _returnSeriesDtos;
         private readonly MonthlyReturnDto[] _monthlyReturnDtos;
 
-        public InvestmentVehicleDataAdapter(
+        public InvestmentVehicleDataMapper(
             ReturnSeriesDto[] returnSeriesDtos,
             MonthlyReturnDto[] monthlyReturnDtos)
         {
