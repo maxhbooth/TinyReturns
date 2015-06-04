@@ -46,12 +46,10 @@ namespace Dimensional.TinyReturns.UnitTests.Core
                     .SetupGetReturnSeries(entityNumbers, a);
             }
 
-            public void SetupGetMonthlyReturns(
-                int[] returnSeriesIds,
-                Action<MonthlyReturnDtoCollectionForTests> listAction)
+            public void AddMonthlyReturnDto(
+                MonthlyReturnDto dto)
             {
-                _monthlyReturnsDataGatewayStub
-                    .SetupGetMonthlyReturns(returnSeriesIds, listAction);
+                _monthlyReturnsDataGatewayStub.InsertMonthlyReturns(new []{ dto });
             }
         }
 
@@ -153,8 +151,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
                 c => c.AddNetOfFeesReturnSeries(1000, 100));
 
             testHelper
-                .SetupGetMonthlyReturns(new []{ 1000 },
-                c => c.Add(new MonthlyReturnDto() { ReturnSeriesId = 1000, Year = 2000, Month = 1, ReturnValue = 0.1m } ));
+                .AddMonthlyReturnDto(new MonthlyReturnDto() { ReturnSeriesId = 1000, Year = 2000, Month = 1, ReturnValue = 0.1m });
 
             var repository = testHelper.CreateEntityReturnsRepository();
 

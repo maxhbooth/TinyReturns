@@ -58,8 +58,6 @@
     <Compile Include="Core\InvestmentVehicleTypeTests.cs" />
     <Compile Include="Core\FeeTypeTests.cs" />
     <Compile Include="Core\IntArrayEqualityComparer.cs" />
-    <Compile Include="Core\DataRepositories\MonthlyReturnDtoCollectionForTests.cs" />
-    <Compile Include="Core\DataRepositories\MonthlyReturnsDataGatewayDummy.cs" />
     <Compile Include="Core\DataRepositories\MonthlyReturnsDataGatewayStub.cs" />
     <Compile Include="Core\DataRepositories\ReturnSeriesDtoCollectionForTests.cs" />
     <Compile Include="Core\DataRepositories\ReturnsSeriesDataGatewayDummy.cs" />

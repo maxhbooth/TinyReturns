@@ -1,36 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.UnitTests.Core.DataRepositories
 {
-    public class MonthlyReturnsDataGatewayStub : MonthlyReturnsDataGatewayDummy
+    public class MonthlyReturnsDataGatewayStub : IMonthlyReturnsDataGateway
     {
-        private readonly Dictionary<int[], MonthlyReturnDto[]> _getMonthlyReturnsSetups;
+        private readonly List<MonthlyReturnDto> _monthlyReturnDtos;
 
         public MonthlyReturnsDataGatewayStub()
         {
-            _getMonthlyReturnsSetups = new Dictionary<int[], MonthlyReturnDto[]>(new IntArrayEqualityComparer());
+            _monthlyReturnDtos = new List<MonthlyReturnDto>();
         }
 
-        public void SetupGetMonthlyReturns(
-            int[] returnSeriesIds,
-            Action<MonthlyReturnDtoCollectionForTests> listAction)
+        public void InsertMonthlyReturns(MonthlyReturnDto[] monthlyReturns)
         {
-            var col = new MonthlyReturnDtoCollectionForTests();
-
-            listAction(col);
-
-            _getMonthlyReturnsSetups.Add(returnSeriesIds, col.GetReturnSeriesDtos());
+            _monthlyReturnDtos.AddRange(monthlyReturns);
         }
 
-        public override MonthlyReturnDto[] GetMonthlyReturns(int[] returnSeriesIds)
+        public MonthlyReturnDto[] GetMonthlyReturns(int returnSeriesId)
         {
-            if (_getMonthlyReturnsSetups.ContainsKey(returnSeriesIds))
-                return _getMonthlyReturnsSetups[returnSeriesIds];
-
-            return new MonthlyReturnDto[0];
+            return _monthlyReturnDtos
+                .Where(dto => dto.ReturnSeriesId == returnSeriesId)
+                .ToArray();
         }
 
+        public MonthlyReturnDto[] GetMonthlyReturns(int[] returnSeriesIds)
+        {
+            return _monthlyReturnDtos
+                .Where(dto => returnSeriesIds.Any(id => dto.ReturnSeriesId == id))
+                .ToArray();
+        }
+
+        public void DeleteMonthlyReturns(int returnSeriesId)
+        {
+            _monthlyReturnDtos.RemoveAll(dto => dto.ReturnSeriesId == returnSeriesId);
+        }
+
+        public void DeleteAllMonthlyReturns()
+        {
+            _monthlyReturnDtos.Clear();
+        }
     }
 }
