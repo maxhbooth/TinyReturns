@@ -38,12 +38,10 @@ namespace Dimensional.TinyReturns.UnitTests.Core
                 _investmentVehicleDataGatewayStub.SetupGetAllEntities(a);
             }
 
-            public void SetupGetReturnSeries(
-                int[] entityNumbers,
-                Action<ReturnSeriesDtoCollectionForTests> a)
+            public void AddReturnSeriesDto(
+                ReturnSeriesDto dto)
             {
-                _returnsSeriesDataGatewayStub
-                    .SetupGetReturnSeries(entityNumbers, a);
+                _returnsSeriesDataGatewayStub.InsertReturnSeries(dto);
             }
 
             public void AddMonthlyReturnDto(
@@ -85,10 +83,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             testHelper
                 .SetupGetAllEntities(c => c.AddPortfolio(100, "Port100"));
 
-            testHelper
-                .SetupGetReturnSeries(
-                    new []{ 100 },
-                    c => c.AddNetOfFeesReturnSeries(1000, 100));
+            testHelper.AddReturnSeriesDto(ReturnSeriesDto.CreateForNetOfFees(1000, 100));
 
             var repository = testHelper.CreateEntityReturnsRepository();
 
@@ -114,12 +109,8 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             testHelper
                 .SetupGetAllEntities(c => c.AddPortfolio(100, "Port100"));
 
-            testHelper
-                .SetupGetReturnSeries(
-                    new[] { 100 },
-                    c => c
-                        .AddNetOfFeesReturnSeries(1000, 100)
-                        .AddNetOfGrossReturnSeries(1001, 100));
+            testHelper.AddReturnSeriesDto(ReturnSeriesDto.CreateForNetOfFees(1000, 100));
+            testHelper.AddReturnSeriesDto(ReturnSeriesDto.CreateForGrossOfFees(1001, 100));
 
             var repository = testHelper.CreateEntityReturnsRepository();
 
@@ -146,9 +137,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             testHelper
                 .SetupGetAllEntities(c => c.AddPortfolio(100, "Port100"));
 
-            testHelper.SetupGetReturnSeries(
-                new[] { 100 },
-                c => c.AddNetOfFeesReturnSeries(1000, 100));
+            testHelper.AddReturnSeriesDto(ReturnSeriesDto.CreateForNetOfFees(1000, 100));
 
             testHelper
                 .AddMonthlyReturnDto(new MonthlyReturnDto() { ReturnSeriesId = 1000, Year = 2000, Month = 1, ReturnValue = 0.1m });

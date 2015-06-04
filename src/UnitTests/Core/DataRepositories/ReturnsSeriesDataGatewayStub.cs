@@ -1,35 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Dimensional.TinyReturns.Core.DataRepositories;
 
 namespace Dimensional.TinyReturns.UnitTests.Core.DataRepositories
 {
-    public class ReturnsSeriesDataGatewayStub : ReturnsSeriesDataGatewayDummy
+    public class ReturnsSeriesDataGatewayStub : IReturnsSeriesDataGateway
     {
-        private readonly Dictionary<int[], ReturnSeriesDto[]> _getReturnSeriesSetups;
+        private readonly List<ReturnSeriesDto> _returnSeriesDtos;
+        private int _index;
 
         public ReturnsSeriesDataGatewayStub()
         {
-            _getReturnSeriesSetups = new Dictionary<int[], ReturnSeriesDto[]>(new IntArrayEqualityComparer());
+            _returnSeriesDtos = new List<ReturnSeriesDto>();
+
+            _index = 0;
         }
 
-        public void SetupGetReturnSeries(
-            int[] entityNumbers,
-            Action<ReturnSeriesDtoCollectionForTests> listAction)
+        public int InsertReturnSeries(ReturnSeriesDto returnSeries)
         {
-            var col = new ReturnSeriesDtoCollectionForTests();
-
-            listAction(col);
-
-            _getReturnSeriesSetups.Add(entityNumbers, col.GetReturnSeriesDtos());
+            _returnSeriesDtos.Add(returnSeries);
+            _index ++;
+            return _index;
         }
 
-        public override ReturnSeriesDto[] GetReturnSeries(int[] entityNumbers)
+        public ReturnSeriesDto GetReturnSeries(int returnSeriesId)
         {
-            if (_getReturnSeriesSetups.ContainsKey(entityNumbers))
-                return _getReturnSeriesSetups[entityNumbers];
+            return _returnSeriesDtos
+                .FirstOrDefault(dto => dto.ReturnSeriesId == returnSeriesId);
+        }
 
-            return new ReturnSeriesDto[0];
+        public void DeleteReturnSeries(int returnSeriesId)
+        {
+            _returnSeriesDtos
+                .RemoveAll(dto => dto.ReturnSeriesId == returnSeriesId);
+        }
+
+        public ReturnSeriesDto[] GetReturnSeries(int[] entityNumbers)
+        {
+            return _returnSeriesDtos
+                .Where(dto => entityNumbers.Any(n => dto.InvestmentVehicleNumber == n))
+                .ToArray();
+        }
+
+        public void DeleteAllReturnSeries()
+        {
+            _returnSeriesDtos.Clear();
         }
     }
 }

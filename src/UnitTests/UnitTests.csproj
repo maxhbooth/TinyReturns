@@ -60,7 +60,6 @@
     <Compile Include="Core\IntArrayEqualityComparer.cs" />
     <Compile Include="Core\DataRepositories\MonthlyReturnsDataGatewayStub.cs" />
     <Compile Include="Core\DataRepositories\ReturnSeriesDtoCollectionForTests.cs" />
-    <Compile Include="Core\DataRepositories\ReturnsSeriesDataGatewayDummy.cs" />
     <Compile Include="Core\DataRepositories\ReturnsSeriesDataGatewayStub.cs" />
     <Compile Include="Core\InvestmentVehicleReturnsRepositoryStub.cs" />
     <Compile Include="Core\OmniFileExport\OmniDataFileCreatorTests.cs" />
