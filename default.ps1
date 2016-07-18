@@ -9,6 +9,7 @@ properties {
 	$buildFolder = "$baseDir\.build"
 	$srcFolder = "$baseDir\src"
 	$docsFolder = "$baseDir\docs"
+	$dataFolder = "$baseDir\data"
 	
 	$buildTargetFolder = "$buildFolder\$buildConfig"
 
@@ -19,13 +20,14 @@ properties {
 	$databaseScripts = "$baseDir\data\mssql\TinyReturns\TransitionsScripts"
 
 	$dbdeployExec = "$baseDir\lib\dbdeploy\dbdeploy.exe"
+	$roundhouseExec = "$srcFolder\packages\roundhouse.0.8.6\bin\rh.exe"
 
 	$doDatabaseScriptPath = "$buildFolder\DatabaseUpgrade_GIPS_Local_$dateStamp.sql"
 	$undoDatabaseScriptPath = "$buildFolder\DatabaseRollback_GIPS_Local_$dateStamp.sql"
 	
 	$solutionFile = "$srcFolder\TinyReturns.sln"
 
-	$packageNunitExec = "$srcFolder\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
+	$packageXunitExec = "$srcFolder\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
 }
 
 task default -depends CleanSolution, UpdateNuGetPackages, BuildSolution, RebuildDatabase, RunUnitTests, RunIntegrationTests, PopulateDatabase
@@ -60,33 +62,27 @@ task BuildSolution -depends CleanSolution {
 ## ---------------------------------------------
 
 task RunUnitTests -depends BuildSolution {
-	Exec { &$packageNunitExec "$buildTargetFolder\Dimensional.TinyReturns.UnitTests.dll" /html "$buildFolder\Dimensional.TinyReturns.UnitTests.dll.html" }
+	Exec { &$packageXunitExec "$buildTargetFolder\Dimensional.TinyReturns.UnitTests.dll" /html "$buildFolder\Dimensional.TinyReturns.UnitTests.dll.html" }
 }
 
 ## ---------------------------------------------
 
 task RebuildDatabase {
-	DropSqlDatabase $databaseServer $databaseName
-	CreateSqlDatabase $databaseServer $databaseName
-	
-	RunDatabaseScriptsFromFolder $databaseServer $databaseName $standardDatabaseObjectsFolder
-	
-	Exec { &$dbDeployExec `
-		-scriptfiles $databaseScripts `
-		-dofile $doDatabaseScriptPath `
-		-undofile $undoDatabaseScriptPath `
-		-connection "Initial Catalog=$databaseName;Data Source=$databaseServer;Integrated Security=SSPI;" `
-		-type mssql `
-		-deltaset "$projectName" `
-		-tablename DatabaseVersion `
-		-owner $databaseChangeOwner
+	$dbFileDir = "$dataFolder\mssql\TinyReturns"
+	$versionFile = "$dbFileDir\_BuildInfo.xml"
+	$enviornment = "LOCAL"
+
+	Exec {
+		&$roundhouseExec /d=$databaseName /f=$dbFileDir /s=$databaseServer /vf=$versionFile /vx='//buildInfo/version' /env=$enviornment /drop /silent
 	}
-	
-	ExecuteSqlFile $databaseServer $databaseName $doDatabaseScriptPath
+
+	Exec {
+		&$roundhouseExec /d=$databaseName /f=$dbFileDir /s=$databaseServer /vf=$versionFile /vx='//buildInfo/version' /env=$enviornment /simple /silent
+	}
 }
 
 task RunIntegrationTests -depends BuildSolution {
-	Exec { &$packageNunitExec "$buildTargetFolder\Dimensional.TinyReturns.IntegrationTests.dll" /html "$buildFolder\Dimensional.TinyReturns.IntegrationTests.dll.html" }
+	Exec { &$packageXunitExec "$buildTargetFolder\Dimensional.TinyReturns.IntegrationTests.dll" /html "$buildFolder\Dimensional.TinyReturns.IntegrationTests.dll.html" }
 }
 
 task PopulateDatabase -depends RebuildDatabase {

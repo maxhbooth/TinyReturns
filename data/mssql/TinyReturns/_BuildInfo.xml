@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<buildInfo>
+  <projectName>Tiny Returns</projectName>
+  <companyName>Dimensional Fund Advisors</companyName>
+  <versionMajor>0</versionMajor>
+  <versionMinor>0</versionMinor>
+  <versionPatch>0</versionPatch>
+  <buildNumber>1</buildNumber>
+  <revision>0</revision>
+  <version>0.0.0.0</version>
+  <repositoryPath>https://github.com/chucknorris/roundhouse.git</repositoryPath>
+  <microsoftNetFramework>net-4.0</microsoftNetFramework>
+  <msbuildConfiguration>Release</msbuildConfiguration>
+  <msbuildPlatform>Any CPU</msbuildPlatform>
+  <builtWith>UppercuT v. 1.4.2.0</builtWith>
+</buildInfo>
