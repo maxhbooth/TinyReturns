@@ -1,13 +1,12 @@
+Framework '4.0'
 
 properties {
-	Framework '4.0'
-
 	$projectName = "TinyReturns"
 	$baseDir = resolve-path .
 	$buildConfig = "Release"
 	$databaseChangeOwner = "Paul Herrera"
 
-	$buildFolder = "$baseDir\package"
+	$buildFolder = "$baseDir\.build"
 	$srcFolder = "$baseDir\src"
 	$docsFolder = "$baseDir\docs"
 	
@@ -58,6 +57,14 @@ task BuildSolution -depends CleanSolution {
 	Copy-Item "$srcFolder\Logging\Log4NetConfig.xml" "$buildTargetFolder"
 }
 
+## ---------------------------------------------
+
+task RunUnitTests -depends BuildSolution {
+	Exec { &$packageNunitExec "$buildTargetFolder\Dimensional.TinyReturns.UnitTests.dll" /html "$buildFolder\Dimensional.TinyReturns.UnitTests.dll.html" }
+}
+
+## ---------------------------------------------
+
 task RebuildDatabase {
 	DropSqlDatabase $databaseServer $databaseName
 	CreateSqlDatabase $databaseServer $databaseName
@@ -76,10 +83,6 @@ task RebuildDatabase {
 	}
 	
 	ExecuteSqlFile $databaseServer $databaseName $doDatabaseScriptPath
-}
-
-task RunUnitTests -depends BuildSolution {
-	Exec { &$packageNunitExec "$buildTargetFolder\Dimensional.TinyReturns.UnitTests.dll" /html "$buildFolder\Dimensional.TinyReturns.UnitTests.dll.html" }
 }
 
 task RunIntegrationTests -depends BuildSolution {
