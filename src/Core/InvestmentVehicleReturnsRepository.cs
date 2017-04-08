@@ -10,23 +10,23 @@ namespace Dimensional.TinyReturns.Core
 
     public class InvestmentVehicleReturnsRepository : IInvestmentVehicleReturnsRepository
     {
-        private readonly IInvestmentVehicleDataGateway _investmentVehicleDataGateway;
-        private readonly IReturnsSeriesDataGateway _returnsSeriesDataGateway;
-        private readonly IMonthlyReturnsDataGateway _monthlyReturnsDataGateway;
+        private readonly IInvestmentVehicleDataTableGateway _investmentVehicleDataTableGateway;
+        private readonly IReturnsSeriesDataTableGateway _returnsSeriesDataTableGateway;
+        private readonly IMonthlyReturnsDataTableGateway _monthlyReturnsDataTableGateway;
 
         public InvestmentVehicleReturnsRepository(
-            IInvestmentVehicleDataGateway investmentVehicleDataGateway,
-            IReturnsSeriesDataGateway returnsSeriesDataGateway,
-            IMonthlyReturnsDataGateway monthlyReturnsDataGateway)
+            IInvestmentVehicleDataTableGateway investmentVehicleDataTableGateway,
+            IReturnsSeriesDataTableGateway returnsSeriesDataTableGateway,
+            IMonthlyReturnsDataTableGateway monthlyReturnsDataTableGateway)
         {
-            _monthlyReturnsDataGateway = monthlyReturnsDataGateway;
-            _returnsSeriesDataGateway = returnsSeriesDataGateway;
-            _investmentVehicleDataGateway = investmentVehicleDataGateway;
+            _monthlyReturnsDataTableGateway = monthlyReturnsDataTableGateway;
+            _returnsSeriesDataTableGateway = returnsSeriesDataTableGateway;
+            _investmentVehicleDataTableGateway = investmentVehicleDataTableGateway;
         }
 
         public InvestmentVehicle[] GetAllInvestmentVehicles()
         {
-            var entityDtos = _investmentVehicleDataGateway.GetAllEntities();
+            var entityDtos = _investmentVehicleDataTableGateway.GetAllEntities();
 
             var allReturnSeriesDtos = GetReturnSeriesDtos(entityDtos);
             var allMonthlyReturnDtos = GetMonthlyReturns(allReturnSeriesDtos);
@@ -46,7 +46,7 @@ namespace Dimensional.TinyReturns.Core
                 .Distinct()
                 .ToArray();
 
-            var returnSeriesDtos = _returnsSeriesDataGateway
+            var returnSeriesDtos = _returnsSeriesDataTableGateway
                 .GetReturnSeries(distinctEntityNumbers);
 
             return returnSeriesDtos;
@@ -60,7 +60,7 @@ namespace Dimensional.TinyReturns.Core
                 .Distinct()
                 .ToArray();
 
-            var monthlyReturnDtos = _monthlyReturnsDataGateway
+            var monthlyReturnDtos = _monthlyReturnsDataTableGateway
                 .GetMonthlyReturns(distinctReturnSeriesIds);
 
             return monthlyReturnDtos;

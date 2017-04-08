@@ -44,9 +44,9 @@
     <Compile Include="BaseDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\BaseTinyReturnsDataTableGateway.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TinyReturnsDatabase\InvestmentVehicleDataGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\ReturnsSeriesDataGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\MonthlyReturnsDataGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\InvestmentVehicleDataTableGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\ReturnsSeriesDataTableGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\MonthlyReturnsDataTableGateway.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

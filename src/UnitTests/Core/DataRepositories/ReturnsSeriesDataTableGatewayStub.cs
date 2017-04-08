@@ -4,12 +4,12 @@ using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
 
 namespace Dimensional.TinyReturns.UnitTests.Core.DataRepositories
 {
-    public class ReturnsSeriesDataGatewayStub : IReturnsSeriesDataGateway
+    public class ReturnsSeriesDataTableGatewayStub : IReturnsSeriesDataTableGateway
     {
         private readonly List<ReturnSeriesDto> _returnSeriesDtos;
         private int _index;
 
-        public ReturnsSeriesDataGatewayStub()
+        public ReturnsSeriesDataTableGatewayStub()
         {
             _returnSeriesDtos = new List<ReturnSeriesDto>();
 

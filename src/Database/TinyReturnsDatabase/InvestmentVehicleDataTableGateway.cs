@@ -5,9 +5,9 @@ using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
 
 namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase
 {
-    public class InvestmentVehicleDataGateway : BaseTinyReturnsDataTableGateway, IInvestmentVehicleDataGateway
+    public class InvestmentVehicleDataTableGateway : BaseTinyReturnsDataTableGateway, IInvestmentVehicleDataTableGateway
     {
-        public InvestmentVehicleDataGateway(
+        public InvestmentVehicleDataTableGateway(
             ITinyReturnsDatabaseSettings tinyReturnsDatabaseSettings,
             ISystemLog systemLog)
             : base(tinyReturnsDatabaseSettings, systemLog)

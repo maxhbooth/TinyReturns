@@ -5,9 +5,9 @@ using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
 
 namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase
 {
-    public class MonthlyReturnsDataGateway : BaseTinyReturnsDataTableGateway, IMonthlyReturnsDataGateway
+    public class MonthlyReturnsDataTableGateway : BaseTinyReturnsDataTableGateway, IMonthlyReturnsDataTableGateway
     {
-        public MonthlyReturnsDataGateway(
+        public MonthlyReturnsDataTableGateway(
             ITinyReturnsDatabaseSettings tinyReturnsDatabaseSettings,
             ISystemLog systemLog) : base(tinyReturnsDatabaseSettings, systemLog)
         {

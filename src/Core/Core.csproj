@@ -44,8 +44,8 @@
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
     <Compile Include="TinyReturnsDatabase\InvestmentVehicleDto.cs" />
-    <Compile Include="TinyReturnsDatabase\IInvestmentVehicleDataGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\IMonthlyReturnsDataGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\IInvestmentVehicleDataTableGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\IMonthlyReturnsDataTableGateway.cs" />
     <Compile Include="DateExtend\DateTimeExtensions.cs" />
     <Compile Include="DateExtend\MonthYearRange.cs" />
     <Compile Include="FinancialMath.cs" />
@@ -57,7 +57,7 @@
     <Compile Include="InvestmentVehicleReturnsRepository.cs" />
     <Compile Include="InvestmentVehicleType.cs" />
     <Compile Include="FeeType.cs" />
-    <Compile Include="TinyReturnsDatabase\IReturnsSeriesDataGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\IReturnsSeriesDataTableGateway.cs" />
     <Compile Include="Headspring\Enumeration.cs" />
     <Compile Include="DateExtend\IMonthAndYear.cs" />
     <Compile Include="ISystemLog.cs" />

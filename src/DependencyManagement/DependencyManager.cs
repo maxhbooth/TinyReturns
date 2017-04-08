@@ -36,10 +36,10 @@ namespace Dimensional.TinyReturns.DependencyManagement
 
             MasterFactory.SystemLog = systemLog;
             MasterFactory.TinyReturnsDatabaseSettings = tinyReturnsDatabaseSettings;
-            MasterFactory.ReturnsSeriesDataGateway = new ReturnsSeriesDataGateway(tinyReturnsDatabaseSettings, systemLog);
-            MasterFactory.MonthlyReturnsDataGateway = new MonthlyReturnsDataGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.ReturnsSeriesDataTableGateway = new ReturnsSeriesDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.MonthlyReturnsDataTableGateway = new MonthlyReturnsDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
             MasterFactory.CitiReturnsFileReader = citiReturnsFileReader;
-            MasterFactory.InvestmentVehicleDataGateway = new InvestmentVehicleDataGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.InvestmentVehicleDataTableGateway = new InvestmentVehicleDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
             MasterFactory.FlatFileIo = flatFileIo;
             MasterFactory.PerformanceReportExcelReportView = performanceReportExcelReportView;
 

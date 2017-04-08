@@ -8,13 +8,13 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
 {
     public class ReturnSeriesDataRepositoryTests : DatabaseTestBase
     {
-        private readonly IReturnsSeriesDataGateway _returnsSeriesDataGateway;
-        private IMonthlyReturnsDataGateway _monthlyReturnsDataGateway;
+        private readonly IReturnsSeriesDataTableGateway _returnsSeriesDataTableGateway;
+        private IMonthlyReturnsDataTableGateway _monthlyReturnsDataTableGateway;
 
         public ReturnSeriesDataRepositoryTests()
         {
-            _returnsSeriesDataGateway = MasterFactory.GetReturnsSeriesRepository();
-            _monthlyReturnsDataGateway = MasterFactory.GetMonthlyReturnsDataRepository();
+            _returnsSeriesDataTableGateway = MasterFactory.GetReturnsSeriesRepository();
+            _monthlyReturnsDataTableGateway = MasterFactory.GetMonthlyReturnsDataRepository();
         }
 
         [Fact]
@@ -22,11 +22,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
         {
             var newReturnsSeries = InsertTestReturnSeries();
 
-            var savedReturnSeries = _returnsSeriesDataGateway.GetReturnSeries(newReturnsSeries.ReturnSeriesId);
+            var savedReturnSeries = _returnsSeriesDataTableGateway.GetReturnSeries(newReturnsSeries.ReturnSeriesId);
 
             AssertReturnSeriesRecordIsValid(savedReturnSeries, newReturnsSeries);
 
-            _returnsSeriesDataGateway.DeleteReturnSeries(newReturnsSeries.ReturnSeriesId);
+            _returnsSeriesDataTableGateway.DeleteReturnSeries(newReturnsSeries.ReturnSeriesId);
         }
 
         [Fact]
@@ -36,14 +36,14 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
 
             var testMonthlyReturns = CreateTestMonthlyReturns(newReturnsSeries);
 
-            _monthlyReturnsDataGateway.InsertMonthlyReturns(testMonthlyReturns);
+            _monthlyReturnsDataTableGateway.InsertMonthlyReturns(testMonthlyReturns);
 
-            var savedMonthlyReturns = _monthlyReturnsDataGateway.GetMonthlyReturns(newReturnsSeries.ReturnSeriesId);
+            var savedMonthlyReturns = _monthlyReturnsDataTableGateway.GetMonthlyReturns(newReturnsSeries.ReturnSeriesId);
 
             AssertMonthlyReturnsAreValid(savedMonthlyReturns, newReturnsSeries.ReturnSeriesId);
 
-            _monthlyReturnsDataGateway.DeleteMonthlyReturns(newReturnsSeries.ReturnSeriesId);
-            _returnsSeriesDataGateway.DeleteReturnSeries(newReturnsSeries.ReturnSeriesId);
+            _monthlyReturnsDataTableGateway.DeleteMonthlyReturns(newReturnsSeries.ReturnSeriesId);
+            _returnsSeriesDataTableGateway.DeleteReturnSeries(newReturnsSeries.ReturnSeriesId);
         }
 
         private void AssertMonthlyReturnsAreValid(
@@ -109,7 +109,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
             returnSeries.InvestmentVehicleNumber = 100;
             returnSeries.FeeTypeCode = 'N';
 
-            var newId = _returnsSeriesDataGateway.InsertReturnSeries(returnSeries);
+            var newId = _returnsSeriesDataTableGateway.InsertReturnSeries(returnSeries);
 
             returnSeries.ReturnSeriesId = newId;
 

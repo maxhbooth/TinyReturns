@@ -8,13 +8,13 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 {
     public class CitiReturnSeriesImporterTests : DatabaseTestBase
     {
-        private readonly IReturnsSeriesDataGateway _returnsSeriesDataGateway;
-        private readonly IMonthlyReturnsDataGateway _monthlyReturnsDataGateway;
+        private readonly IReturnsSeriesDataTableGateway _returnsSeriesDataTableGateway;
+        private readonly IMonthlyReturnsDataTableGateway _monthlyReturnsDataTableGateway;
 
         public CitiReturnSeriesImporterTests()
         {
-            _returnsSeriesDataGateway = MasterFactory.GetReturnsSeriesRepository();
-            _monthlyReturnsDataGateway = MasterFactory.GetMonthlyReturnsDataRepository();
+            _returnsSeriesDataTableGateway = MasterFactory.GetReturnsSeriesRepository();
+            _monthlyReturnsDataTableGateway = MasterFactory.GetMonthlyReturnsDataRepository();
         }
 
         [Fact]
@@ -24,7 +24,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             
             ImportTestFile(GetNetReturnsTestFilePath());
 
-            var series = _returnsSeriesDataGateway.GetReturnSeries(
+            var series = _returnsSeriesDataTableGateway.GetReturnSeries(
                 new[] {100, 101, 102});
 
             Assert.Equal(series.Length, 3);
@@ -39,7 +39,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 
             ImportTestFile(GetNetReturnsTestFilePath());
 
-            var series = _returnsSeriesDataGateway.GetReturnSeries(
+            var series = _returnsSeriesDataTableGateway.GetReturnSeries(
                 new[] { 100 });
 
             Assert.Equal(series[0].InvestmentVehicleNumber, 100);
@@ -81,8 +81,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 
         private MonthlyReturnDto[] GetMonthlyReturnSeries(int entityNumber)
         {
-            var returnSeries = _returnsSeriesDataGateway.GetReturnSeries(new[] {entityNumber}).First();
-            var monthlyReturns = _monthlyReturnsDataGateway.GetMonthlyReturns(returnSeries.ReturnSeriesId);
+            var returnSeries = _returnsSeriesDataTableGateway.GetReturnSeries(new[] {entityNumber}).First();
+            var monthlyReturns = _monthlyReturnsDataTableGateway.GetMonthlyReturns(returnSeries.ReturnSeriesId);
             return monthlyReturns;
         }
 
