@@ -5,7 +5,7 @@ namespace Dimensional.TinyReturns.ReportGeneratorConsole
 {
     public class DatabaseSettings : ITinyReturnsDatabaseSettings
     {
-        public string ReturnsDatabaseConnectionString
+        public string TinyReturnsDatabaseConnectionString
         {
             get { return ConfigurationManager.ConnectionStrings["TinyReturnsDatabase"].ConnectionString; }
         }

@@ -5,7 +5,7 @@ namespace Dimensional.TinyReturns.OmniFileExporterConsole
 {
     public class DatabaseSettings : ITinyReturnsDatabaseSettings
     {
-        public string ReturnsDatabaseConnectionString
+        public string TinyReturnsDatabaseConnectionString
         {
             get { return ConfigurationManager.ConnectionStrings["TinyReturnsDatabase"].ConnectionString; }
         }
