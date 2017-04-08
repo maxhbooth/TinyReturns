@@ -1,6 +1,6 @@
-﻿namespace Dimensional.TinyReturns.Core.DataRepositories
+﻿namespace Dimensional.TinyReturns.Core.TinyReturnsDatabase
 {
-    public interface IMonthlyReturnsDataGateway
+    public interface IMonthlyReturnsDataTableGateway
     {
         void InsertMonthlyReturns(MonthlyReturnDto[] monthlyReturns);
 

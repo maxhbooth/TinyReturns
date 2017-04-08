@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using Dimensional.TinyReturns.Core.DataRepositories;
+using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
 
 namespace Dimensional.TinyReturns.UnitTests.Core
 {
-    public class InvestmentVehicleDataGatewayStub : IInvestmentVehicleDataGateway
+    public class InvestmentVehicleDataTableGatewayStub : IInvestmentVehicleDataTableGateway
     {
         private readonly EntityDtoCollectionForTest _entityDtoCollectionForTest;
 
-        public InvestmentVehicleDataGatewayStub()
+        public InvestmentVehicleDataTableGatewayStub()
         {
             _entityDtoCollectionForTest = new EntityDtoCollectionForTest();
         }

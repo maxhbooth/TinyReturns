@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Dimensional.TinyReturns.Core.DataRepositories;
+using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
 
 namespace Dimensional.TinyReturns.UnitTests.Core.DataRepositories
 {
-    public class MonthlyReturnsDataGatewayStub : IMonthlyReturnsDataGateway
+    public class MonthlyReturnsDataTableGatewayStub : IMonthlyReturnsDataTableGateway
     {
         private readonly List<MonthlyReturnDto> _monthlyReturnDtos;
 
-        public MonthlyReturnsDataGatewayStub()
+        public MonthlyReturnsDataTableGatewayStub()
         {
             _monthlyReturnDtos = new List<MonthlyReturnDto>();
         }

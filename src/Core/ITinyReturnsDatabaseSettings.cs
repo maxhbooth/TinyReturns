@@ -2,6 +2,6 @@
 {
     public interface ITinyReturnsDatabaseSettings
     {
-        string ReturnsDatabaseConnectionString { get; }
+        string TinyReturnsDatabaseConnectionString { get; }
     }
 }

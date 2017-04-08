@@ -1,7 +1,7 @@
 ﻿using System;
 using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.DataRepositories;
 using Dimensional.TinyReturns.Core.DateExtend;
+using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
 using Dimensional.TinyReturns.UnitTests.Core.DataRepositories;
 using Xunit;
 
@@ -11,43 +11,43 @@ namespace Dimensional.TinyReturns.UnitTests.Core
     {
         private class EntityReturnsRepositoryTestHelper
         {
-            private readonly InvestmentVehicleDataGatewayStub _investmentVehicleDataGatewayStub;
-            private readonly ReturnsSeriesDataGatewayStub _returnsSeriesDataGatewayStub;
-            private readonly MonthlyReturnsDataGatewayStub _monthlyReturnsDataGatewayStub;
+            private readonly InvestmentVehicleDataTableGatewayStub _investmentVehicleDataTableGatewayStub;
+            private readonly ReturnsSeriesDataTableGatewayStub _returnsSeriesDataTableGatewayStub;
+            private readonly MonthlyReturnsDataTableGatewayStub _monthlyReturnsDataTableGatewayStub;
 
             public EntityReturnsRepositoryTestHelper()
             {
-                _investmentVehicleDataGatewayStub = new InvestmentVehicleDataGatewayStub();
-                _returnsSeriesDataGatewayStub = new ReturnsSeriesDataGatewayStub();
-                _monthlyReturnsDataGatewayStub = new MonthlyReturnsDataGatewayStub();
+                _investmentVehicleDataTableGatewayStub = new InvestmentVehicleDataTableGatewayStub();
+                _returnsSeriesDataTableGatewayStub = new ReturnsSeriesDataTableGatewayStub();
+                _monthlyReturnsDataTableGatewayStub = new MonthlyReturnsDataTableGatewayStub();
             }
 
             public InvestmentVehicleReturnsRepository CreateEntityReturnsRepository()
             {
                 var repository = new InvestmentVehicleReturnsRepository(
-                    _investmentVehicleDataGatewayStub,
-                    _returnsSeriesDataGatewayStub,
-                    _monthlyReturnsDataGatewayStub);
+                    _investmentVehicleDataTableGatewayStub,
+                    _returnsSeriesDataTableGatewayStub,
+                    _monthlyReturnsDataTableGatewayStub);
 
                 return repository;
             }
 
             public void SetupGetAllEntities(
-                Action<InvestmentVehicleDataGatewayStub.EntityDtoCollectionForTest> a)
+                Action<InvestmentVehicleDataTableGatewayStub.EntityDtoCollectionForTest> a)
             {
-                _investmentVehicleDataGatewayStub.SetupGetAllEntities(a);
+                _investmentVehicleDataTableGatewayStub.SetupGetAllEntities(a);
             }
 
             public void AddReturnSeriesDto(
                 ReturnSeriesDto dto)
             {
-                _returnsSeriesDataGatewayStub.InsertReturnSeries(dto);
+                _returnsSeriesDataTableGatewayStub.InsertReturnSeries(dto);
             }
 
             public void AddMonthlyReturnDto(
                 MonthlyReturnDto dto)
             {
-                _monthlyReturnsDataGatewayStub.InsertMonthlyReturns(new []{ dto });
+                _monthlyReturnsDataTableGatewayStub.InsertMonthlyReturns(new []{ dto });
             }
         }
 

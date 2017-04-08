@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="Core\CalculateReturnRequestFactoryTests.cs" />
     <Compile Include="Core\CitiFileImport\CitiFileImportInteractorTests.cs" />
-    <Compile Include="Core\DataRepositories\InvestmentVehicleDataGatewayStub.cs" />
+    <Compile Include="Core\DataRepositories\InvestmentVehicleDataTableGatewayStub.cs" />
     <Compile Include="Core\FinancialMathTests.cs" />
     <Compile Include="Core\FlatFiles\FlatFileIoSpy.cs" />
     <Compile Include="Core\InvestmentVehicleFactoryForTests.cs" />
@@ -58,9 +58,9 @@
     <Compile Include="Core\InvestmentVehicleTypeTests.cs" />
     <Compile Include="Core\FeeTypeTests.cs" />
     <Compile Include="Core\IntArrayEqualityComparer.cs" />
-    <Compile Include="Core\DataRepositories\MonthlyReturnsDataGatewayStub.cs" />
+    <Compile Include="Core\DataRepositories\MonthlyReturnsDataTableGatewayStub.cs" />
     <Compile Include="Core\DataRepositories\ReturnSeriesDtoCollectionForTests.cs" />
-    <Compile Include="Core\DataRepositories\ReturnsSeriesDataGatewayStub.cs" />
+    <Compile Include="Core\DataRepositories\ReturnsSeriesDataTableGatewayStub.cs" />
     <Compile Include="Core\InvestmentVehicleReturnsRepositoryStub.cs" />
     <Compile Include="Core\OmniFileExport\OmniDataFileCreatorTests.cs" />
     <Compile Include="Core\PerformanceReport\PerformanceReportExcelReportCreatorTests.cs" />

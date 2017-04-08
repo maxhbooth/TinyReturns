@@ -5,11 +5,11 @@ using Dimensional.TinyReturns.Core;
 
 namespace Dimensional.TinyReturns.Database
 {
-    public abstract class BaseDatabase
+    public abstract class BaseDataTableGateway
     {
         protected ISystemLog SystemLog;
 
-        protected BaseDatabase(
+        protected BaseDataTableGateway(
             ISystemLog systemLog)
         {
             SystemLog = systemLog;
@@ -63,7 +63,5 @@ namespace Dimensional.TinyReturns.Database
                 sqlConnection.Close();
             }
         }
-
     }
-
 }

@@ -1,9 +1,9 @@
 ﻿using Dimensional.TinyReturns.Core.CitiFileImport;
-using Dimensional.TinyReturns.Core.DataRepositories;
 using Dimensional.TinyReturns.Core.FlatFiles;
 using Dimensional.TinyReturns.Core.OmniFileExport;
 using Dimensional.TinyReturns.Core.PerformanceReport;
 using Dimensional.TinyReturns.Core.PublicWebSite;
+using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
 
 namespace Dimensional.TinyReturns.Core
 {
@@ -21,15 +21,15 @@ namespace Dimensional.TinyReturns.Core
 
         // **
 
-        private static IReturnsSeriesDataGateway _returnsSeriesDataGateway;
-        public static IReturnsSeriesDataGateway ReturnsSeriesDataGateway { set { _returnsSeriesDataGateway = value; } }
-        public static IReturnsSeriesDataGateway GetReturnsSeriesRepository() { return _returnsSeriesDataGateway; }
+        private static IReturnsSeriesDataTableGateway _returnsSeriesDataTableGateway;
+        public static IReturnsSeriesDataTableGateway ReturnsSeriesDataTableGateway { set { _returnsSeriesDataTableGateway = value; } }
+        public static IReturnsSeriesDataTableGateway GetReturnsSeriesRepository() { return _returnsSeriesDataTableGateway; }
 
         // **
 
-        private static IMonthlyReturnsDataGateway _monthlyReturnsDataGateway;
-        public static IMonthlyReturnsDataGateway MonthlyReturnsDataGateway { set { _monthlyReturnsDataGateway = value; } }
-        public static IMonthlyReturnsDataGateway GetMonthlyReturnsDataRepository() { return _monthlyReturnsDataGateway; }
+        private static IMonthlyReturnsDataTableGateway _monthlyReturnsDataTableGateway;
+        public static IMonthlyReturnsDataTableGateway MonthlyReturnsDataTableGateway { set { _monthlyReturnsDataTableGateway = value; } }
+        public static IMonthlyReturnsDataTableGateway GetMonthlyReturnsDataRepository() { return _monthlyReturnsDataTableGateway; }
 
         // **
 
@@ -39,9 +39,9 @@ namespace Dimensional.TinyReturns.Core
 
         // **
 
-        private static IInvestmentVehicleDataGateway _investmentVehicleDataGateway;
-        public static IInvestmentVehicleDataGateway InvestmentVehicleDataGateway { set { _investmentVehicleDataGateway = value; } }
-        public static IInvestmentVehicleDataGateway GetInvestmentVehicleDataRepository() { return _investmentVehicleDataGateway; }
+        private static IInvestmentVehicleDataTableGateway _investmentVehicleDataTableGateway;
+        public static IInvestmentVehicleDataTableGateway InvestmentVehicleDataTableGateway { set { _investmentVehicleDataTableGateway = value; } }
+        public static IInvestmentVehicleDataTableGateway GetInvestmentVehicleDataRepository() { return _investmentVehicleDataTableGateway; }
 
         // **
 
@@ -65,9 +65,9 @@ namespace Dimensional.TinyReturns.Core
         public static CitiReturnSeriesImporter GetCitiReturnSeriesImporter()
         {
             return new CitiReturnSeriesImporter(
-                _returnsSeriesDataGateway,
+                _returnsSeriesDataTableGateway,
                 _citiReturnsFileReader,
-                _monthlyReturnsDataGateway);
+                _monthlyReturnsDataTableGateway);
         }
 
         public static OmniDataFileCreator GetOmniDataFileCreator()

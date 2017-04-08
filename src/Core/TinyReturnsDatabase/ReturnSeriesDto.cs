@@ -1,4 +1,4 @@
-﻿namespace Dimensional.TinyReturns.Core.DataRepositories
+﻿namespace Dimensional.TinyReturns.Core.TinyReturnsDatabase
 {
     public class ReturnSeriesDto
     {

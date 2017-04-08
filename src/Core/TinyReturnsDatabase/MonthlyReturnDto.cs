@@ -1,6 +1,6 @@
 ﻿using Dimensional.TinyReturns.Core.DateExtend;
 
-namespace Dimensional.TinyReturns.Core.DataRepositories
+namespace Dimensional.TinyReturns.Core.TinyReturnsDatabase
 {
     public class MonthlyReturnDto : IMonthAndYear
     {
