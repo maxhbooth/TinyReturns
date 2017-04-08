@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Dimensional.TinyReturns.Core.DataRepositories;
+using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
 
 namespace Dimensional.TinyReturns.Core.CitiFileImport
 {

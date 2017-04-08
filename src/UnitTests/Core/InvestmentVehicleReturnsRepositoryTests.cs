@@ -1,7 +1,7 @@
 ﻿using System;
 using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.DataRepositories;
 using Dimensional.TinyReturns.Core.DateExtend;
+using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
 using Dimensional.TinyReturns.UnitTests.Core.DataRepositories;
 using Xunit;
 

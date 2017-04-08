@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.DataRepositories;
+using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
 using Xunit;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport

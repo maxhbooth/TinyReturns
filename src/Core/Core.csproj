@@ -43,9 +43,9 @@
     <Compile Include="CitiFileImport\CitiFileImportInteractor.cs" />
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
-    <Compile Include="DataRepositories\InvestmentVehicleDto.cs" />
-    <Compile Include="DataRepositories\IInvestmentVehicleDataGateway.cs" />
-    <Compile Include="DataRepositories\IMonthlyReturnsDataGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\InvestmentVehicleDto.cs" />
+    <Compile Include="TinyReturnsDatabase\IInvestmentVehicleDataGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\IMonthlyReturnsDataGateway.cs" />
     <Compile Include="DateExtend\DateTimeExtensions.cs" />
     <Compile Include="DateExtend\MonthYearRange.cs" />
     <Compile Include="FinancialMath.cs" />
@@ -57,13 +57,13 @@
     <Compile Include="InvestmentVehicleReturnsRepository.cs" />
     <Compile Include="InvestmentVehicleType.cs" />
     <Compile Include="FeeType.cs" />
-    <Compile Include="DataRepositories\IReturnsSeriesDataGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\IReturnsSeriesDataGateway.cs" />
     <Compile Include="Headspring\Enumeration.cs" />
     <Compile Include="DateExtend\IMonthAndYear.cs" />
     <Compile Include="ISystemLog.cs" />
     <Compile Include="ITinyReturnsDatabaseSettings.cs" />
     <Compile Include="MasterFactory.cs" />
-    <Compile Include="DataRepositories\MonthlyReturnDto.cs" />
+    <Compile Include="TinyReturnsDatabase\MonthlyReturnDto.cs" />
     <Compile Include="MonthlyReturn.cs" />
     <Compile Include="DateExtend\MonthYear.cs" />
     <Compile Include="MonthlyReturnExtensions.cs" />
@@ -74,7 +74,7 @@
     <Compile Include="PerformanceReport\PerformanceReportExcelReportCreator.cs" />
     <Compile Include="PerformanceReport\PerformanceReportExcelReportModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataRepositories\ReturnSeriesDto.cs" />
+    <Compile Include="TinyReturnsDatabase\ReturnSeriesDto.cs" />
     <Compile Include="CitiFileImport\CitiReturnSeriesImporter.cs" />
     <Compile Include="PublicWebSite\PortfolioListPageAdapter.cs" />
     <Compile Include="PublicWebSite\PortfolioListRecord.cs" />
