@@ -42,6 +42,7 @@
     <Compile Include="CalculateReturnRequestFactory.cs" />
     <Compile Include="CitiFileImport\CitiFileImportInteractor.cs" />
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
+    <Compile Include="CitiFileImport\CitiMonthyReturnImporter.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
     <Compile Include="TinyReturnsDatabase\InvestmentVehicleDto.cs" />
     <Compile Include="TinyReturnsDatabase\IInvestmentVehicleDataTableGateway.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="TinyReturnsDatabase\Performance\MonthlyReturnDto.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\ReturnSeriesDto.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\BenchmarkDto.cs" />
+    <Compile Include="TinyReturnsDatabase\Portfolio\IPortfolioDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioDto.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioToBenchmarkDto.cs" />
     <Compile Include="TinyReturnsDatabase\ReturnSeriesDto.cs" />

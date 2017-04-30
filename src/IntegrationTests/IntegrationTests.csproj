@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllTablesDeleter.cs" />
+    <Compile Include="Core\CitiFileImport\CitiMonthyReturnImporterTests.cs" />
     <Compile Include="Core\CitiFileImport\CitiReturnSeriesImporterTests.cs" />
     <Compile Include="Core\CitiFileImport\CitiReturnsFileReaderTests.cs" />
     <Compile Include="Core\DataRepository\InvestmentVehicleDataRepositoryTests.cs" />
