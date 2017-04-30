@@ -1,11 +1,25 @@
-﻿namespace Dimensional.TinyReturns.Core.CitiFileImport
+﻿using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
+
+namespace Dimensional.TinyReturns.Core.CitiFileImport
 {
     public class CitiMonthyReturnImporter
     {
-        public void ImportMonthyNetReturnsFile(
+        private readonly IReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
+
+        public CitiMonthyReturnImporter(
+            IReturnSeriesDataTableGateway returnSeriesDataTableGateway)
+        {
+            _returnSeriesDataTableGateway = returnSeriesDataTableGateway;
+        }
+
+        public void ImportMonthyPortfolioNetReturnsFile(
             string filePath)
         {
-            return;
+            _returnSeriesDataTableGateway.Inert(new ReturnSeriesDto()
+            {
+                Name = "Returns for Portfolio 100",
+                Disclosure = string.Empty
+            });
         }
     }
 }

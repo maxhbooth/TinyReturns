@@ -2,6 +2,7 @@
 using System.IO;
 using Dimensional.TinyReturns.Core.CitiFileImport;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
+using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using Xunit;
 
@@ -34,9 +35,21 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 
             var netReturnsTestFilePath = GetNetReturnsTestFilePath();
 
-            var citiMonthyReturnImporter = new CitiMonthyReturnImporter();
+            var returnSeriesDataTableGateway = new ReturnSeriesDataTableGateway(
+                databaseSettings,
+                systemLogForIntegrationTests);
 
-            citiMonthyReturnImporter.ImportMonthyNetReturnsFile(netReturnsTestFilePath);
+            var citiMonthyReturnImporter = new CitiMonthyReturnImporter(
+                returnSeriesDataTableGateway);
+
+            citiMonthyReturnImporter.ImportMonthyPortfolioNetReturnsFile(
+                netReturnsTestFilePath);
+
+            var returnSeriesDtos = returnSeriesDataTableGateway.GetAll();
+
+            Assert.Equal(1, returnSeriesDtos.Length);
+            Assert.False(returnSeriesDtos[0].ReturnSeriesId <= 0);
+            Assert.Equal("Returns for Portfolio 100", returnSeriesDtos[0].Name);
 
             allTablesDeleter.DeleteAllDataFromTables(
                 databaseSettings.TinyReturnsDatabaseConnectionString,
