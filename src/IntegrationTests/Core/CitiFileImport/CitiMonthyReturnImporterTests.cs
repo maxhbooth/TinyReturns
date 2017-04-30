@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Dimensional.TinyReturns.Core.CitiFileImport;
+using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
@@ -10,50 +11,83 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 {
     public class CitiMonthyReturnImporterTests
     {
+        public class TestHelper
+        {
+            private readonly ReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
+            private readonly PortfolioDataTableGateway _portfolioDataTableGateway;
+            private readonly AllTablesDeleter _allTablesDeleter;
+
+            public TestHelper()
+            {
+                var databaseSettings = new DatabaseSettings();
+                var systemLogForIntegrationTests = new SystemLogForIntegrationTests();
+
+                _allTablesDeleter = new AllTablesDeleter();
+
+                _returnSeriesDataTableGateway = new ReturnSeriesDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
+                _portfolioDataTableGateway = new PortfolioDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+            }
+
+            public void InsertPortfolioDto(PortfolioDto dto)
+            {
+                _portfolioDataTableGateway.Insert(dto);
+            }
+
+            public ReturnSeriesDto[] GetAllReturnSeriesDtos()
+            {
+                return _returnSeriesDataTableGateway.GetAll();
+            }
+
+            public CitiMonthyReturnImporter CreateImporter()
+            {
+
+                return new CitiMonthyReturnImporter(
+                    _returnSeriesDataTableGateway);
+            }
+
+            public void DeleteAllDataInDatabase()
+            {
+                var databaseSettings = new DatabaseSettings();
+
+                _allTablesDeleter.DeleteAllDataFromTables(
+                    databaseSettings.TinyReturnsDatabaseConnectionString,
+                    new AllTablesDeleter.TableInfoDto[0]);
+            }
+        }
+
         [Fact]
         public void ShouldWork()
         {
-            var allTablesDeleter = new AllTablesDeleter();
+            var testHelper = new TestHelper();
 
-            var databaseSettings = new DatabaseSettings();
-            var systemLogForIntegrationTests = new SystemLogForIntegrationTests();
+            testHelper.DeleteAllDataInDatabase();
 
-            allTablesDeleter.DeleteAllDataFromTables(
-                databaseSettings.TinyReturnsDatabaseConnectionString,
-                new AllTablesDeleter.TableInfoDto[0]);
-
-            var portfolioDataTableGateway = new PortfolioDataTableGateway(
-                databaseSettings,
-                systemLogForIntegrationTests);
-
-            portfolioDataTableGateway.Insert(new PortfolioDto()
+            testHelper.InsertPortfolioDto(new PortfolioDto()
             {
                 Number = 100,
                 Name = "Portfolio 100",
                 InceptionDate = new DateTime(2000, 1, 1)
             });
 
+            var importer = testHelper.CreateImporter();
+
             var netReturnsTestFilePath = GetNetReturnsTestFilePath();
 
-            var returnSeriesDataTableGateway = new ReturnSeriesDataTableGateway(
-                databaseSettings,
-                systemLogForIntegrationTests);
-
-            var citiMonthyReturnImporter = new CitiMonthyReturnImporter(
-                returnSeriesDataTableGateway);
-
-            citiMonthyReturnImporter.ImportMonthyPortfolioNetReturnsFile(
+            importer.ImportMonthyPortfolioNetReturnsFile(
                 netReturnsTestFilePath);
 
-            var returnSeriesDtos = returnSeriesDataTableGateway.GetAll();
+            var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
 
             Assert.Equal(1, returnSeriesDtos.Length);
             Assert.False(returnSeriesDtos[0].ReturnSeriesId <= 0);
             Assert.Equal("Returns for Portfolio 100", returnSeriesDtos[0].Name);
 
-            allTablesDeleter.DeleteAllDataFromTables(
-                databaseSettings.TinyReturnsDatabaseConnectionString,
-                new AllTablesDeleter.TableInfoDto[0]);
+            testHelper.DeleteAllDataInDatabase();
         }
 
         private string GetNetReturnsTestFilePath()
