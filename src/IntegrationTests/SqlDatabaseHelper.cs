@@ -5,23 +5,18 @@ using Dimensional.TinyReturns.Core;
 
 namespace Dimensional.TinyReturns.IntegrationTests
 {
-    public class DatabaseTestBase
+    public class SqlDatabaseHelper
     {
-        protected ISystemLog SystemLog;
-
-        public DatabaseTestBase()
-        {
-            SystemLog = MasterFactory.GetSystemLog();
-        }
-
-        protected void ConnectionExecuteWithLog(
+        public static void ConnectionExecuteWithLog(
             string connectionString,
             Action<SqlConnection> connectionAction,
             string logSql)
         {
+            var systemLog = CreateSystemLog();
+
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                SystemLog.Info("Executing: " + logSql);
+                systemLog.Info("Executing: " + logSql);
 
                 sqlConnection.Open();
                 connectionAction(sqlConnection);
@@ -29,12 +24,14 @@ namespace Dimensional.TinyReturns.IntegrationTests
             }
         }
 
-        protected void ConnectionExecuteWithLog(
+        public static void ConnectionExecuteWithLog(
             string connectionString,
             Action<SqlConnection> connectionAction,
             string logSql,
             object values)
         {
+            var systemLog = CreateSystemLog();
+
             var propertyInfos = values.GetType().GetProperties();
 
             var stringBuilder = new StringBuilder();
@@ -53,7 +50,7 @@ namespace Dimensional.TinyReturns.IntegrationTests
                     stringBuilder.AppendLine(value.ToString());
             }
 
-            SystemLog.Info(stringBuilder.ToString());
+            systemLog.Info(stringBuilder.ToString());
 
             using (var sqlConnection = new SqlConnection(connectionString))
             {
@@ -61,6 +58,11 @@ namespace Dimensional.TinyReturns.IntegrationTests
                 connectionAction(sqlConnection);
                 sqlConnection.Close();
             }
+        }
+
+        private static ISystemLog CreateSystemLog()
+        {
+            return new SystemLogForIntegrationTests();
         }
     }
 }

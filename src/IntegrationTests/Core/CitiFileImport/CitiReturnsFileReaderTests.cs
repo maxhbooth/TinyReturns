@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 {
-    public class CitiReturnsFileReaderTests : IntegrationTestBase
+    public class CitiReturnsFileReaderTests
     {
         [Fact]
         public void ShouldReadCorrectNumberOfRecordsGivenValidReturnsFile()
