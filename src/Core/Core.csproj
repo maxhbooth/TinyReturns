@@ -40,7 +40,6 @@
     <Compile Include="AnnualizeActionEnum.cs" />
     <Compile Include="CalculateReturnRequest.cs" />
     <Compile Include="CalculateReturnRequestFactory.cs" />
-    <Compile Include="CitiFileImport\CitiFileImportInteractor.cs" />
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="CitiFileImport\CitiMonthyReturnImporter.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
@@ -87,7 +86,6 @@
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioDto.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioToBenchmarkDto.cs" />
     <Compile Include="TinyReturnsDatabase\ReturnSeriesDto.cs" />
-    <Compile Include="CitiFileImport\CitiReturnSeriesImporter.cs" />
     <Compile Include="PublicWebSite\PortfolioListPageAdapter.cs" />
     <Compile Include="PublicWebSite\PortfolioListRecord.cs" />
     <Compile Include="PublicWebSite\SerializableReturnResult.cs" />

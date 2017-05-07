@@ -4,6 +4,7 @@ using Dimensional.TinyReturns.Core.OmniFileExport;
 using Dimensional.TinyReturns.Core.PerformanceReport;
 using Dimensional.TinyReturns.Core.PublicWebSite;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
+using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
 
 namespace Dimensional.TinyReturns.Core
 {
@@ -24,6 +25,24 @@ namespace Dimensional.TinyReturns.Core
         private static IReturnsSeriesDataTableGateway _returnsSeriesDataTableGateway;
         public static IReturnsSeriesDataTableGateway ReturnsSeriesDataTableGateway { set { _returnsSeriesDataTableGateway = value; } }
         public static IReturnsSeriesDataTableGateway GetReturnsSeriesRepository() { return _returnsSeriesDataTableGateway; }
+
+        // **  New One
+
+        private static IReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
+        public static IReturnSeriesDataTableGateway ReturnSeriesDataTableGateway { set { _returnSeriesDataTableGateway = value; } }
+        public static IReturnSeriesDataTableGateway GetReturnSeriesDataTableGateway() { return _returnSeriesDataTableGateway; }
+
+        // **
+
+        private static IMonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
+        public static IMonthlyReturnDataTableGateway MonthlyReturnDataTableGateway { set { _monthlyReturnDataTableGateway = value; } }
+        public static IMonthlyReturnDataTableGateway GetMonthlyReturnDataTableGateway() { return _monthlyReturnDataTableGateway; }
+
+        // **
+
+        private static IPortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
+        public static IPortfolioToReturnSeriesDataTableGateway PortfolioToReturnSeriesDataTableGateway { set { _portfolioToReturnSeriesDataTableGateway = value; } }
+        public static IPortfolioToReturnSeriesDataTableGateway GetPortfolioToReturnSeriesDataTableGateway() { return _portfolioToReturnSeriesDataTableGateway; }
 
         // **
 
@@ -56,18 +75,14 @@ namespace Dimensional.TinyReturns.Core
         public static IFlatFileIo GetFlatFileIo() { return _flatFileIo; }
 
         // **
-
-        public static ICitiFileImportInteractor GetCitiFileImportInteractor()
-        {
-            return new CitiFileImportInteractor(GetCitiReturnSeriesImporter());
-        }
         
-        public static CitiReturnSeriesImporter GetCitiReturnSeriesImporter()
+        public static CitiMonthyReturnImporter GetCitiReturnSeriesImporter()
         {
-            return new CitiReturnSeriesImporter(
-                _returnsSeriesDataTableGateway,
+            return new CitiMonthyReturnImporter(
                 _citiReturnsFileReader,
-                _monthlyReturnsDataTableGateway);
+                _returnSeriesDataTableGateway,
+                _monthlyReturnDataTableGateway,
+                _portfolioToReturnSeriesDataTableGateway);
         }
 
         public static OmniDataFileCreator GetOmniDataFileCreator()

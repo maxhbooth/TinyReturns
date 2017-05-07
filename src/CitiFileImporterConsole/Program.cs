@@ -1,5 +1,4 @@
 ﻿using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.CitiFileImport;
 using Dimensional.TinyReturns.DependencyManagement;
 
 namespace Dimensional.TinyReturns.CitiFileImporterConsole
@@ -10,11 +9,10 @@ namespace Dimensional.TinyReturns.CitiFileImporterConsole
         {
             DependencyManager.BootstrapForSystem("Console", new DatabaseSettings());
 
-            var interactor = MasterFactory.GetCitiFileImportInteractor();
+            var interactor = MasterFactory.GetCitiReturnSeriesImporter();
 
-            var requestModel = new CitiFileImportRequestModel(args);
-
-            interactor.ImportFiles(requestModel);
+            interactor.ImportMonthyPortfolioNetReturnsFile(args[0]);
+            interactor.ImportMonthyPortfolioGrossReturnsFile(args[0]);
         }
     }
 }
