@@ -43,7 +43,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             CitiMonthlyReturnsDataFileRecord[] citiMonthlyReturns)
         {
             var uniqueEntityNumbers = citiMonthlyReturns
-                .Select(s => s.GetConvertedExternalIdAsInt())
+                .Select(s => s.GetPortfolioNumber())
                 .Distinct();
 
             var returnSeries = ConvertEntityNumbersToReturnSeries(uniqueEntityNumbers, feeType);
@@ -72,7 +72,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             foreach (var series in returnSeries)
             {
                 var returnsForMonth = sourceMonthlyReturns
-                    .Where(s => s.GetConvertedExternalIdAsInt() == series.InvestmentVehicleNumber);
+                    .Where(s => s.GetPortfolioNumber() == series.InvestmentVehicleNumber);
 
                 var monthlyReturns = returnsForMonth
                     .Select(sourceMonthlyReturn => CreateMonthlyReturn(series, sourceMonthlyReturn))

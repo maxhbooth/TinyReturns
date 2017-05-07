@@ -93,6 +93,34 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             testHelper.DeleteAllDataInDatabase();
         }
 
+        [Fact(DisplayName = "ImportMonthyPortfolioNetReturnsFile should populate the table Performance.MonthlyReturn with monthly returns from file.")]
+        public void ImportMonthyPortfolioNetReturnsFileShouldPopulateMonthlyReturns()
+        {
+            // Arrange
+            var testHelper = new TestHelper();
+
+            testHelper.DeleteAllDataInDatabase();
+
+            var importer = testHelper.CreateImporter();
+
+            var filePath = GetNetReturnsTestFilePath();
+
+            // Act
+            importer.ImportMonthyPortfolioNetReturnsFile(filePath);
+
+            // Assert
+            var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
+
+            Assert.Equal(3, returnSeriesDtos.Length);
+
+            var returnSeriesPortfolio100 = returnSeriesDtos.First(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(100));
+            Assert.NotNull(returnSeriesPortfolio100);
+
+            // Teardown
+            testHelper.DeleteAllDataInDatabase();
+        }
+
+
         private string GetNetReturnsTestFilePath()
         {
             var currentDirectory = Directory.GetCurrentDirectory();
