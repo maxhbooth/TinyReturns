@@ -236,6 +236,73 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             testHelper.DeleteAllDataInDatabase();
         }
 
+        [Fact(DisplayName = "ImportMonthyPortfolioGrossReturnsFile should populate the table Performance.PortfolioToReturnSeries with gross record per portfolio.")]
+        public void ImportMonthyPortfolioGrossReturnsFileShouldPopulatePortfolioToReturnSeries()
+        {
+            // Arrange
+            var testHelper = new TestHelper();
+
+            testHelper.DeleteAllDataInDatabase();
+
+            var importer = testHelper.CreateImporter();
+
+            var filePath = GetReturnsTestFilePath();
+
+            // Act
+            importer.ImportMonthyPortfolioGrossReturnsFile(filePath);
+
+            // Assert
+            var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
+            var portfolioToReturnSeriesDtos = testHelper.GetAllPortfolioToReturnSeriesDtos();
+
+            Assert.Equal(3, returnSeriesDtos.Length);
+
+            // **
+
+            var returnSeriesPortfolio100 = returnSeriesDtos.FirstOrDefault(d =>
+                d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(100));
+
+            Assert.NotNull(returnSeriesPortfolio100);
+
+            var portfolioToReturnSeriesDto100 = portfolioToReturnSeriesDtos.FirstOrDefault(d =>
+                d.PortfolioNumber == 100
+                && d.ReturnSeriesId == returnSeriesPortfolio100.ReturnSeriesId
+                && d.SeriesTypeCode == PortfolioToReturnSeriesDto.GrossSeriesTypeCode);
+
+            Assert.NotNull(portfolioToReturnSeriesDto100);
+
+            // **
+
+            var returnSeriesPortfolio101 = returnSeriesDtos.FirstOrDefault(d =>
+                d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(101));
+
+            Assert.NotNull(returnSeriesPortfolio101);
+
+            var portfolioToReturnSeriesDto101 = portfolioToReturnSeriesDtos.FirstOrDefault(d =>
+                d.PortfolioNumber == 101
+                && d.ReturnSeriesId == returnSeriesPortfolio101.ReturnSeriesId
+                && d.SeriesTypeCode == PortfolioToReturnSeriesDto.GrossSeriesTypeCode);
+
+            Assert.NotNull(portfolioToReturnSeriesDto101);
+
+            // **
+
+            var returnSeriesPortfolio102 = returnSeriesDtos.FirstOrDefault(d =>
+                d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(102));
+
+            Assert.NotNull(returnSeriesPortfolio102);
+
+            var portfolioToReturnSeriesDto102 = portfolioToReturnSeriesDtos.FirstOrDefault(d =>
+                d.PortfolioNumber == 102
+                && d.ReturnSeriesId == returnSeriesPortfolio102.ReturnSeriesId
+                && d.SeriesTypeCode == PortfolioToReturnSeriesDto.GrossSeriesTypeCode);
+
+            Assert.NotNull(portfolioToReturnSeriesDto102);
+
+            // Teardown
+            testHelper.DeleteAllDataInDatabase();
+        }
+
 
         private string GetReturnsTestFilePath()
         {

@@ -24,8 +24,19 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             _returnSeriesDataTableGateway = returnSeriesDataTableGateway;
         }
 
-        public void ImportMonthyPortfolioNetReturnsFile(
-            string filePath)
+        public void ImportMonthyPortfolioNetReturnsFile(string filePath)
+        {
+            ImportFile(filePath, PortfolioToReturnSeriesDto.NetSeriesTypeCode);
+        }
+
+        public void ImportMonthyPortfolioGrossReturnsFile(string filePath)
+        {
+            ImportFile(filePath, PortfolioToReturnSeriesDto.GrossSeriesTypeCode);
+        }
+
+        private void ImportFile(
+            string filePath,
+            char netSeriesTypeCode)
         {
             var citiMonthlyReturnsDataFileRecords = _citiReturnsFileReader.ReadFile(filePath);
 
@@ -49,7 +60,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
 
                     InsertPortfolioToReturnSeriesRecord(
                         portfolioNumber,
-                        returnSeriesDto.ReturnSeriesId);
+                        returnSeriesDto.ReturnSeriesId, netSeriesTypeCode);
                 }
 
                 monthlyReturnDtos.Add(new MonthlyReturnDto()
@@ -66,13 +77,14 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
 
         private void InsertPortfolioToReturnSeriesRecord(
             int portfolioNumber,
-            int seriesId)
+            int seriesId,
+            char netSeriesTypeCode)
         {
             var portfolioToReturnSeriesDto = new PortfolioToReturnSeriesDto()
             {
                 PortfolioNumber = portfolioNumber,
                 ReturnSeriesId = seriesId,
-                SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                SeriesTypeCode = netSeriesTypeCode
             };
 
             _portfolioToReturnSeriesDataTableGateway.Insert(new[]
