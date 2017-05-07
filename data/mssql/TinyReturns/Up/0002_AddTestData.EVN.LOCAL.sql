@@ -60,47 +60,47 @@ INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (1002
 GO
 INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10030, N'Benchmark 30', NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (100, N'Portfolio 100', CAST(N'2000-01-08 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (100, N'Portfolio 100', CAST(N'2000-01-08 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (101, N'Portfolio 101', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (101, N'Portfolio 101', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (102, N'Portfolio 102', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (102, N'Portfolio 102', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (103, N'Portfolio 103', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (103, N'Portfolio 103', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (104, N'Portfolio 104', CAST(N'2000-08-15 00:00:00.000' AS DateTime), CAST(N'2017-12-05 00:00:00.000' AS DateTime), NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (104, N'Portfolio 104', CAST(N'2000-08-15 00:00:00.000' AS DateTime), CAST(N'2017-12-05 00:00:00.000' AS DateTime))
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (105, N'Portfolio 105', CAST(N'1999-07-03 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (105, N'Portfolio 105', CAST(N'1999-07-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (106, N'Portfolio 106', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (106, N'Portfolio 106', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (107, N'Portfolio 107', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (107, N'Portfolio 107', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (108, N'Portfolio 108', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (108, N'Portfolio 108', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (109, N'Portfolio 109', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (109, N'Portfolio 109', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (110, N'Portfolio 110', CAST(N'2000-08-15 00:00:00.000' AS DateTime), CAST(N'2001-11-04 00:00:00.000' AS DateTime), NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (110, N'Portfolio 110', CAST(N'2000-08-15 00:00:00.000' AS DateTime), CAST(N'2001-11-04 00:00:00.000' AS DateTime))
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (111, N'Portfolio 111', CAST(N'1999-07-03 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (111, N'Portfolio 111', CAST(N'1999-07-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (112, N'Portfolio 112', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (112, N'Portfolio 112', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (113, N'Portfolio 113', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (113, N'Portfolio 113', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (114, N'Portfolio 114', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (114, N'Portfolio 114', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (115, N'Portfolio 115', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (115, N'Portfolio 115', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (116, N'Portfolio 116', CAST(N'2000-08-15 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (116, N'Portfolio 116', CAST(N'2000-08-15 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (117, N'Portfolio 117', CAST(N'1999-07-03 00:00:00.000' AS DateTime), CAST(N'2005-03-07 00:00:00.000' AS DateTime), NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (117, N'Portfolio 117', CAST(N'1999-07-03 00:00:00.000' AS DateTime), CAST(N'2005-03-07 00:00:00.000' AS DateTime))
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (118, N'Portfolio 118', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (118, N'Portfolio 118', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (119, N'Portfolio 119', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (119, N'Portfolio 119', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate], [NetReturnSeriesId], [GrossReturnSeriesId]) VALUES (120, N'Portfolio 120', CAST(N'2000-08-15 00:00:00.000' AS DateTime), NULL, NULL, NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (120, N'Portfolio 120', CAST(N'2000-08-15 00:00:00.000' AS DateTime), NULL)
 GO
 INSERT [Portfolio].[PortfolioToBenchmark] ([PortfolioNumber], [BenchmarkNumber], [SortOrder]) VALUES (101, 10010, 1)
 GO
