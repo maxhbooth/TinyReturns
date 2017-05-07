@@ -1,11 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Dimensional.TinyReturns.Core.CitiFileImport;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
-using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
-using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
+using Dimensional.TinyReturns.FileIo;
 using Xunit;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
@@ -15,8 +13,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
         public class TestHelper
         {
             private readonly ReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
-            private readonly PortfolioDataTableGateway _portfolioDataTableGateway;
             private readonly AllTablesDeleter _allTablesDeleter;
+            private readonly CitiReturnsFileReader _citiReturnsFileReader;
 
             public TestHelper()
             {
@@ -29,14 +27,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
                     databaseSettings,
                     systemLogForIntegrationTests);
 
-                _portfolioDataTableGateway = new PortfolioDataTableGateway(
-                    databaseSettings,
+                _citiReturnsFileReader = new CitiReturnsFileReader(
                     systemLogForIntegrationTests);
-            }
-
-            public void InsertPortfolioDto(PortfolioDto dto)
-            {
-                _portfolioDataTableGateway.Insert(dto);
             }
 
             public ReturnSeriesDto[] GetAllReturnSeriesDtos()
@@ -48,7 +40,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             {
 
                 return new CitiMonthyReturnImporter(
-                    _portfolioDataTableGateway,
+                    _citiReturnsFileReader,
                     _returnSeriesDataTableGateway);
             }
 
@@ -62,109 +54,44 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             }
         }
 
-        [Fact]
-        public void ImportMonthyPortfolioNetReturnsFileShouldImportNothingIfNoPortfolioAreFound()
+        [Fact(DisplayName = "ImportMonthyPortfolioNetReturnsFile should populate the table Performance.ReturnSeries with series from file.")]
+        public void ImportMonthyPortfolioNetReturnsFileShouldPopulateReturnSeries()
         {
-            // * Arrange
+            // Arrange
             var testHelper = new TestHelper();
 
             testHelper.DeleteAllDataInDatabase();
 
             var importer = testHelper.CreateImporter();
 
-            var netReturnsTestFilePath = GetNetReturnsTestFilePath();
+            var filePath = GetNetReturnsTestFilePath();
 
-            // * Act
-            importer.ImportMonthyPortfolioNetReturnsFile(
-                netReturnsTestFilePath);
+            // Act
+            importer.ImportMonthyPortfolioNetReturnsFile(filePath);
 
-            // * Assert
+            // Assert
             var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
 
-            Assert.Equal(0, returnSeriesDtos.Length);
+            Assert.Equal(3, returnSeriesDtos.Length);
 
-            // * Teardown
+            var returnSeriesPortfolio100 = returnSeriesDtos.First(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(100));
+            Assert.NotNull(returnSeriesPortfolio100);
+            Assert.True(returnSeriesPortfolio100.ReturnSeriesId > 0);
+            Assert.Equal(string.Empty, returnSeriesPortfolio100.Disclosure);
+
+            var returnSeriesPortfolio101 = returnSeriesDtos.First(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(101));
+            Assert.NotNull(returnSeriesPortfolio101);
+            Assert.True(returnSeriesPortfolio101.ReturnSeriesId > 0);
+            Assert.Equal(string.Empty, returnSeriesPortfolio101.Disclosure);
+
+            var returnSeriesPortfolio102 = returnSeriesDtos.First(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(102));
+            Assert.NotNull(returnSeriesPortfolio102);
+            Assert.True(returnSeriesPortfolio102.ReturnSeriesId > 0);
+            Assert.Equal(string.Empty, returnSeriesPortfolio102.Disclosure);
+
+            // Teardown
             testHelper.DeleteAllDataInDatabase();
         }
-
-        [Fact]
-        public void ImportMonthyPortfolioNetReturnsFileShouldInsertReturnSeriesWhenSinglePortfolioIsFound()
-        {
-            // * Arrange
-            var testHelper = new TestHelper();
-
-            testHelper.DeleteAllDataInDatabase();
-
-            testHelper.InsertPortfolioDto(new PortfolioDto()
-            {
-                Number = 100,
-                Name = "Portfolio 100",
-                InceptionDate = new DateTime(2000, 1, 1)
-            });
-
-            var importer = testHelper.CreateImporter();
-
-            var netReturnsTestFilePath = GetNetReturnsTestFilePath();
-
-            // * Act
-            importer.ImportMonthyPortfolioNetReturnsFile(
-                netReturnsTestFilePath);
-
-            // * Assert
-            var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
-
-            Assert.Equal(1, returnSeriesDtos.Length);
-            Assert.True(returnSeriesDtos[0].ReturnSeriesId > 0);
-            Assert.Equal("Returns for Portfolio 100", returnSeriesDtos[0].Name);
-
-            // * Teardown
-            testHelper.DeleteAllDataInDatabase();
-        }
-
-        [Fact]
-        public void ImportMonthyPortfolioNetReturnsFileShouldInsertReturnSeriesWhenTwoPortfolioAreFound()
-        {
-            // * Arrange
-            var testHelper = new TestHelper();
-
-            testHelper.DeleteAllDataInDatabase();
-
-            testHelper.InsertPortfolioDto(new PortfolioDto()
-            {
-                Number = 100,
-                Name = "Portfolio 100",
-                InceptionDate = new DateTime(2000, 1, 1)
-            });
-
-            testHelper.InsertPortfolioDto(new PortfolioDto()
-            {
-                Number = 101,
-                Name = "Portfolio 101",
-                InceptionDate = new DateTime(2000, 1, 1)
-            });
-
-            var importer = testHelper.CreateImporter();
-
-            var netReturnsTestFilePath = GetNetReturnsTestFilePath();
-
-            // * Act
-            importer.ImportMonthyPortfolioNetReturnsFile(
-                netReturnsTestFilePath);
-
-            // * Assert
-            var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
-
-            Assert.Equal(2, returnSeriesDtos.Length);
-
-            Assert.True(returnSeriesDtos.All(d => d.ReturnSeriesId > 0));
-
-            Assert.True(returnSeriesDtos.Any(d => d.Name == "Returns for Portfolio 100"));
-            Assert.True(returnSeriesDtos.Any(d => d.Name == "Returns for Portfolio 101"));
-
-            // * Teardown
-            testHelper.DeleteAllDataInDatabase();
-        }
-
 
         private string GetNetReturnsTestFilePath()
         {

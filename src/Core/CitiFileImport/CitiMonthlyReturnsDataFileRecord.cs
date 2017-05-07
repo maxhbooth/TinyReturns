@@ -8,7 +8,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
         public string EndDate { get; set; }
         public string Value { get; set; }
 
-        public int GetConvertedExternalId()
+        public int GetPortfolioNumber()
         {
             return Convert.ToInt32(ExternalId.Trim());
         }

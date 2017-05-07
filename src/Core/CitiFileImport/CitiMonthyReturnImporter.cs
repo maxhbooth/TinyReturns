@@ -1,44 +1,66 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
-using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
 
 namespace Dimensional.TinyReturns.Core.CitiFileImport
 {
     public class CitiMonthyReturnImporter
     {
         private readonly IReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
-        private readonly IPortfolioDataTableGateway _portfolioDataTableGateway;
+        private readonly ICitiReturnsFileReader _citiReturnsFileReader;
 
         public CitiMonthyReturnImporter(
-            IPortfolioDataTableGateway portfolioDataTableGateway,
+            ICitiReturnsFileReader citiReturnsFileReader,
             IReturnSeriesDataTableGateway returnSeriesDataTableGateway)
         {
-            _portfolioDataTableGateway = portfolioDataTableGateway;
+            _citiReturnsFileReader = citiReturnsFileReader;
             _returnSeriesDataTableGateway = returnSeriesDataTableGateway;
         }
 
         public void ImportMonthyPortfolioNetReturnsFile(
             string filePath)
         {
-            var portfolioDtos = _portfolioDataTableGateway.GetAll();
+            var citiMonthlyReturnsDataFileRecords = _citiReturnsFileReader.ReadFile(filePath);
 
             var returnSeriesDtos = new List<ReturnSeriesDto>();
 
-            foreach (var portfolioDto in portfolioDtos)
+            foreach (var citiMonthlyReturnsDataFileRecord in citiMonthlyReturnsDataFileRecords)
             {
-                returnSeriesDtos.Add(new ReturnSeriesDto()
-                {
-                    Name = CreateReturnSeriesName(portfolioDto.Name),
-                    Disclosure = string.Empty
-                });
-            }
+                var portfolioNumber = citiMonthlyReturnsDataFileRecord.GetPortfolioNumber();
 
-            _returnSeriesDataTableGateway.Insert(returnSeriesDtos.ToArray());
+                var returnSeriesName = CreateReturnSeriesName(portfolioNumber);
+
+                var returnSeriesDto = returnSeriesDtos.FirstOrDefault(d => d.Name == returnSeriesName);
+
+                if (returnSeriesDto == null)
+                {
+                    returnSeriesDto = CreateAndInsertReturnSeriesDto(returnSeriesName);
+
+                    returnSeriesDtos.Add(returnSeriesDto);
+                }
+            }
         }
 
-        private string CreateReturnSeriesName(string portfolioName)
+        private ReturnSeriesDto CreateAndInsertReturnSeriesDto(
+            string returnSeriesName)
         {
-            return string.Format("Returns for {0}", portfolioName);
+            var returnSeriesDto = new ReturnSeriesDto()
+            {
+                Name = returnSeriesName,
+                Disclosure = String.Empty
+            };
+
+            var returnSeriesId = _returnSeriesDataTableGateway.Insert(returnSeriesDto);
+
+            returnSeriesDto.ReturnSeriesId = returnSeriesId;
+
+            return returnSeriesDto;
+        }
+
+        public static string CreateReturnSeriesName(int portfolioNumber)
+        {
+            return string.Format("Return Series for Portfolio Number {0}", portfolioNumber);
         }
     }
 }
