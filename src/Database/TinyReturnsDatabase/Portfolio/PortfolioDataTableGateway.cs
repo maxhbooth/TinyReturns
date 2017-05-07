@@ -23,16 +23,12 @@ INSERT INTO [Portfolio].[Portfolio]
            ([Number]
            ,[Name]
            ,[InceptionDate]
-           ,[CloseDate]
-           ,[NetReturnSeriesId]
-           ,[GrossReturnSeriesId])
+           ,[CloseDate])
      VALUES
            (@Number
            ,@Name
            ,@InceptionDate
-           ,@CloseDate
-           ,@NetReturnSeriesId
-           ,@GrossReturnSeriesId)
+           ,@CloseDate)
 ";
 
             ConnectionExecuteWithLog(
@@ -52,8 +48,6 @@ SELECT
         ,[Name]
         ,[InceptionDate]
         ,[CloseDate]
-        ,[NetReturnSeriesId]
-        ,[GrossReturnSeriesId]
     FROM
         [Portfolio].[Portfolio]";
 

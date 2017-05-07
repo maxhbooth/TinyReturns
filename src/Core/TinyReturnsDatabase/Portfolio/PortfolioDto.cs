@@ -8,7 +8,5 @@ namespace Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio
         public string Name { get; set; }
         public DateTime InceptionDate { get; set; }
         public DateTime? CloseDate { get; set; }
-        public int? NetReturnSeriesId { get; set; }
-        public int? GrossReturnSeriesId { get; set; }
     }
 }
