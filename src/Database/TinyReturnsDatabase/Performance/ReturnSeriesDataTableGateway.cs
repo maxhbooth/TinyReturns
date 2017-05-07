@@ -36,7 +36,7 @@ SELECT
             return result;
         }
 
-        public int Inert(ReturnSeriesDto dto)
+        public int Insert(ReturnSeriesDto dto)
         {
             const string sql = @"
 INSERT INTO [Performance].[ReturnSeries]

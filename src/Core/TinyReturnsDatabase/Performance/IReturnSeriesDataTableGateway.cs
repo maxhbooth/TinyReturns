@@ -4,6 +4,6 @@
     {
         ReturnSeriesDto[] GetAll();
 
-        int Inert(ReturnSeriesDto dto);
+        int Insert(ReturnSeriesDto dto);
     }
 }

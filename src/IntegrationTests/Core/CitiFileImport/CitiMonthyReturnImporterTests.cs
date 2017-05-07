@@ -47,6 +47,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             {
 
                 return new CitiMonthyReturnImporter(
+                    _portfolioDataTableGateway,
                     _returnSeriesDataTableGateway);
             }
 
@@ -61,8 +62,34 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
         }
 
         [Fact]
-        public void ShouldWork()
+        public void ImportMonthyPortfolioNetReturnsFileShouldImportNothingIfNoPortfolioAreFound()
         {
+            // * Arrange
+            var testHelper = new TestHelper();
+
+            testHelper.DeleteAllDataInDatabase();
+
+            var importer = testHelper.CreateImporter();
+
+            var netReturnsTestFilePath = GetNetReturnsTestFilePath();
+
+            // * Act
+            importer.ImportMonthyPortfolioNetReturnsFile(
+                netReturnsTestFilePath);
+
+            // * Assert
+            var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
+
+            Assert.Equal(0, returnSeriesDtos.Length);
+
+            // * Teardown
+            testHelper.DeleteAllDataInDatabase();
+        }
+
+        [Fact]
+        public void ImportMonthyPortfolioNetReturnsFileShouldInsertReturnSeriesWhenSinglePortfolioIsFound()
+        {
+            // * Arrange
             var testHelper = new TestHelper();
 
             testHelper.DeleteAllDataInDatabase();
@@ -78,15 +105,18 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 
             var netReturnsTestFilePath = GetNetReturnsTestFilePath();
 
+            // * Act
             importer.ImportMonthyPortfolioNetReturnsFile(
                 netReturnsTestFilePath);
 
+            // * Assert
             var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
 
             Assert.Equal(1, returnSeriesDtos.Length);
-            Assert.False(returnSeriesDtos[0].ReturnSeriesId <= 0);
+            Assert.True(returnSeriesDtos[0].ReturnSeriesId > 0);
             Assert.Equal("Returns for Portfolio 100", returnSeriesDtos[0].Name);
 
+            // * Teardown
             testHelper.DeleteAllDataInDatabase();
         }
 
