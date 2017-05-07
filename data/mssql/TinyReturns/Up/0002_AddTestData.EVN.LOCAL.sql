@@ -1,64 +1,64 @@
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10000, N'Benchmark 00', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10000, N'Benchmark 00')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10001, N'Benchmark 01', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10001, N'Benchmark 01')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10002, N'Benchmark 02', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10002, N'Benchmark 02')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10003, N'Benchmark 03', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10003, N'Benchmark 03')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10004, N'Benchmark 04', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10004, N'Benchmark 04')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10005, N'Benchmark 05', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10005, N'Benchmark 05')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10006, N'Benchmark 06', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10006, N'Benchmark 06')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10007, N'Benchmark 07', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10007, N'Benchmark 07')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10008, N'Benchmark 08', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10008, N'Benchmark 08')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10009, N'Benchmark 09', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10009, N'Benchmark 09')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10010, N'Benchmark 10', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10010, N'Benchmark 10')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10011, N'Benchmark 11', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10011, N'Benchmark 11')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10012, N'Benchmark 12', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10012, N'Benchmark 12')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10013, N'Benchmark 13', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10013, N'Benchmark 13')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10014, N'Benchmark 14', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10014, N'Benchmark 14')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10015, N'Benchmark 15', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10015, N'Benchmark 15')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10016, N'Benchmark 16', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10016, N'Benchmark 16')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10017, N'Benchmark 17', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10017, N'Benchmark 17')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10018, N'Benchmark 18', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10018, N'Benchmark 18')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10019, N'Benchmark 19', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10019, N'Benchmark 19')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10020, N'Benchmark 20', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10020, N'Benchmark 20')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10021, N'Benchmark 21', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10021, N'Benchmark 21')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10022, N'Benchmark 22', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10022, N'Benchmark 22')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10023, N'Benchmark 23', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10023, N'Benchmark 23')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10024, N'Benchmark 24', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10024, N'Benchmark 24')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10025, N'Benchmark 25', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10025, N'Benchmark 25')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10026, N'Benchmark 26', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10026, N'Benchmark 26')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10027, N'Benchmark 27', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10027, N'Benchmark 27')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10028, N'Benchmark 28', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10028, N'Benchmark 28')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10029, N'Benchmark 29', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10029, N'Benchmark 29')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name], [ReturnSeriesId]) VALUES (10030, N'Benchmark 30', NULL)
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10030, N'Benchmark 30')
 GO
 INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (100, N'Portfolio 100', CAST(N'2000-01-08 00:00:00.000' AS DateTime), NULL)
 GO

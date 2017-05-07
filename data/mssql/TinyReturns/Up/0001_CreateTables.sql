@@ -3,8 +3,7 @@ GO
 
 CREATE TABLE [Portfolio].[Benchmark](
 	[Number] [int] NOT NULL,
-	[Name] [nvarchar](64) NOT NULL,
-	[ReturnSeriesId] [int] NULL,
+	[Name] [nvarchar](64) NOT NULL
  CONSTRAINT [PK_Portfolio_Benchmark] PRIMARY KEY CLUSTERED 
 (
 	[Number] ASC
@@ -110,3 +109,13 @@ CREATE TABLE [Performance].[PortfolioToReturnSeries](
 ) ON [PRIMARY]
 
 GO
+
+CREATE TABLE [Performance].[BenchmarkToReturnSeries](
+	[BenchmarkNumber] [int] NOT NULL,
+	[ReturnSeriesId] [int] NOT NULL,
+ CONSTRAINT [PK_Performance_BenchmarkToReturnSeries] PRIMARY KEY CLUSTERED 
+(
+	[BenchmarkNumber] ASC,
+	[ReturnSeriesId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
