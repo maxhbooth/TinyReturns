@@ -75,6 +75,7 @@
     <Compile Include="PerformanceReport\PerformanceReportExcelReportCreator.cs" />
     <Compile Include="PerformanceReport\PerformanceReportExcelReportModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TinyReturnsDatabase\Performance\IReturnSeriesDataGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\MonthlyReturnDto.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\IReturnSeriesDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\ReturnSeriesDto.cs" />
