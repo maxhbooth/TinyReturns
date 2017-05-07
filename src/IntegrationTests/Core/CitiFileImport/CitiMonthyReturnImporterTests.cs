@@ -15,6 +15,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             private readonly ReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
             private readonly AllTablesDeleter _allTablesDeleter;
             private readonly CitiReturnsFileReader _citiReturnsFileReader;
+            private MonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
 
             public TestHelper()
             {
@@ -27,6 +28,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
                     databaseSettings,
                     systemLogForIntegrationTests);
 
+                _monthlyReturnDataTableGateway = new MonthlyReturnDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
                 _citiReturnsFileReader = new CitiReturnsFileReader(
                     systemLogForIntegrationTests);
             }
@@ -36,12 +41,18 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
                 return _returnSeriesDataTableGateway.GetAll();
             }
 
+            public MonthlyReturnDto[] GetAllMonthlyReturnDtos()
+            {
+                return _monthlyReturnDataTableGateway.GetAll();
+            }
+
             public CitiMonthyReturnImporter CreateImporter()
             {
 
                 return new CitiMonthyReturnImporter(
                     _citiReturnsFileReader,
-                    _returnSeriesDataTableGateway);
+                    _returnSeriesDataTableGateway,
+                    _monthlyReturnDataTableGateway);
             }
 
             public void DeleteAllDataInDatabase()
@@ -74,17 +85,17 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 
             Assert.Equal(3, returnSeriesDtos.Length);
 
-            var returnSeriesPortfolio100 = returnSeriesDtos.First(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(100));
+            var returnSeriesPortfolio100 = returnSeriesDtos.FirstOrDefault(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(100));
             Assert.NotNull(returnSeriesPortfolio100);
             Assert.True(returnSeriesPortfolio100.ReturnSeriesId > 0);
             Assert.Equal(string.Empty, returnSeriesPortfolio100.Disclosure);
 
-            var returnSeriesPortfolio101 = returnSeriesDtos.First(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(101));
+            var returnSeriesPortfolio101 = returnSeriesDtos.FirstOrDefault(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(101));
             Assert.NotNull(returnSeriesPortfolio101);
             Assert.True(returnSeriesPortfolio101.ReturnSeriesId > 0);
             Assert.Equal(string.Empty, returnSeriesPortfolio101.Disclosure);
 
-            var returnSeriesPortfolio102 = returnSeriesDtos.First(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(102));
+            var returnSeriesPortfolio102 = returnSeriesDtos.FirstOrDefault(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(102));
             Assert.NotNull(returnSeriesPortfolio102);
             Assert.True(returnSeriesPortfolio102.ReturnSeriesId > 0);
             Assert.Equal(string.Empty, returnSeriesPortfolio102.Disclosure);
@@ -111,10 +122,21 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             // Assert
             var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
 
-            Assert.Equal(3, returnSeriesDtos.Length);
-
-            var returnSeriesPortfolio100 = returnSeriesDtos.First(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(100));
+            var returnSeriesPortfolio100 = returnSeriesDtos.FirstOrDefault(d => d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(100));
             Assert.NotNull(returnSeriesPortfolio100);
+
+            var allMonthlyReturnDtos = testHelper.GetAllMonthlyReturnDtos();
+
+            var monthlyReturnDtos = allMonthlyReturnDtos
+                .Where(d => d.ReturnSeriesId == returnSeriesPortfolio100.ReturnSeriesId)
+                .ToArray();
+
+            Assert.Equal(9, monthlyReturnDtos.Length);
+
+            var monthlyReturnDto = monthlyReturnDtos.FirstOrDefault(d => d.Month == 10 && d.Year == 2013);
+            Assert.NotNull(monthlyReturnDto);
+
+            Assert.Equal(0.04400550m, monthlyReturnDto.ReturnValue, 5);
 
             // Teardown
             testHelper.DeleteAllDataInDatabase();

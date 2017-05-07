@@ -91,7 +91,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             monthlyReturn.ReturnSeriesId = series.ReturnSeriesId;
             monthlyReturn.Month = sourceMonthlyReturn.GetMonth();
             monthlyReturn.Year = sourceMonthlyReturn.GetYear();
-            monthlyReturn.ReturnValue = sourceMonthlyReturn.GetDecimalValue();
+            monthlyReturn.ReturnValue = sourceMonthlyReturn.GetReturnValue();
 
             return monthlyReturn;
         }

@@ -9,11 +9,14 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
     {
         private readonly IReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
         private readonly ICitiReturnsFileReader _citiReturnsFileReader;
+        private IMonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
 
         public CitiMonthyReturnImporter(
             ICitiReturnsFileReader citiReturnsFileReader,
-            IReturnSeriesDataTableGateway returnSeriesDataTableGateway)
+            IReturnSeriesDataTableGateway returnSeriesDataTableGateway,
+            IMonthlyReturnDataTableGateway monthlyReturnDataTableGateway)
         {
+            _monthlyReturnDataTableGateway = monthlyReturnDataTableGateway;
             _citiReturnsFileReader = citiReturnsFileReader;
             _returnSeriesDataTableGateway = returnSeriesDataTableGateway;
         }
@@ -24,6 +27,8 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             var citiMonthlyReturnsDataFileRecords = _citiReturnsFileReader.ReadFile(filePath);
 
             var returnSeriesDtos = new List<ReturnSeriesDto>();
+
+            var monthlyReturnDtos = new List<MonthlyReturnDto>();
 
             foreach (var citiMonthlyReturnsDataFileRecord in citiMonthlyReturnsDataFileRecords)
             {
@@ -39,7 +44,17 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
 
                     returnSeriesDtos.Add(returnSeriesDto);
                 }
+
+                monthlyReturnDtos.Add(new MonthlyReturnDto()
+                {
+                    ReturnSeriesId = returnSeriesDto.ReturnSeriesId,
+                    Year = citiMonthlyReturnsDataFileRecord.GetYear(),
+                    Month = citiMonthlyReturnsDataFileRecord.GetMonth(),
+                    ReturnValue = citiMonthlyReturnsDataFileRecord.GetReturnValue()
+                });
             }
+
+            _monthlyReturnDataTableGateway.Insert(monthlyReturnDtos.ToArray());
         }
 
         private ReturnSeriesDto CreateAndInsertReturnSeriesDto(

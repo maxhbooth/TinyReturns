@@ -23,7 +23,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             return DateTime.Parse(EndDate).Year;
         }
 
-        public decimal GetDecimalValue()
+        public decimal GetReturnValue()
         {
             return decimal.Parse(Value) / 100;
         }
