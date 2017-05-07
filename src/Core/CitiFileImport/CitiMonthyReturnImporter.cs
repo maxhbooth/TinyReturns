@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
 
@@ -22,14 +23,18 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
         {
             var portfolioDtos = _portfolioDataTableGateway.GetAll();
 
-            if (portfolioDtos.Length <= 0)
-                return;
+            var returnSeriesDtos = new List<ReturnSeriesDto>();
 
-            _returnSeriesDataTableGateway.Insert(new ReturnSeriesDto()
+            foreach (var portfolioDto in portfolioDtos)
             {
-                Name = "Returns for Portfolio 100",
-                Disclosure = string.Empty
-            });
+                returnSeriesDtos.Add(new ReturnSeriesDto()
+                {
+                    Name = string.Format("Returns for {0}", portfolioDto.Name),
+                    Disclosure = string.Empty
+                });
+            }
+
+            _returnSeriesDataTableGateway.Insert(returnSeriesDtos.ToArray());
         }
     }
 }

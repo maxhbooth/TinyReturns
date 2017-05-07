@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Dimensional.TinyReturns.Core.CitiFileImport;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
@@ -119,6 +120,51 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             // * Teardown
             testHelper.DeleteAllDataInDatabase();
         }
+
+        [Fact]
+        public void ImportMonthyPortfolioNetReturnsFileShouldInsertReturnSeriesWhenTwoPortfolioAreFound()
+        {
+            // * Arrange
+            var testHelper = new TestHelper();
+
+            testHelper.DeleteAllDataInDatabase();
+
+            testHelper.InsertPortfolioDto(new PortfolioDto()
+            {
+                Number = 100,
+                Name = "Portfolio 100",
+                InceptionDate = new DateTime(2000, 1, 1)
+            });
+
+            testHelper.InsertPortfolioDto(new PortfolioDto()
+            {
+                Number = 101,
+                Name = "Portfolio 101",
+                InceptionDate = new DateTime(2000, 1, 1)
+            });
+
+            var importer = testHelper.CreateImporter();
+
+            var netReturnsTestFilePath = GetNetReturnsTestFilePath();
+
+            // * Act
+            importer.ImportMonthyPortfolioNetReturnsFile(
+                netReturnsTestFilePath);
+
+            // * Assert
+            var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
+
+            Assert.Equal(2, returnSeriesDtos.Length);
+
+            Assert.True(returnSeriesDtos.All(d => d.ReturnSeriesId > 0));
+
+            Assert.True(returnSeriesDtos.Any(d => d.Name == "Returns for Portfolio 100"));
+            Assert.True(returnSeriesDtos.Any(d => d.Name == "Returns for Portfolio 101"));
+
+            // * Teardown
+            testHelper.DeleteAllDataInDatabase();
+        }
+
 
         private string GetNetReturnsTestFilePath()
         {

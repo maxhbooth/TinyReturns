@@ -61,5 +61,25 @@ SELECT CAST(SCOPE_IDENTITY() as int)
 
             return newId;
         }
+
+        public void Insert(ReturnSeriesDto[] dtos)
+        {
+            const string sql = @"
+INSERT INTO [Performance].[ReturnSeries]
+           ([Name]
+           ,[Disclosure])
+     VALUES
+           (@Name
+           ,@Disclosure)
+";
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    connection.Execute(sql, dtos);
+                },
+                sql,
+                dtos);
+        }
     }
 }
