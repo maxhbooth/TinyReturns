@@ -9,12 +9,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
     public class ReturnSeriesDataRepositoryTests
     {
         private readonly IReturnsSeriesDataTableGateway _returnsSeriesDataTableGateway;
-        private IMonthlyReturnsDataTableGateway _monthlyReturnsDataTableGateway;
+        private readonly IMonthlyReturnsDataTableGateway _monthlyReturnsDataTableGateway;
 
         public ReturnSeriesDataRepositoryTests()
         {
-            _returnsSeriesDataTableGateway = MasterFactory.GetReturnsSeriesRepository();
-            _monthlyReturnsDataTableGateway = MasterFactory.GetMonthlyReturnsDataRepository();
+            _returnsSeriesDataTableGateway = MasterFactory.ReturnsSeriesDataTableGateway;
+            _monthlyReturnsDataTableGateway = MasterFactory.MonthlyReturnsDataTableGateway;
         }
 
         [Fact]

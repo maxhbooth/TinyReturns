@@ -9,7 +9,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
         [Fact]
         public void GetAllEntitiesShouldReturnCorrectNumberOfEntities()
         {
-            var entityDataRepository = MasterFactory.GetInvestmentVehicleDataRepository();
+            var entityDataRepository = MasterFactory.InvestmentVehicleDataTableGateway;
 
             var results = entityDataRepository.GetAllEntities();
 
@@ -19,7 +19,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.DataRepository
         [Fact]
         public void GetAllEntitiesShouldReturnMapAllColumnsToProperties()
         {
-            var entityDataRepository = MasterFactory.GetInvestmentVehicleDataRepository();
+            var entityDataRepository = MasterFactory.InvestmentVehicleDataTableGateway;
 
             var results = entityDataRepository.GetAllEntities();
 
