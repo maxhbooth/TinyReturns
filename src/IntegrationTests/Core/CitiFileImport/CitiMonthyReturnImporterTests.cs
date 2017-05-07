@@ -86,7 +86,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 
             var importer = testHelper.CreateImporter();
 
-            var filePath = GetNetReturnsTestFilePath();
+            var filePath = GetReturnsTestFilePath();
 
             // Act
             importer.ImportMonthyPortfolioNetReturnsFile(filePath);
@@ -139,7 +139,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 
             var importer = testHelper.CreateImporter();
 
-            var filePath = GetNetReturnsTestFilePath();
+            var filePath = GetReturnsTestFilePath();
 
             // Act
             importer.ImportMonthyPortfolioNetReturnsFile(filePath);
@@ -179,7 +179,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
 
             var importer = testHelper.CreateImporter();
 
-            var filePath = GetNetReturnsTestFilePath();
+            var filePath = GetReturnsTestFilePath();
 
             // Act
             importer.ImportMonthyPortfolioNetReturnsFile(filePath);
@@ -200,7 +200,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             var portfolioToReturnSeriesDto100 = portfolioToReturnSeriesDtos.FirstOrDefault(d =>
                 d.PortfolioNumber == 100
                 && d.ReturnSeriesId == returnSeriesPortfolio100.ReturnSeriesId
-                && d.SeriesType == 'N');
+                && d.SeriesTypeCode == PortfolioToReturnSeriesDto.NetSeriesTypeCode);
 
             Assert.NotNull(portfolioToReturnSeriesDto100);
 
@@ -214,7 +214,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             var portfolioToReturnSeriesDto101 = portfolioToReturnSeriesDtos.FirstOrDefault(d =>
                 d.PortfolioNumber == 101
                 && d.ReturnSeriesId == returnSeriesPortfolio101.ReturnSeriesId
-                && d.SeriesType == 'N');
+                && d.SeriesTypeCode == PortfolioToReturnSeriesDto.NetSeriesTypeCode);
 
             Assert.NotNull(portfolioToReturnSeriesDto101);
 
@@ -228,7 +228,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
             var portfolioToReturnSeriesDto102 = portfolioToReturnSeriesDtos.FirstOrDefault(d =>
                 d.PortfolioNumber == 102
                 && d.ReturnSeriesId == returnSeriesPortfolio102.ReturnSeriesId
-                && d.SeriesType == 'N');
+                && d.SeriesTypeCode == PortfolioToReturnSeriesDto.NetSeriesTypeCode);
 
             Assert.NotNull(portfolioToReturnSeriesDto102);
 
@@ -237,12 +237,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
         }
 
 
-        private string GetNetReturnsTestFilePath()
+        private string GetReturnsTestFilePath()
         {
             var currentDirectory = Directory.GetCurrentDirectory();
 
             var targetFile = currentDirectory
-                 + @"\Core\TestNetReturnsForEntity100_101_102.csv";
+                 + @"\Core\TestReturnsForEntity100_101_102.csv";
 
             return targetFile;
         }

@@ -2,8 +2,11 @@
 {
     public class PortfolioToReturnSeriesDto
     {
+        public const char NetSeriesTypeCode = 'N';
+        public const char GrossSeriesTypeCode = 'G';
+
         public int PortfolioNumber { get; set; }
         public int ReturnSeriesId { get; set; }
-        public char SeriesType { get; set; }
+        public char SeriesTypeCode { get; set; }
     }
 }

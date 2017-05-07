@@ -99,12 +99,12 @@ GO
 CREATE TABLE [Performance].[PortfolioToReturnSeries](
 	[PortfolioNumber] [int] NOT NULL,
 	[ReturnSeriesId] [int] NOT NULL,
-	[SeriesType] [char](1) NOT NULL,
+	[SeriesTypeCode] [char](1) NOT NULL,
  CONSTRAINT [PK_Performance_PortfolioToReturnSeries] PRIMARY KEY CLUSTERED 
 (
 	[PortfolioNumber] ASC,
 	[ReturnSeriesId] ASC,
-	[SeriesType] ASC
+	[SeriesTypeCode] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 

@@ -72,7 +72,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             {
                 PortfolioNumber = portfolioNumber,
                 ReturnSeriesId = seriesId,
-                SeriesType = 'N'
+                SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
             };
 
             _portfolioToReturnSeriesDataTableGateway.Insert(new[]

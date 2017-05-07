@@ -22,7 +22,7 @@ namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance
 SELECT
         [PortfolioNumber]
         ,[ReturnSeriesId]
-        ,[SeriesType]
+        ,[SeriesTypeCode]
     FROM
         [Performance].[PortfolioToReturnSeries]";
 
@@ -44,11 +44,11 @@ SELECT
 INSERT INTO [Performance].[PortfolioToReturnSeries]
            ([PortfolioNumber]
            ,[ReturnSeriesId]
-           ,[SeriesType])
+           ,[SeriesTypeCode])
      VALUES
            (@PortfolioNumber
            ,@ReturnSeriesId
-           ,@SeriesType)
+           ,@SeriesTypeCode)
 ";
 
             ConnectionExecuteWithLog(

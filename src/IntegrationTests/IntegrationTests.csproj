@@ -67,7 +67,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
-    <Content Include="Core\TestNetReturnsForEntity100_101_102.csv">
+    <Content Include="Core\TestReturnsForEntity100_101_102.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Core\TestIndexReturnsForEntity10000.csv">
