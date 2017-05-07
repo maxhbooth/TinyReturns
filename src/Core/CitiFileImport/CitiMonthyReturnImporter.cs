@@ -9,13 +9,16 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
     {
         private readonly IReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
         private readonly ICitiReturnsFileReader _citiReturnsFileReader;
-        private IMonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
+        private readonly IMonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
+        private readonly IPortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
 
         public CitiMonthyReturnImporter(
             ICitiReturnsFileReader citiReturnsFileReader,
             IReturnSeriesDataTableGateway returnSeriesDataTableGateway,
-            IMonthlyReturnDataTableGateway monthlyReturnDataTableGateway)
+            IMonthlyReturnDataTableGateway monthlyReturnDataTableGateway,
+            IPortfolioToReturnSeriesDataTableGateway portfolioToReturnSeriesDataTableGateway)
         {
+            _portfolioToReturnSeriesDataTableGateway = portfolioToReturnSeriesDataTableGateway;
             _monthlyReturnDataTableGateway = monthlyReturnDataTableGateway;
             _citiReturnsFileReader = citiReturnsFileReader;
             _returnSeriesDataTableGateway = returnSeriesDataTableGateway;
@@ -43,6 +46,10 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
                     returnSeriesDto = CreateAndInsertReturnSeriesDto(returnSeriesName);
 
                     returnSeriesDtos.Add(returnSeriesDto);
+
+                    InsertPortfolioToReturnSeriesRecord(
+                        portfolioNumber,
+                        returnSeriesDto.ReturnSeriesId);
                 }
 
                 monthlyReturnDtos.Add(new MonthlyReturnDto()
@@ -55,6 +62,23 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             }
 
             _monthlyReturnDataTableGateway.Insert(monthlyReturnDtos.ToArray());
+        }
+
+        private void InsertPortfolioToReturnSeriesRecord(
+            int portfolioNumber,
+            int seriesId)
+        {
+            var portfolioToReturnSeriesDto = new PortfolioToReturnSeriesDto()
+            {
+                PortfolioNumber = portfolioNumber,
+                ReturnSeriesId = seriesId,
+                SeriesType = 'N'
+            };
+
+            _portfolioToReturnSeriesDataTableGateway.Insert(new[]
+            {
+                portfolioToReturnSeriesDto,
+            });
         }
 
         private ReturnSeriesDto CreateAndInsertReturnSeriesDto(
