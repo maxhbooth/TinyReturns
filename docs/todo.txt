@@ -1,3 +1,4 @@
-Separate web site from services
+Notes for People Leaning
 
-Add Proper Portfolio and Benchmark tables to database
+CitiMonthyReturnImporterTests - Is a good place to start for into to testing
+Has bug... will only work on a blank database

@@ -43,6 +43,7 @@
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="CitiFileImport\CitiMonthyReturnImporter.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
+    <Compile Include="PublicWebReport\PublicWebReportFacade.cs" />
     <Compile Include="TinyReturnsDatabase\InvestmentVehicleDto.cs" />
     <Compile Include="TinyReturnsDatabase\IInvestmentVehicleDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\IMonthlyReturnsDataTableGateway.cs" />
