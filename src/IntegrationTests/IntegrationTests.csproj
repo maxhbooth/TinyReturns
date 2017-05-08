@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +61,7 @@
     <Compile Include="Core\DataRepository\ReturnSeriesDataRepositoryTests.cs" />
     <Compile Include="SqlDatabaseHelper.cs" />
     <Compile Include="SystemLogForIntegrationTests.cs" />
+    <Compile Include="Web\Controllers\ReportControllerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\TestNetReturnsForEntity100.csv">
@@ -90,6 +92,10 @@
     <ProjectReference Include="..\FileIo\FileIo.csproj">
       <Project>{BDED245A-AC49-4207-BFCE-EA60D00FAC7A}</Project>
       <Name>FileIo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Web\Web.csproj">
+      <Project>{756A3DFF-E91C-4210-A78D-A7145943EBC3}</Project>
+      <Name>Web</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
