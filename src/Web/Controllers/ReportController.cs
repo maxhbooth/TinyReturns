@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.DateExtend;
 using Dimensional.TinyReturns.Core.PublicWebReport;
 
@@ -10,7 +11,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
         public ReportController()
         {
-            _publicWebReportFacade = new PublicWebReportFacade();
+            _publicWebReportFacade = MasterFactory.GetPublicWebReportFacade();
         }
 
         // Used for tests

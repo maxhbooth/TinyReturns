@@ -1,6 +1,7 @@
 ﻿using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
+using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using Dimensional.TinyReturns.ExcelRendering;
 using Dimensional.TinyReturns.FileIo;
 using Dimensional.TinyReturns.Logging;
@@ -46,6 +47,7 @@ namespace Dimensional.TinyReturns.DependencyManagement
             MasterFactory.ReturnSeriesDataTableGateway = new ReturnSeriesDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
             MasterFactory.PortfolioToReturnSeriesDataTableGateway = new PortfolioToReturnSeriesDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
             MasterFactory.MonthlyReturnDataTableGateway = new MonthlyReturnDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.PortfolioDataTableGateway = new PortfolioDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
 
         }
     }
