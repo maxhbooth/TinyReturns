@@ -4,6 +4,8 @@
     {
         PortfolioToReturnSeriesDto[] GetAll();
 
+        PortfolioToReturnSeriesDto[] Get(int[] portfolioNumbers);
+
         void Insert(PortfolioToReturnSeriesDto[] dtos);
     }
 }

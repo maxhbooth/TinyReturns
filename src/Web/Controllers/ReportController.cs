@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.DateExtend;
 using Dimensional.TinyReturns.Core.PublicWebReport;
 
 namespace Dimensional.TinyReturns.Web.Controllers
@@ -23,9 +22,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
         public ActionResult Index()
         {
-            var monthYear = new MonthYear(2000, 1);
-
-            return View(_publicWebReportFacade.GetPortfolioPerforance(monthYear));
+            return View(_publicWebReportFacade.GetPortfolioPerforance());
         }
     }
 }

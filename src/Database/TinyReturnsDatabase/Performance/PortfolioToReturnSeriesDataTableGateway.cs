@@ -16,9 +16,7 @@ namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance
         {
         }
 
-        public PortfolioToReturnSeriesDto[] GetAll()
-        {
-            const string sql = @"
+        private const string SelectClause = @"
 SELECT
         [PortfolioNumber]
         ,[ReturnSeriesId]
@@ -26,12 +24,37 @@ SELECT
     FROM
         [Performance].[PortfolioToReturnSeries]";
 
+        public PortfolioToReturnSeriesDto[] GetAll()
+        {
             PortfolioToReturnSeriesDto[] result = null;
 
             ConnectionExecuteWithLog(
                 connection =>
                 {
-                    result = connection.Query<PortfolioToReturnSeriesDto>(sql).ToArray();
+                    result = connection.Query<PortfolioToReturnSeriesDto>(SelectClause).ToArray();
+                },
+                SelectClause);
+
+            return result;
+        }
+
+        public PortfolioToReturnSeriesDto[] Get(int[] portfolioNumbers)
+        {
+            PortfolioToReturnSeriesDto[] result = null;
+
+            var sql = SelectClause + @"
+WHERE   
+    PortfolioNumber IN @PortfolioNumbers";
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    var paramObject = new
+                    {
+                        PortfolioNumbers = portfolioNumbers
+                    };
+
+                    result = connection.Query<PortfolioToReturnSeriesDto>(sql, paramObject).ToArray();
                 },
                 sql);
 

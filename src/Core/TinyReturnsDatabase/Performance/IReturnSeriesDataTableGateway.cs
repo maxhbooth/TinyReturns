@@ -4,6 +4,8 @@
     {
         ReturnSeriesDto[] GetAll();
 
+        ReturnSeriesDto[] Get(int[] returnSeriesIds);
+
         int Insert(ReturnSeriesDto dto);
 
         void Insert(ReturnSeriesDto[] dtos);

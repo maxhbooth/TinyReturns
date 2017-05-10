@@ -14,9 +14,8 @@ namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance
         {
         }
 
-        public ReturnSeriesDto[] GetAll()
-        {
-            const string sql = @"
+
+        private const string SelectClause = @"
 SELECT
         [ReturnSeriesId]
         ,[Name]
@@ -24,17 +23,43 @@ SELECT
     FROM
         [Performance].[ReturnSeries]";
 
+        public ReturnSeriesDto[] GetAll()
+        {
             ReturnSeriesDto[] result = null;
 
             ConnectionExecuteWithLog(
                 connection =>
                 {
-                    result = connection.Query<ReturnSeriesDto>(sql).ToArray();
+                    result = connection.Query<ReturnSeriesDto>(SelectClause).ToArray();
+                },
+                SelectClause);
+
+            return result;
+        }
+
+        public ReturnSeriesDto[] Get(int[] returnSeriesIds)
+        {
+            ReturnSeriesDto[] result = null;
+
+            var sql = SelectClause + @"
+WHERE
+    [ReturnSeriesId] IN @ReturnSeriesIds";
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    var paramObject = new
+                    {
+                        ReturnSeriesIds = returnSeriesIds
+                    };
+
+                    result = connection.Query<ReturnSeriesDto>(sql, paramObject).ToArray();
                 },
                 sql);
 
             return result;
         }
+
 
         public int Insert(ReturnSeriesDto dto)
         {

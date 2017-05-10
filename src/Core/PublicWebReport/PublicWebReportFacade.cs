@@ -1,32 +1,37 @@
 ﻿using System.Collections.Generic;
 using Dimensional.TinyReturns.Core.DateExtend;
-using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
 
 namespace Dimensional.TinyReturns.Core.PublicWebReport
 {
     public class PublicWebReportFacade
     {
-        private readonly IPortfolioDataTableGateway _portfolioDataTableGateway;
+        private readonly IClock _clock;
+        private readonly PortfolioWithPerformanceRepository _portfolioWithPerformanceRepository;
 
         public PublicWebReportFacade(
-            IPortfolioDataTableGateway portfolioDataTableGateway)
+            PortfolioWithPerformanceRepository portfolioWithPerformanceRepository,
+            IClock clock)
         {
-            _portfolioDataTableGateway = portfolioDataTableGateway;
+            _portfolioWithPerformanceRepository = portfolioWithPerformanceRepository;
+            _clock = clock;
         }
 
-        public PortfolioModel[] GetPortfolioPerforance(
-            MonthYear monthYear)
+        public PortfolioModel[] GetPortfolioPerforance()
         {
-            var portfolioDtos = _portfolioDataTableGateway.GetAll();
+            var portfolios = _portfolioWithPerformanceRepository.GetAll();
+
+            var currentMonthYear = new MonthYear(_clock.GetCurrentDate());
+            var previousMonthYear = currentMonthYear.AddMonths(-1);
 
             var portfolioModels = new List<PortfolioModel>();
 
-            foreach (var portfolioDto in portfolioDtos)
+            foreach (var portfolioWithPerformance in portfolios)
             {
                 portfolioModels.Add(new PortfolioModel()
                 {
-                    Number = portfolioDto.Number,
-                    Name = portfolioDto.Name
+                    Number = portfolioWithPerformance.Number,
+                    Name = portfolioWithPerformance.Name,
+                    OneMonth = portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear)
                 });
             }
 
@@ -37,6 +42,8 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
         {
             public int Number { get; set; }
             public string Name { get; set; }
+
+            public decimal? OneMonth { get; set; }
         }
     }
 }

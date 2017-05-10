@@ -43,7 +43,12 @@
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="CitiFileImport\CitiMonthyReturnImporter.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
+    <Compile Include="IClock.cs" />
+    <Compile Include="PublicWebReport\MonthlyReturnFindResult.cs" />
+    <Compile Include="PublicWebReport\PortfolioWithPerformance.cs" />
+    <Compile Include="PublicWebReport\PortfolioWithPerformanceRepository.cs" />
     <Compile Include="PublicWebReport\PublicWebReportFacade.cs" />
+    <Compile Include="PublicWebReport\ReturnSeries.cs" />
     <Compile Include="TinyReturnsDatabase\InvestmentVehicleDto.cs" />
     <Compile Include="TinyReturnsDatabase\IInvestmentVehicleDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\IMonthlyReturnsDataTableGateway.cs" />
@@ -76,7 +81,6 @@
     <Compile Include="PerformanceReport\PerformanceReportExcelReportModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\IPortfolioToReturnSeriesDataTableGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\Performance\IReturnSeriesDataGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\IMonthlyReturnDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\MonthlyReturnDto.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\IReturnSeriesDataTableGateway.cs" />

@@ -47,7 +47,6 @@
     <Compile Include="TinyReturnsDatabase\InvestmentVehicleDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\MonthlyReturnDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\PortfolioToReturnSeriesDataTableGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\Performance\ReturnSeriesDataGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\ReturnSeriesDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\ReturnsSeriesDataTableGateway.cs" />

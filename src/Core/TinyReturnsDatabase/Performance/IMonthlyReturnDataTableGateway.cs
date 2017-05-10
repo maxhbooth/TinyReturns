@@ -4,6 +4,9 @@
     {
         MonthlyReturnDto[] GetAll();
 
+        MonthlyReturnDto[] Get(
+            int[] returnSeriesIds);
+
         void Insert(MonthlyReturnDto[] dtos);
     }
 }
