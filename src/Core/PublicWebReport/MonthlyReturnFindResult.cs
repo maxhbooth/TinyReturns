@@ -1,5 +1,6 @@
 namespace Dimensional.TinyReturns.Core.PublicWebReport
 {
+    //TODO: Not sure if we need this class.
     public class MonthlyReturnFindResult
     {
         public static MonthlyReturnFindResult NotFoundResult = new MonthlyReturnFindResult(false, 0);

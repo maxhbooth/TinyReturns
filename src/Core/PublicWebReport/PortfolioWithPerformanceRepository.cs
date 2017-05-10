@@ -36,7 +36,6 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
             var portfolioToReturnSeriesDtos = _portfolioToReturnSeriesDataTableGateway.Get(portfolioNumbers);
 
             var targetReturnSeriesIds = portfolioToReturnSeriesDtos
-                .Where(d => d.SeriesTypeCode == PortfolioToReturnSeriesDto.NetSeriesTypeCode)
                 .Select(d => d.ReturnSeriesId)
                 .ToArray();
 
