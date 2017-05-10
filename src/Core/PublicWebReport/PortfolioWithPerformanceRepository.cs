@@ -43,15 +43,11 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
             
             foreach (var portfolioDto in portfolioDtos)
             {
-                var netDto = portfolioToReturnSeriesDtos.FirstOrDefault(
-                    d =>
-                        d.PortfolioNumber == portfolioDto.Number &&
-                        d.SeriesTypeCode == PortfolioToReturnSeriesDto.NetSeriesTypeCode);
+                var netDto = portfolioToReturnSeriesDtos.FindNet(
+                    portfolioDto.Number);
 
-                var grossDto = portfolioToReturnSeriesDtos.FirstOrDefault(
-                    d =>
-                        d.PortfolioNumber == portfolioDto.Number &&
-                        d.SeriesTypeCode == PortfolioToReturnSeriesDto.GrossSeriesTypeCode);
+                var grossDto = portfolioToReturnSeriesDtos.FindGross(
+                    portfolioDto.Number);
 
                 ReturnSeries netReturnSeries = null;
                 ReturnSeries grossReturnSeries = null;
