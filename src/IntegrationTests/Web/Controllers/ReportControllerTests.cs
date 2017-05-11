@@ -53,11 +53,14 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             public ReportController CreateController()
             {
+                var returnSeriesRepository = new ReturnSeriesRepository(
+                    _returnSeriesDataTableGateway,
+                    _monthlyReturnDataTableGateway);
+
                 var portfolioWithPerformanceRepository = new PortfolioWithPerformanceRepository(
                     _portfolioDataTableGateway,
                     _portfolioToReturnSeriesDataTableGateway,
-                    _returnSeriesDataTableGateway,
-                    _monthlyReturnDataTableGateway);
+                    returnSeriesRepository);
 
                 var publicWebReportFacade = new PublicWebReportFacade(
                     portfolioWithPerformanceRepository, 

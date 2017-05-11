@@ -49,6 +49,7 @@
     <Compile Include="PublicWebReport\PortfolioWithPerformanceRepository.cs" />
     <Compile Include="PublicWebReport\PublicWebReportFacade.cs" />
     <Compile Include="PublicWebReport\ReturnSeries.cs" />
+    <Compile Include="PublicWebReport\ReturnSeriesRepository.cs" />
     <Compile Include="TinyReturnsDatabase\InvestmentVehicleDto.cs" />
     <Compile Include="TinyReturnsDatabase\IInvestmentVehicleDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\IMonthlyReturnsDataTableGateway.cs" />

@@ -70,11 +70,14 @@ namespace Dimensional.TinyReturns.Core
 
         public static PublicWebReportFacade GetPublicWebReportFacade()
         {
+            var returnSeriesRepository = new ReturnSeriesRepository(
+                ReturnSeriesDataTableGateway,
+                MonthlyReturnDataTableGateway);
+
             var portfolioWithPerformanceRepository = new PortfolioWithPerformanceRepository(
                 PortfolioDataTableGateway,
                 PortfolioToReturnSeriesDataTableGateway,
-                ReturnSeriesDataTableGateway,
-                MonthlyReturnDataTableGateway);
+                returnSeriesRepository);
 
             return new PublicWebReportFacade(
                 portfolioWithPerformanceRepository,

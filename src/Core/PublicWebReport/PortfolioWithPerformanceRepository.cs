@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Dimensional.TinyReturns.Core.DateExtend;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
 
@@ -11,17 +9,15 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
     {
         private readonly IPortfolioDataTableGateway _portfolioDataTableGateway;
         private readonly IPortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
-        private readonly IReturnSeriesDataTableGateway _returnSeriesDataGateway;
-        private readonly IMonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
+
+        private readonly ReturnSeriesRepository _returnSeriesRepository;
 
         public PortfolioWithPerformanceRepository(
             IPortfolioDataTableGateway portfolioDataTableGateway,
             IPortfolioToReturnSeriesDataTableGateway portfolioToReturnSeriesDataTableGateway,
-            IReturnSeriesDataTableGateway returnSeriesDataGateway,
-            IMonthlyReturnDataTableGateway monthlyReturnDataTableGateway)
+            ReturnSeriesRepository returnSeriesRepository)
         {
-            _monthlyReturnDataTableGateway = monthlyReturnDataTableGateway;
-            _returnSeriesDataGateway = returnSeriesDataGateway;
+            _returnSeriesRepository = returnSeriesRepository;
             _portfolioToReturnSeriesDataTableGateway = portfolioToReturnSeriesDataTableGateway;
             _portfolioDataTableGateway = portfolioDataTableGateway;
         }
@@ -40,7 +36,7 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
                 .Select(d => d.ReturnSeriesId)
                 .ToArray();
 
-            var returnSeries = GetReturnSeries(targetReturnSeriesIds);
+            var returnSeries = _returnSeriesRepository.GetReturnSeries(targetReturnSeriesIds);
             
             foreach (var portfolioDto in portfolioDtos)
             {
@@ -65,34 +61,5 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
             return portfolioModels.ToArray();
         }
 
-        private ReturnSeries[] GetReturnSeries(
-            int[] targetReturnSeriesIds)
-        {
-            var returnSeriesDtos = _returnSeriesDataGateway.Get(targetReturnSeriesIds);
-
-            var monthlyReturnDtos = _monthlyReturnDataTableGateway.Get(targetReturnSeriesIds);
-
-            var returnSeries = new List<ReturnSeries>();
-
-            foreach (var returnSeriesDto in returnSeriesDtos)
-            {
-                var returnDtos = monthlyReturnDtos.Where(d => d.ReturnSeriesId == returnSeriesDto.ReturnSeriesId);
-
-                var monthlyReturns = new List<ReturnSeries.MonthlyReturn>();
-
-                foreach (var monthlyReturnDto in returnDtos)
-                {
-                    monthlyReturns.Add(new ReturnSeries.MonthlyReturn(
-                        new MonthYear(monthlyReturnDto.Year, monthlyReturnDto.Month), monthlyReturnDto.ReturnValue));
-                }
-
-                var series = new ReturnSeries(returnSeriesDto.ReturnSeriesId, monthlyReturns.ToArray());
-
-
-                returnSeries.Add(series);
-            }
-
-            return returnSeries.ToArray();
-        }
     }
 }
