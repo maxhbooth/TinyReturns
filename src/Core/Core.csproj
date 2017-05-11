@@ -91,9 +91,6 @@
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioDto.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioToBenchmarkDto.cs" />
     <Compile Include="TinyReturnsDatabase\ReturnSeriesDto.cs" />
-    <Compile Include="PublicWebSite\PortfolioListPageAdapter.cs" />
-    <Compile Include="PublicWebSite\PortfolioListRecord.cs" />
-    <Compile Include="PublicWebSite\SerializableReturnResult.cs" />
     <Compile Include="ReturnResult.cs" />
     <Compile Include="MonthlyReturnSeries.cs" />
   </ItemGroup>

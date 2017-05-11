@@ -3,7 +3,6 @@ using Dimensional.TinyReturns.Core.FlatFiles;
 using Dimensional.TinyReturns.Core.OmniFileExport;
 using Dimensional.TinyReturns.Core.PerformanceReport;
 using Dimensional.TinyReturns.Core.PublicWebReport;
-using Dimensional.TinyReturns.Core.PublicWebSite;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
@@ -61,11 +60,6 @@ namespace Dimensional.TinyReturns.Core
             return new PerformanceReportExcelReportCreator(
                 GetInvestmentVehicleReturnsRepository(),
                 PerformanceReportExcelReportView);
-        }
-
-        public static PortfolioListPageAdapter GetPortfolioListPageAdapter()
-        {
-            return new PortfolioListPageAdapter(GetInvestmentVehicleReturnsRepository());
         }
 
         public static PublicWebReportFacade GetPublicWebReportFacade()
