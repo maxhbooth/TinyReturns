@@ -19,7 +19,7 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
             _financialMath = new FinancialMath();
         }
 
-        public int Id { get; }
+        public int Id { get; private set; }
 
         public decimal? GetMonthlyReturn(
             MonthYear monthYear)
@@ -42,8 +42,8 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
                 MonthYear = monthYear;
             }
 
-            public MonthYear MonthYear { get; }
-            public decimal Value { get; }
+            public MonthYear MonthYear { get; private set; }
+            public decimal Value { get; private set; }
         }
 
         public decimal? CalculateReturnAsDecimal(

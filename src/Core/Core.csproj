@@ -44,7 +44,6 @@
     <Compile Include="CitiFileImport\CitiMonthyReturnImporter.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
     <Compile Include="IClock.cs" />
-    <Compile Include="PublicWebReport\MonthlyReturnFindResult.cs" />
     <Compile Include="PublicWebReport\PortfolioWithPerformance.cs" />
     <Compile Include="PublicWebReport\PortfolioWithPerformanceRepository.cs" />
     <Compile Include="PublicWebReport\PublicWebReportFacade.cs" />

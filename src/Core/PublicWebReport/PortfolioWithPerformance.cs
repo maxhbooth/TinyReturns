@@ -19,8 +19,8 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
             Number = number;
         }
 
-        public int Number { get; }
-        public string Name { get; }
+        public int Number { get; private set; }
+        public string Name { get; private set; }
 
         public decimal? GetNetMonthlyReturn(
             MonthYear monthYear)
