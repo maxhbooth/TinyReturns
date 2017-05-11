@@ -238,6 +238,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var monthYear = new MonthYear(2016, 5);
                 var monthYearMinus1 = monthYear.AddMonths(-1);
                 var monthYearMinus2 = monthYear.AddMonths(-2);
+                var monthYearMinus3 = monthYear.AddMonths(-3);
+                var monthYearMinus4 = monthYear.AddMonths(-4);
                 var nextMonth = monthYear.AddMonths(1);
 
                 testHelper.CurrentDate = new DateTime(
@@ -263,6 +265,22 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     PortfolioNumber = portfolioNumber,
                     ReturnSeriesId = returnSeriesId,
                     SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+
+                testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
+                {
+                    ReturnSeriesId = returnSeriesId,
+                    Year = monthYearMinus4.Year,
+                    Month = monthYearMinus4.Month,
+                    ReturnValue = -0.01m
+                });
+
+                testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
+                {
+                    ReturnSeriesId = returnSeriesId,
+                    Year = monthYearMinus3.Year,
+                    Month = monthYearMinus3.Month,
+                    ReturnValue = 0.01m
                 });
 
                 testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
@@ -302,9 +320,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].Number.Should().Be(portfolioNumber);
                 viewResultModel[0].Name.Should().Be(portfolioName);
 
-                viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00001m);
-                viewResultModel[0].ThreeMonth.Should().HaveValue();
-                viewResultModel[0].YearToDate.Should().NotHaveValue();
+                viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
+                viewResultModel[0].ThreeMonth.Should().BeApproximately(0.039584m, 0.00000001m);
+                viewResultModel[0].YearToDate.Should().BeApproximately(0.0394800416m, 0.00000001m);
             });
         }
 
