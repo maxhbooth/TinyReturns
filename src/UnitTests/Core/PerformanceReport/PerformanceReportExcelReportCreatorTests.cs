@@ -208,9 +208,9 @@ namespace Dimensional.TinyReturns.UnitTests.Core.PerformanceReport
             _returnsRepository.AddInvestmentVehicle(benchmark10001);
         }
         
-        private PerformanceReportExcelReportCreator CreatePerformanceReportExcelCreator()
+        private PerformanceReportExcelReportProjector CreatePerformanceReportExcelCreator()
         {
-            return new PerformanceReportExcelReportCreator(_returnsRepository, _excelViewSpy);
+            return new PerformanceReportExcelReportProjector(_returnsRepository, _excelViewSpy);
         }
 
         private InvestmentVehicle CreateTestPortfolio(

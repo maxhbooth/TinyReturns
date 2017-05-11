@@ -55,9 +55,9 @@ namespace Dimensional.TinyReturns.Core
             return r;
         }
 
-        public static PerformanceReportExcelReportCreator GetPerformanceReportExcelReportCreator()
+        public static PerformanceReportExcelReportProjector GetPerformanceReportExcelReportCreator()
         {
-            return new PerformanceReportExcelReportCreator(
+            return new PerformanceReportExcelReportProjector(
                 GetInvestmentVehicleReturnsRepository(),
                 PerformanceReportExcelReportView);
         }

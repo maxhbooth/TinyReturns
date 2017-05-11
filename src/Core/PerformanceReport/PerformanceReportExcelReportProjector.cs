@@ -4,12 +4,12 @@ using Dimensional.TinyReturns.Core.DateExtend;
 
 namespace Dimensional.TinyReturns.Core.PerformanceReport
 {
-    public class PerformanceReportExcelReportCreator
+    public class PerformanceReportExcelReportProjector
     {
         private readonly IInvestmentVehicleReturnsRepository _returnsRepository;
         private readonly IPerformanceReportExcelReportView _view;
 
-        public PerformanceReportExcelReportCreator(
+        public PerformanceReportExcelReportProjector(
             IInvestmentVehicleReturnsRepository returnsRepository,
             IPerformanceReportExcelReportView view)
         {
