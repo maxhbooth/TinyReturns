@@ -218,8 +218,96 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].Number.Should().Be(portfolioNumber);
                 viewResultModel[0].Name.Should().Be(portfolioName);
                 viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00001m);
+
+                viewResultModel[0].ThreeMonth.Should().NotHaveValue();
+                viewResultModel[0].YearToDate.Should().NotHaveValue();
             });
         }
+
+        [Fact]
+        public void ShouldReturnSinglePortfolioWithReturnsForAllValues()
+        {
+            // Arrange
+            var testHelper = new TestHelper();
+
+            testHelper.DatabaseDataDeleter(() =>
+            {
+                var portfolioNumber = 100;
+                var portfolioName = "Portfolio 100";
+
+                var monthYear = new MonthYear(2016, 5);
+                var monthYearMinus1 = monthYear.AddMonths(-1);
+                var monthYearMinus2 = monthYear.AddMonths(-2);
+                var nextMonth = monthYear.AddMonths(1);
+
+                testHelper.CurrentDate = new DateTime(
+                    nextMonth.Year,
+                    nextMonth.Month,
+                    5);
+
+                testHelper.InsertPortfolioDto(new PortfolioDto()
+                {
+                    Number = portfolioNumber,
+                    Name = portfolioName,
+                    InceptionDate = new DateTime(2010, 1, 1)
+                });
+
+                var returnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Return Series for Portfolio 100",
+                    Disclosure = string.Empty
+                });
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber,
+                    ReturnSeriesId = returnSeriesId,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+
+                testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
+                {
+                    ReturnSeriesId = returnSeriesId,
+                    Year = monthYearMinus2.Year,
+                    Month = monthYearMinus2.Month,
+                    ReturnValue = 0.04m
+                });
+
+                testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
+                {
+                    ReturnSeriesId = returnSeriesId,
+                    Year = monthYearMinus1.Year,
+                    Month = monthYearMinus1.Month,
+                    ReturnValue = -0.02m
+                });
+
+                testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
+                {
+                    ReturnSeriesId = returnSeriesId,
+                    Year = monthYear.Year,
+                    Month = monthYear.Month,
+                    ReturnValue = 0.02m
+                });
+
+                var controller = testHelper.CreateController();
+
+                // Act
+                var actionResult = controller.Index();
+
+                // Assert
+                var viewResultModel = GetModelFromActionResult(actionResult);
+
+                viewResultModel.Length.Should().Be(1);
+
+                viewResultModel[0].Number.Should().Be(portfolioNumber);
+                viewResultModel[0].Name.Should().Be(portfolioName);
+
+                viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00001m);
+                viewResultModel[0].ThreeMonth.Should().HaveValue();
+                viewResultModel[0].YearToDate.Should().NotHaveValue();
+            });
+        }
+
 
         private static PublicWebReportFacade.PortfolioModel[] GetModelFromActionResult(
             ActionResult actionResult)

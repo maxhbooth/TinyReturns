@@ -31,7 +31,8 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
                 {
                     Number = portfolioWithPerformance.Number,
                     Name = portfolioWithPerformance.Name,
-                    OneMonth = portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear)
+                    OneMonth = portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear),
+                    ThreeMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(CalculateReturnRequestFactory.ThreeMonth(previousMonthYear))
                 });
             }
 
@@ -44,6 +45,8 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
             public string Name { get; set; }
 
             public decimal? OneMonth { get; set; }
+            public decimal? ThreeMonth { get; set; }
+            public decimal? YearToDate { get; set; }
         }
     }
 }

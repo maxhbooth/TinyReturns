@@ -30,5 +30,23 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
 
             return _netReturnSeries.GetMonthlyReturn(monthYear);
         }
+
+        public decimal? CalculateNetReturnAsDecimal(
+            CalculateReturnRequest request)
+        {
+            if (_netReturnSeries == null)
+                return null;
+
+            return _netReturnSeries.CalculateReturnAsDecimal(request);
+        }
+
+        public ReturnResult CalculateNetReturn(
+            CalculateReturnRequest request)
+        {
+            if (_netReturnSeries == null)
+                return ReturnResult.CreateWithError("Portfolio has not net return series.");
+
+            return _netReturnSeries.CalculateReturn(request);
+        }
     }
 }

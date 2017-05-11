@@ -81,19 +81,19 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
 
             var oneMonthRequest = CalculateReturnRequestFactory.OneMonth(monthYear);
             var oneMonthResult = portfolio.CalculateReturn(oneMonthRequest, feeType);
-            recordModel.OneMonth = oneMonthResult.GetValueNullOnError();
+            recordModel.OneMonth = oneMonthResult.GetNullValueOnError();
 
             var threeMonthRequest = CalculateReturnRequestFactory.ThreeMonth(monthYear);
             var threeMonthResult = portfolio.CalculateReturn(threeMonthRequest, feeType);
-            recordModel.ThreeMonths = threeMonthResult.GetValueNullOnError();
+            recordModel.ThreeMonths = threeMonthResult.GetNullValueOnError();
 
             var twelveMonthRequest = CalculateReturnRequestFactory.TwelveMonth(monthYear);
             var twelveMonthResult = portfolio.CalculateReturn(twelveMonthRequest, feeType);
-            recordModel.TwelveMonths = twelveMonthResult.GetValueNullOnError();
+            recordModel.TwelveMonths = twelveMonthResult.GetNullValueOnError();
 
             var yearToDateRequest = CalculateReturnRequestFactory.YearToDate(monthYear);
             var yearToDateResult = portfolio.CalculateReturn(yearToDateRequest, feeType);
-            recordModel.YearToDate = yearToDateResult.GetValueNullOnError();
+            recordModel.YearToDate = yearToDateResult.GetNullValueOnError();
 
             return recordModel;
         }
