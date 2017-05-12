@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using Dimensional.TinyReturns.Core.DateExtend;
+using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
+
+namespace Dimensional.TinyReturns.IntegrationTests.Core
+{
+    public class MonthlyReturnDtoDataBuilder
+    {
+        public static MonthlyReturnDto[] CreateMonthlyReturns(
+            int returnSeriesId,
+            MonthYearRange monthYearRange,
+            int seed = 0)
+        {
+            var random = new Random(seed);
+
+            var monthlyReturnDtos = new List<MonthlyReturnDto>();
+
+            monthYearRange.ForEachMonthInRange((monthYear) =>
+            {
+                var nextRandomValue = random.Next(-10000, 10000) / 10000m;
+
+                monthlyReturnDtos.Add(new MonthlyReturnDto()
+                {
+                    ReturnSeriesId = returnSeriesId,
+                    Year = monthYear.Year,
+                    Month = monthYear.Month,
+                    ReturnValue = nextRandomValue
+                });
+            });
+
+            return monthlyReturnDtos.ToArray();
+        }
+    }
+}

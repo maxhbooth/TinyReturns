@@ -64,9 +64,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
                 return _returnSeriesDataTableGateway.Insert(dto);
             }
 
-            public void InsertMonthlyReturnDto(MonthlyReturnDto dto)
+            public void InsertMonthlyReturnDtos(MonthlyReturnDto[] dtos)
             {
-                _monthlyReturnDataTableGateway.Insert(new[] { dto });
+                _monthlyReturnDataTableGateway.Insert(dtos);
             }
 
             public void InsertPortfolioToReturnSeriesDto(PortfolioToReturnSeriesDto dto)
@@ -129,7 +129,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
         }
 
         [Fact]
-        public void ShouldPrintNetRecordForPortrfolio()
+        public void ShouldPrintNetOnlyRecordForPortrfolio()
         {
             var testHelper = new TestHelper();
 
@@ -141,10 +141,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
                 var portfolioName = "Portfolio 100";
 
                 var monthYear = new MonthYear(2016, 5);
-                var monthYearMinus1 = monthYear.AddMonths(-1);
-                var monthYearMinus2 = monthYear.AddMonths(-2);
-                var monthYearMinus3 = monthYear.AddMonths(-3);
-                var monthYearMinus4 = monthYear.AddMonths(-4);
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
@@ -166,45 +162,15 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
                     SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
                 });
 
-                testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
-                {
-                    ReturnSeriesId = returnSeriesId,
-                    Year = monthYearMinus4.Year,
-                    Month = monthYearMinus4.Month,
-                    ReturnValue = -0.01m
-                });
+                var monthYearRange = new MonthYearRange(
+                    monthYear.AddMonths(-10),
+                    monthYear);
 
-                testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
-                {
-                    ReturnSeriesId = returnSeriesId,
-                    Year = monthYearMinus3.Year,
-                    Month = monthYearMinus3.Month,
-                    ReturnValue = 0.01m
-                });
+                var monthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    returnSeriesId,
+                    monthYearRange);
 
-                testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
-                {
-                    ReturnSeriesId = returnSeriesId,
-                    Year = monthYearMinus2.Year,
-                    Month = monthYearMinus2.Month,
-                    ReturnValue = 0.04m
-                });
-
-                testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
-                {
-                    ReturnSeriesId = returnSeriesId,
-                    Year = monthYearMinus1.Year,
-                    Month = monthYearMinus1.Month,
-                    ReturnValue = -0.02m
-                });
-
-                testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
-                {
-                    ReturnSeriesId = returnSeriesId,
-                    Year = monthYear.Year,
-                    Month = monthYear.Month,
-                    ReturnValue = 0.02m
-                });
+                testHelper.InsertMonthlyReturnDtos(monthlyReturnDtos);
 
                 projector.CreateReport(
                     monthYear,
@@ -223,9 +189,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
                 recordModel.Type.Should().Be("Portfolio");
                 recordModel.FeeType.Should().Be("Net");
 
-                recordModel.OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
-                recordModel.ThreeMonths.Should().BeApproximately(0.039584m, 0.00000001m);
-                recordModel.YearToDate.Should().BeApproximately(0.0394800416m, 0.00000001m);
+                recordModel.OneMonth.Should().BeApproximately(-0.4162m, 0.00000001m);
+                recordModel.ThreeMonths.Should().BeApproximately(-0.375236505m, 0.00000001m);
+                recordModel.TwelveMonths.Should().NotHaveValue();
+                recordModel.YearToDate.Should().BeApproximately(0.0010907851939m, 0.00000001m);
 
                 viewSpy.PerformanceReportExcelReportModel.MonthText.Should().Be("Month: 5/2016");
             });
