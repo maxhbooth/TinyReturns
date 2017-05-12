@@ -61,7 +61,6 @@
     <Compile Include="Core\DataRepositories\ReturnSeriesDtoCollectionForTests.cs" />
     <Compile Include="Core\DataRepositories\ReturnsSeriesDataTableGatewayStub.cs" />
     <Compile Include="Core\InvestmentVehicleReturnsRepositoryStub.cs" />
-    <Compile Include="Core\OmniFileExport\OmniDataFileCreatorTests.cs" />
     <Compile Include="Core\ReturnResultTestExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

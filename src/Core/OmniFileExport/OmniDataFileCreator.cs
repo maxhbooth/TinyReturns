@@ -69,8 +69,7 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
 
             flatFile
                 .SetDelimiter("|")
-                .AddColumn(c => c.InvestmentVehicleId, o => o.Heading("Investment Vehicle Id"))
-                .AddColumn(c => c.Type)
+                .AddColumn(c => c.InvestmentVehicleId, o => o.Heading("Fund Id"))
                 .AddColumn(c => c.Name)
                 .AddColumn(c => c.FeeType, o => o.Heading("Fee Type"))
                 .AddColumn(c => c.Duration)

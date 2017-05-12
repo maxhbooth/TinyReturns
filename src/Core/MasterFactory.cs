@@ -41,7 +41,7 @@ namespace Dimensional.TinyReturns.Core
         public static OmniDataFileCreator GetOmniDataFileCreator()
         {
             return new OmniDataFileCreator(
-                GetInvestmentVehicleReturnsRepository(),
+                CreatePortfolioWithPerformanceRepository(),
                 FlatFileIo);
         }
 

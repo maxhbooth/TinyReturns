@@ -3,7 +3,6 @@
     public class OmniDataFileLineModel
     {
         public string InvestmentVehicleId { get; set; }
-        public string Type { get; set; }
         public string Name { get; set; } 
         public string FeeType { get; set; }
         public string Duration { get; set; }

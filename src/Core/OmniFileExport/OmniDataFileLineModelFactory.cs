@@ -155,7 +155,6 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
             return new OmniDataFileLineModel()
             {
                 InvestmentVehicleId = _portfolio.Number.ToString(),
-                Type = "Portfolio",
                 Name = _portfolio.Name
             };
         }
