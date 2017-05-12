@@ -67,5 +67,23 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
         {
             get { return _grossReturnSeries != null; }
         }
+
+        public ReturnSeries.MonthlyReturn[] GetNetReturnsInRange(
+            MonthYearRange monthYearRange)
+        {
+            if (HasNetReturnSeries)
+                return _netReturnSeries.GetMonthsInRange(monthYearRange);
+
+            return new ReturnSeries.MonthlyReturn[0];
+        }
+
+        public ReturnSeries.MonthlyReturn[] GetGrossReturnsInRange(
+            MonthYearRange monthYearRange)
+        {
+            if (HasGrossReturnSeries)
+                return _grossReturnSeries.GetMonthsInRange(monthYearRange);
+
+            return new ReturnSeries.MonthlyReturn[0];
+        }
     }
 }
