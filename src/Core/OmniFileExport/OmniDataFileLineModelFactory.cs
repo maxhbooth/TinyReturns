@@ -39,7 +39,7 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
             return netMonthlyReturns.Select(r => CreateMonthModel(r, "G"));
         }
 
-        public IEnumerable<OmniDataFileLineModel> CreateNetQuarterLineModels(FeeType feeType)
+        public IEnumerable<OmniDataFileLineModel> CreateNetQuarterLineModels()
         {
             var models = new List<OmniDataFileLineModel>();
 
@@ -60,7 +60,7 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
             return models;
         }
 
-        public IEnumerable<OmniDataFileLineModel> CreateGrossQuarterLineModels(FeeType feeType)
+        public IEnumerable<OmniDataFileLineModel> CreateGrossQuarterLineModels()
         {
             var models = new List<OmniDataFileLineModel>();
 

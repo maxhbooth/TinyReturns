@@ -44,8 +44,8 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
                 models.AddRange(lineFactory.CreateGrossMonthLineModels());
                 models.AddRange(lineFactory.CreateNetMonthLineModels());
 
-                models.AddRange(lineFactory.CreateGrossQuarterLineModels(FeeType.GrossOfFees));
-                models.AddRange(lineFactory.CreateNetQuarterLineModels(FeeType.NetOfFees));
+                models.AddRange(lineFactory.CreateGrossQuarterLineModels());
+                models.AddRange(lineFactory.CreateNetQuarterLineModels());
 
                 var grossYearToDateLineModel = lineFactory.CreateGrossYearToDateLineModel();
 
