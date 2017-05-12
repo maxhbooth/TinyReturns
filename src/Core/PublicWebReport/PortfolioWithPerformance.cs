@@ -48,5 +48,24 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
 
             return _netReturnSeries.CalculateReturn(request);
         }
+
+        public ReturnResult CalculateGrossReturn(
+            CalculateReturnRequest request)
+        {
+            if (_grossReturnSeries == null)
+                return ReturnResult.CreateWithError("Portfolio has not gross return series.");
+
+            return _grossReturnSeries.CalculateReturn(request);
+        }
+
+        public bool HasNetReturnSeries
+        {
+            get { return _netReturnSeries != null; }
+        }
+
+        public bool HasGrossReturnSeries
+        {
+            get { return _grossReturnSeries != null; }
+        }
     }
 }
