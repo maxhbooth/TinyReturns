@@ -77,7 +77,7 @@ GO
 
 CREATE TABLE [Performance].[ReturnSeries](
 	[ReturnSeriesId] [int] IDENTITY(1,1) NOT NULL,
-	[Name] NVARCHAR(64) NOT NULL,
+	[Name] NVARCHAR(255) NOT NULL,
 	[Disclosure] NVARCHAR(MAX) NOT NULL,
  CONSTRAINT [PK_Performance_ReturnSeries] PRIMARY KEY CLUSTERED 
 (

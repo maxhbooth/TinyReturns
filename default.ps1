@@ -30,9 +30,9 @@ properties {
 	$packageXunitExec = "$srcFolder\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
 }
 
-task default -depends CleanSolution, UpdateNuGetPackages, BuildSolution, RebuildDatabase, RunUnitTests, RunIntegrationTests, PopulateDatabase
+task default -depends CleanSolution, UpdateNuGetPackages, BuildSolution, RebuildDatabase, RunUnitTests, RunIntegrationTests
 
-task databaseonly -depends RebuildDatabase, PopulateDatabase
+task databaseonly -depends RebuildDatabase
 
 formatTaskName {
 	param($taskName)
@@ -85,20 +85,4 @@ task RebuildDatabase {
 
 task RunIntegrationTests -depends BuildSolution {
 	Exec { &$packageXunitExec "$buildTargetFolder\Dimensional.TinyReturns.IntegrationTests.dll" /html "$buildFolder\Dimensional.TinyReturns.IntegrationTests.dll.html" }
-}
-
-task PopulateDatabase -depends RebuildDatabase {
-	$consoleExec = "$buildTargetFolder\Dimensional.TinyReturns.CitiFileImporterConsole.exe"
-	
-	$netOfFeesFile = "$docsFolder\CitiFileFullNetOfFees.csv"
-	$grossOfFeesFile = "$docsFolder\CitiFileFullGrossOfFees.csv"
-	$indexFile = "$docsFolder\CitiFileFullIndex.csv"
-	
-	Write-Host "Executing: $consoleExec $netOfFeesFile $grossOfFeesFile $indexFile"
-	
-	cd "$buildTargetFolder"
-	
-	Exec { &$consoleExec "$netOfFeesFile" "$grossOfFeesFile" "$indexFile" }
-	
-	cd "$baseDir"
 }

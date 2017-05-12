@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelRendering", "ExcelRend
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportGeneratorConsole", "ReportGenerator\ReportGeneratorConsole.csproj", "{8B9C5B3F-FCE5-4306-97EA-4F64600BABCF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDataPopulatorConsole", "TestDataPopulatorConsole\TestDataPopulatorConsole.csproj", "{D7D3D152-05B9-4B84-862E-158E175B811D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +96,10 @@ Global
 		{8B9C5B3F-FCE5-4306-97EA-4F64600BABCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B9C5B3F-FCE5-4306-97EA-4F64600BABCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B9C5B3F-FCE5-4306-97EA-4F64600BABCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7D3D152-05B9-4B84-862E-158E175B811D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7D3D152-05B9-4B84-862E-158E175B811D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7D3D152-05B9-4B84-862E-158E175B811D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7D3D152-05B9-4B84-862E-158E175B811D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,5 +117,6 @@ Global
 		{756A3DFF-E91C-4210-A78D-A7145943EBC3} = {C61B7D27-4367-4CAF-A7E2-574C7D111881}
 		{9F87153E-C99D-4234-BDA9-F0754646B0FB} = {C61B7D27-4367-4CAF-A7E2-574C7D111881}
 		{8B9C5B3F-FCE5-4306-97EA-4F64600BABCF} = {C61B7D27-4367-4CAF-A7E2-574C7D111881}
+		{D7D3D152-05B9-4B84-862E-158E175B811D} = {C61B7D27-4367-4CAF-A7E2-574C7D111881}
 	EndGlobalSection
 EndGlobal
