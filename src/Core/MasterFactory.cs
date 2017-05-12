@@ -58,24 +58,29 @@ namespace Dimensional.TinyReturns.Core
         public static PerformanceReportExcelReportProjector GetPerformanceReportExcelReportCreator()
         {
             return new PerformanceReportExcelReportProjector(
-                GetInvestmentVehicleReturnsRepository(),
+                CreatePortfolioWithPerformanceRepository(),
                 PerformanceReportExcelReportView);
         }
 
         public static PublicWebReportFacade GetPublicWebReportFacade()
         {
-            var returnSeriesRepository = new ReturnSeriesRepository(
-                ReturnSeriesDataTableGateway,
-                MonthlyReturnDataTableGateway);
-
-            var portfolioWithPerformanceRepository = new PortfolioWithPerformanceRepository(
-                PortfolioDataTableGateway,
-                PortfolioToReturnSeriesDataTableGateway,
-                returnSeriesRepository);
+            var portfolioWithPerformanceRepository = CreatePortfolioWithPerformanceRepository();
 
             return new PublicWebReportFacade(
                 portfolioWithPerformanceRepository,
                 new Clock());
+        }
+
+        private static PortfolioWithPerformanceRepository CreatePortfolioWithPerformanceRepository()
+        {
+            var returnSeriesRepository = new ReturnSeriesRepository(
+                ReturnSeriesDataTableGateway,
+                MonthlyReturnDataTableGateway);
+
+            return new PortfolioWithPerformanceRepository(
+                PortfolioDataTableGateway,
+                PortfolioToReturnSeriesDataTableGateway,
+                returnSeriesRepository);
         }
     }
 }

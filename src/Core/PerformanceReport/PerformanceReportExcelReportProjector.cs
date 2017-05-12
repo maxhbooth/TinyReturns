@@ -1,74 +1,57 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Dimensional.TinyReturns.Core.DateExtend;
+using Dimensional.TinyReturns.Core.PublicWebReport;
 
 namespace Dimensional.TinyReturns.Core.PerformanceReport
 {
     public class PerformanceReportExcelReportProjector
     {
-        private readonly IInvestmentVehicleReturnsRepository _returnsRepository;
         private readonly IPerformanceReportExcelReportView _view;
 
+        private readonly PortfolioWithPerformanceRepository _portfolioWithPerformanceRepository;
+
         public PerformanceReportExcelReportProjector(
-            IInvestmentVehicleReturnsRepository returnsRepository,
+            PortfolioWithPerformanceRepository portfolioWithPerformanceRepository,
             IPerformanceReportExcelReportView view)
         {
+            _portfolioWithPerformanceRepository = portfolioWithPerformanceRepository;
             _view = view;
-            _returnsRepository = returnsRepository;
         }
 
         public void CreateReport(
             MonthYear monthYear,
             string fullFilePath)
         {
-            var investmentVehicles = _returnsRepository.GetAllInvestmentVehicles();
+            var portfolios = _portfolioWithPerformanceRepository.GetAll();
 
-            var portfolioRecords = CreatePortfolioExcelRecords(monthYear, investmentVehicles);
-            var benchmarkRecords = CreateBenchmarkExcelRecords(monthYear, investmentVehicles);
+            var portfolioRecords = CreatePortfolioExcelRecords(monthYear, portfolios);
 
             var reportModel = new PerformanceReportExcelReportModel();
 
             reportModel.MonthText = string.Format("Month: {0}/{1}", monthYear.Month, monthYear.Year);
-            reportModel.Records = portfolioRecords.Union(benchmarkRecords).ToArray();
+            reportModel.Records = portfolioRecords.ToArray();
             
             _view.RenderReport(reportModel, fullFilePath);
         }
 
         private IEnumerable<PerformanceReportExcelReportRecordModel> CreatePortfolioExcelRecords(
             MonthYear monthYear,
-            IEnumerable<InvestmentVehicle> investmentVehicles)
+            PortfolioWithPerformance[] portfolios)
         {
             var recordModels = new List<PerformanceReportExcelReportRecordModel>();
 
-            var portfolios = investmentVehicles.GetPortfolios();
-
             foreach (var portfolio in portfolios)
             {
-                recordModels.Add(CreateExcelRecord(portfolio, monthYear, FeeType.NetOfFees, "Portfolio"));
-                recordModels.Add(CreateExcelRecord(portfolio, monthYear, FeeType.GrossOfFees, "Portfolio"));
+                recordModels.Add(CreateExcelRecord(portfolio, monthYear, "Portfolio"));
+//                recordModels.Add(CreateExcelRecord(portfolio, monthYear, FeeType.GrossOfFees, "Portfolio"));
             }
 
             return recordModels;
         }
-
-        private IEnumerable<PerformanceReportExcelReportRecordModel> CreateBenchmarkExcelRecords(
-            MonthYear monthYear,
-            IEnumerable<InvestmentVehicle> investmentVehicles)
-        {
-            var recordModels = new List<PerformanceReportExcelReportRecordModel>();
-
-            var benchmarks = investmentVehicles.GetBenchmarks();
-
-            foreach (var benchmark in benchmarks)
-                recordModels.Add(CreateExcelRecord(benchmark, monthYear, FeeType.None, "Benchmark"));
-
-            return recordModels;
-        }
-
         private PerformanceReportExcelReportRecordModel CreateExcelRecord(
-            InvestmentVehicle portfolio,
+            PortfolioWithPerformance portfolio,
             MonthYear monthYear,
-            FeeType feeType,
             string entityType)
         {
             var recordModel = new PerformanceReportExcelReportRecordModel()
@@ -76,23 +59,23 @@ namespace Dimensional.TinyReturns.Core.PerformanceReport
                 EntityNumber = portfolio.Number,
                 Name = portfolio.Name,
                 Type = entityType,
-                FeeType = feeType.DisplayName,
+                FeeType = "Net",
             };
 
             var oneMonthRequest = CalculateReturnRequestFactory.OneMonth(monthYear);
-            var oneMonthResult = portfolio.CalculateReturn(oneMonthRequest, feeType);
+            var oneMonthResult = portfolio.CalculateNetReturn(oneMonthRequest);
             recordModel.OneMonth = oneMonthResult.GetNullValueOnError();
 
             var threeMonthRequest = CalculateReturnRequestFactory.ThreeMonth(monthYear);
-            var threeMonthResult = portfolio.CalculateReturn(threeMonthRequest, feeType);
+            var threeMonthResult = portfolio.CalculateNetReturn(threeMonthRequest);
             recordModel.ThreeMonths = threeMonthResult.GetNullValueOnError();
 
             var twelveMonthRequest = CalculateReturnRequestFactory.TwelveMonth(monthYear);
-            var twelveMonthResult = portfolio.CalculateReturn(twelveMonthRequest, feeType);
+            var twelveMonthResult = portfolio.CalculateNetReturn(twelveMonthRequest);
             recordModel.TwelveMonths = twelveMonthResult.GetNullValueOnError();
 
             var yearToDateRequest = CalculateReturnRequestFactory.YearToDate(monthYear);
-            var yearToDateResult = portfolio.CalculateReturn(yearToDateRequest, feeType);
+            var yearToDateResult = portfolio.CalculateNetReturn(yearToDateRequest);
             recordModel.YearToDate = yearToDateResult.GetNullValueOnError();
 
             return recordModel;
