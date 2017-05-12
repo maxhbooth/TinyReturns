@@ -13,15 +13,10 @@ namespace Dimensional.TinyReturns.Core
     {
         public static ISystemLog SystemLog { get; set; }
         public static ITinyReturnsDatabaseSettings TinyReturnsDatabaseSettings { get; set; }
-        public static IReturnsSeriesDataTableGateway ReturnsSeriesDataTableGateway { get; set; }
-
-        // **  New One
         public static IReturnSeriesDataTableGateway ReturnSeriesDataTableGateway { get; set; }
         public static IMonthlyReturnDataTableGateway MonthlyReturnDataTableGateway { get; set; }
         public static IPortfolioToReturnSeriesDataTableGateway PortfolioToReturnSeriesDataTableGateway { get; set; }
-        public static IMonthlyReturnsDataTableGateway MonthlyReturnsDataTableGateway { get; set; }
         public static ICitiReturnsFileReader CitiReturnsFileReader { get; set; }
-        public static IInvestmentVehicleDataTableGateway InvestmentVehicleDataTableGateway { get; set; }
         public static IPerformanceReportExcelReportView PerformanceReportExcelReportView { get; set; }
         public static IFlatFileIo FlatFileIo { get; set; }
 
