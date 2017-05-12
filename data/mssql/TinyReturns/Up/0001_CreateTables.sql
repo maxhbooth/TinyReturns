@@ -3,7 +3,7 @@ GO
 
 CREATE TABLE [Portfolio].[Benchmark](
 	[Number] [int] NOT NULL,
-	[Name] [nvarchar](64) NOT NULL
+	[Name] [nvarchar](255) NOT NULL
  CONSTRAINT [PK_Portfolio_Benchmark] PRIMARY KEY CLUSTERED 
 (
 	[Number] ASC
@@ -18,7 +18,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [Portfolio].[Portfolio](
 	[Number] [int] NOT NULL,
-	[Name] [nvarchar](64) NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
 	[InceptionDate] [datetime] NOT NULL,
 	[CloseDate] [datetime] NULL
  CONSTRAINT [PK_Portfolio_Portfolio] PRIMARY KEY CLUSTERED 

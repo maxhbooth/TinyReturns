@@ -1,106 +1,106 @@
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10000, N'Benchmark 00')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10000, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10001, N'Benchmark 01')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10001, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10002, N'Benchmark 02')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10002, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10003, N'Benchmark 03')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10003, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10004, N'Benchmark 04')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10004, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10005, N'Benchmark 05')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10005, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10006, N'Benchmark 06')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10006, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10007, N'Benchmark 07')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10007, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10008, N'Benchmark 08')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10008, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10009, N'Benchmark 09')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10009, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10010, N'Benchmark 10')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10010, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10011, N'Benchmark 11')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10011, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10012, N'Benchmark 12')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10012, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10013, N'Benchmark 13')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10013, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10014, N'Benchmark 14')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10014, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10015, N'Benchmark 15')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10015, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10016, N'Benchmark 16')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10016, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10017, N'Benchmark 17')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10017, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10018, N'Benchmark 18')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10018, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10019, N'Benchmark 19')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10019, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10020, N'Benchmark 20')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10020, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10021, N'Benchmark 21')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10021, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10022, N'Benchmark 22')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10022, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10023, N'Benchmark 23')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10023, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10024, N'Benchmark 24')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10024, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10025, N'Benchmark 25')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10025, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10026, N'Benchmark 26')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10026, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10027, N'Benchmark 27')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10027, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10028, N'Benchmark 28')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10028, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10029, N'Benchmark 29')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10029, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10030, N'Benchmark 30')
+INSERT [Portfolio].[Benchmark] ([Number], [Name]) VALUES (10030, N'***REMOVED***')
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (100, N'Portfolio 100', CAST(N'2000-01-08 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (100, N'***REMOVED***', CAST(N'2000-01-08 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (101, N'Portfolio 101', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (101, N'***REMOVED***', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (102, N'Portfolio 102', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (102, N'***REMOVED***', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (103, N'Portfolio 103', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (103, N'***REMOVED***', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (104, N'Portfolio 104', CAST(N'2000-08-15 00:00:00.000' AS DateTime), CAST(N'2017-12-05 00:00:00.000' AS DateTime))
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (104, N'***REMOVED***', CAST(N'2000-08-15 00:00:00.000' AS DateTime), CAST(N'2017-12-05 00:00:00.000' AS DateTime))
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (105, N'Portfolio 105', CAST(N'1999-07-03 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (105, N'***REMOVED***', CAST(N'1999-07-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (106, N'Portfolio 106', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (106, N'***REMOVED***', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (107, N'Portfolio 107', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (107, N'***REMOVED***', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (108, N'Portfolio 108', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (108, N'***REMOVED***', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (109, N'Portfolio 109', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (109, N'***REMOVED***', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (110, N'Portfolio 110', CAST(N'2000-08-15 00:00:00.000' AS DateTime), CAST(N'2001-11-04 00:00:00.000' AS DateTime))
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (110, N'***REMOVED***', CAST(N'2000-08-15 00:00:00.000' AS DateTime), CAST(N'2001-11-04 00:00:00.000' AS DateTime))
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (111, N'Portfolio 111', CAST(N'1999-07-03 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (111, N'***REMOVED***', CAST(N'1999-07-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (112, N'Portfolio 112', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (112, N'***REMOVED***', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (113, N'Portfolio 113', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (113, N'***REMOVED***', CAST(N'2010-08-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (114, N'Portfolio 114', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (114, N'***REMOVED***', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (115, N'Portfolio 115', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (115, N'***REMOVED***', CAST(N'1985-12-30 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (116, N'Portfolio 116', CAST(N'2000-08-15 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (116, N'***REMOVED***', CAST(N'2000-08-15 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (117, N'Portfolio 117', CAST(N'1999-07-03 00:00:00.000' AS DateTime), CAST(N'2005-03-07 00:00:00.000' AS DateTime))
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (117, N'***REMOVED***', CAST(N'1999-07-03 00:00:00.000' AS DateTime), CAST(N'2005-03-07 00:00:00.000' AS DateTime))
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (118, N'Portfolio 118', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (118, N'***REMOVED***', CAST(N'2003-04-09 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (119, N'Portfolio 119', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (119, N'***REMOVED***', CAST(N'2013-01-03 00:00:00.000' AS DateTime), NULL)
 GO
-INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (120, N'Portfolio 120', CAST(N'2000-08-15 00:00:00.000' AS DateTime), NULL)
+INSERT [Portfolio].[Portfolio] ([Number], [Name], [InceptionDate], [CloseDate]) VALUES (120, N'***REMOVED***', CAST(N'2000-08-15 00:00:00.000' AS DateTime), NULL)
 GO
 INSERT [Portfolio].[PortfolioToBenchmark] ([PortfolioNumber], [BenchmarkNumber], [SortOrder]) VALUES (101, 10010, 1)
 GO

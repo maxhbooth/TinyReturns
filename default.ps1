@@ -32,6 +32,8 @@ properties {
 
 task default -depends CleanSolution, UpdateNuGetPackages, BuildSolution, RebuildDatabase, RunUnitTests, RunIntegrationTests, PopulateDatabase
 
+task databaseonly -depends RebuildDatabase, PopulateDatabase
+
 formatTaskName {
 	param($taskName)
 	write-host "********************** $taskName **********************" -foregroundcolor Green
