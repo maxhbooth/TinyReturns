@@ -220,7 +220,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00001m);
 
                 viewResultModel[0].ThreeMonth.Should().NotHaveValue();
-                viewResultModel[0].YearToDate.Should().NotHaveValue();
+                viewResultModel[0].YearToDate.Should().BeApproximately(0.02m, 0.00001m);
             });
         }
 

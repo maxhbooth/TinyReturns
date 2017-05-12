@@ -1,6 +1,6 @@
 ﻿using System.IO;
-using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.CitiFileImport;
+using Dimensional.TinyReturns.FileIo;
 using Xunit;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
@@ -28,7 +28,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
         private CitiMonthlyReturnsDataFileRecord[] ReadTestFile()
         {
             var file = GetNetReturnsTestFilePath();
-            var reader = MasterFactory.CitiReturnsFileReader;
+            var reader = new CitiReturnsFileReader(new SystemLogForIntegrationTests());
             var results = reader.ReadFile(file);
             return results;
         }
