@@ -49,10 +49,6 @@
   <ItemGroup>
     <Compile Include="Core\CalculateReturnRequestFactoryTests.cs" />
     <Compile Include="Core\FinancialMathTests.cs" />
-    <Compile Include="Core\FlatFiles\FlatFileIoSpy.cs" />
-    <Compile Include="Core\InvestmentVehicleTypeTests.cs" />
-    <Compile Include="Core\IntArrayEqualityComparer.cs" />
-    <Compile Include="Core\ReturnResultTestExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

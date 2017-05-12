@@ -55,15 +55,12 @@
     <Compile Include="FlatFiles\FlatFile.cs" />
     <Compile Include="FlatFiles\IFlatFileIo.cs" />
     <Compile Include="FlatFiles\ReflectionHelper.cs" />
-    <Compile Include="InvestmentVehicleType.cs" />
     <Compile Include="Headspring\Enumeration.cs" />
     <Compile Include="DateExtend\IMonthAndYear.cs" />
     <Compile Include="ISystemLog.cs" />
     <Compile Include="ITinyReturnsDatabaseSettings.cs" />
     <Compile Include="MasterFactory.cs" />
-    <Compile Include="MonthlyReturn.cs" />
     <Compile Include="DateExtend\MonthYear.cs" />
-    <Compile Include="MonthlyReturnExtensions.cs" />
     <Compile Include="OmniFileExport\OmniDataFileCreator.cs" />
     <Compile Include="OmniFileExport\OmniDataFileLineModel.cs" />
     <Compile Include="OmniFileExport\OmniDataFileLineModelFactory.cs" />
