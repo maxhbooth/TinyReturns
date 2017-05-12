@@ -10,7 +10,7 @@ namespace Dimensional.TinyReturns.TestDataPopulatorConsole
         private readonly IPortfolioDataTableGateway _portfolioDataTableGateway;
         private readonly IReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
         private readonly IMonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
-        private IPortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
+        private readonly IPortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
 
         public TestDataPopulator(
             IPortfolioDataTableGateway portfolioDataTableGateway,
@@ -31,10 +31,16 @@ namespace Dimensional.TinyReturns.TestDataPopulatorConsole
             var monthYear = new MonthYear(DateTime.Now);
             var previousMonthYear = monthYear.AddMonths(-1);
 
+            var random = new Random();
+
             foreach (var portfolioDto in portfolioDtos)
             {
                 InsertMonthlyReturnSeries(portfolioDto, previousMonthYear, 'N');
-                InsertMonthlyReturnSeries(portfolioDto, previousMonthYear, 'G', 1);
+
+                var next = random.Next(1, 10);
+
+                if (next < 9) // 80% of the time
+                    InsertMonthlyReturnSeries(portfolioDto, previousMonthYear, 'G', 1);
             }
         }
 
