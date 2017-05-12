@@ -58,11 +58,7 @@
     <Compile Include="FlatFiles\FlatFile.cs" />
     <Compile Include="FlatFiles\IFlatFileIo.cs" />
     <Compile Include="FlatFiles\ReflectionHelper.cs" />
-    <Compile Include="InvestmentVehicle.cs" />
-    <Compile Include="InvestmentVehicleDataMapper.cs" />
-    <Compile Include="InvestmentVehicleReturnsRepository.cs" />
     <Compile Include="InvestmentVehicleType.cs" />
-    <Compile Include="FeeType.cs" />
     <Compile Include="TinyReturnsDatabase\IReturnsSeriesDataTableGateway.cs" />
     <Compile Include="Headspring\Enumeration.cs" />
     <Compile Include="DateExtend\IMonthAndYear.cs" />
@@ -92,7 +88,6 @@
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioToBenchmarkDto.cs" />
     <Compile Include="TinyReturnsDatabase\ReturnSeriesDto.cs" />
     <Compile Include="ReturnResult.cs" />
-    <Compile Include="MonthlyReturnSeries.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Headspring\LICENSE.txt" />

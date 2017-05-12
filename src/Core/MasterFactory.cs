@@ -45,16 +45,6 @@ namespace Dimensional.TinyReturns.Core
                 FlatFileIo);
         }
 
-        public static InvestmentVehicleReturnsRepository GetInvestmentVehicleReturnsRepository()
-        {
-            var r = new InvestmentVehicleReturnsRepository(
-                InvestmentVehicleDataTableGateway,
-                ReturnsSeriesDataTableGateway,
-                MonthlyReturnsDataTableGateway);
-
-            return r;
-        }
-
         public static PerformanceReportExcelReportProjector GetPerformanceReportExcelReportCreator()
         {
             return new PerformanceReportExcelReportProjector(
