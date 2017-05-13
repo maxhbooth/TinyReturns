@@ -36,15 +36,26 @@
         </thead>
         <tbody>
         
-            @foreach (var ret in Model)
+            @foreach (var portfolio in Model)
             {
-                <tr>
-                    <td>@ret.Number</td>
-                    <td>@ret.Name</td>
-                    <td>@ret.OneMonth</td>
-                    <td>@ret.ThreeMonth</td>
-                    <td>@ret.YearToDate</td>
+                <tr style="background: lavenderblush">
+                    <td>@portfolio.Number</td>
+                    <td>@portfolio.Name</td>
+                    <td>@portfolio.OneMonth</td>
+                    <td>@portfolio.ThreeMonth</td>
+                    <td>@portfolio.YearToDate</td>
                 </tr>
+
+                foreach (var benchmark in portfolio.Benchmarks)
+                {
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">@benchmark.Name</td>
+                        <td>@benchmark.OneMonth</td>
+                        <td>@benchmark.ThreeMonth</td>
+                        <td>@benchmark.YearToDate</td>
+                    </tr>
+                }
             }
 
         </tbody>
