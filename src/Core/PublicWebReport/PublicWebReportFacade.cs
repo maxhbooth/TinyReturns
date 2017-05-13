@@ -42,9 +42,24 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
 
         public class PortfolioModel
         {
+            public PortfolioModel()
+            {
+                Benchmarks = new BenchmarkModel[0];
+            }
+
             public int Number { get; set; }
             public string Name { get; set; }
 
+            public decimal? OneMonth { get; set; }
+            public decimal? ThreeMonth { get; set; }
+            public decimal? YearToDate { get; set; }
+
+            public BenchmarkModel[] Benchmarks { get; set; }
+        }
+
+        public class BenchmarkModel
+        {
+            public int Name { get; set; }
             public decimal? OneMonth { get; set; }
             public decimal? ThreeMonth { get; set; }
             public decimal? YearToDate { get; set; }

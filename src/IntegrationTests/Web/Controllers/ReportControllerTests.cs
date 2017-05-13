@@ -160,6 +160,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 viewResultModel[0].Number.Should().Be(100);
                 viewResultModel[0].Name.Should().Be("Portfolio 100");
+                viewResultModel[0].Benchmarks.Should().BeEmpty();
             });
         }
 
@@ -222,8 +223,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 viewResultModel[0].Number.Should().Be(portfolioNumber);
                 viewResultModel[0].Name.Should().Be(portfolioName);
-                viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00001m);
+                viewResultModel[0].Benchmarks.Should().BeEmpty();
 
+                viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00001m);
                 viewResultModel[0].ThreeMonth.Should().NotHaveValue();
                 viewResultModel[0].YearToDate.Should().BeApproximately(0.02m, 0.00001m);
             });
@@ -324,6 +326,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 viewResultModel[0].Number.Should().Be(portfolioNumber);
                 viewResultModel[0].Name.Should().Be(portfolioName);
+                viewResultModel[0].Benchmarks.Should().BeEmpty();
 
                 viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
                 viewResultModel[0].ThreeMonth.Should().BeApproximately(0.039584m, 0.00000001m);
@@ -391,6 +394,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 viewResultModel[0].Number.Should().Be(portfolioNumber);
                 viewResultModel[0].Name.Should().Be(portfolioName);
+                viewResultModel[0].Benchmarks.Should().BeEmpty();
 
                 viewResultModel[0].OneMonth.Should().BeApproximately(-0.588m, 0.00000001m);
                 viewResultModel[0].ThreeMonth.Should().BeApproximately(-0.2935696384m, 0.00000001m);
