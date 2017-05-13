@@ -4,3 +4,6 @@ CitiMonthyReturnImporterTests - Is a good place to start for into to testing
 Has bug... will only work on a blank database
 
 Lessons on IClock and Deterministic
+
+* Tasks
+CitiMonthyReturnImporter has a bug.  Running it twice causes duplication

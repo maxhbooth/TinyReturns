@@ -14,7 +14,7 @@ namespace Dimensional.TinyReturns.TestDataPopulatorConsole
             var monthlyReturnDataTableGateway = MasterFactory.MonthlyReturnDataTableGateway;
             var portfolioToReturnSeriesDataTableGateway = MasterFactory.PortfolioToReturnSeriesDataTableGateway;
 
-            var testDataPopulator = new TestDataPopulator(
+            var testDataPopulator = new PortfolioTestDataPopulator(
                 portfolioDataTableGateway,
                 returnSeriesDataTableGateway,
                 monthlyReturnDataTableGateway,

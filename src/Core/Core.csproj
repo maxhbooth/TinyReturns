@@ -75,6 +75,9 @@
     <Compile Include="TinyReturnsDatabase\Performance\PortfolioToReturnSeriesDto.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\ReturnSeriesDto.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\BenchmarkDto.cs" />
+    <Compile Include="TinyReturnsDatabase\Performance\BenchmarkToReturnSeriesDataTableGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\Performance\BenchmarkToReturnSeriesDto.cs" />
+    <Compile Include="TinyReturnsDatabase\Portfolio\IBenchmarkDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\IPortfolioDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioDto.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioToBenchmarkDto.cs" />

@@ -5,14 +5,14 @@ using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
 
 namespace Dimensional.TinyReturns.TestDataPopulatorConsole
 {
-    public class TestDataPopulator
+    public class PortfolioTestDataPopulator
     {
         private readonly IPortfolioDataTableGateway _portfolioDataTableGateway;
         private readonly IReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
         private readonly IMonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
         private readonly IPortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
 
-        public TestDataPopulator(
+        public PortfolioTestDataPopulator(
             IPortfolioDataTableGateway portfolioDataTableGateway,
             IReturnSeriesDataTableGateway returnSeriesDataTableGateway,
             IMonthlyReturnDataTableGateway monthlyReturnDataTableGateway,
