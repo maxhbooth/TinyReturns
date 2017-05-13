@@ -86,6 +86,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 _monthlyReturnDataTableGateway.Insert(new []{ dto });
             }
 
+            public void InsertMonthlyReturnDtos(MonthlyReturnDto[] dtos)
+            {
+                _monthlyReturnDataTableGateway.Insert(dtos);
+            }
+
             public void InsertPortfolioToReturnSeriesDto(PortfolioToReturnSeriesDto dto)
             {
                 _portfolioToReturnSeriesDataTableGateway.Insert(new []{ dto });
@@ -323,6 +328,73 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
                 viewResultModel[0].ThreeMonth.Should().BeApproximately(0.039584m, 0.00000001m);
                 viewResultModel[0].YearToDate.Should().BeApproximately(0.0394800416m, 0.00000001m);
+            });
+        }
+
+        [Fact]
+        public void ShouldReturnPortfolioWithBenchmark()
+        {
+            // Arrange
+            var testHelper = new TestHelper();
+
+            testHelper.DatabaseDataDeleter(() =>
+            {
+                var portfolioNumber = 100;
+                var portfolioName = "Portfolio 100";
+
+                var benchmarkNumber = 10000;
+                var benchmarkName = "Benchmark 10000";
+
+                var monthYear = new MonthYear(2016, 5);
+                var nextMonth = monthYear.AddMonths(1);
+
+                testHelper.CurrentDate = new DateTime(
+                    nextMonth.Year,
+                    nextMonth.Month,
+                    5);
+
+                testHelper.InsertPortfolioDto(new PortfolioDto()
+                {
+                    Number = portfolioNumber,
+                    Name = portfolioName,
+                    InceptionDate = new DateTime(2010, 1, 1)
+                });
+
+                var returnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Return Series for Portfolio 100",
+                    Disclosure = string.Empty
+                });
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber,
+                    ReturnSeriesId = returnSeriesId,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+
+                var monthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    returnSeriesId,
+                    new MonthYearRange(monthYear.AddMonths(-4), monthYear));
+
+                testHelper.InsertMonthlyReturnDtos(monthlyReturnDtos);
+
+                var controller = testHelper.CreateController();
+
+                // Act
+                var actionResult = controller.Index();
+
+                // Assert
+                var viewResultModel = GetModelFromActionResult(actionResult);
+
+                viewResultModel.Length.Should().Be(1);
+
+                viewResultModel[0].Number.Should().Be(portfolioNumber);
+                viewResultModel[0].Name.Should().Be(portfolioName);
+
+                viewResultModel[0].OneMonth.Should().BeApproximately(-0.588m, 0.00000001m);
+                viewResultModel[0].ThreeMonth.Should().BeApproximately(-0.2935696384m, 0.00000001m);
+                viewResultModel[0].YearToDate.Should().BeApproximately(0.677131404719243m, 0.00000001m);
             });
         }
 
