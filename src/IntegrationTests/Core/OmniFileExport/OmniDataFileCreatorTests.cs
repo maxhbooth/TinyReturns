@@ -21,6 +21,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.OmniFileExport
             private readonly MonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
             private readonly PortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
             private readonly FlatFileIoSpy _flatFileIoSpy;
+            private readonly PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
+            private readonly BenchmarkDataTableGateway _benchmarkDataTableGateway;
+            private readonly BenchmarkToReturnSeriesDataTableGateway _benchmarkToReturnSeriesDataTableGateway;
 
             public TestHelper()
             {
@@ -45,6 +48,18 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.OmniFileExport
                     databaseSettings,
                     systemLogForIntegrationTests);
 
+                _portfolioToBenchmarkDataTableGateway = new PortfolioToBenchmarkDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
+                _benchmarkDataTableGateway = new BenchmarkDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
+                _benchmarkToReturnSeriesDataTableGateway = new BenchmarkToReturnSeriesDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+                
                 _flatFileIoSpy = new FlatFileIoSpy();
             }
 
@@ -97,10 +112,17 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.OmniFileExport
                     _returnSeriesDataTableGateway,
                     _monthlyReturnDataTableGateway);
 
+                var benchmarkWithPerformanceRepository = new BenchmarkWithPerformanceRepository(
+                    _benchmarkDataTableGateway,
+                    _benchmarkToReturnSeriesDataTableGateway,
+                    returnSeriesRepository);
+
                 var portfolioWithPerformanceRepository = new PortfolioWithPerformanceRepository(
                     _portfolioDataTableGateway,
                     _portfolioToReturnSeriesDataTableGateway,
-                    returnSeriesRepository);
+                    _portfolioToBenchmarkDataTableGateway,
+                    returnSeriesRepository,
+                    benchmarkWithPerformanceRepository);
 
                 return new OmniDataFileCreator(
                     portfolioWithPerformanceRepository,

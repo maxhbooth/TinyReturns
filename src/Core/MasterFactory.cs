@@ -22,6 +22,7 @@ namespace Dimensional.TinyReturns.Core
         public static IPortfolioDataTableGateway PortfolioDataTableGateway { get; set; }
         public static IBenchmarkDataTableGateway BenchmarkDataTableGateway { get; set; }
         public static IBenchmarkToReturnSeriesDataTableGateway BenchmarkToReturnSeriesDataTableGateway { get; set; }
+        public static IPortfolioToBenchmarkDataTableGateway PortfolioToBenchmarkDataTableGateway { get; set; }
 
         // **
 
@@ -63,10 +64,17 @@ namespace Dimensional.TinyReturns.Core
                 ReturnSeriesDataTableGateway,
                 MonthlyReturnDataTableGateway);
 
+            var benchmarkWithPerformanceRepository = new BenchmarkWithPerformanceRepository(
+                BenchmarkDataTableGateway,
+                BenchmarkToReturnSeriesDataTableGateway,
+                returnSeriesRepository);
+
             return new PortfolioWithPerformanceRepository(
                 PortfolioDataTableGateway,
                 PortfolioToReturnSeriesDataTableGateway,
-                returnSeriesRepository);
+                PortfolioToBenchmarkDataTableGateway,
+                returnSeriesRepository,
+                benchmarkWithPerformanceRepository);
         }
     }
 }

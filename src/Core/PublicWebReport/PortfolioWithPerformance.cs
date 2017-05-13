@@ -1,4 +1,6 @@
-﻿using Dimensional.TinyReturns.Core.DateExtend;
+﻿using System;
+using System.Linq;
+using Dimensional.TinyReturns.Core.DateExtend;
 
 namespace Dimensional.TinyReturns.Core.PublicWebReport
 {
@@ -6,13 +8,16 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
     {
         private readonly ReturnSeries _netReturnSeries;
         private readonly ReturnSeries _grossReturnSeries;
+        private BenchmarkWithPerformance[] _benchmarkWithPerformances;
 
         public PortfolioWithPerformance(
             int number,
             string name,
             ReturnSeries netReturnSeries,
-            ReturnSeries grossReturnSeries)
+            ReturnSeries grossReturnSeries,
+            BenchmarkWithPerformance[] benchmarks)
         {
+            _benchmarkWithPerformances = benchmarks;
             _grossReturnSeries = grossReturnSeries;
             _netReturnSeries = netReturnSeries;
             Name = name;
@@ -84,6 +89,13 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
                 return _grossReturnSeries.GetMonthsInRange(monthYearRange);
 
             return new ReturnSeries.MonthlyReturn[0];
+        }
+
+        public BenchmarkWithPerformance[] GetAllBenchmarks()
+        {
+            return _benchmarkWithPerformances
+                .OrderBy(b => b.Number)
+                .ToArray();
         }
     }
 }

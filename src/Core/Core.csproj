@@ -44,6 +44,8 @@
     <Compile Include="CitiFileImport\CitiMonthyReturnImporter.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
     <Compile Include="IClock.cs" />
+    <Compile Include="PublicWebReport\BenchmarkWithPerformance.cs" />
+    <Compile Include="PublicWebReport\BenchmarkWithPerformanceRepository.cs" />
     <Compile Include="PublicWebReport\PortfolioWithPerformance.cs" />
     <Compile Include="PublicWebReport\PortfolioWithPerformanceRepository.cs" />
     <Compile Include="PublicWebReport\PublicWebReportFacade.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="TinyReturnsDatabase\Performance\BenchmarkToReturnSeriesDto.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\IBenchmarkDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\IPortfolioDataTableGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\Portfolio\IPortfolioToBenchmarkDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioDto.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioToBenchmarkDto.cs" />
     <Compile Include="ReturnResult.cs" />

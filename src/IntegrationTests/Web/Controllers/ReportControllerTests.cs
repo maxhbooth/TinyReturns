@@ -22,6 +22,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             private readonly ReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
             private readonly MonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
             private readonly PortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
+            private BenchmarkDataTableGateway _benchmarkDataTableGateway;
+            private BenchmarkToReturnSeriesDataTableGateway _benchmarkToReturnSeriesDataTableGateway;
+            private PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
 
             public TestHelper()
             {
@@ -36,6 +39,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     databaseSettings,
                     systemLogForIntegrationTests);
 
+                _benchmarkDataTableGateway = new BenchmarkDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
                 _returnSeriesDataTableGateway = new ReturnSeriesDataTableGateway(
                     databaseSettings,
                     systemLogForIntegrationTests);
@@ -45,6 +52,14 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     systemLogForIntegrationTests);
 
                 _portfolioToReturnSeriesDataTableGateway = new PortfolioToReturnSeriesDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
+                _benchmarkToReturnSeriesDataTableGateway = new BenchmarkToReturnSeriesDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
+                _portfolioToBenchmarkDataTableGateway = new PortfolioToBenchmarkDataTableGateway(
                     databaseSettings,
                     systemLogForIntegrationTests);
             }
@@ -57,10 +72,17 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     _returnSeriesDataTableGateway,
                     _monthlyReturnDataTableGateway);
 
+                var benchmarkWithPerformanceRepository = new BenchmarkWithPerformanceRepository(
+                    _benchmarkDataTableGateway,
+                    _benchmarkToReturnSeriesDataTableGateway,
+                    returnSeriesRepository);
+
                 var portfolioWithPerformanceRepository = new PortfolioWithPerformanceRepository(
                     _portfolioDataTableGateway,
                     _portfolioToReturnSeriesDataTableGateway,
-                    returnSeriesRepository);
+                    _portfolioToBenchmarkDataTableGateway,
+                    returnSeriesRepository,
+                    benchmarkWithPerformanceRepository);
 
                 var publicWebReportFacade = new PublicWebReportFacade(
                     portfolioWithPerformanceRepository, 
@@ -74,6 +96,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 PortfolioDto dto)
             {
                 _portfolioDataTableGateway.Insert(dto);
+            }
+
+            public void InsertBenchmarkDto(
+                BenchmarkDto dto)
+            {
+                _benchmarkDataTableGateway.Insert(new []{ dto });
             }
 
             public int InsertReturnSeriesDto(ReturnSeriesDto dto)
@@ -94,6 +122,17 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             public void InsertPortfolioToReturnSeriesDto(PortfolioToReturnSeriesDto dto)
             {
                 _portfolioToReturnSeriesDataTableGateway.Insert(new []{ dto });
+            }
+
+            public void InsertBenchmarkToReturnSeriesDto(BenchmarkToReturnSeriesDto dto)
+            {
+                _benchmarkToReturnSeriesDataTableGateway.Insert(new []{ dto });
+            }
+
+            public void InsertPortfolioToBenchmarkDto(
+                PortfolioToBenchmarkDto dto)
+            {
+                _portfolioToBenchmarkDataTableGateway.Insert(new []{ dto });
             }
 
             public void DatabaseDataDeleter(
@@ -356,6 +395,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     nextMonth.Month,
                     5);
 
+                // **
+
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
                     Number = portfolioNumber,
@@ -363,7 +404,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     InceptionDate = new DateTime(2010, 1, 1)
                 });
 
-                var returnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                var portfolioReturnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
                     Name = "Return Series for Portfolio 100",
                     Disclosure = string.Empty
@@ -372,15 +413,51 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
                 {
                     PortfolioNumber = portfolioNumber,
-                    ReturnSeriesId = returnSeriesId,
+                    ReturnSeriesId = portfolioReturnSeriesId,
                     SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
                 });
 
-                var monthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
-                    returnSeriesId,
+                var portfolioMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    portfolioReturnSeriesId,
                     new MonthYearRange(monthYear.AddMonths(-4), monthYear));
 
-                testHelper.InsertMonthlyReturnDtos(monthlyReturnDtos);
+                testHelper.InsertMonthlyReturnDtos(portfolioMonthlyReturnDtos);
+
+                // **
+
+                testHelper.InsertBenchmarkDto(new BenchmarkDto()
+                {
+                    Number = benchmarkNumber,
+                    Name = benchmarkName
+                });
+
+                var benchmarkReturnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Return Series for Benchmark X",
+                    Disclosure = string.Empty
+                });
+
+                testHelper.InsertBenchmarkToReturnSeriesDto(new BenchmarkToReturnSeriesDto()
+                {
+                    BenchmarkNumber = benchmarkNumber,
+                    ReturnSeriesId = benchmarkReturnSeriesId
+                });
+
+                var benchmarkMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    benchmarkReturnSeriesId,
+                    new MonthYearRange(monthYear.AddMonths(-4), monthYear),
+                    seed: 8);
+
+                testHelper.InsertMonthlyReturnDtos(benchmarkMonthlyReturnDtos);
+
+                // **
+
+                testHelper.InsertPortfolioToBenchmarkDto(new PortfolioToBenchmarkDto()
+                {
+                    PortfolioNumber = portfolioNumber,
+                    BenchmarkNumber = benchmarkNumber,
+                    SortOrder = 1
+                });
 
                 var controller = testHelper.CreateController();
 
@@ -394,11 +471,20 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 viewResultModel[0].Number.Should().Be(portfolioNumber);
                 viewResultModel[0].Name.Should().Be(portfolioName);
-                viewResultModel[0].Benchmarks.Should().BeEmpty();
 
                 viewResultModel[0].OneMonth.Should().BeApproximately(-0.588m, 0.00000001m);
                 viewResultModel[0].ThreeMonth.Should().BeApproximately(-0.2935696384m, 0.00000001m);
                 viewResultModel[0].YearToDate.Should().BeApproximately(0.677131404719243m, 0.00000001m);
+
+                viewResultModel[0].Benchmarks.Should().HaveCount(1);
+
+                var benchmarkModel = viewResultModel[0].Benchmarks[0];
+
+                benchmarkModel.Name.Should().Be(benchmarkName);
+                benchmarkModel.OneMonth.Should().BeApproximately(0.6358m, 0.00000001m);
+                benchmarkModel.ThreeMonth.Should().BeApproximately(-0.374303686424m, 0.00000001m);
+                benchmarkModel.YearToDate.Should().BeApproximately(-0.62681709897m, 0.00000001m);
+
             });
         }
 

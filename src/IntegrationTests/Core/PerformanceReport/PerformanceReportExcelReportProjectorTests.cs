@@ -21,6 +21,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
             private readonly MonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
             private readonly PortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
             private readonly PerformanceReportExcelReportViewSpy _performanceReportExcelReportViewSpy;
+            private PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
+            private BenchmarkDataTableGateway _benchmarkDataTableGateway;
+            private BenchmarkToReturnSeriesDataTableGateway _benchmarkToReturnSeriesDataTableGateway;
 
             public TestHelper()
             {
@@ -42,6 +45,14 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
                     systemLogForIntegrationTests);
 
                 _portfolioToReturnSeriesDataTableGateway = new PortfolioToReturnSeriesDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
+                _benchmarkDataTableGateway = new BenchmarkDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
+                _benchmarkToReturnSeriesDataTableGateway = new BenchmarkToReturnSeriesDataTableGateway(
                     databaseSettings,
                     systemLogForIntegrationTests);
 
@@ -96,10 +107,17 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
                     _returnSeriesDataTableGateway,
                     _monthlyReturnDataTableGateway);
 
+                var benchmarkWithPerformanceRepository = new BenchmarkWithPerformanceRepository(
+                    _benchmarkDataTableGateway,
+                    _benchmarkToReturnSeriesDataTableGateway,
+                    returnSeriesRepository);
+
                 var portfolioWithPerformanceRepository = new PortfolioWithPerformanceRepository(
                     _portfolioDataTableGateway,
                     _portfolioToReturnSeriesDataTableGateway,
-                    returnSeriesRepository);
+                    _portfolioToBenchmarkDataTableGateway,
+                    returnSeriesRepository,
+                    benchmarkWithPerformanceRepository);
 
                 return new PerformanceReportExcelReportProjector(
                     portfolioWithPerformanceRepository,

@@ -9,14 +9,20 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
     {
         private readonly IPortfolioDataTableGateway _portfolioDataTableGateway;
         private readonly IPortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
+        private readonly IPortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
 
         private readonly ReturnSeriesRepository _returnSeriesRepository;
+        private readonly BenchmarkWithPerformanceRepository _benchmarkWithPerformanceRepository;
 
         public PortfolioWithPerformanceRepository(
             IPortfolioDataTableGateway portfolioDataTableGateway,
             IPortfolioToReturnSeriesDataTableGateway portfolioToReturnSeriesDataTableGateway,
-            ReturnSeriesRepository returnSeriesRepository)
+            IPortfolioToBenchmarkDataTableGateway portfolioToBenchmarkDataTableGateway,
+            ReturnSeriesRepository returnSeriesRepository,
+            BenchmarkWithPerformanceRepository benchmarkWithPerformanceRepository)
         {
+            _portfolioToBenchmarkDataTableGateway = portfolioToBenchmarkDataTableGateway;
+            _benchmarkWithPerformanceRepository = benchmarkWithPerformanceRepository;
             _returnSeriesRepository = returnSeriesRepository;
             _portfolioToReturnSeriesDataTableGateway = portfolioToReturnSeriesDataTableGateway;
             _portfolioDataTableGateway = portfolioDataTableGateway;
@@ -37,7 +43,10 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
                 .ToArray();
 
             var returnSeries = _returnSeriesRepository.GetReturnSeries(targetReturnSeriesIds);
-            
+
+            var benchmarkWithPerformances = _benchmarkWithPerformanceRepository.GetAll();
+            var portfolioToBenchmarkDtos = _portfolioToBenchmarkDataTableGateway.GetAll();
+
             foreach (var portfolioDto in portfolioDtos)
             {
                 var netDto = portfolioToReturnSeriesDtos.FindNet(
@@ -55,7 +64,14 @@ namespace Dimensional.TinyReturns.Core.PublicWebReport
                 if (grossDto != null)
                     grossReturnSeries = returnSeries.FirstOrDefault(r => r.Id == grossDto.ReturnSeriesId);
 
-                portfolioModels.Add(new PortfolioWithPerformance(portfolioDto.Number, portfolioDto.Name, netReturnSeries, grossReturnSeries));
+                var benchmarkNumbers = portfolioToBenchmarkDtos
+                    .Where(d => d.PortfolioNumber == portfolioDto.Number)
+                    .Select(b => b.BenchmarkNumber)
+                    .ToArray();
+
+                var withPerformances = benchmarkWithPerformances.Where(b => benchmarkNumbers.Any(n => n == b.Number)).ToArray();
+
+                portfolioModels.Add(new PortfolioWithPerformance(portfolioDto.Number, portfolioDto.Name, netReturnSeries, grossReturnSeries, withPerformances));
             }
 
             return portfolioModels.ToArray();

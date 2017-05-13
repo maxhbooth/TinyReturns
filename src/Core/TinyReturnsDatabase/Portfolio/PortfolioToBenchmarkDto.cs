@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio
 {
     public class PortfolioToBenchmarkDto
