@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dimensional.TinyReturns.Core.DateExtend;
+using Dimensional.TinyReturns.Core.PublicWebReport;
 
 namespace Dimensional.TinyReturns.Core.OmniFileExport
 {
     public class OmniDataFileLineModelFactory
     {
-        private InvestmentVehicle _portfolio;
+        private PortfolioWithPerformance _portfolio;
         private readonly MonthYearRange _januaryToGivenMonth;
         private readonly MonthYear _endMonth;
 
@@ -19,20 +20,26 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
         }
 
         public void SetCurrentPortfolio(
-            InvestmentVehicle portfolio)
+            PortfolioWithPerformance portfolio)
         {
             _portfolio = portfolio;
         }
 
-        public IEnumerable<OmniDataFileLineModel> CreateMonthLineModels(
-            FeeType feeType)
+        public IEnumerable<OmniDataFileLineModel> CreateNetMonthLineModels()
         {
-            var netMonthlyReturns = _portfolio.GetReturnsInRange(_januaryToGivenMonth, feeType);
+            var netMonthlyReturns = _portfolio.GetNetReturnsInRange(_januaryToGivenMonth);
 
-            return netMonthlyReturns.Select(r => CreateMonthModel(r, feeType));
+            return netMonthlyReturns.Select(r => CreateMonthModel(r, "N"));
         }
 
-        public IEnumerable<OmniDataFileLineModel> CreateQuarterLineModels(FeeType feeType)
+        public IEnumerable<OmniDataFileLineModel> CreateGrossMonthLineModels()
+        {
+            var netMonthlyReturns = _portfolio.GetGrossReturnsInRange(_januaryToGivenMonth);
+
+            return netMonthlyReturns.Select(r => CreateMonthModel(r, "G"));
+        }
+
+        public IEnumerable<OmniDataFileLineModel> CreateNetQuarterLineModels()
         {
             var models = new List<OmniDataFileLineModel>();
 
@@ -43,39 +50,71 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
                     {
                         var calculateQuarterRequest = CalculateReturnRequestFactory.ThreeMonth(m);
 
-                        var netQuarterResult = _portfolio.CalculateReturn(calculateQuarterRequest, feeType);
+                        var netQuarterResult = _portfolio.CalculateNetReturn(calculateQuarterRequest);
 
                         if (!netQuarterResult.HasError)
-                            models.Add(CreateQuarterModel(m, netQuarterResult, feeType));
+                            models.Add(CreateQuarterModel(m, netQuarterResult, "N"));
                     }
                 });
 
             return models;
         }
 
-        public OmniDataFileLineModel CreateYearToDateLineModel(
-            FeeType feeType)
+        public IEnumerable<OmniDataFileLineModel> CreateGrossQuarterLineModels()
+        {
+            var models = new List<OmniDataFileLineModel>();
+
+            _januaryToGivenMonth.ForEachMonthInRange(
+                m =>
+                {
+                    if (m.IsLastMonthOfQuarter)
+                    {
+                        var calculateQuarterRequest = CalculateReturnRequestFactory.ThreeMonth(m);
+
+                        var netQuarterResult = _portfolio.CalculateGrossReturn(calculateQuarterRequest);
+
+                        if (!netQuarterResult.HasError)
+                            models.Add(CreateQuarterModel(m, netQuarterResult, "G"));
+                    }
+                });
+
+            return models;
+        }
+
+        public OmniDataFileLineModel CreateNetYearToDateLineModel()
         {
             var yearToDateRequest = CalculateReturnRequestFactory.YearToDate(_endMonth);
 
-            var yearToDateResult = _portfolio.CalculateReturn(yearToDateRequest, feeType);
+            var yearToDateResult = _portfolio.CalculateNetReturn(yearToDateRequest);
 
             if (yearToDateResult.HasError)
                 return null;
 
-            return CreateYearToDateModel(_endMonth, yearToDateResult, feeType);
+            return CreateYearToDateModel(_endMonth, yearToDateResult, "N");
+        }
+        public OmniDataFileLineModel CreateGrossYearToDateLineModel()
+        {
+            var yearToDateRequest = CalculateReturnRequestFactory.YearToDate(_endMonth);
+
+            var yearToDateResult = _portfolio.CalculateGrossReturn(yearToDateRequest);
+
+            if (yearToDateResult.HasError)
+                return null;
+
+            return CreateYearToDateModel(_endMonth, yearToDateResult, "G");
         }
 
+
         private OmniDataFileLineModel CreateMonthModel(
-            MonthlyReturn r,
-            FeeType feeType)
+            ReturnSeries.MonthlyReturn r,
+            string feeTypeCode)
         {
             var m = CreateModelWithPortfolioPopulated();
 
-            m.FeeType = feeType.Code.ToString();
+            m.FeeType = feeTypeCode;
             m.Duration = "M";
             m.EndDate = FormatDate(r.MonthYear.LastDayOfMonth);
-            m.ReturnValue = r.ReturnValue.ToString();
+            m.ReturnValue = r.Value.ToString();
 
             return m;
         }
@@ -83,11 +122,11 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
         private OmniDataFileLineModel CreateQuarterModel(
             MonthYear monthYear,
             ReturnResult result,
-            FeeType feeType)
+            string feeTypeCode)
         {
             var m = CreateModelWithPortfolioPopulated();
 
-            m.FeeType = feeType.Code.ToString();
+            m.FeeType = feeTypeCode;
             m.Duration = "Q";
             m.EndDate = FormatDate(monthYear.LastDayOfMonth);
             m.ReturnValue = result.Value.ToString();
@@ -98,11 +137,11 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
         private OmniDataFileLineModel CreateYearToDateModel(
             MonthYear monthYear,
             ReturnResult result,
-            FeeType feeType)
+            string typeCode)
         {
             var m = CreateModelWithPortfolioPopulated();
 
-            m.FeeType = feeType.Code.ToString();
+            m.FeeType = typeCode;
             m.Duration = "Y";
             m.EndDate = FormatDate(monthYear.LastDayOfMonth);
             m.ReturnValue = result.Value.ToString();
@@ -110,12 +149,12 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
             return m;
         }
 
+
         private OmniDataFileLineModel CreateModelWithPortfolioPopulated()
         {
             return new OmniDataFileLineModel()
             {
                 InvestmentVehicleId = _portfolio.Number.ToString(),
-                Type = "Portfolio",
                 Name = _portfolio.Name
             };
         }

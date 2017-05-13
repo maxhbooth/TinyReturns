@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using Dimensional.TinyReturns.Core.DateExtend;
 using Dimensional.TinyReturns.Core.FlatFiles;
+using Dimensional.TinyReturns.Core.PublicWebReport;
 
 namespace Dimensional.TinyReturns.Core.OmniFileExport
 {
     public class OmniDataFileCreator
     {
         private readonly IFlatFileIo _flatFileIo;
-        private readonly IInvestmentVehicleReturnsRepository _investmentVehicleReturnsRepository;
+        private readonly PortfolioWithPerformanceRepository _portfolioWithPerformanceRepository;
 
         public OmniDataFileCreator(
-            IInvestmentVehicleReturnsRepository investmentVehicleReturnsRepository,
+            PortfolioWithPerformanceRepository portfolioWithPerformanceRepository,
             IFlatFileIo flatFileIo)
         {
-            _investmentVehicleReturnsRepository = investmentVehicleReturnsRepository;
+            _portfolioWithPerformanceRepository = portfolioWithPerformanceRepository;
             _flatFileIo = flatFileIo;
         }
 
@@ -21,7 +22,7 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
             MonthYear endMonth,
             string fullFilePath)
         {
-            var portfolios = _investmentVehicleReturnsRepository.GetPortfolios();
+            var portfolios = _portfolioWithPerformanceRepository.GetAll();
 
             var models = CreateFileLineModels(endMonth, portfolios);
 
@@ -30,7 +31,7 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
 
         private List<OmniDataFileLineModel> CreateFileLineModels(
             MonthYear endMonth,
-            IEnumerable<InvestmentVehicle> portfolios)
+            PortfolioWithPerformance[] portfolios)
         {
             var models = new List<OmniDataFileLineModel>();
 
@@ -40,18 +41,18 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
             {
                 lineFactory.SetCurrentPortfolio(portfolio);
 
-                models.AddRange(lineFactory.CreateMonthLineModels(FeeType.GrossOfFees));
-                models.AddRange(lineFactory.CreateMonthLineModels(FeeType.NetOfFees));
+                models.AddRange(lineFactory.CreateGrossMonthLineModels());
+                models.AddRange(lineFactory.CreateNetMonthLineModels());
 
-                models.AddRange(lineFactory.CreateQuarterLineModels(FeeType.GrossOfFees));
-                models.AddRange(lineFactory.CreateQuarterLineModels(FeeType.NetOfFees));
+                models.AddRange(lineFactory.CreateGrossQuarterLineModels());
+                models.AddRange(lineFactory.CreateNetQuarterLineModels());
 
-                var grossYearToDateLineModel = lineFactory.CreateYearToDateLineModel(FeeType.GrossOfFees);
+                var grossYearToDateLineModel = lineFactory.CreateGrossYearToDateLineModel();
 
                 if (grossYearToDateLineModel != null)
                     models.Add(grossYearToDateLineModel);
 
-                var netYearToDateLineModel = lineFactory.CreateYearToDateLineModel(FeeType.NetOfFees);
+                var netYearToDateLineModel = lineFactory.CreateNetYearToDateLineModel();
 
                 if (netYearToDateLineModel != null)
                     models.Add(netYearToDateLineModel);
@@ -68,8 +69,7 @@ namespace Dimensional.TinyReturns.Core.OmniFileExport
 
             flatFile
                 .SetDelimiter("|")
-                .AddColumn(c => c.InvestmentVehicleId, o => o.Heading("Investment Vehicle Id"))
-                .AddColumn(c => c.Type)
+                .AddColumn(c => c.InvestmentVehicleId, o => o.Heading("Fund Id"))
                 .AddColumn(c => c.Name)
                 .AddColumn(c => c.FeeType, o => o.Heading("Fee Type"))
                 .AddColumn(c => c.Duration)

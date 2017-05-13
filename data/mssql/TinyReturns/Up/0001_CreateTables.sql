@@ -1,43 +1,71 @@
-CREATE TABLE [dbo].[InvestmentVehicle](
-	[InvestmentVehicleNumber] [int] NOT NULL,
+CREATE SCHEMA [Portfolio]
+GO
+
+CREATE TABLE [Portfolio].[Benchmark](
+	[Number] [int] NOT NULL,
+	[Name] [nvarchar](255) NOT NULL
+ CONSTRAINT [PK_Portfolio_Benchmark] PRIMARY KEY CLUSTERED 
+(
+	[Number] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [Portfolio].[Portfolio]    Script Date: 4/15/2017 7:37:24 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [Portfolio].[Portfolio](
+	[Number] [int] NOT NULL,
 	[Name] [nvarchar](255) NOT NULL,
-	[InvestmentVehicleTypeCode] [char](1) NOT NULL,
- CONSTRAINT [PK_InvestmentVehicle] PRIMARY KEY CLUSTERED 
+	[InceptionDate] [datetime] NOT NULL,
+	[CloseDate] [datetime] NULL
+ CONSTRAINT [PK_Portfolio_Portfolio] PRIMARY KEY CLUSTERED 
 (
-	[InvestmentVehicleNumber] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+	[Number] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
-
-CREATE TABLE [dbo].[InvestmentVehicleType](
-	[InvestmentVehicleTypeCode] [char](1) NOT NULL,
-	[Name] [nvarchar](64) NOT NULL,
- CONSTRAINT [PK_InvestmentVehicleType] PRIMARY KEY CLUSTERED 
+/****** Object:  Table [Portfolio].[PortfolioToBenchmark]    Script Date: 4/15/2017 7:37:24 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [Portfolio].[PortfolioToBenchmark](
+	[PortfolioNumber] [int] NOT NULL,
+	[BenchmarkNumber] [int] NOT NULL,
+	[SortOrder] [int] NOT NULL,
+ CONSTRAINT [PK_Portfolio_PortfolioToBenchmark] PRIMARY KEY CLUSTERED 
 (
-	[InvestmentVehicleTypeCode] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+	[PortfolioNumber] ASC,
+	[BenchmarkNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
+ALTER TABLE [Portfolio].[PortfolioToBenchmark]  WITH CHECK ADD  CONSTRAINT [FK_PortfolioToBenchmark_Benchmark] FOREIGN KEY([BenchmarkNumber])
+REFERENCES [Portfolio].[Benchmark] ([Number])
+GO
+ALTER TABLE [Portfolio].[PortfolioToBenchmark] CHECK CONSTRAINT [FK_PortfolioToBenchmark_Benchmark]
+GO
+ALTER TABLE [Portfolio].[PortfolioToBenchmark]  WITH CHECK ADD  CONSTRAINT [FK_PortfolioToBenchmark_Portfolio] FOREIGN KEY([PortfolioNumber])
+REFERENCES [Portfolio].[Portfolio] ([Number])
+GO
+ALTER TABLE [Portfolio].[PortfolioToBenchmark] CHECK CONSTRAINT [FK_PortfolioToBenchmark_Portfolio]
+GO
 
-CREATE TABLE [dbo].[FeeType](
-	[FeeTypeCode] [char](1) NOT NULL,
-	[Name] [nvarchar](64) NOT NULL,
- CONSTRAINT [PK_FeeType] PRIMARY KEY CLUSTERED 
-(
-	[FeeTypeCode] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
+CREATE SCHEMA [Performance]
 
 GO
 
-CREATE TABLE [dbo].[MonthlyReturn](
+CREATE TABLE [Performance].[MonthlyReturn](
 	[ReturnSeriesId] [int] NOT NULL,
 	[Year] [int] NOT NULL,
 	[Month] [int] NOT NULL,
 	[ReturnValue] [decimal](18, 8) NOT NULL,
- CONSTRAINT [PK_Return] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Performance_MonthlyReturn] PRIMARY KEY CLUSTERED 
 (
 	[ReturnSeriesId] ASC,
 	[Year] ASC,
@@ -47,11 +75,11 @@ CREATE TABLE [dbo].[MonthlyReturn](
 
 GO
 
-CREATE TABLE [dbo].[ReturnSeries](
+CREATE TABLE [Performance].[ReturnSeries](
 	[ReturnSeriesId] [int] IDENTITY(1,1) NOT NULL,
-	[InvestmentVehicleNumber] [int] NOT NULL,
-	[FeeTypeCode] [char](1) NOT NULL,
- CONSTRAINT [PK_ReturnSeries] PRIMARY KEY CLUSTERED 
+	[Name] NVARCHAR(255) NOT NULL,
+	[Disclosure] NVARCHAR(MAX) NOT NULL,
+ CONSTRAINT [PK_Performance_ReturnSeries] PRIMARY KEY CLUSTERED 
 (
 	[ReturnSeriesId] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
@@ -59,29 +87,35 @@ CREATE TABLE [dbo].[ReturnSeries](
 
 GO
 
-ALTER TABLE [dbo].[InvestmentVehicle]  WITH CHECK ADD  CONSTRAINT [FK_InvestmentVehicle_InvestmentVehicleType] FOREIGN KEY([InvestmentVehicleTypeCode])
-REFERENCES [dbo].[InvestmentVehicleType] ([InvestmentVehicleTypeCode])
+ALTER TABLE [Performance].[MonthlyReturn]  WITH CHECK ADD  CONSTRAINT [FK_Performance_MonthlyReturn_ReturnSeries] FOREIGN KEY([ReturnSeriesId])
+REFERENCES [Performance].[ReturnSeries] ([ReturnSeriesId])
 GO
 
-ALTER TABLE [dbo].[InvestmentVehicle] CHECK CONSTRAINT [FK_InvestmentVehicle_InvestmentVehicleType]
+ALTER TABLE [Performance].[MonthlyReturn] CHECK CONSTRAINT [FK_Performance_MonthlyReturn_ReturnSeries]
 GO
 
-ALTER TABLE [dbo].[MonthlyReturn]  WITH CHECK ADD  CONSTRAINT [FK_MonthlyReturn_ReturnSeries] FOREIGN KEY([ReturnSeriesId])
-REFERENCES [dbo].[ReturnSeries] ([ReturnSeriesId])
+-- **
+
+CREATE TABLE [Performance].[PortfolioToReturnSeries](
+	[PortfolioNumber] [int] NOT NULL,
+	[ReturnSeriesId] [int] NOT NULL,
+	[SeriesTypeCode] [char](1) NOT NULL,
+ CONSTRAINT [PK_Performance_PortfolioToReturnSeries] PRIMARY KEY CLUSTERED 
+(
+	[PortfolioNumber] ASC,
+	[ReturnSeriesId] ASC,
+	[SeriesTypeCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 GO
 
-ALTER TABLE [dbo].[MonthlyReturn] CHECK CONSTRAINT [FK_MonthlyReturn_ReturnSeries]
-GO
-
-ALTER TABLE [dbo].[ReturnSeries]  WITH CHECK ADD  CONSTRAINT [FK_ReturnSeries_FeeType] FOREIGN KEY([FeeTypeCode])
-REFERENCES [dbo].[FeeType] ([FeeTypeCode])
-GO
-
-ALTER TABLE [dbo].[ReturnSeries] CHECK CONSTRAINT [FK_ReturnSeries_FeeType]
-GO
-
-ALTER TABLE [dbo].[ReturnSeries]  WITH CHECK ADD  CONSTRAINT [FK_ReturnSeries_InvestmentVehicle] FOREIGN KEY([InvestmentVehicleNumber])
-REFERENCES [dbo].[InvestmentVehicle] ([InvestmentVehicleNumber])
-GO
-
-
+CREATE TABLE [Performance].[BenchmarkToReturnSeries](
+	[BenchmarkNumber] [int] NOT NULL,
+	[ReturnSeriesId] [int] NOT NULL,
+ CONSTRAINT [PK_Performance_BenchmarkToReturnSeries] PRIMARY KEY CLUSTERED 
+(
+	[BenchmarkNumber] ASC,
+	[ReturnSeriesId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]

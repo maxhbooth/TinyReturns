@@ -33,7 +33,7 @@ namespace Dimensional.TinyReturns.ExcelRendering
                     worksheet.Cells[rowIndex, 4].Value = record.FeeType;
                     worksheet.Cells[rowIndex, 5].Value = record.OneMonth;
                     worksheet.Cells[rowIndex, 6].Value = record.ThreeMonths;
-                    worksheet.Cells[rowIndex, 7].Value = record.TwelveMonths;
+                    worksheet.Cells[rowIndex, 7].Value = record.YearToDate;
                     worksheet.Cells[rowIndex, 8].Value = record.YearToDate;
 
                     rowIndex++;

@@ -1,2 +1,2 @@
-Powershell .\psake.ps1
+Powershell .\build.ps1
 pause

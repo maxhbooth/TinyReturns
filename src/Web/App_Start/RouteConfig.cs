@@ -12,7 +12,7 @@ namespace Dimensional.TinyReturns.Web
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "PublicWebTester", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Report", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

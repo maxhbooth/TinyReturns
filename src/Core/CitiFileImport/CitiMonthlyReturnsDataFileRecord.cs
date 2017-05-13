@@ -8,7 +8,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
         public string EndDate { get; set; }
         public string Value { get; set; }
 
-        public int GetConvertedExternalId()
+        public int GetPortfolioNumber()
         {
             return Convert.ToInt32(ExternalId.Trim());
         }
@@ -23,7 +23,7 @@ namespace Dimensional.TinyReturns.Core.CitiFileImport
             return DateTime.Parse(EndDate).Year;
         }
 
-        public decimal GetDecimalValue()
+        public decimal GetReturnValue()
         {
             return decimal.Parse(Value) / 100;
         }

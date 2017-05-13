@@ -1,5 +1,6 @@
 ﻿using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Database.TinyReturnsDatabase;
+using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
+using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using Dimensional.TinyReturns.ExcelRendering;
 using Dimensional.TinyReturns.FileIo;
 using Dimensional.TinyReturns.Logging;
@@ -36,12 +37,16 @@ namespace Dimensional.TinyReturns.DependencyManagement
 
             MasterFactory.SystemLog = systemLog;
             MasterFactory.TinyReturnsDatabaseSettings = tinyReturnsDatabaseSettings;
-            MasterFactory.ReturnsSeriesDataTableGateway = new ReturnsSeriesDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
-            MasterFactory.MonthlyReturnsDataTableGateway = new MonthlyReturnsDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
             MasterFactory.CitiReturnsFileReader = citiReturnsFileReader;
-            MasterFactory.InvestmentVehicleDataTableGateway = new InvestmentVehicleDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
             MasterFactory.FlatFileIo = flatFileIo;
             MasterFactory.PerformanceReportExcelReportView = performanceReportExcelReportView;
+            MasterFactory.ReturnSeriesDataTableGateway = new ReturnSeriesDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.PortfolioToReturnSeriesDataTableGateway = new PortfolioToReturnSeriesDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.MonthlyReturnDataTableGateway = new MonthlyReturnDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.PortfolioDataTableGateway = new PortfolioDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.BenchmarkDataTableGateway = new BenchmarkDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.BenchmarkToReturnSeriesDataTableGateway = new BenchmarkToReturnSeriesDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.PortfolioToBenchmarkDataTableGateway = new PortfolioToBenchmarkDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
 
         }
     }

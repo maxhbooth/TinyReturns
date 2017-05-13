@@ -69,7 +69,7 @@
             _calculation += System.Environment.NewLine + moreCalculation;
         }
 
-        public decimal? GetValueNullOnError()
+        public decimal? GetNullValueOnError()
         {
             if (_hasError)
                 return null;

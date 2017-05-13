@@ -1,0 +1,13 @@
+Notes for People Leaning
+
+CitiMonthyReturnImporterTests - Is a good place to start for into to testing
+Has bug... will only work on a blank database
+
+Lessons on IClock and Deterministic
+
+* Tasks
+CitiMonthyReturnImporter has a bug.  Running it twice causes duplication
+Add Benchmark File import
+Add Last minute bug - Can fix with source control
+Ui shows raw numbers... have it show percentage
+Web report is showing closed portfolio... hide closed portfolios
