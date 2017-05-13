@@ -20,6 +20,8 @@ namespace Dimensional.TinyReturns.Core
         public static IFlatFileIo FlatFileIo { get; set; }
 
         public static IPortfolioDataTableGateway PortfolioDataTableGateway { get; set; }
+        public static IBenchmarkDataTableGateway BenchmarkDataTableGateway { get; set; }
+        public static IBenchmarkToReturnSeriesDataTableGateway BenchmarkToReturnSeriesDataTableGateway { get; set; }
 
         // **
 

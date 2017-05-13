@@ -44,6 +44,8 @@ namespace Dimensional.TinyReturns.DependencyManagement
             MasterFactory.PortfolioToReturnSeriesDataTableGateway = new PortfolioToReturnSeriesDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
             MasterFactory.MonthlyReturnDataTableGateway = new MonthlyReturnDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
             MasterFactory.PortfolioDataTableGateway = new PortfolioDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.BenchmarkDataTableGateway = new BenchmarkDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
+            MasterFactory.BenchmarkToReturnSeriesDataTableGateway = new BenchmarkToReturnSeriesDataTableGateway(tinyReturnsDatabaseSettings, systemLog);
 
         }
     }

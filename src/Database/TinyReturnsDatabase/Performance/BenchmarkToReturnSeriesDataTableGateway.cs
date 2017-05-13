@@ -44,7 +44,7 @@ INSERT INTO [Performance].[BenchmarkToReturnSeries]
            ([BenchmarkNumber]
            ,[ReturnSeriesId])
      VALUES
-           (@PortfolioNumber
+           (@BenchmarkNumber
            ,@ReturnSeriesId)
 ";
 

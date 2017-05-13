@@ -10,17 +10,26 @@ namespace Dimensional.TinyReturns.TestDataPopulatorConsole
             DependencyManager.BootstrapForSystem("Console", new DatabaseSettings());
 
             var portfolioDataTableGateway = MasterFactory.PortfolioDataTableGateway;
+            var benchmarkDataTableGateway = MasterFactory.BenchmarkDataTableGateway;
             var returnSeriesDataTableGateway = MasterFactory.ReturnSeriesDataTableGateway;
             var monthlyReturnDataTableGateway = MasterFactory.MonthlyReturnDataTableGateway;
             var portfolioToReturnSeriesDataTableGateway = MasterFactory.PortfolioToReturnSeriesDataTableGateway;
+            var benchmarkToReturnSeriesDataTableGateway = MasterFactory.BenchmarkToReturnSeriesDataTableGateway;
 
-            var testDataPopulator = new PortfolioTestDataPopulator(
+            var portfolioTestDataPopulator = new PortfolioTestDataPopulator(
                 portfolioDataTableGateway,
                 returnSeriesDataTableGateway,
                 monthlyReturnDataTableGateway,
                 portfolioToReturnSeriesDataTableGateway);
 
-            testDataPopulator.PopulateTestData();
+            var benchmarkTestDataPopulator = new BenchmarkTestDataPopulator(
+                benchmarkDataTableGateway,
+                returnSeriesDataTableGateway,
+                monthlyReturnDataTableGateway,
+                benchmarkToReturnSeriesDataTableGateway);
+            
+            portfolioTestDataPopulator.PopulateTestData();
+            benchmarkTestDataPopulator.PopulateTestData();
         }
 
     }
