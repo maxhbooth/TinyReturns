@@ -5,7 +5,17 @@ Has bug... will only work on a blank database
 
 Lessons on IClock and Deterministic
 
-* Tasks
+* Todo
+Check in PResentation
+Upgrade to Latests frameworks
+Add WebAPI
+Refactor to Context
+Test Excel Export
+
+* Programming Tasks
+Change Read me as first taks
+Add 6 month return to UI
+Add 6 unannualized month return to UI
 CitiMonthyReturnImporter has a bug.  Running it twice causes duplication
 Add Benchmark File import
 Add Last minute bug - Can fix with source control
