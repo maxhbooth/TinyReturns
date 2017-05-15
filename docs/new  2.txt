@@ -1,0 +1,8 @@
+Intern Todos
+
+- Get Machines
+- Setup Machines
+	- VS
+	- GIT
+	- Reshaper
+- Stash Accounts
