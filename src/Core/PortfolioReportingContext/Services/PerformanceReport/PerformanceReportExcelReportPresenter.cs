@@ -5,13 +5,13 @@ using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PerformanceReport
 {
-    public class PerformanceReportExcelReportProjector
+    public class PerformanceReportExcelReportPresenter
     {
         private readonly IPerformanceReportExcelReportView _view;
 
         private readonly PortfolioWithPerformanceRepository _portfolioWithPerformanceRepository;
 
-        public PerformanceReportExcelReportProjector(
+        public PerformanceReportExcelReportPresenter(
             PortfolioWithPerformanceRepository portfolioWithPerformanceRepository,
             IPerformanceReportExcelReportView view)
         {

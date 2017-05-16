@@ -48,9 +48,9 @@ namespace Dimensional.TinyReturns.Core
                 omniDataFileView);
         }
 
-        public static PerformanceReportExcelReportProjector GetPerformanceReportExcelReportCreator()
+        public static PerformanceReportExcelReportPresenter GetPerformanceReportExcelReportCreator()
         {
-            return new PerformanceReportExcelReportProjector(
+            return new PerformanceReportExcelReportPresenter(
                 CreatePortfolioWithPerformanceRepository(),
                 PerformanceReportExcelReportView);
         }

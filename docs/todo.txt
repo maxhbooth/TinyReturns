@@ -6,10 +6,10 @@ Has bug... will only work on a blank database
 Lessons on IClock and Deterministic
 
 * Todo
-Check in PResentation
 Upgrade to Latests frameworks
-Refactor to Context
 Test Excel Export
+Make test pass
+Run data population on db rebuild
 
 * Programming Tasks
 Change Read me as first taks

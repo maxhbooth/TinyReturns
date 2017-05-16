@@ -21,9 +21,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
             private readonly MonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
             private readonly PortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
             private readonly PerformanceReportExcelReportViewSpy _performanceReportExcelReportViewSpy;
-            private PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
-            private BenchmarkDataTableGateway _benchmarkDataTableGateway;
-            private BenchmarkToReturnSeriesDataTableGateway _benchmarkToReturnSeriesDataTableGateway;
+            private readonly PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
+            private readonly BenchmarkDataTableGateway _benchmarkDataTableGateway;
+            private readonly BenchmarkToReturnSeriesDataTableGateway _benchmarkToReturnSeriesDataTableGateway;
 
             public TestHelper()
             {
@@ -53,6 +53,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
                     systemLogForIntegrationTests);
 
                 _benchmarkToReturnSeriesDataTableGateway = new BenchmarkToReturnSeriesDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
+                _portfolioToBenchmarkDataTableGateway = new PortfolioToBenchmarkDataTableGateway(
                     databaseSettings,
                     systemLogForIntegrationTests);
 
@@ -101,7 +105,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
                     new AllTablesDeleter.TableInfoDto[0]);
             }
 
-            public PerformanceReportExcelReportProjector CreateProjector()
+            public PerformanceReportExcelReportPresenter CreatePresenter()
             {
                 var returnSeriesRepository = new ReturnSeriesRepository(
                     _returnSeriesDataTableGateway,
@@ -119,7 +123,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
                     returnSeriesRepository,
                     benchmarkWithPerformanceRepository);
 
-                return new PerformanceReportExcelReportProjector(
+                return new PerformanceReportExcelReportPresenter(
                     portfolioWithPerformanceRepository,
                     _performanceReportExcelReportViewSpy);
             }
@@ -132,9 +136,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
 
             testHelper.DatabaseDataDeleter(() =>
             {
-                var projector = testHelper.CreateProjector();
+                var presenter = testHelper.CreatePresenter();
 
-                projector.CreateReport(
+                presenter.CreateReport(
                     new MonthYear(2010, 1),
                     "c:\\temp\\excel.xlsx");
 
@@ -153,7 +157,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
 
             testHelper.DatabaseDataDeleter(() =>
             {
-                var projector = testHelper.CreateProjector();
+                var presenter = testHelper.CreatePresenter();
 
                 var portfolioNumber = 100;
                 var portfolioName = "Portfolio 100";
@@ -190,7 +194,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
 
                 testHelper.InsertMonthlyReturnDtos(monthlyReturnDtos);
 
-                projector.CreateReport(
+                presenter.CreateReport(
                     monthYear,
                     "c:\\temp\\excel.xlsx");
 
@@ -223,7 +227,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
 
             testHelper.DatabaseDataDeleter(() =>
             {
-                var projector = testHelper.CreateProjector();
+                var presenter = testHelper.CreatePresenter();
 
                 var portfolioNumber = 100;
                 var portfolioName = "Portfolio 100";
@@ -280,7 +284,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
                 
                 testHelper.InsertMonthlyReturnDtos(grossMonthlyReturnDtos);
 
-                projector.CreateReport(
+                presenter.CreateReport(
                     monthYear,
                     "c:\\temp\\excel.xlsx");
 
