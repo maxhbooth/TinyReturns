@@ -124,9 +124,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.OmniFileExport
                     returnSeriesRepository,
                     benchmarkWithPerformanceRepository);
 
+                var omniDataFileView = new OmniDataFileView(
+                    _flatFileIoSpy);
+
                 return new OmniDataFilePresenter(
                     portfolioWithPerformanceRepository,
-                    _flatFileIoSpy);
+                    omniDataFileView);
             }
         }
 

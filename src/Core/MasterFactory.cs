@@ -40,9 +40,12 @@ namespace Dimensional.TinyReturns.Core
 
         public static OmniDataFilePresenter GetOmniDataFileCreator()
         {
+            var omniDataFileView = new OmniDataFileView(
+                FlatFileIo);
+
             return new OmniDataFilePresenter(
                 CreatePortfolioWithPerformanceRepository(),
-                FlatFileIo);
+                omniDataFileView);
         }
 
         public static PerformanceReportExcelReportProjector GetPerformanceReportExcelReportCreator()

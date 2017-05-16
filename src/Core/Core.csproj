@@ -40,6 +40,7 @@
     <Compile Include="PortfolioReportingContext\Domain\AnnualizeActionEnum.cs" />
     <Compile Include="PortfolioReportingContext\Domain\CalculateReturnRequest.cs" />
     <Compile Include="PortfolioReportingContext\Domain\CalculateReturnRequestFactory.cs" />
+    <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileView.cs" />
     <Compile Include="ReturnSeriesImportContext\Services\CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="ReturnSeriesImportContext\Services\CitiFileImport\CitiMonthyReturnImporter.cs" />
     <Compile Include="ReturnSeriesImportContext\Services\CitiFileImport\ICitiReturnsFileReader.cs" />
