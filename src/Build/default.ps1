@@ -27,7 +27,7 @@ properties {
 	
 	$solutionFile = "$srcFolder\TinyReturns.sln"
 
-	$packageXunitExec = "$srcFolder\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
+	$packageXunitExec = "$srcFolder\packages\xunit.runner.console.2.0.0\tools\xunit.console.exe"
 }
 
 task default -depends CleanSolution, UpdateNuGetPackages, BuildSolution, RebuildDatabase, RunUnitTests, RunIntegrationTests
@@ -61,13 +61,13 @@ task BuildSolution -depends CleanSolution {
 	Copy-Item "$srcFolder\Logging\Log4NetConfig.xml" "$buildTargetFolder"
 }
 
-## ---------------------------------------------
-
 task RunUnitTests -depends BuildSolution {
-	Exec { &$packageXunitExec "$buildTargetFolder\Dimensional.TinyReturns.UnitTests.dll" /html "$buildFolder\Dimensional.TinyReturns.UnitTests.dll.html" }
+	Exec { &$packageXunitExec "$buildTargetFolder\Dimensional.TinyReturns.UnitTests.dll" -html "$buildFolder\Dimensional.TinyReturns.UnitTests.dll.html" -parallel none }
 }
 
-## ---------------------------------------------
+task RunIntegrationTests -depends BuildSolution {
+	Exec { &$packageXunitExec "$buildTargetFolder\Dimensional.TinyReturns.IntegrationTests.dll" -html "$buildFolder\Dimensional.TinyReturns.IntegrationTests.dll.html" -parallel none }
+}
 
 task RebuildDatabase {
 	$dbFileDir = "$dataFolder\mssql\TinyReturns"
@@ -83,6 +83,3 @@ task RebuildDatabase {
 	}
 }
 
-task RunIntegrationTests -depends BuildSolution {
-	Exec { &$packageXunitExec "$buildTargetFolder\Dimensional.TinyReturns.IntegrationTests.dll" /html "$buildFolder\Dimensional.TinyReturns.IntegrationTests.dll.html" }
-}
