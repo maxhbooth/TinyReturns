@@ -1,6 +1,6 @@
 ﻿using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 
-namespace Dimensional.TinyReturns.Core
+namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 {
     public class CalculateReturnRequestFactory
     {

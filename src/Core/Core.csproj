@@ -37,9 +37,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnnualizeActionEnum.cs" />
-    <Compile Include="CalculateReturnRequest.cs" />
-    <Compile Include="CalculateReturnRequestFactory.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\AnnualizeActionEnum.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\CalculateReturnRequest.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\CalculateReturnRequestFactory.cs" />
     <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="CitiFileImport\CitiMonthyReturnImporter.cs" />
     <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
@@ -53,7 +53,7 @@
     <Compile Include="PortfolioReportingContext\Domain\ReturnSeriesRepository.cs" />
     <Compile Include="SharedContext\Services\DateExtend\DateTimeExtensions.cs" />
     <Compile Include="SharedContext\Services\DateExtend\MonthYearRange.cs" />
-    <Compile Include="FinancialMath.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\FinancialMath.cs" />
     <Compile Include="SharedContext\Services\FlatFiles\FlatFile.cs" />
     <Compile Include="SharedContext\Services\FlatFiles\IFlatFileIo.cs" />
     <Compile Include="SharedContext\Services\FlatFiles\ReflectionHelper.cs" />
@@ -84,7 +84,7 @@
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\IPortfolioToBenchmarkDataTableGateway.cs" />
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\PortfolioDto.cs" />
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\PortfolioToBenchmarkDto.cs" />
-    <Compile Include="ReturnResult.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\ReturnResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Headspring\LICENSE.txt" />

@@ -1,4 +1,4 @@
-﻿namespace Dimensional.TinyReturns.Core
+﻿namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 {
     public enum AnnualizeActionEnum
     {
