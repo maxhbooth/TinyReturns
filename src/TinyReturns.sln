@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportGeneratorConsole", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDataPopulatorConsole", "TestDataPopulatorConsole\TestDataPopulatorConsole.csproj", "{D7D3D152-05B9-4B84-862E-158E175B811D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "Build\Build.csproj", "{98DE3E15-E110-4C56-8AF6-BD6D389EFE19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,10 @@ Global
 		{D7D3D152-05B9-4B84-862E-158E175B811D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7D3D152-05B9-4B84-862E-158E175B811D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7D3D152-05B9-4B84-862E-158E175B811D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98DE3E15-E110-4C56-8AF6-BD6D389EFE19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98DE3E15-E110-4C56-8AF6-BD6D389EFE19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98DE3E15-E110-4C56-8AF6-BD6D389EFE19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98DE3E15-E110-4C56-8AF6-BD6D389EFE19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,5 +124,6 @@ Global
 		{9F87153E-C99D-4234-BDA9-F0754646B0FB} = {C61B7D27-4367-4CAF-A7E2-574C7D111881}
 		{8B9C5B3F-FCE5-4306-97EA-4F64600BABCF} = {C61B7D27-4367-4CAF-A7E2-574C7D111881}
 		{D7D3D152-05B9-4B84-862E-158E175B811D} = {C61B7D27-4367-4CAF-A7E2-574C7D111881}
+		{98DE3E15-E110-4C56-8AF6-BD6D389EFE19} = {C61B7D27-4367-4CAF-A7E2-574C7D111881}
 	EndGlobalSection
 EndGlobal
