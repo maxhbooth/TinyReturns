@@ -60,7 +60,7 @@
     <Compile Include="Headspring\Enumeration.cs" />
     <Compile Include="DateExtend\IMonthAndYear.cs" />
     <Compile Include="ISystemLog.cs" />
-    <Compile Include="ITinyReturnsDatabaseSettings.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\ITinyReturnsDatabaseSettings.cs" />
     <Compile Include="MasterFactory.cs" />
     <Compile Include="DateExtend\MonthYear.cs" />
     <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileCreator.cs" />

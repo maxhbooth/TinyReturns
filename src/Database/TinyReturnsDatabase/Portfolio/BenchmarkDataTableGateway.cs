@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using Dapper;
 using Dimensional.TinyReturns.Core;
+using Dimensional.TinyReturns.Core.SharedContext.Services;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Portfolio;
 
 namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio
