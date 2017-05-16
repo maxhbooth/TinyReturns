@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 {
-    public class ReportControllerTests
+    public class PortfolioPerformanceControllerTests
     {
         public class TestHelper
         {
@@ -23,9 +23,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             private readonly ReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
             private readonly MonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
             private readonly PortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
-            private BenchmarkDataTableGateway _benchmarkDataTableGateway;
-            private BenchmarkToReturnSeriesDataTableGateway _benchmarkToReturnSeriesDataTableGateway;
-            private PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
+            private readonly BenchmarkDataTableGateway _benchmarkDataTableGateway;
+            private readonly BenchmarkToReturnSeriesDataTableGateway _benchmarkToReturnSeriesDataTableGateway;
+            private readonly PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
 
             public TestHelper()
             {
@@ -67,7 +67,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             public DateTime CurrentDate { get; set; }
 
-            public ReportController CreateController()
+            public PortfolioPerformanceController CreateController()
             {
                 var returnSeriesRepository = new ReturnSeriesRepository(
                     _returnSeriesDataTableGateway,
@@ -89,7 +89,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     portfolioWithPerformanceRepository, 
                     new ClockStub(CurrentDate));
 
-                return new ReportController(
+                return new PortfolioPerformanceController(
                     publicWebReportFacade);
             }
 
