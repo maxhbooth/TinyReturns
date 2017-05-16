@@ -8,16 +8,15 @@ Lessons on IClock and Deterministic
 * Todo
 Check in PResentation
 Upgrade to Latests frameworks
-Add WebAPI
 Refactor to Context
 Test Excel Export
 
 * Programming Tasks
 Change Read me as first taks
+Ui shows raw numbers... have it show percentage
 Add 6 month return to UI
 Add 6 unannualized month return to UI
 CitiMonthyReturnImporter has a bug.  Running it twice causes duplication
 Add Benchmark File import
 Add Last minute bug - Can fix with source control
-Ui shows raw numbers... have it show percentage
 Web report is showing closed portfolio... hide closed portfolios

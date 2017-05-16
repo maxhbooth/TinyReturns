@@ -1,6 +1,7 @@
 ﻿using System;
 using Dimensional.TinyReturns.Core.DateExtend;
 using Dimensional.TinyReturns.Core.PerformanceReport;
+using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.PublicWebReport;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;

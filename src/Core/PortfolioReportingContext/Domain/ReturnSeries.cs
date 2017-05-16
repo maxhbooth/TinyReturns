@@ -2,7 +2,7 @@
 using System.Linq;
 using Dimensional.TinyReturns.Core.DateExtend;
 
-namespace Dimensional.TinyReturns.Core.PublicWebReport
+namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 {
     public class ReturnSeries
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
 
-namespace Dimensional.TinyReturns.Core.PublicWebReport
+namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 {
     public class PortfolioWithPerformanceRepository
     {
