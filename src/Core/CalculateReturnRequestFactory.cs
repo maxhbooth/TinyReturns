@@ -1,4 +1,4 @@
-﻿using Dimensional.TinyReturns.Core.DateExtend;
+﻿using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 
 namespace Dimensional.TinyReturns.Core
 {

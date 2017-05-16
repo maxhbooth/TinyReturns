@@ -1,4 +1,4 @@
-﻿namespace Dimensional.TinyReturns.Core.DateExtend
+﻿namespace Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend
 {
     public interface IMonthAndYear
     {

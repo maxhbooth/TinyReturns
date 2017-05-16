@@ -1,5 +1,5 @@
 ﻿using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.DateExtend;
+using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 using Xunit;
 using Xunit.Extensions;
 

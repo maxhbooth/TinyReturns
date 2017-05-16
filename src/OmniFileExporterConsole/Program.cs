@@ -1,6 +1,6 @@
 ﻿using System;
 using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.DateExtend;
+using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 using Dimensional.TinyReturns.DependencyManagement;
 
 namespace Dimensional.TinyReturns.OmniFileExporterConsole
