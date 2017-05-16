@@ -65,7 +65,7 @@
     <Compile Include="Core\CitiFileImport\CitiReturnsFileReaderTests.cs" />
     <Compile Include="Core\ClockStub.cs" />
     <Compile Include="Core\MonthlyReturnDtoDataBuilder.cs" />
-    <Compile Include="Core\OmniFileExport\OmniDataFileCreatorTests.cs" />
+    <Compile Include="Core\OmniFileExport\OmniDataFilePresenterTests.cs" />
     <Compile Include="Core\PerformanceReport\PerformanceReportExcelReportProjectorTests.cs" />
     <Compile Include="DatabaseSettings.cs" />
     <Compile Include="FlatFileIoSpy.cs" />

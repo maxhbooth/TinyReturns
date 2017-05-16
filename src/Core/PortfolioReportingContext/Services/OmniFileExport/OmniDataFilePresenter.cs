@@ -5,12 +5,12 @@ using Dimensional.TinyReturns.Core.SharedContext.Services.FlatFiles;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.OmniFileExport
 {
-    public class OmniDataFileCreator
+    public class OmniDataFilePresenter
     {
         private readonly IFlatFileIo _flatFileIo;
         private readonly PortfolioWithPerformanceRepository _portfolioWithPerformanceRepository;
 
-        public OmniDataFileCreator(
+        public OmniDataFilePresenter(
             PortfolioWithPerformanceRepository portfolioWithPerformanceRepository,
             IFlatFileIo flatFileIo)
         {

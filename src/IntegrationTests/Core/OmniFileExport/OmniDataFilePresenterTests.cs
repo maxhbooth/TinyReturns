@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Core.OmniFileExport
 {
-    public class OmniDataFileCreatorTests
+    public class OmniDataFilePresenterTests
     {
         public class TestHelper
         {
@@ -106,7 +106,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.OmniFileExport
             }
 
 
-            public OmniDataFileCreator CreateCreator()
+            public OmniDataFilePresenter CreatePresenter()
             {
                 var returnSeriesRepository = new ReturnSeriesRepository(
                     _returnSeriesDataTableGateway,
@@ -124,7 +124,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.OmniFileExport
                     returnSeriesRepository,
                     benchmarkWithPerformanceRepository);
 
-                return new OmniDataFileCreator(
+                return new OmniDataFilePresenter(
                     portfolioWithPerformanceRepository,
                     _flatFileIoSpy);
             }
@@ -137,9 +137,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.OmniFileExport
 
             testHelper.DatabaseDataDeleter(() =>
             {
-                var omniDataFileCreator = testHelper.CreateCreator();
+                var omniDataFilePresenter = testHelper.CreatePresenter();
 
-                omniDataFileCreator.CreateFile(new MonthYear(2010, 1), "c:\\temp\\Export.txt");
+                omniDataFilePresenter.CreateFile(new MonthYear(2010, 1), "c:\\temp\\Export.txt");
 
                 var flatFileIoSpy = testHelper.FlatFileIoSpy;
 
@@ -210,9 +210,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.OmniFileExport
 
                 testHelper.InsertMonthlyReturnDtos(grossMonthlyReturnDtos);
 
-                var omniDataFileCreator = testHelper.CreateCreator();
+                var omniDataFilePresenter = testHelper.CreatePresenter();
 
-                omniDataFileCreator.CreateFile(monthYear, "c:\\temp\\Export.txt");
+                omniDataFilePresenter.CreateFile(monthYear, "c:\\temp\\Export.txt");
 
                 var flatFileIoSpy = testHelper.FlatFileIoSpy;
 
@@ -306,9 +306,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.OmniFileExport
 
                 testHelper.InsertMonthlyReturnDtos(grossMonthlyReturnDtos);
 
-                var omniDataFileCreator = testHelper.CreateCreator();
+                var omniDataFilePresenter = testHelper.CreatePresenter();
 
-                omniDataFileCreator.CreateFile(monthYear, "c:\\temp\\Export.txt");
+                omniDataFilePresenter.CreateFile(monthYear, "c:\\temp\\Export.txt");
 
                 var flatFileIoSpy = testHelper.FlatFileIoSpy;
 

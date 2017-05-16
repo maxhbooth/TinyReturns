@@ -38,9 +38,9 @@ namespace Dimensional.TinyReturns.Core
                 PortfolioToReturnSeriesDataTableGateway);
         }
 
-        public static OmniDataFileCreator GetOmniDataFileCreator()
+        public static OmniDataFilePresenter GetOmniDataFileCreator()
         {
-            return new OmniDataFileCreator(
+            return new OmniDataFilePresenter(
                 CreatePortfolioWithPerformanceRepository(),
                 FlatFileIo);
         }

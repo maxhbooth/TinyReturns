@@ -63,7 +63,7 @@
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\ITinyReturnsDatabaseSettings.cs" />
     <Compile Include="MasterFactory.cs" />
     <Compile Include="SharedContext\Services\DateExtend\MonthYear.cs" />
-    <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileCreator.cs" />
+    <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFilePresenter.cs" />
     <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileLineModel.cs" />
     <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileLineModelFactory.cs" />
     <Compile Include="PortfolioReportingContext\Services\PerformanceReport\IPerformanceReportExcelReportView.cs" />
