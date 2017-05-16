@@ -104,10 +104,6 @@
       <Project>{BDED245A-AC49-4207-BFCE-EA60D00FAC7A}</Project>
       <Name>FileIo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Web\Web.csproj">
-      <Project>{756A3DFF-E91C-4210-A78D-A7145943EBC3}</Project>
-      <Name>Web</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
