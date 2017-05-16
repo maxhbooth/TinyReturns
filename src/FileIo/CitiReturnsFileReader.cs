@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.ReturnSeriesImportContext.Services.CitiFileImport;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
+using Dimensional.TinyReturns.Core.SharedContext.Services.CitiFileImport;
 using Microsoft.VisualBasic.FileIO;
 
 namespace Dimensional.TinyReturns.FileIo

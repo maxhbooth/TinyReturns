@@ -1,9 +1,9 @@
 ﻿using System.IO;
-using Dimensional.TinyReturns.Core.ReturnSeriesImportContext.Services.CitiFileImport;
+using Dimensional.TinyReturns.Core.SharedContext.Services.CitiFileImport;
 using Dimensional.TinyReturns.FileIo;
 using Xunit;
 
-namespace Dimensional.TinyReturns.IntegrationTests.Core.CitiFileImport
+namespace Dimensional.TinyReturns.IntegrationTests.Core.ShareContext.Services.CitiFileImport
 {
     public class CitiReturnsFileReaderTests
     {
