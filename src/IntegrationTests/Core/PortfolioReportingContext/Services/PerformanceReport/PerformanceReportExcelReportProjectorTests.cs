@@ -9,7 +9,7 @@ using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using FluentAssertions;
 using Xunit;
 
-namespace Dimensional.TinyReturns.IntegrationTests.Core.PerformanceReport
+namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContext.Services.PerformanceReport
 {
     public class PerformanceReportExcelReportProjectorTests
     {

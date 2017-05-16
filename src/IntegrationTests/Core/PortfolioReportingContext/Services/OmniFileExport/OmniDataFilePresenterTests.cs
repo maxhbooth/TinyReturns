@@ -9,7 +9,7 @@ using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using FluentAssertions;
 using Xunit;
 
-namespace Dimensional.TinyReturns.IntegrationTests.Core.OmniFileExport
+namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContext.Services.OmniFileExport
 {
     public class OmniDataFilePresenterTests
     {

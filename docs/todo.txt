@@ -8,8 +8,8 @@ Lessons on IClock and Deterministic
 * Todo
 Upgrade to Latests frameworks
 Test Excel Export
-Make test pass
 Run data population on db rebuild
+Organize test folder structure
 
 * Programming Tasks
 Change Read me as first taks
