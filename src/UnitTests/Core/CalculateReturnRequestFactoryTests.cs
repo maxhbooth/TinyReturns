@@ -1,5 +1,4 @@
-﻿using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
+﻿using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 using Xunit;
 using Xunit.Extensions;
