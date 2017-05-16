@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
+using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport

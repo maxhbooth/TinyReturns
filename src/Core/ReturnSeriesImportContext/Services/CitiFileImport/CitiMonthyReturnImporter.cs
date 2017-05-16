@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
 
-namespace Dimensional.TinyReturns.Core.CitiFileImport
+namespace Dimensional.TinyReturns.Core.ReturnSeriesImportContext.Services.CitiFileImport
 {
     public class CitiMonthyReturnImporter
     {

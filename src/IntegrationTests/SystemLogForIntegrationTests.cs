@@ -1,5 +1,6 @@
 ﻿using System;
 using Dimensional.TinyReturns.Core;
+using Dimensional.TinyReturns.Core.SharedContext.Services;
 
 namespace Dimensional.TinyReturns.IntegrationTests
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dimensional.TinyReturns.Core
+namespace Dimensional.TinyReturns.Core.SharedContext.Services
 {
     public interface IClock
     {

@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Dimensional.TinyReturns.Core.CitiFileImport;
+using Dimensional.TinyReturns.Core.ReturnSeriesImportContext.Services.CitiFileImport;
 using Dimensional.TinyReturns.FileIo;
 using Xunit;
 

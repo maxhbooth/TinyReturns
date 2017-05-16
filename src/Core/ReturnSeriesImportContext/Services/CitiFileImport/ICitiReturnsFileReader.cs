@@ -1,4 +1,4 @@
-﻿namespace Dimensional.TinyReturns.Core.CitiFileImport
+﻿namespace Dimensional.TinyReturns.Core.ReturnSeriesImportContext.Services.CitiFileImport
 {
     public interface ICitiReturnsFileReader
     {

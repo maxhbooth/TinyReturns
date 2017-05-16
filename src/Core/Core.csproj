@@ -40,10 +40,10 @@
     <Compile Include="PortfolioReportingContext\Domain\AnnualizeActionEnum.cs" />
     <Compile Include="PortfolioReportingContext\Domain\CalculateReturnRequest.cs" />
     <Compile Include="PortfolioReportingContext\Domain\CalculateReturnRequestFactory.cs" />
-    <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
-    <Compile Include="CitiFileImport\CitiMonthyReturnImporter.cs" />
-    <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
-    <Compile Include="IClock.cs" />
+    <Compile Include="ReturnSeriesImportContext\Services\CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
+    <Compile Include="ReturnSeriesImportContext\Services\CitiFileImport\CitiMonthyReturnImporter.cs" />
+    <Compile Include="ReturnSeriesImportContext\Services\CitiFileImport\ICitiReturnsFileReader.cs" />
+    <Compile Include="SharedContext\Services\IClock.cs" />
     <Compile Include="PortfolioReportingContext\Domain\BenchmarkWithPerformance.cs" />
     <Compile Include="PortfolioReportingContext\Domain\BenchmarkWithPerformanceRepository.cs" />
     <Compile Include="PortfolioReportingContext\Domain\PortfolioWithPerformance.cs" />
@@ -59,7 +59,7 @@
     <Compile Include="SharedContext\Services\FlatFiles\ReflectionHelper.cs" />
     <Compile Include="Headspring\Enumeration.cs" />
     <Compile Include="SharedContext\Services\DateExtend\IMonthAndYear.cs" />
-    <Compile Include="ISystemLog.cs" />
+    <Compile Include="SharedContext\Services\ISystemLog.cs" />
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\ITinyReturnsDatabaseSettings.cs" />
     <Compile Include="MasterFactory.cs" />
     <Compile Include="SharedContext\Services\DateExtend\MonthYear.cs" />
