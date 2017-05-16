@@ -1,4 +1,4 @@
-﻿namespace Dimensional.TinyReturns.Core.OmniFileExport
+﻿namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.OmniFileExport
 {
     public class OmniDataFileLineModel
     {

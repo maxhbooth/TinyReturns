@@ -3,7 +3,7 @@ using Dimensional.TinyReturns.Core.DateExtend;
 using Dimensional.TinyReturns.Core.FlatFiles;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 
-namespace Dimensional.TinyReturns.Core.OmniFileExport
+namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.OmniFileExport
 {
     public class OmniDataFileCreator
     {

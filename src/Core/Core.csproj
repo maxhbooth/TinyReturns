@@ -63,9 +63,9 @@
     <Compile Include="ITinyReturnsDatabaseSettings.cs" />
     <Compile Include="MasterFactory.cs" />
     <Compile Include="DateExtend\MonthYear.cs" />
-    <Compile Include="OmniFileExport\OmniDataFileCreator.cs" />
-    <Compile Include="OmniFileExport\OmniDataFileLineModel.cs" />
-    <Compile Include="OmniFileExport\OmniDataFileLineModelFactory.cs" />
+    <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileCreator.cs" />
+    <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileLineModel.cs" />
+    <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileLineModelFactory.cs" />
     <Compile Include="PerformanceReport\IPerformanceReportExcelReportView.cs" />
     <Compile Include="PerformanceReport\PerformanceReportExcelReportProjector.cs" />
     <Compile Include="PerformanceReport\PerformanceReportExcelReportModel.cs" />
@@ -92,7 +92,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="OmniFileExport\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
