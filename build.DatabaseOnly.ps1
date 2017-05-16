@@ -1,16 +1,25 @@
-﻿$nugetExe = (get-childItem (".\src\.nuget\NuGet.exe")).FullName
-&$nugetExe "install" ".\src\.nuget\packages.config" "-outputDirectory" ".\src\packages" "-source" "https://api.nuget.org/v3/index.json;https://www.nuget.org/api/v2" 
+﻿param(
+	[string]$buildEnv="local",
+	[Int32]$buildNumber=0,
+	[String]$branchName="localBuild",
+	[String]$gitCommitHash="unknownHash",
+	[Switch]$isMainBranch=$False)
+
+cls
+
+$nugetExe = (get-childItem (".\src\.NuGet\NuGet.exe")).FullName
+&$nugetExe "restore" ".\src\build\packages.config" "-outputDirectory" ".\src\packages"
 
 # '[p]sake' is the same as 'psake' but $Error is not polluted
 remove-module [p]sake
 
 # find psake's path
-$psakeModule = (Get-ChildItem (".\psake.psm1")).FullName | Sort-Object $_ | select -last 1
+$psakeModule = (Get-ChildItem (".\src\Packages\psake*\tools\psake.psm1")).FullName | Sort-Object $_ | select -last 1
  
 Import-Module $psakeModule
 
 # you can write statements in multiple lines using `
-Invoke-psake -buildFile .\default.ps1 `
+Invoke-psake -buildFile .\src\Build\default.ps1 `
 			 -taskList databaseonly `
 			 -framework 4.0
 

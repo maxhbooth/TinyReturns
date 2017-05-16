@@ -1,0 +1,32 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <LibraryProjectOutputDirectory>$(OutDir)_PublishedLibraries</LibraryProjectOutputDirectory>
+    <NuGetToolPath>$(NuGetExePath)</NuGetToolPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PrepareForRunDependsOn>
+      $(PrepareForRunDependsOn);
+      _PackageLibrary;
+    </PrepareForRunDependsOn>
+  </PropertyGroup>
+
+  <!--
+  ============================================================
+  _PackageLibrary
+
+  This target will package the project as a NuGet package and copy it into a _PublishedLibraries folder.
+  ============================================================
+  -->
+  <Target Name="_PackageLibrary" Condition="'$(OutDir)' != '$(OutputPath)' And '$(NuGetToolPath)' != '' " >
+    <!-- Log tasks -->
+    <Message Text="Package class library  for $(MSBuildProjectName)" />
+
+    <!-- Create the _PublishedLibraries folder -->
+    <MakeDir Directories="$(LibraryProjectOutputDirectory)" />
+
+    <!-- Create the NuGet package-->
+    <Exec Command="&quot;$(NuGetToolPath)&quot; pack &quot;$(MSBuildProjectDirectory)\$(MSBuildProjectName).csproj&quot; -OutputDirectory &quot;$(LibraryProjectOutputDirectory)&quot; -IncludeReferencedProjects -Verbosity detailed -Build -Properties Configuration=$(Configuration)" />
+  </Target>
+</Project>

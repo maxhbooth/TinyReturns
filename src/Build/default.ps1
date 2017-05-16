@@ -2,7 +2,7 @@ Framework '4.0'
 
 properties {
 	$projectName = "TinyReturns"
-	$baseDir = resolve-path .
+	$baseDir = resolve-path ".\..\.."
 	$buildConfig = "Release"
 	$databaseChangeOwner = "Paul Herrera"
 
