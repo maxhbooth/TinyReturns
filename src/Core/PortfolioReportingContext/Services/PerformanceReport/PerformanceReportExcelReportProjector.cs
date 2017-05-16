@@ -3,7 +3,7 @@ using System.Linq;
 using Dimensional.TinyReturns.Core.DateExtend;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 
-namespace Dimensional.TinyReturns.Core.PerformanceReport
+namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PerformanceReport
 {
     public class PerformanceReportExcelReportProjector
     {

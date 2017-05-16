@@ -1,4 +1,4 @@
-﻿namespace Dimensional.TinyReturns.Core.PerformanceReport
+﻿namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PerformanceReport
 {
     public class PerformanceReportExcelReportModel
     {
