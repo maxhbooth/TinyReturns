@@ -54,9 +54,9 @@
     <Compile Include="DateExtend\DateTimeExtensions.cs" />
     <Compile Include="DateExtend\MonthYearRange.cs" />
     <Compile Include="FinancialMath.cs" />
-    <Compile Include="FlatFiles\FlatFile.cs" />
-    <Compile Include="FlatFiles\IFlatFileIo.cs" />
-    <Compile Include="FlatFiles\ReflectionHelper.cs" />
+    <Compile Include="SharedContext\Services\FlatFiles\FlatFile.cs" />
+    <Compile Include="SharedContext\Services\FlatFiles\IFlatFileIo.cs" />
+    <Compile Include="SharedContext\Services\FlatFiles\ReflectionHelper.cs" />
     <Compile Include="Headspring\Enumeration.cs" />
     <Compile Include="DateExtend\IMonthAndYear.cs" />
     <Compile Include="ISystemLog.cs" />
@@ -93,7 +93,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="OmniFileExport\" />
+    <Folder Include="FlatFiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

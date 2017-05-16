@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Dimensional.TinyReturns.Core.FlatFiles
+namespace Dimensional.TinyReturns.Core.SharedContext.Services.FlatFiles
 {
     public static class ReflectionHelper
     {

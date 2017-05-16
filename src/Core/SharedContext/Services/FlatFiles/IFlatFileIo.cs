@@ -1,4 +1,4 @@
-﻿namespace Dimensional.TinyReturns.Core.FlatFiles
+﻿namespace Dimensional.TinyReturns.Core.SharedContext.Services.FlatFiles
 {
     public interface IFlatFileIo
     {
