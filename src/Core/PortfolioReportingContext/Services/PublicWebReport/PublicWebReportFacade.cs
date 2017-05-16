@@ -2,7 +2,7 @@
 using Dimensional.TinyReturns.Core.DateExtend;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 
-namespace Dimensional.TinyReturns.Core.PublicWebReport
+namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport
 {
     public class PublicWebReportFacade
     {

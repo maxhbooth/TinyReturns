@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
-using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Portfolio;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 {

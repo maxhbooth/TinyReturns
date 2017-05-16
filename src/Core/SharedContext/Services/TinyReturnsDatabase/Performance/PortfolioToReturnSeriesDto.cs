@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance
+namespace Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance
 {
     public class PortfolioToReturnSeriesDto
     {

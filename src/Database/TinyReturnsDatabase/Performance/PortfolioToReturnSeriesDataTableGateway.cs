@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Dapper;
 using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
 
 namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance
 {

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.PublicWebReport;
+using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 
 namespace Dimensional.TinyReturns.Web.Controllers
 {

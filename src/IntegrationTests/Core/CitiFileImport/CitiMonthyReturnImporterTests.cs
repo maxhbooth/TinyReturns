@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using Dimensional.TinyReturns.Core.CitiFileImport;
-using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.FileIo;
 using Xunit;

@@ -1,4 +1,4 @@
-﻿namespace Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio
+﻿namespace Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Portfolio
 {
     public interface IBenchmarkDataTableGateway
     {
