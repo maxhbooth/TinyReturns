@@ -30,9 +30,9 @@ properties {
 	$packageXunitExec = "$srcFolder\packages\xunit.runner.console.2.0.0\tools\xunit.console.exe"
 }
 
-task default -depends CleanSolution, UpdateNuGetPackages, BuildSolution, RebuildDatabase, RunUnitTests, RunIntegrationTests
+task default -depends CleanSolution, UpdateNuGetPackages, BuildSolution, RebuildDatabase, RunUnitTests, RunIntegrationTests, PopulateReturnsData
 
-task databaseonly -depends RebuildDatabase
+task databaseonly -depends RebuildDatabase, PopulateReturnsData
 
 formatTaskName {
 	param($taskName)
@@ -83,3 +83,6 @@ task RebuildDatabase {
 	}
 }
 
+task PopulateReturnsData -depends BuildSolution {
+	Exec { &"$buildFolder\Release\Dimensional.TinyReturns.TestDataPopulatorConsole.exe" }
+}
