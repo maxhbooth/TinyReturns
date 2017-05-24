@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Dimensional.TinyReturns.Core</RootNamespace>
     <AssemblyName>Dimensional.TinyReturns.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,54 +38,55 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnnualizeActionEnum.cs" />
-    <Compile Include="CalculateReturnRequest.cs" />
-    <Compile Include="CalculateReturnRequestFactory.cs" />
-    <Compile Include="CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
-    <Compile Include="CitiFileImport\CitiMonthyReturnImporter.cs" />
-    <Compile Include="CitiFileImport\ICitiReturnsFileReader.cs" />
-    <Compile Include="IClock.cs" />
-    <Compile Include="PublicWebReport\BenchmarkWithPerformance.cs" />
-    <Compile Include="PublicWebReport\BenchmarkWithPerformanceRepository.cs" />
-    <Compile Include="PublicWebReport\PortfolioWithPerformance.cs" />
-    <Compile Include="PublicWebReport\PortfolioWithPerformanceRepository.cs" />
-    <Compile Include="PublicWebReport\PublicWebReportFacade.cs" />
-    <Compile Include="PublicWebReport\ReturnSeries.cs" />
-    <Compile Include="PublicWebReport\ReturnSeriesRepository.cs" />
-    <Compile Include="DateExtend\DateTimeExtensions.cs" />
-    <Compile Include="DateExtend\MonthYearRange.cs" />
-    <Compile Include="FinancialMath.cs" />
-    <Compile Include="FlatFiles\FlatFile.cs" />
-    <Compile Include="FlatFiles\IFlatFileIo.cs" />
-    <Compile Include="FlatFiles\ReflectionHelper.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\AnnualizeActionEnum.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\CalculateReturnRequest.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\CalculateReturnRequestFactory.cs" />
+    <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileView.cs" />
+    <Compile Include="SharedContext\Services\CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
+    <Compile Include="SharedContext\Services\CitiFileImport\CitiMonthyReturnImporter.cs" />
+    <Compile Include="SharedContext\Services\CitiFileImport\ICitiReturnsFileReader.cs" />
+    <Compile Include="SharedContext\Services\IClock.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\BenchmarkWithPerformance.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\BenchmarkWithPerformanceRepository.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\PortfolioWithPerformance.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\PortfolioWithPerformanceRepository.cs" />
+    <Compile Include="PortfolioReportingContext\Services\PublicWebReport\PublicWebReportFacade.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\ReturnSeries.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\ReturnSeriesRepository.cs" />
+    <Compile Include="SharedContext\Services\DateExtend\DateTimeExtensions.cs" />
+    <Compile Include="SharedContext\Services\DateExtend\MonthYearRange.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\FinancialMath.cs" />
+    <Compile Include="SharedContext\Services\FlatFiles\FlatFile.cs" />
+    <Compile Include="SharedContext\Services\FlatFiles\IFlatFileIo.cs" />
+    <Compile Include="SharedContext\Services\FlatFiles\ReflectionHelper.cs" />
     <Compile Include="Headspring\Enumeration.cs" />
-    <Compile Include="DateExtend\IMonthAndYear.cs" />
-    <Compile Include="ISystemLog.cs" />
-    <Compile Include="ITinyReturnsDatabaseSettings.cs" />
+    <Compile Include="SharedContext\Services\DateExtend\IMonthAndYear.cs" />
+    <Compile Include="SharedContext\Services\ISystemLog.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\ITinyReturnsDatabaseSettings.cs" />
     <Compile Include="MasterFactory.cs" />
-    <Compile Include="DateExtend\MonthYear.cs" />
-    <Compile Include="OmniFileExport\OmniDataFileCreator.cs" />
-    <Compile Include="OmniFileExport\OmniDataFileLineModel.cs" />
-    <Compile Include="OmniFileExport\OmniDataFileLineModelFactory.cs" />
-    <Compile Include="PerformanceReport\IPerformanceReportExcelReportView.cs" />
-    <Compile Include="PerformanceReport\PerformanceReportExcelReportProjector.cs" />
-    <Compile Include="PerformanceReport\PerformanceReportExcelReportModel.cs" />
+    <Compile Include="SharedContext\Services\DateExtend\MonthYear.cs" />
+    <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFilePresenter.cs" />
+    <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileLineModel.cs" />
+    <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileLineModelFactory.cs" />
+    <Compile Include="PortfolioReportingContext\Services\PerformanceReport\IPerformanceReportExcelReportView.cs" />
+    <Compile Include="PortfolioReportingContext\Services\PerformanceReport\PerformanceReportExcelReportPresenter.cs" />
+    <Compile Include="PortfolioReportingContext\Services\PerformanceReport\PerformanceReportExcelReportModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TinyReturnsDatabase\Performance\IPortfolioToReturnSeriesDataTableGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\Performance\IMonthlyReturnDataTableGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\Performance\MonthlyReturnDto.cs" />
-    <Compile Include="TinyReturnsDatabase\Performance\IReturnSeriesDataTableGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\Performance\PortfolioToReturnSeriesDto.cs" />
-    <Compile Include="TinyReturnsDatabase\Performance\ReturnSeriesDto.cs" />
-    <Compile Include="TinyReturnsDatabase\Portfolio\BenchmarkDto.cs" />
-    <Compile Include="TinyReturnsDatabase\Performance\BenchmarkToReturnSeriesDataTableGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\Performance\BenchmarkToReturnSeriesDto.cs" />
-    <Compile Include="TinyReturnsDatabase\Portfolio\IBenchmarkDataTableGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\Portfolio\IPortfolioDataTableGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\Portfolio\IPortfolioToBenchmarkDataTableGateway.cs" />
-    <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioDto.cs" />
-    <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioToBenchmarkDto.cs" />
-    <Compile Include="ReturnResult.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Performance\IPortfolioToReturnSeriesDataTableGateway.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Performance\IMonthlyReturnDataTableGateway.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Performance\MonthlyReturnDto.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Performance\IReturnSeriesDataTableGateway.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Performance\PortfolioToReturnSeriesDto.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Performance\ReturnSeriesDto.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\BenchmarkDto.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Performance\BenchmarkToReturnSeriesDataTableGateway.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Performance\BenchmarkToReturnSeriesDto.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\IBenchmarkDataTableGateway.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\IPortfolioDataTableGateway.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\IPortfolioToBenchmarkDataTableGateway.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\PortfolioDto.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\PortfolioToBenchmarkDto.cs" />
+    <Compile Include="PortfolioReportingContext\Domain\ReturnResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Headspring\LICENSE.txt" />

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Reflection;
-using Dimensional.TinyReturns.Core.PerformanceReport;
+using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PerformanceReport;
 using OfficeOpenXml;
 
 namespace Dimensional.TinyReturns.ExcelRendering

@@ -1,5 +1,6 @@
 ﻿using System;
 using Dimensional.TinyReturns.Core;
+using Dimensional.TinyReturns.Core.SharedContext.Services;
 using log4net;
 
 namespace Dimensional.TinyReturns.Logging

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Dimensional.TinyReturns.Core.DateExtend;
-using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
+using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Core
 {
