@@ -50,13 +50,21 @@
     <None Include="..\..\build.ps1">
       <Link>build.ps1</Link>
     </None>
+    <None Include="..\..\TeamCity.developbranch.ps1">
+      <Link>TeamCity.developbranch.ps1</Link>
+    </None>
+    <None Include="..\..\TeamCity.featurebranch.ps1">
+      <Link>TeamCity.featurebranch.ps1</Link>
+    </None>
+    <None Include="..\..\TeamCity.masterbranch.ps1">
+      <Link>TeamCity.masterbranch.ps1</Link>
+    </None>
     <None Include="default.ps1" />
     <None Include="MSBuild\ApplicationBuild.targets" />
     <None Include="MSBuild\NuGetBuild.targets" />
     <None Include="MSBuild\xUnitBuild.targets" />
     <None Include="mssql.psm1" />
     <None Include="packages.config" />
-    <None Include="teamcity.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
