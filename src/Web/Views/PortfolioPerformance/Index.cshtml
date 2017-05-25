@@ -1,0 +1,45 @@
+﻿@model Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport.PublicWebReportFacade.PortfolioModel[]
+
+@{
+    ViewBag.Title = "Portfolio Performance";
+}
+
+<div>
+
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Name</th>
+                <th>1 Month</th>
+                <th>3 Month</th>
+                <th>Year to Date</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var portfolio in Model)
+            {
+                <tr style="background: lavenderblush">
+                    <td>@portfolio.Number</td>
+                    <td>@portfolio.Name</td>
+                    <td>@portfolio.OneMonth</td>
+                    <td>@portfolio.ThreeMonth</td>
+                    <td>@portfolio.YearToDate</td>
+                </tr>
+
+                foreach (var benchmark in portfolio.Benchmarks)
+                {
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">@benchmark.Name</td>
+                        <td>@benchmark.OneMonth</td>
+                        <td>@benchmark.ThreeMonth</td>
+                        <td>@benchmark.YearToDate</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>

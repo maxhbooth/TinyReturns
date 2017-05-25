@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Tiny Returns</title>
+
+		<link rel="stylesheet" href="../lib/reveal.js-3.4.1/css/reveal.css">
+		<link rel="stylesheet" href="../lib/reveal.js-3.4.1/css/theme/night.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../lib/reveal.js-3.4.1/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../lib/reveal.js-3.4.1/css/print/pdf.css' : '../lib/reveal.js-3.4.1/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Tiny Returns</h1>
+					<p>Sample Codebase</p>
+				</section>
+
+				<section>
+					<h2>Subset of Returns Web</h2>
+					<p><a href="https://returnsweb.dimensional.com" target="_blank">returnsweb.dimensional.com</a></p>
+				</section>
+
+				<section>
+
+					<section>
+						<h2>Definitions</h2>
+					</section>
+
+					<section>
+						<h3>Performance</h3>
+						<p>Also called "Returns".</p>
+					</section>
+
+					<section>
+						<h3>Portfolio</h3>
+						<p>Mutual Fund</p>
+					</section>
+
+					<section>
+						<h3>Benchmark</h3>
+						<p>Used for Comparison</p>
+					</section>
+
+					<section>
+						<h3>Monthly Return</h3>
+						<p>Percentage Value of Return for a Single Month</p>
+					</section>
+
+					<section>
+						<h3>Fees</h3>
+						<p>How we make money</p>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>Business Rules and Outcomes</h2>
+					</section>
+
+					<section>
+						<h3>Citi Files</h3>
+						<p>Citi sends us three data files every month with net of fees performance, gross of fees performance, and benchmark monthly returns.  These files need to be uploaded into system.</p>
+					</section>
+
+					<section>
+						<h3>Web User Interface</h3>
+						<p>The users would like a web interface to check the performance numbers after they are uploaded.</p>
+					</section>
+
+					<section>
+						<h3>Omni Performance Extracts</h3>
+						<p>Every month we need to send a data feed of net performance to the company Omni.  They help distribution mutual fund performance.</p>
+					</section>
+
+					<section>
+						<h3>Excel Performance Report</h3>
+						<p>Users would like an formatted Excel report that shows fund performance run on demand.</p>
+					</section>
+
+					<section>
+						<h3>Web Service</h3>
+						<p>The web site team would like to show performance on dimensional.com.  They would like to read these numbers real time from a web service.</p>
+						<small>(Does not exist.)</small>
+					</section>
+
+				</section>
+
+				<section>
+					<img src="images/ArchDiagram.png" />
+				</section>
+
+				<section>
+					<h3>Standard Team Architecture</h3>
+					<p>If you can work on this you can work on everything.</p>
+				</section>
+
+				<section>
+					<section>
+						<h2>Getting Started</h2>
+					</section>
+
+					<section>
+						<h3>Download Source Code from Source Control</h3>
+					</section>
+
+					<section>
+						<h3>build.ps1</h3>
+						<ul>
+							<li>Run Through Powershell</li>
+							<li>Complies Code</li>
+							<li>Resets Local Database</li>
+							<li>Runs Automated Tests</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>src\TinyReturns.sln</h3>
+						<ul>
+							<li>Visual Studio Solution</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Local Database</h3>
+						<ul>
+							<li>Server Name: (local)\sqlexpress</li>
+							<li>Database Name: TinyReturns</li>
+						</ul>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>Exercises</h2>
+						<p><a href="exercises.html" target="_blank">The List</a></h3>
+					</section>
+
+					<section>
+						<h3>Purposely Vague</h3>
+						<ul>
+							<li>Vague => Common Problem</li>
+							<li>Ask Questions</li>
+							<li>Suggest Innovative Solution</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Feature Branches</h3>
+						<ul>
+							<li>Branch per Feature</li>
+							<li>Name : feature/[Feature Name]</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Pull Requests</h3>
+						<ul>
+							<li>Request Merge into 'develop' Branch</li>
+							<li>Code Review: All Team</li>
+							<li>Best Effort to Review within 24 Hours</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3><a href="exercises.html" target="_blank">Exercise List</a></h3>
+					</section>
+
+				</section>
+			</div>
+		</div>
+
+		<script src="../lib/reveal.js-3.4.1/lib/js/head.min.js"></script>
+		<script src="../lib/reveal.js-3.4.1/js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../lib/reveal.js-3.4.1/plugin/markdown/marked.js' },
+					{ src: '../lib/reveal.js-3.4.1/plugin/markdown/markdown.js' },
+					{ src: '../lib/reveal.js-3.4.1/plugin/notes/notes.js', async: true },
+					{ src: '../lib/reveal.js-3.4.1/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

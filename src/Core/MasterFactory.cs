@@ -1,10 +1,13 @@
-﻿using Dimensional.TinyReturns.Core.CitiFileImport;
-using Dimensional.TinyReturns.Core.FlatFiles;
-using Dimensional.TinyReturns.Core.OmniFileExport;
-using Dimensional.TinyReturns.Core.PerformanceReport;
-using Dimensional.TinyReturns.Core.PublicWebReport;
-using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Performance;
-using Dimensional.TinyReturns.Core.TinyReturnsDatabase.Portfolio;
+﻿using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
+using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.OmniFileExport;
+using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PerformanceReport;
+using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
+using Dimensional.TinyReturns.Core.SharedContext.Services;
+using Dimensional.TinyReturns.Core.SharedContext.Services.CitiFileImport;
+using Dimensional.TinyReturns.Core.SharedContext.Services.FlatFiles;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Portfolio;
 
 namespace Dimensional.TinyReturns.Core
 {
@@ -18,13 +21,10 @@ namespace Dimensional.TinyReturns.Core
         public static ICitiReturnsFileReader CitiReturnsFileReader { get; set; }
         public static IPerformanceReportExcelReportView PerformanceReportExcelReportView { get; set; }
         public static IFlatFileIo FlatFileIo { get; set; }
-
         public static IPortfolioDataTableGateway PortfolioDataTableGateway { get; set; }
         public static IBenchmarkDataTableGateway BenchmarkDataTableGateway { get; set; }
         public static IBenchmarkToReturnSeriesDataTableGateway BenchmarkToReturnSeriesDataTableGateway { get; set; }
         public static IPortfolioToBenchmarkDataTableGateway PortfolioToBenchmarkDataTableGateway { get; set; }
-
-        // **
 
         public static CitiMonthyReturnImporter GetCitiReturnSeriesImporter()
         {
@@ -35,16 +35,19 @@ namespace Dimensional.TinyReturns.Core
                 PortfolioToReturnSeriesDataTableGateway);
         }
 
-        public static OmniDataFileCreator GetOmniDataFileCreator()
+        public static OmniDataFilePresenter GetOmniDataFileCreator()
         {
-            return new OmniDataFileCreator(
-                CreatePortfolioWithPerformanceRepository(),
+            var omniDataFileView = new OmniDataFileView(
                 FlatFileIo);
+
+            return new OmniDataFilePresenter(
+                CreatePortfolioWithPerformanceRepository(),
+                omniDataFileView);
         }
 
-        public static PerformanceReportExcelReportProjector GetPerformanceReportExcelReportCreator()
+        public static PerformanceReportExcelReportPresenter GetPerformanceReportExcelReportCreator()
         {
-            return new PerformanceReportExcelReportProjector(
+            return new PerformanceReportExcelReportPresenter(
                 CreatePortfolioWithPerformanceRepository(),
                 PerformanceReportExcelReportView);
         }

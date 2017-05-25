@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Dimensional.TinyReturns.Core.FlatFiles;
+using Dimensional.TinyReturns.Core.SharedContext.Services.FlatFiles;
 
 namespace Dimensional.TinyReturns.IntegrationTests
 {

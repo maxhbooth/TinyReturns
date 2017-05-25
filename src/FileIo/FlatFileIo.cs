@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Dimensional.TinyReturns.Core.FlatFiles;
+using Dimensional.TinyReturns.Core.SharedContext.Services.FlatFiles;
 
 namespace Dimensional.TinyReturns.FileIo
 {
