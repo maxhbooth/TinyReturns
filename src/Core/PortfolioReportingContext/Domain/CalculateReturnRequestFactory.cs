@@ -18,6 +18,13 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
                 endMonth, 3);
         }
 
+        public static CalculateReturnRequest SixMonth(
+            MonthYear endMonth)
+        {
+            return new CalculateReturnRequest(
+                endMonth, 6);
+        }
+
         public static CalculateReturnRequest YearToDate(
             MonthYear endMonth)
         {
