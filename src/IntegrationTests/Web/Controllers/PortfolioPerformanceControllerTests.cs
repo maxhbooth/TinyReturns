@@ -272,7 +272,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         }
 
         [Fact]
-        public void ShouldReturnSinglePortfolioWithReturnsForFourMonths()
+        public void ShouldReturnSinglePortfolioWithReturnsForfiveMonths()
         {
             // Arrange
             var testHelper = new TestHelper();
@@ -376,7 +376,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
 
         [Fact]
-        public void ShouldReturnSinglePortfolioWithReturnsForSevenMonths()
+        public void ShouldReturnSinglePortfolioWithReturnsForEightMonths()
         {
             // Arrange
             var testHelper = new TestHelper();
@@ -386,7 +386,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var portfolioNumber = 100;
                 var portfolioName = "Portfolio 100";
 
-                var monthYear = new MonthYear(2016, 5);
+                var monthYear = new MonthYear(2016, 8);
                 var monthYearMinus1 = monthYear.AddMonths(-1);
                 var monthYearMinus2 = monthYear.AddMonths(-2);
                 var monthYearMinus3 = monthYear.AddMonths(-3);
@@ -502,7 +502,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var ExpectedThreeMonthResult = (1.02m) * (.98m) * (1.04m) - 1;
                 var ExpectedSixMonthResult = (1.02m) * (.98m) * (1.04m) * (1.01m) * (.99m) * (1.03m) - 1;
                 var ExpectedYearToDateResult = (1.02m) * (.98m) * (1.04m) * (1.01m)
-                                                * (.99m) * (1.03m) * (1.02m) * (1.02m)- 1;
+                                                * (.99m) * (1.03m) * (1.02m) * (1.01m)- 1;
 
                 viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
                 viewResultModel[0].ThreeMonth.Should().BeApproximately(ExpectedThreeMonthResult, 0.00000001m);
