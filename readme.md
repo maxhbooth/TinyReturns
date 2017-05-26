@@ -79,14 +79,12 @@ and Excel Report
 
 ###Web Report
 
-Through Visual Studio, right click on External.Web to Set as StartUp 
-Project. The website is implemented through
-Web.Controllers.PortfolioPerformanceController and called with Index().
+Through Visual Studio, right click on External.Web to Set as StartUp Project. The website is 
+implemented through Web.Controllers.PortfolioPerformanceController and called with Index().
 We need to GetPortfolioPerformance() for each of the portfolios we want to display.
-We CreatePortfolioModel(PortfolioWithPerformance, MonthYear)
-where the PortfolioWithPerformance is an entry in the TinyReturns webpage chart.
-Each entry has a number, name, and ReturnSeries. and a benchmark array where 
-each benchmark has a number, name, and ReturnSeries
+We CreatePortfolioModel(PortfolioWithPerformance, MonthYear) where the PortfolioWithPerformance 
+is an entry in the TinyReturns webpage chart. Each entry has a number, name, and ReturnSeries 
+and a benchmark array where each benchmark has a number, name, and ReturnSeries
 where ReturnSeries: an array of monthly returns; financial math
 An entry is created by:
 PublicWebReportFacade creates an entry (Number, Name, OneMonth,ThreeMonth, YearToDate)
