@@ -60,7 +60,7 @@ telling you to use --set-upstream to set it to the origin (which is good, just c
 Now you should have pushed your branch to dimensional server!
 
 
-##SQL setup
+## SQL setup
 
 
 http://itproguru.com/expert/2014/09/how-to-fix-login-failed-for-user-microsoft-sql-server-error-18456-step-by-step-add-sql-administrator-to-sql-management-studio/
@@ -71,13 +71,13 @@ https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/connect-t
 
 
 
-##Tiny Returns Project
+## Tiny Returns Project
 
 We look at the computed data through the following entry points: Web Report
 and Excel Report
 
 
-###Web Report
+### Web Report
 
 Through Visual Studio, right click on External.Web to Set as StartUp Project. The website is 
 implemented through Web.Controllers.PortfolioPerformanceController and called with Index().
