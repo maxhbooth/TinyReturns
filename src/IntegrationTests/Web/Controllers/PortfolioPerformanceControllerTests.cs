@@ -502,12 +502,14 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var ExpectedThreeMonthResult = (1.02m) * (.98m) * (1.04m) - 1;
                 var ExpectedSixMonthResult = (1.02m) * (.98m) * (1.04m) * (1.01m) * (.99m) * (1.03m) - 1;
+                var ExpectedYearToDateResult = (1.02m) * (.98m) * (1.04m) * (1.01m)
+                                                * (.99m) * (1.03m) * (1.02m) * (1.02m)- 1;
 
                 viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
                 viewResultModel[0].ThreeMonth.Should().BeApproximately(ExpectedThreeMonthResult, 0.00000001m);
                 viewResultModel[0].SixMonth.Should().BeApproximately(
                 ExpectedSixMonthResult, 0.00000001m);
-                viewResultModel[0].YearToDate.Should().BeApproximately(0.0394800416m, 0.00000001m);
+                viewResultModel[0].YearToDate.Should().BeApproximately(ExpectedYearToDateResult, 0.00000001m);
             });
         }
 
