@@ -42,7 +42,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             MonthYear previousMonthYear)
         {
             var threeMonthCalculationRequest = CalculateReturnRequestFactory.ThreeMonth(previousMonthYear);
-            var sixMonthCalculationRequest = CalculateReturnRequestFactory.SixMonth(previousMonthYear);
             var yearToDateCalculationRequest = CalculateReturnRequestFactory.YearToDate(previousMonthYear);
 
             var portfolioModel = new PortfolioModel()
@@ -51,7 +50,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 Name = portfolioWithPerformance.Name,
                 OneMonth = portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear),
                 ThreeMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(threeMonthCalculationRequest),
-                SixMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(sixMonthCalculationRequest),
                 YearToDate = portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest),
             };
 
@@ -66,7 +64,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                     Name = benchmarkWithPerformance.Name,
                     OneMonth = benchmarkWithPerformance.GetNetMonthlyReturn(previousMonthYear),
                     ThreeMonth = benchmarkWithPerformance.CalculateReturnAsDecimal(threeMonthCalculationRequest),
-                    SixMonth = benchmarkWithPerformance.CalculateReturnAsDecimal(sixMonthCalculationRequest),
                     YearToDate = benchmarkWithPerformance.CalculateReturnAsDecimal(yearToDateCalculationRequest),
                 };
 
@@ -90,7 +87,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
             public decimal? OneMonth { get; set; }
             public decimal? ThreeMonth { get; set; }
-            public decimal? SixMonth { get; set; }
             public decimal? YearToDate { get; set; }
 
             public BenchmarkModel[] Benchmarks { get; set; }
@@ -101,7 +97,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public string Name { get; set; }
             public decimal? OneMonth { get; set; }
             public decimal? ThreeMonth { get; set; }
-            public decimal? SixMonth { get; set; }
             public decimal? YearToDate { get; set; }
         }
     }

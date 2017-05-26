@@ -73,10 +73,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
             var threeMonthResult = portfolio.CalculateNetReturn(threeMonthRequest);
             recordModel.ThreeMonths = threeMonthResult.GetNullValueOnError();
 
-            var sixMonthRequest = CalculateReturnRequestFactory.SixMonth(monthYear);
-            var sixMonthResult = portfolio.CalculateNetReturn(sixMonthRequest);
-            recordModel.SixMonths = sixMonthResult.GetNullValueOnError();
-
             var twelveMonthRequest = CalculateReturnRequestFactory.TwelveMonth(monthYear);
             var twelveMonthResult = portfolio.CalculateNetReturn(twelveMonthRequest);
             recordModel.TwelveMonths = twelveMonthResult.GetNullValueOnError();
@@ -108,10 +104,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
             var threeMonthRequest = CalculateReturnRequestFactory.ThreeMonth(monthYear);
             var threeMonthResult = portfolio.CalculateGrossReturn(threeMonthRequest);
             recordModel.ThreeMonths = threeMonthResult.GetNullValueOnError();
-
-            var sixMonthRequest = CalculateReturnRequestFactory.SixMonth(monthYear);
-            var sixMonthResult = portfolio.CalculateGrossReturn(sixMonthRequest);
-            recordModel.SixMonths = sixMonthResult.GetNullValueOnError();
 
             var twelveMonthRequest = CalculateReturnRequestFactory.TwelveMonth(monthYear);
             var twelveMonthResult = portfolio.CalculateGrossReturn(twelveMonthRequest);
