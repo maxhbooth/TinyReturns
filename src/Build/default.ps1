@@ -1,5 +1,3 @@
-Framework '4.0'
-
 properties {
 	$projectName = "TinyReturns"
 	$baseDir = resolve-path ".\..\.."
