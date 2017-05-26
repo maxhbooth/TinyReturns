@@ -17,7 +17,6 @@
         public decimal? SixMonths { get; set; }
         public decimal? TwelveMonths { get; set; }
         public decimal? YearToDate { get; set; }
-        public decimal? QuarterToDate { get; set; }
     }
 
 }
