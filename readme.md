@@ -2,10 +2,10 @@
 *Max Booth and Emily Johnson*
 
 
-#Week 0
+# Week 0
 
 
-##GIT setup
+## GIT setup
 
 **Pulling from a Repository**
 After receiving local admin priviledges and downloading the GIT extensions, you can begin 
