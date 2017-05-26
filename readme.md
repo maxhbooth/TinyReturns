@@ -88,3 +88,8 @@ and a benchmark array where each benchmark has a number, name, and ReturnSeries
 where ReturnSeries: an array of monthly returns; financial math
 An entry is created by:
 PublicWebReportFacade creates an entry (Number, Name, OneMonth,ThreeMonth, YearToDate)
+
+#### Six Month Returns
+
+Had to add variables for sixMonth in all classes that include threeMonth. Then had to jump into 
+code to find html files that display the monthly returns to add Six Month Returns
