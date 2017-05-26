@@ -31,10 +31,30 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 
         public static CalculateReturnRequest QuarterToDate(
             MonthYear endMonth)
-        { 
-            var QuarterMonth = (endMonth.Month-2) % 3 + 1;
+        {
+            //var QuarterMonth = (endMonth.Month) % 3;    
+            //var diffMonths = endMonth.Month - QuarterMonth + 1; 
 
-            var diffMonths = endMonth.Month - QuarterMonth + 1; 
+            var QuarterMonth = 0;
+
+            if(endMonth.Month <= 3)
+            {
+                QuarterMonth = 1;
+            }
+            else if (endMonth.Month <= 6 )
+            {
+                QuarterMonth = 4;
+            }
+            else if (endMonth.Month <= 9)
+            {
+                QuarterMonth = 7;
+            }
+            else
+            {
+                QuarterMonth = 10;
+            }
+
+            var diffMonths = endMonth.Month - QuarterMonth + 1;
 
             return new CalculateReturnRequest(
                 endMonth,diffMonths);
