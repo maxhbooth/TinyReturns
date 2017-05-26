@@ -18,7 +18,7 @@ namespace Dimensional.TinyReturns.TestDataPopulatorConsole
 
             monthYearRange.ForEachMonthInRange((monthYear) =>
             {
-                var nextRandomValue = random.Next(-10000, 10000) / 10000m;
+                var nextRandomValue = random.Next(-10000, 10000) / 100000m;
 
                 monthlyReturnDtos.Add(new MonthlyReturnDto()
                 {
