@@ -375,7 +375,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         }
 
 
-
         [Fact]
         public void ShouldReturnSinglePortfolioWithReturnsForSevenMonths()
         {
@@ -512,6 +511,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].YearToDate.Should().BeApproximately(ExpectedYearToDateResult, 0.00000001m);
             });
         }
+
 
         [Fact]
         public void ShouldReturnPortfolioWithBenchmark()
