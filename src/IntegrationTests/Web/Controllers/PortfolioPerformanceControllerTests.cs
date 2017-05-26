@@ -272,7 +272,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         }
 
         [Fact]
-        public void ShouldReturnSinglePortfolioWithReturnsForAllValues()
+        public void ShouldReturnSinglePortfolioWithReturnsForFourMonths()
         {
             // Arrange
             var testHelper = new TestHelper();
