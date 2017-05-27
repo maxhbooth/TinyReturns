@@ -13,11 +13,20 @@ namespace Dimensional.TinyReturns.ReportGeneratorConsole
 
             var performanceReportExcelReportCreator = MasterFactory.GetPerformanceReportExcelReportCreator();
 
-            const string excelFilePath = "c:\\temp\\ExcelReport.xlsx";
+#if DEBUG
+            string excelFilePath = "c:\\temp\\ExcelReport.xlsx";
+            var monthYear = new MonthYear(2016, 6);
+#else
+            string excelFilePath = args[0];
+
+            var year = int.Parse(args[1]);
+            var month = int.Parse(args[2]);
+            var monthYear = new MonthYear(year, month);
+#endif
 
             File.Delete(excelFilePath);
-
-            performanceReportExcelReportCreator.CreateReport(new MonthYear(2013, 6), excelFilePath);
+            
+            performanceReportExcelReportCreator.CreateReport(monthYear, excelFilePath);
         }
     }
 }
