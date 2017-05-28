@@ -103,7 +103,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.ShareContext.Services.Ci
 
             Assert.NotNull(returnSeriesPortfolio100);
             Assert.True(returnSeriesPortfolio100.ReturnSeriesId > 0);
-            Assert.Equal(string.Empty, returnSeriesPortfolio100.Disclosure);
 
             // **
 
@@ -112,7 +111,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.ShareContext.Services.Ci
 
             Assert.NotNull(returnSeriesPortfolio101);
             Assert.True(returnSeriesPortfolio101.ReturnSeriesId > 0);
-            Assert.Equal(string.Empty, returnSeriesPortfolio101.Disclosure);
 
             // **
 
@@ -121,7 +119,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.ShareContext.Services.Ci
 
             Assert.NotNull(returnSeriesPortfolio102);
             Assert.True(returnSeriesPortfolio102.ReturnSeriesId > 0);
-            Assert.Equal(string.Empty, returnSeriesPortfolio102.Disclosure);
 
             // **
 

@@ -98,8 +98,7 @@ namespace Dimensional.TinyReturns.Core.SharedContext.Services.CitiFileImport
         {
             var returnSeriesDto = new ReturnSeriesDto()
             {
-                Name = returnSeriesName,
-                Disclosure = String.Empty
+                Name = returnSeriesName
             };
 
             var returnSeriesId = _returnSeriesDataTableGateway.Insert(returnSeriesDto);

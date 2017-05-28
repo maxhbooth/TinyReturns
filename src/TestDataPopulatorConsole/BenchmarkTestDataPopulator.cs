@@ -54,8 +54,7 @@ namespace Dimensional.TinyReturns.TestDataPopulatorConsole
         {
             var netReturnSeriesId = _returnSeriesDataTableGateway.Insert(new ReturnSeriesDto()
             {
-                Name = string.Format("{0}", benchmarkDto.Name),
-                Disclosure = string.Empty
+                Name = string.Format("{0}", benchmarkDto.Name)
             });
 
             var monthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
