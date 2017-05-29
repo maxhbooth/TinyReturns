@@ -41,7 +41,10 @@
 
 <div class="container">
 
-    <h2>Product Backlog</h2>
+    <h1>Product Backlog</h1>
+
+    <h2>Basic</h2>
+    <hr/>
 
     <div class="row">
         <div class="col-md-12">
@@ -53,7 +56,9 @@
                 <li>The file content should format the text with markdown. <a href="https://confluence.atlassian.com/bitbucketserver/markdown-syntax-guide-776639995.html" target="_blank">Click here for markdown help.</a></li>
             </ul>
         </div>
+    </div>
 
+    <div class="row">
         <div class="col-md-12">
             <h3>Six Month Return for Australia</h3>
             <p>As a Financial Adviser Service (FAS) team member we would like to include a six month performance value in our adviser reports.</p>
@@ -61,17 +66,16 @@
                 <li>All FAS teams use both the Web Report and the Excel report to create their adviser reports.</li>
             </ul>
         </div>
+    </div>
 
+    <div class="row">
         <div class="col-md-12">
             <h3>BUG: Citi File Importer Duplicates Data</h3>
             <p>The system duplicates data when the Citi file import is run multiple times.</p>
         </div>
+    </div>
 
-        <div class="col-md-12">
-            <h3>TECH TASK: Improve Logging for Consoles</h3>
-            <p>Ensue that every console project prints the log messages to the screen and to a log file.</p>
-        </div>
-
+    <div class="row">
         <div class="col-md-12">
             <h3>Web Report Improvements</h3>
             <p>As a user I would like the following enhancements made to the web report...</p>
@@ -81,12 +85,9 @@
                 <li>We would like the ability to choose net or gross return types. Default to net.</li>
             </ul>
         </div>
+    </div>
 
-        <div class="col-md-12">
-            <h3>Benchmark Disclosures</h3>
-            <p>As a user I must (by law) include the disclosures for all benchmarks on all reports going to the public.</p>
-        </div>
-
+    <div class="row">
         <div class="col-md-12">
             <h3>Standard Deviation</h3>
             <p>As a FAS user I would to include a standard deviation value with the global adviser reports.</p>
@@ -97,22 +98,48 @@
                 <li>You must have at least 12 months of returns for a standard deviation value to be valid.</li>
             </ul>
         </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <h3>TECH TASK: Automated Deployment - Web Site</h3>
+            <p>Add an automated deployment for the web site in the solution in Team City.</p>
+        </div>
+
+    </div>
+
+    <h2>Intermediate</h2>
+    <hr/>
+
+    <!-- Date updated and date created -->
+
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <h3>Benchmark Disclosures</h3>
+            <p>As a user I must (by law) include the disclosures for all benchmarks on all reports going to the public.</p>
+            <ul>
+                <li>Currently, system does not support disclosures in any way.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-12">
             <h3>Show Calculations</h3>
             <p>As a quality assurance user I need a way to see the calculations that were done for every number reported to the public.</p>
         </div>
+    </div>
 
+    <div class="row">
         <div class="col-md-12">
-            <h3>Tech TASK: Implement IOC</h3>
+            <h3>TECH TASK: Implement IOC</h3>
             <p>Replace all usages of the MasterFactory class with an <a href="https://en.wikipedia.org/wiki/Inversion_of_control" target="_blank">Inversion of Control</a> container.</p>
         </div>
+    </div>
 
-        <div class="col-md-12">
-            <h3>TECH TASK: Automated Deployment - Web Site</h3>
-            <p>Add an automated deployment for the web site in the solution.</p>
-        </div>
-
+    <div class="row">
         <div class="col-md-12">
             <h3>Growth of Wealth Chart</h3>
             <p>As an Institutional user I would the ability to run a Growth of Wealth chart for a single portfolio plus its related benchmarks.</p>
@@ -120,25 +147,12 @@
                 <li>This chart should only run for the Net return type.</li>
             </ul>
         </div>
+    </div>
 
-        <div class="col-md-12">
-            <h3>Portfolio Edit</h3>
-            <p>As an Investment Operations user I would like the ability to add and change portfolios with their related benchmarks.</p>
-        </div>
+    <h2>Advanced</h2>
+    <hr/>
 
-        <div class="col-md-12">
-            <h3>Return Series Management</h3>
-            <p>As a Returns specialists I would like the ability to add and edit return series for the system.</p>
-            <ul>
-                <li>Include a feature that allows the updating of return series disclosures.</li>
-                <li>We DO not have to edit the monthly returns.</li>
-            </ul>
-        </div>
-
-        <div class="col-md-12">
-            <h3>Return Disclosures</h3>
-            <p>As a Returns specialists I would like the ability for the system to include a disclosure for the benchmark return series.</p>
-        </div>
+    <div class="row">
 
         <div class="col-md-12">
             <h3>TECH TASK: Web API for Dimensional.com</h3>
@@ -154,7 +168,25 @@
                 <li>The web team also needs to show a growth of wealth change.  Therefore, the service must include the data for this chart.</li>
             </ul>
         </div>
-        
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Portfolio Edit</h3>
+            <p>As an Investment Operations user I would like the ability to add and change portfolios with their related benchmarks.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Return Series Management</h3>
+            <p>As a Returns specialists I would like the ability to add and edit return series for the system.</p>
+            <ul>
+                <li>Include a feature that allows the updating of return series disclosures.</li>
+                <li>We DO not have to edit the monthly returns.</li>
+            </ul>
+        </div>
+
         <!-- look at omni export -- all time? -->
         <!--exchange rate fees -->
 
