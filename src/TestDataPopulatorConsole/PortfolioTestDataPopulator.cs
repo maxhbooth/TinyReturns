@@ -57,8 +57,7 @@ namespace Dimensional.TinyReturns.TestDataPopulatorConsole
 
             var netReturnSeriesId = _returnSeriesDataTableGateway.Insert(new ReturnSeriesDto()
             {
-                Name = string.Format("{0} - {1}", portfolioDto.Name, feeTypeName),
-                Disclosure = string.Empty
+                Name = string.Format("{0} - {1}", portfolioDto.Name, feeTypeName)
             });
 
             var monthYearRange = new MonthYearRange(
