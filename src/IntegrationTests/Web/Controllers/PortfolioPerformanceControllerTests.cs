@@ -411,7 +411,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var returnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
                     Name = "Return Series for Portfolio 100",
-                    Disclosure = string.Empty
                 });
 
                 testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()

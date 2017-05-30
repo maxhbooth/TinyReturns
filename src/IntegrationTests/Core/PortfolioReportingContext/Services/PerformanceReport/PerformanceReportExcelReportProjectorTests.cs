@@ -8,6 +8,7 @@ using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using FluentAssertions;
 using Xunit;
+using System.Diagnostics;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContext.Services.PerformanceReport
 {
@@ -265,6 +266,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                     returnSeriesIdNet,
                     monthYearRange);
 
+                foreach (var monthlyReturn in netMonthlyReturnDtos)
+                {
+                    Debug.WriteLine("Net Returns:");
+                    Debug.WriteLine(monthlyReturn.ReturnValue);
+                }
+
                 testHelper.InsertMonthlyReturnDtos(netMonthlyReturnDtos);
 
                 testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
@@ -278,6 +285,13 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                     returnSeriesIdGross,
                     monthYearRange,
                     seed: 2);
+
+                foreach (var monthlyReturn in grossMonthlyReturnDtos)
+                {
+                    Debug.WriteLine("Gross Returns:");
+                    Debug.WriteLine(monthlyReturn.ReturnValue);
+                }
+
                 
                 testHelper.InsertMonthlyReturnDtos(grossMonthlyReturnDtos);
 
@@ -298,10 +312,14 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 netRecordModel.Type.Should().Be("Portfolio");
                 netRecordModel.FeeType.Should().Be("Net");
 
+                var expectedNetQuarterToDate = -0.4162m;
+
                 netRecordModel.OneMonth.Should().BeApproximately(-0.4162m, 0.00000001m);
                 netRecordModel.ThreeMonths.Should().BeApproximately(-0.375236505m, 0.00000001m);
                 netRecordModel.TwelveMonths.Should().NotHaveValue();
                 netRecordModel.YearToDate.Should().BeApproximately(0.0010907851939m, 0.00000001m);
+                netRecordModel.QuarterToDate.Should().BeApproximately(expectedNetQuarterToDate, 0.00000001m);
+
 
                 var grossRecordModel = viewSpy.PerformanceReportExcelReportModel.Records[1];
 
@@ -310,10 +328,13 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 grossRecordModel.Type.Should().Be("Portfolio");
                 grossRecordModel.FeeType.Should().Be("Gross");
 
+                var expectedGrossQuarterToDate = 0.5307m;
                 grossRecordModel.OneMonth.Should().BeApproximately(0.5307m, 0.00000001m);
                 grossRecordModel.ThreeMonths.Should().BeApproximately(-0.9845739727m, 0.00000001m);
                 grossRecordModel.TwelveMonths.Should().NotHaveValue();
                 grossRecordModel.YearToDate.Should().BeApproximately(-0.977950928298953m, 0.00000001m);
+                grossRecordModel.QuarterToDate.Should().BeApproximately(expectedGrossQuarterToDate, 0.00000001m);
+
 
                 viewSpy.PerformanceReportExcelReportModel.MonthText.Should().Be("Month: 5/2016");
             });
