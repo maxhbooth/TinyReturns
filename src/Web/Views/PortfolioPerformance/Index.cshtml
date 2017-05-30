@@ -5,7 +5,23 @@
 }
 
 <div>
-
+    <br>
+    @{ 
+        List<SelectListItem> netgrossList = new List<SelectListItem>();
+        netgrossList.Add(new SelectListItem
+        {
+            Selected = true,
+            Text = "Net",
+            Value = "Net"
+        });
+        netgrossList.Add(new SelectListItem
+        {
+            Text = "Gross",
+            Value = "Gross"
+        });
+    }
+    @Html.DropDownList("Net or Gross", netgrossList, new { @class = "form-control" })
+    <br />
     <table class="table table-condensed">
         <thead>
             <tr>

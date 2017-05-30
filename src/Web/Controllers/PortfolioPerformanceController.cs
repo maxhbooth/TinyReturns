@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
+using System.Collections.Generic;
 
 namespace Dimensional.TinyReturns.Web.Controllers
 {
@@ -23,6 +24,24 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public ActionResult Index()
         {
             return View(_publicWebReportFacade.GetPortfolioPerforance());
+        }
+
+        public ActionResult LoadNetGross()
+        {
+            List<SelectListItem> netgrossList = new List<SelectListItem>();
+            netgrossList.Add(new SelectListItem
+            {
+                Selected = true,
+                Text = "Net",
+                Value = "Net"
+            });
+            netgrossList.Add(new SelectListItem
+            {
+                Text = "Gross",
+                Value = "Gross"
+            });
+            ViewData["netgross"] = netgrossList;
+            return View();
         }
     }
 }
