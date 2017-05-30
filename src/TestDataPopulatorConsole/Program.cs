@@ -7,7 +7,7 @@ namespace Dimensional.TinyReturns.TestDataPopulatorConsole
     {
         static void Main(string[] args)
         {
-            DependencyManager.BootstrapForSystem("Console", new DatabaseSettings());
+            DependencyManager.BootstrapForSystem("TestDataConsole", new DatabaseSettings());
 
             var portfolioDataTableGateway = MasterFactory.PortfolioDataTableGateway;
             var benchmarkDataTableGateway = MasterFactory.BenchmarkDataTableGateway;

@@ -173,8 +173,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
 
                 var returnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
-                    Name = "Return Series for Portfolio 100",
-                    Disclosure = string.Empty
+                    Name = "Return Series for Portfolio 100"
                 });
 
                 testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
@@ -243,14 +242,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
 
                 var returnSeriesIdNet = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
-                    Name = "Net Return Series for Portfolio 100",
-                    Disclosure = string.Empty
+                    Name = "Net Return Series for Portfolio 100"
                 });
 
                 var returnSeriesIdGross = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
-                    Name = "Net Return Series for Portfolio 100",
-                    Disclosure = string.Empty
+                    Name = "Net Return Series for Portfolio 100"
                 });
 
                 testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
