@@ -301,6 +301,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 netRecordModel.Type.Should().Be("Portfolio");
                 netRecordModel.FeeType.Should().Be("Net");
 
+
                 netRecordModel.OneMonth.Should().BeApproximately(-0.4162m, 0.00000001m);
                 netRecordModel.ThreeMonths.Should().BeApproximately(-0.375236505m, 0.00000001m);
                 netRecordModel.TwelveMonths.Should().NotHaveValue();
@@ -313,6 +314,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 grossRecordModel.Type.Should().Be("Portfolio");
                 grossRecordModel.FeeType.Should().Be("Gross");
 
+                Console.WriteLine("I ran");
+
+                //grossRecordModel.OneMonth.Should().BeApproximately(0.05307m, 0.00000001m);
                 grossRecordModel.OneMonth.Should().BeApproximately(0.5307m, 0.00000001m);
                 grossRecordModel.ThreeMonths.Should().BeApproximately(-0.9845739727m, 0.00000001m);
                 grossRecordModel.TwelveMonths.Should().NotHaveValue();
