@@ -41,7 +41,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
         {
             if (_netReturnSeries == null)
                 return null;
-
+            //this is wrong
             return _netReturnSeries.GetMonthlyReturn(monthYear);
         }
 
