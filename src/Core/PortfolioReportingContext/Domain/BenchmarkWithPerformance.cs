@@ -38,7 +38,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             CalculateReturnRequest request)
         {
             if (HasReturnSeries)
-                return _returnSeries.CalculateReturnAsDecimal(request);
+                return _returnSeries.CalculateReturnAsDecimalPlaces(request);
 
             return null;
         }

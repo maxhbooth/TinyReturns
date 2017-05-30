@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
+using System;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 {
@@ -50,6 +51,16 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             CalculateReturnRequest request)
         {
             var result = CalculateReturn(request);
+            
+            return result.GetNullValueOnError();
+        }
+
+        public decimal? CalculateReturnAsDecimalPlaces(
+            CalculateReturnRequest request)
+        {
+            var result = CalculateReturn(request);
+            result.SetValue(decimal.Round(result.Value, 2, MidpointRounding.AwayFromZero), result.Calculation);
+            //Convert.ToDecimal(result).ToString("#,##0.00");
 
             return result.GetNullValueOnError();
         }
@@ -62,6 +73,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             var returnsInRange = GetMonthsInRange(monthRange);
 
             var result = new ReturnResult();
+
 
             if (!returnsInRange.Any())
                 return ReturnResult.CreateWithError("Could not find return(s) for month(s).");
