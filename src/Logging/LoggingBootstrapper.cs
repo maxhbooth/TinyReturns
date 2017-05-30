@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Reflection;
 using log4net.Config;
 
 namespace Dimensional.TinyReturns.Logging
@@ -16,12 +18,17 @@ namespace Dimensional.TinyReturns.Logging
 
         private static string GetLogConfigFile()
         {
-            var currentDirectory = Directory.GetCurrentDirectory();
-
-            var targetFile = currentDirectory
-                 + @"\Log4NetConfig.xml";
+            var targetFile = Path.Combine(GetDirectoryOfExecutingAssembly(), "Log4NetConfig.xml");
 
             return targetFile;
+        }
+
+        private static string GetDirectoryOfExecutingAssembly()
+        {
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uri = new UriBuilder(codeBase);
+            string path = Uri.UnescapeDataString(uri.Path);
+            return Path.GetDirectoryName(path);
         }
 
     }

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tiny Returns: Product Backlog</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="starter-template.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Tiny Returns</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+
+    <h1>Product Backlog</h1>
+
+    <h2>Basic</h2>
+    <hr/>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Readme File for Interns</h3>
+            <p>As next year's interns we would like to have a "read me" file that helps us get started with the project.</p>
+            <ul>
+                <li>File should be called 'readme.md' in the root folder.</li>
+                <li>It should include as much information as possible for a new developer to modify Tiny Returns.</li>
+                <li>The file content should format the text with markdown. <a href="https://confluence.atlassian.com/bitbucketserver/markdown-syntax-guide-776639995.html" target="_blank">Click here for markdown help.</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Six Month Return for Australia</h3>
+            <p>As a Financial Adviser Service (FAS) team member we would like to include a six month performance value in our adviser reports.</p>
+            <ul>
+                <li>All FAS teams use both the Web Report and the Excel report to create their adviser reports.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>BUG: Citi File Importer Duplicates Data</h3>
+            <p>The system duplicates data when the Citi file import is run multiple times.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Web Report Improvements</h3>
+            <p>As a user I would like the following enhancements made to the web report...</p>
+            <ul>
+                <li>We would like the ability to report on past months.</li>
+                <li>We would like all values in percentage format rounded to two decimal places. Default to last complete month.</li>
+                <li>We would like the ability to choose net or gross return types. Default to net.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Standard Deviation</h3>
+            <p>As a FAS user I would to include a standard deviation value with the global adviser reports.</p>
+            <ul>
+                <li>Use the population calculation type of standard deviation => <a href="https://en.wikipedia.org/wiki/Standard_deviation" target="_blank">Standard Deviation</a></li>
+                <li>You must include an average return value (mean) for the standard deviation value to have meaning.</li>
+                <li>All FAS teams use both the Web Report and the Excel report to create their adviser reports.</li>
+                <li>You must have at least 12 months of returns for a standard deviation value to be valid.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>TECH TASK: Automated Deployment - Web Site</h3>
+            <p>Add an automated deployment for the web site in the solution in Team City.</p>
+        </div>
+
+    </div>
+
+    <h2>Intermediate</h2>
+    <hr/>
+
+    <!-- Date updated and date created -->
+
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <h3>Benchmark Disclosures</h3>
+            <p>As a user I must (by law) include the disclosures for all benchmarks on all reports going to the public.</p>
+            <ul>
+                <li>Currently, system does not support disclosures in any way.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Show Calculations</h3>
+            <p>As a quality assurance user I need a way to see the calculations that were done for every number reported to the public.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>TECH TASK: Implement IOC</h3>
+            <p>Replace all usages of the MasterFactory class with an <a href="https://en.wikipedia.org/wiki/Inversion_of_control" target="_blank">Inversion of Control</a> container.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Growth of Wealth Chart</h3>
+            <p>As an Institutional user I would the ability to run a Growth of Wealth chart for a single portfolio plus its related benchmarks.</p>
+            <ul>
+                <li>This chart should only run for the Net return type.</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Advanced</h2>
+    <hr/>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <h3>TECH TASK: Web API for Dimensional.com</h3>
+            <p>Create a web service that allows the Dimensional.com team to show performance for a portfolio.</p>
+            <ul>
+                <li>The web service should include the following performance values for both a portfolio and related benchmarks.</li>
+                <ul>
+                    <li>One Month</li>
+                    <li>Six Month</li>
+                    <li>Three Year Annualized</li>
+                    <li>Since First Full Month Annualized</li>
+                </ul>
+                <li>The web team also needs to show a growth of wealth change.  Therefore, the service must include the data for this chart.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Portfolio Edit</h3>
+            <p>As an Investment Operations user I would like the ability to add and change portfolios with their related benchmarks.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Return Series Management</h3>
+            <p>As a Returns specialists I would like the ability to add and edit return series for the system.</p>
+            <ul>
+                <li>Include a feature that allows the updating of return series disclosures.</li>
+                <li>We DO not have to edit the monthly returns.</li>
+            </ul>
+        </div>
+
+        <!-- look at omni export -- all time? -->
+        <!--exchange rate fees -->
+
+    </div>
+
+
+</div><!-- /.container -->
+
+<script src="../lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</body>
+</html>

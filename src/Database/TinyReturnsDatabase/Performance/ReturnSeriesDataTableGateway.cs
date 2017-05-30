@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Dapper;
-using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
@@ -21,7 +20,6 @@ namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance
 SELECT
         [ReturnSeriesId]
         ,[Name]
-        ,[Disclosure]
     FROM
         [Performance].[ReturnSeries]";
 
@@ -67,11 +65,9 @@ WHERE
         {
             const string sql = @"
 INSERT INTO [Performance].[ReturnSeries]
-           ([Name]
-           ,[Disclosure])
+           ([Name])
      VALUES
-           (@Name
-           ,@Disclosure)
+           (@Name)
 
 SELECT CAST(SCOPE_IDENTITY() as int)
 ";
@@ -93,11 +89,9 @@ SELECT CAST(SCOPE_IDENTITY() as int)
         {
             const string sql = @"
 INSERT INTO [Performance].[ReturnSeries]
-           ([Name]
-           ,[Disclosure])
+           ([Name])
      VALUES
-           (@Name
-           ,@Disclosure)
+           (@Name)
 ";
 
             ConnectionExecuteWithLog(
