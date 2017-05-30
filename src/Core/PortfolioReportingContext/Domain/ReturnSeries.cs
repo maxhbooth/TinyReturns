@@ -33,6 +33,20 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return monthlyReturn.Value;
         }
 
+
+        public decimal? GetMonthlyReturnPercent(
+            MonthYear monthYear)
+        {
+            var monthlyReturn = _monthlyReturns.FirstOrDefault(r => r.MonthYear.Equals(monthYear));
+
+            if (monthlyReturn == null)
+                return null;
+            //monthlyReturn.Value cannot be null
+            decimal val = monthlyReturn.Value;
+            decimal percent = (val * 100);
+            return decimal.Round(percent, 2, MidpointRounding.AwayFromZero);
+            //throw new NotImplementedException();
+        }
         public class MonthlyReturn
         {
             public MonthlyReturn(
@@ -54,17 +68,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             
             return result.GetNullValueOnError();
         }
-
-        public decimal? CalculateReturnAsDecimalPlaces(
-            CalculateReturnRequest request)
-        {
-            var result = CalculateReturn(request);
-            result.SetValue(decimal.Round(result.Value, 2, MidpointRounding.AwayFromZero), result.Calculation);
-            //Convert.ToDecimal(result).ToString("#,##0.00");
-
-            return result.GetNullValueOnError();
-        }
-
+        
+        
         public ReturnResult CalculateReturn(
             CalculateReturnRequest request)
         {
