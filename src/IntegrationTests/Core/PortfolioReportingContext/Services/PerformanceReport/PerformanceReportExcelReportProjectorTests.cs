@@ -298,9 +298,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 netRecordModel.Type.Should().Be("Portfolio");
                 netRecordModel.FeeType.Should().Be("Net");
 
+                var expectedNetSixMonth = (1 - 0.4162m) * (1 - 0.4526m) * (1 + 0.955m)
+                                            * (1 - 0.1157m) * (1 + 0.812m) * (1 + 0.1177m) - 1;
 
                 netRecordModel.OneMonth.Should().BeApproximately(-0.4162m, 0.00000001m);
                 netRecordModel.ThreeMonths.Should().BeApproximately(-0.375236505m, 0.00000001m);
+                netRecordModel.SixMonths.Should().BeApproximately(expectedNetSixMonth, 0.00000001m);
                 netRecordModel.TwelveMonths.Should().NotHaveValue();
                 netRecordModel.YearToDate.Should().BeApproximately(0.0010907851939m, 0.00000001m);
 
@@ -313,11 +316,15 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
 
                 Console.WriteLine("I ran");
 
-                //grossRecordModel.OneMonth.Should().BeApproximately(0.05307m, 0.00000001m);
+                var expectedGrossSixMonth = (1 + 0.5307m) * (1 - 0.9776m) * (1 - 0.5501m)
+                                            * (1 - 0.109m) * (1 + 0.6042m) * (1 - 0.3867m) - 1;
+
                 grossRecordModel.OneMonth.Should().BeApproximately(0.5307m, 0.00000001m);
                 grossRecordModel.ThreeMonths.Should().BeApproximately(-0.9845739727m, 0.00000001m);
+                grossRecordModel.SixMonths.Should().BeApproximately(expectedGrossSixMonth, 0.00000001m);
                 grossRecordModel.TwelveMonths.Should().NotHaveValue();
                 grossRecordModel.YearToDate.Should().BeApproximately(-0.977950928298953m, 0.00000001m);
+
 
                 viewSpy.PerformanceReportExcelReportModel.MonthText.Should().Be("Month: 5/2016");
             });
