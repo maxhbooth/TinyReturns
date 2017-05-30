@@ -11,8 +11,13 @@ namespace Dimensional.TinyReturns.CitiFileImporterConsole
 
             var interactor = MasterFactory.GetCitiReturnSeriesImporter();
 
+#if DEBUG
+            interactor.ImportMonthyPortfolioNetReturnsFile("CitiFileFullGrossOfFees.csv");
+            interactor.ImportMonthyPortfolioGrossReturnsFile("CitiFileFullNetOfFees.csv");
+#else
             interactor.ImportMonthyPortfolioNetReturnsFile(args[0]);
-            interactor.ImportMonthyPortfolioGrossReturnsFile(args[0]);
+            interactor.ImportMonthyPortfolioGrossReturnsFile(args[1]);
+#endif
         }
     }
 }

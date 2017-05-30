@@ -4,6 +4,5 @@
     {
         public int ReturnSeriesId { get; set; }
         public string Name { get; set; }
-        public string Disclosure { get; set; }
     }
 }

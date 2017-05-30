@@ -232,8 +232,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var returnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
-                    Name = "Return Series for Portfolio 100",
-                    Disclosure = string.Empty
+                    Name = "Return Series for Portfolio 100"
                 });
 
                 testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
@@ -304,8 +303,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var returnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
-                    Name = "Return Series for Portfolio 100",
-                    Disclosure = string.Empty
+                    Name = "Return Series for Portfolio 100"
                 });
 
                 testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
@@ -548,8 +546,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var portfolioReturnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
-                    Name = "Return Series for Portfolio 100",
-                    Disclosure = string.Empty
+                    Name = "Return Series for Portfolio 100"
                 });
 
                 testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
@@ -575,8 +572,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var benchmarkReturnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
-                    Name = "Return Series for Benchmark X",
-                    Disclosure = string.Empty
+                    Name = "Return Series for Benchmark X"
                 });
 
                 testHelper.InsertBenchmarkToReturnSeriesDto(new BenchmarkToReturnSeriesDto()
