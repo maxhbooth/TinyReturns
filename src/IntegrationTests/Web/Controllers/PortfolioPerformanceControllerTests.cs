@@ -11,6 +11,7 @@ using Dimensional.TinyReturns.IntegrationTests.Core;
 using Dimensional.TinyReturns.Web.Controllers;
 using FluentAssertions;
 using Xunit;
+using System.Diagnostics;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 {
