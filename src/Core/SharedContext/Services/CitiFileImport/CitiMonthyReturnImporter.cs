@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
+using System.Diagnostics;
 
 namespace Dimensional.TinyReturns.Core.SharedContext.Services.CitiFileImport
 {
@@ -40,12 +41,13 @@ namespace Dimensional.TinyReturns.Core.SharedContext.Services.CitiFileImport
         {
             var citiMonthlyReturnsDataFileRecords = _citiReturnsFileReader.ReadFile(filePath);
 
+            var currentMonthlyDtos =(MonthlyReturnDto[]) _monthlyReturnDataTableGateway.GetAll();
+
+            var currentReturnSeriesDtos = (ReturnSeriesDto[]) _returnSeriesDataTableGateway.GetAll();
+
             var returnSeriesDtos = new List<ReturnSeriesDto>();
 
             var monthlyReturnDtos = new List<MonthlyReturnDto>();
-
-            var currentDtos =(MonthlyReturnDto[]) _monthlyReturnDataTableGateway.GetAll();
-            
 
             foreach (var citiMonthlyReturnsDataFileRecord in citiMonthlyReturnsDataFileRecords)
             {
@@ -53,49 +55,52 @@ namespace Dimensional.TinyReturns.Core.SharedContext.Services.CitiFileImport
 
                 var returnSeriesName = CreateReturnSeriesName(portfolioNumber);
 
-                var returnSeriesDto = returnSeriesDtos.FirstOrDefault(d => d.Name == returnSeriesName);
+                var returnSeriesDto = currentReturnSeriesDtos.FirstOrDefault(d => d.Name == returnSeriesName);
+
+                if (returnSeriesDto == null)
+                {
+                    returnSeriesDto = returnSeriesDtos.FirstOrDefault(d => d.Name == returnSeriesName);
+                }
 
                 if (returnSeriesDto == null)
                 {
                     returnSeriesDto = CreateAndInsertReturnSeriesDto(returnSeriesName);
-
                     returnSeriesDtos.Add(returnSeriesDto);
-
                     InsertPortfolioToReturnSeriesRecord(
                         portfolioNumber,
                         returnSeriesDto.ReturnSeriesId, netSeriesTypeCode);
                 }
-                if (currentDtos != null)
-                {
-                    if (!currentDtos.Contains(new MonthlyReturnDto()
+                    var newMonthlyReturn = new MonthlyReturnDto()
                     {
                         ReturnSeriesId = returnSeriesDto.ReturnSeriesId,
                         Year = citiMonthlyReturnsDataFileRecord.GetYear(),
                         Month = citiMonthlyReturnsDataFileRecord.GetMonth(),
                         ReturnValue = citiMonthlyReturnsDataFileRecord.GetReturnValue()
-                    }))
+                    };
+
+                var alreadyRecievedMonthlySeries = 0;
+                foreach (var currentMonthlyDto in currentMonthlyDtos)
+                {
+                    if (newMonthlyReturn.Year == currentMonthlyDto.Year &&
+                        newMonthlyReturn.Month == currentMonthlyDto.Month &&
+                        newMonthlyReturn.ReturnValue == currentMonthlyDto.ReturnValue
+                        )
                     {
-                        monthlyReturnDtos.Add(new MonthlyReturnDto()
-                        {
-                            ReturnSeriesId = returnSeriesDto.ReturnSeriesId,
-                            Year = citiMonthlyReturnsDataFileRecord.GetYear(),
-                            Month = citiMonthlyReturnsDataFileRecord.GetMonth(),
-                            ReturnValue = citiMonthlyReturnsDataFileRecord.GetReturnValue()
-                        });
+                        alreadyRecievedMonthlySeries = 1;
                     }
                 }
-                //monthlyReturnDtos.Add(new MonthlyReturnDto()
+                if (alreadyRecievedMonthlySeries == 0)
+                {
+                    monthlyReturnDtos.Add(newMonthlyReturn);
+                }
+
+                //if (!currentMonthlyDtos.Contains(newMonthlyReturn))
                 //{
-                //    ReturnSeriesId = returnSeriesDto.ReturnSeriesId,
-                //    Year = citiMonthlyReturnsDataFileRecord.GetYear(),
-                //    Month = citiMonthlyReturnsDataFileRecord.GetMonth(),
-                //    ReturnValue = citiMonthlyReturnsDataFileRecord.GetReturnValue()
-                //});
+                //    monthlyReturnDtos.Add(newMonthlyReturn);
+                //}
+
             }
-            if (monthlyReturnDtos != null)
-            {
-                _monthlyReturnDataTableGateway.Insert(monthlyReturnDtos.ToArray());
-            }
+            _monthlyReturnDataTableGateway.Insert(monthlyReturnDtos.ToArray());
         }
 
         private void InsertPortfolioToReturnSeriesRecord(
