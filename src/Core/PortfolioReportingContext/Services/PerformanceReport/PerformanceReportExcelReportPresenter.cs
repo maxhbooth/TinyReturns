@@ -81,6 +81,10 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
             var yearToDateResult = portfolio.CalculateNetReturn(yearToDateRequest);
             recordModel.YearToDate = yearToDateResult.GetNullValueOnError();
 
+            var quarterToDateRequest = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+            var quarterToDateResult = portfolio.CalculateNetReturn(quarterToDateRequest);
+            recordModel.QuarterToDate = quarterToDateResult.GetNullValueOnError();
+
             return recordModel;
         }
 
@@ -112,6 +116,10 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
             var yearToDateRequest = CalculateReturnRequestFactory.YearToDate(monthYear);
             var yearToDateResult = portfolio.CalculateGrossReturn(yearToDateRequest);
             recordModel.YearToDate = yearToDateResult.GetNullValueOnError();
+
+            var quarterToDateRequest = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+            var quarterToDateResult = portfolio.CalculateGrossReturn(quarterToDateRequest);
+            recordModel.QuarterToDate = quarterToDateResult.GetNullValueOnError();
 
             return recordModel;
         }
