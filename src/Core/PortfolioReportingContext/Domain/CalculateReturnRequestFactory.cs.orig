@@ -18,13 +18,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
                 endMonth, 3);
         }
 
-        public static CalculateReturnRequest SixMonth(
-            MonthYear endMonth)
-        {
-            return new CalculateReturnRequest(
-                endMonth, 6);
-        }
-
         public static CalculateReturnRequest YearToDate(
             MonthYear endMonth)
         {
@@ -36,6 +29,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
                 endMonth, diffMonths);
         }
 
+<<<<<<< HEAD
+=======
         public static CalculateReturnRequest QuarterToDate(
             MonthYear endMonth)
         {
@@ -68,6 +63,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
         }
 
 
+>>>>>>> develop
         public static CalculateReturnRequest TwelveMonth(MonthYear endMonth)
         {
             return new CalculateReturnRequest(
