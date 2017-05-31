@@ -178,7 +178,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
         }
 
         [Fact]
-        public void QuarterMonthShouldReturnRequestForEightBeforeTheGivenEndDate()
+        public void QuarterMonthShouldReturnRequestForNineBeforeTheGivenEndDate()
         {
             var monthYear = new MonthYear(2000, 9);
 
@@ -188,7 +188,7 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             {
                 AnnualizeAction = AnnualizeActionEnum.Annualize,
                 EndMonth = monthYear,
-                NumberOfMonths = 2
+                NumberOfMonths = 3
             };
 
             AssertRequestAreEqual(request, expected);

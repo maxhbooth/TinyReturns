@@ -616,7 +616,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var expectedViewOneMonth = (1 + 0.812m) - 1;
                 var expectedViewThreeMonth = (1 + 0.812m) * (1 + 0.1177m) * (1 - 0.588m) - 1;
-                var expectedViewQuarterToDate= (1 + 0.812m) * (1 + 0.1177m) ;
+                var expectedViewQuarterToDate= (1 + 0.812m) * (1 + 0.1177m) -1;
                 var expectedViewYearToDate = (1 + 0.812m) * (1 + 0.1177m) * (1 - 0.588m) * (1 + 0.1163m)
                                              * (1 + 0.536m) - 1;
                 // note we only include 5 months because the monthyear actually starts with may.
