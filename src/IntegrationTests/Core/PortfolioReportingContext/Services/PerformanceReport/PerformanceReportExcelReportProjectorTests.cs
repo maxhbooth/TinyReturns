@@ -314,8 +314,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 grossRecordModel.Type.Should().Be("Portfolio");
                 grossRecordModel.FeeType.Should().Be("Gross");
 
-                Console.WriteLine("I ran");
-
                 var expectedGrossSixMonth = (1 + 0.5307m) * (1 - 0.9776m) * (1 - 0.5501m)
                                             * (1 - 0.109m) * (1 + 0.6042m) * (1 - 0.3867m) - 1;
 
@@ -324,7 +322,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 grossRecordModel.SixMonths.Should().BeApproximately(expectedGrossSixMonth, 0.00000001m);
                 grossRecordModel.TwelveMonths.Should().NotHaveValue();
                 grossRecordModel.YearToDate.Should().BeApproximately(-0.977950928298953m, 0.00000001m);
-
 
                 viewSpy.PerformanceReportExcelReportModel.MonthText.Should().Be("Month: 5/2016");
             });
