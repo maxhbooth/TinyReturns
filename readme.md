@@ -36,14 +36,13 @@ extensions, it can be done by using the blue push button at the top the window.)
 will need to set up your ssh configuration, which can be done by following the directions of the
 following website:
 
-https://serverfault.com/questions/194567/how-do-i-tell-git-for-windows-where-
-to-find-my-private-rsa-key
+https://serverfault.com/questions/194567/how-do-i-tell-git-for-windows-where-to-find-my-private-rsa-key
 
 You will need to open puTTy in GIT extensions and convert the private key that you generated as
 an openSSH key and save is as id_rsa a folder named ".ssh" in your home directory (you can find
  your home directory by finding what variable HOME is pointing to.  This can be viewed by typing
 *env* in cmd.)  If you do not have a HOME variable, then you can set it by using setx and
- choosing the directory you would like to use for home (such as c:\users\yourprofile.) After 
+ choosing the directory you would like to use for home (such as c:\users\yourprofile or U:\.) After 
 this, you will be able to be able to use ssh to push to bitbucket. 
 In order to actually do this push, you will have to do the following commands (as per the git viedos):
 git branch *branchname* 		create branch
@@ -63,4 +62,9 @@ Now you should have pushed your branch to dimensional server!
 
 ##SQL setup
 
-cry
+
+http://itproguru.com/expert/2014/09/how-to-fix-login-failed-for-user-microsoft-sql-server-error-18456-step-by-step-add-sql-administrator-to-sql-management-studio/
+
+https://stackoverflow.com/questions/20923015/login-to-microsoft-sql-server-error-18456
+
+https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/connect-to-sql-server-when-system-administrators-are-locked-out
