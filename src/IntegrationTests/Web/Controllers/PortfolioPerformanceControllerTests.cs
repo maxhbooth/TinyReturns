@@ -557,7 +557,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var portfolioMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
                     portfolioReturnSeriesId,
-                    new MonthYearRange(monthYear.AddMonths(-4), monthYear));
+                    new MonthYearRange(monthYear.AddMonths(-6), monthYear));// should give 7 months
+
+                foreach (var portfolioMonthlyReturnDto in portfolioMonthlyReturnDtos)
+                {
+                    Debug.WriteLine(portfolioMonthlyReturnDto.ReturnValue);
+                }
 
                 testHelper.InsertMonthlyReturnDtos(portfolioMonthlyReturnDtos);
 
@@ -582,8 +587,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var benchmarkMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
                     benchmarkReturnSeriesId,
-                    new MonthYearRange(monthYear.AddMonths(-4), monthYear),
+                    new MonthYearRange(monthYear.AddMonths(-6), monthYear), //should give seven months
                     seed: 8);
+                foreach (var benchmarkMonthlyReturnDto in benchmarkMonthlyReturnDtos)
+                {
+                    Debug.WriteLine(benchmarkMonthlyReturnDto.ReturnValue);
+                }
 
                 testHelper.InsertMonthlyReturnDtos(benchmarkMonthlyReturnDtos);
 
@@ -604,24 +613,37 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 // Assert
                 var viewResultModel = GetModelFromActionResult(actionResult);
 
+                var expectedViewOneMonth = (1 + 0.812m) - 1;
+                var expectedViewThreeMonth = (1 + 0.812m) * (1 + 0.1177m) * (1 - 0.588m) - 1;
+                var expectedViewQuarterToDate= (1 + 0.812m) * (1 + 0.1177m) ;
+                var expectedViewYearToDate = (1 + 0.812m) * (1 + 0.1177m) * (1 - 0.588m) * (1 + 0.1163m)
+                                             * (1 + 0.536m) - 1;
+                // note we only include 5 months because the monthyear actually starts with may.
+
                 viewResultModel.Length.Should().Be(1);
 
                 viewResultModel[0].Number.Should().Be(portfolioNumber);
                 viewResultModel[0].Name.Should().Be(portfolioName);
 
-                viewResultModel[0].OneMonth.Should().BeApproximately(-0.588m, 0.00000001m);
-                viewResultModel[0].ThreeMonth.Should().BeApproximately(-0.2935696384m, 0.00000001m);
-                viewResultModel[0].YearToDate.Should().BeApproximately(0.677131404719243m, 0.00000001m);
-
+                viewResultModel[0].OneMonth.Should().BeApproximately(expectedViewOneMonth, 0.00000001m);
+                viewResultModel[0].ThreeMonth.Should().BeApproximately(expectedViewThreeMonth, 0.00000001m);
+                viewResultModel[0].QuarterToDate.Should().BeApproximately(expectedViewQuarterToDate, 0.00000001m);
+                viewResultModel[0].YearToDate.Should().BeApproximately(expectedViewYearToDate, 0.00000001m);
                 viewResultModel[0].Benchmarks.Should().HaveCount(1);
 
                 var benchmarkModel = viewResultModel[0].Benchmarks[0];
 
-                benchmarkModel.Name.Should().Be(benchmarkName);
-                benchmarkModel.OneMonth.Should().BeApproximately(0.6358m, 0.00000001m);
-                benchmarkModel.ThreeMonth.Should().BeApproximately(-0.374303686424m, 0.00000001m);
-                benchmarkModel.YearToDate.Should().BeApproximately(-0.62681709897m, 0.00000001m);
+                var expectedBenchOneMonth = (1 - 0.0191m) - 1;
+                var expectedBenchThreeMonth = (1 - 0.0191m) * (1 + .1001m) * (1 + 0.6358m) - 1;
+                var expectedBenchQuarterToDate = (1 - 0.0191m) * (1 + .1001m) - 1;
+                var expectedBenchYearToDate = (1 - 0.0191m) * (1 + .1001m) * (1 + 0.6358m) * (1 - 0.4686m)
+                                              * (1 - 0.2802m) - 1;
 
+                benchmarkModel.Name.Should().Be(benchmarkName);
+                benchmarkModel.OneMonth.Should().BeApproximately(expectedBenchOneMonth, 0.00000001m);
+                benchmarkModel.ThreeMonth.Should().BeApproximately(expectedBenchThreeMonth, 0.00000001m);
+                benchmarkModel.QuarterToDate.Should().BeApproximately(expectedBenchQuarterToDate, 0.00000001m);
+                benchmarkModel.YearToDate.Should().BeApproximately(expectedBenchYearToDate, 0.00000001m);
             });
         }
 
