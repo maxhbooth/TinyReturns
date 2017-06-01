@@ -58,8 +58,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
         {
             if (HasReturnSeries)//THIS MEANS NOT NULL
             {
-                decimal orig = (decimal)(_returnSeries.CalculateReturnAsDecimal(request) * 100);
-                return decimal.Round(orig, 2, MidpointRounding.AwayFromZero);
+                decimal? orig = (_returnSeries.CalculateReturnAsDecimal(request) * 100);
+                decimal original = (decimal)orig;
+                return decimal.Round(original, 2, MidpointRounding.AwayFromZero);
             }
 
             return null;
