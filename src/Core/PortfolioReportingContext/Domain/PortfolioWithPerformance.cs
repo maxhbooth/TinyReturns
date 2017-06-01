@@ -67,7 +67,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
                 result = (result * 100);
                 return decimal.Round((decimal)result, 2, MidpointRounding.AwayFromZero);
             }
-            return result;
+            return null;
             //throw new NotImplementedException();
         }
 
