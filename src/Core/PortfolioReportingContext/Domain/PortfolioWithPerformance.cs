@@ -57,7 +57,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
         }
 
 
-        internal decimal? CalculateNetReturnAsPercent(CalculateReturnRequest request)
+        public decimal? CalculateNetReturnAsPercent(CalculateReturnRequest request)
         {
             
             if (_netReturnSeries == null)
