@@ -201,6 +201,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\PortfolioPerformance\Index.cshtml" />
+    <Content Include="Views\PortfolioPerformance\PastMonths.cshtml" />
+    <Content Include="Views\PortfolioPerformance\PastMonthsGraph.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

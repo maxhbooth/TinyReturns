@@ -1,0 +1,25 @@
+﻿@model Dimensional.TinyReturns.Web.Controllers.PastMonthsModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View</title>
+</head>
+<body>
+<div>
+    @using (Html.BeginForm("PastMonthsGraph", "PortfolioPerformance"))
+    {
+        @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears);
+@*        @Html.DropDownList("", Model.MonthYears);*@
+        <input type="submit" value="save" />
+    }
+    
+</div>
+</body>
+</html>

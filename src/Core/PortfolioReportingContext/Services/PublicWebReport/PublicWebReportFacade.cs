@@ -18,11 +18,29 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             _clock = clock;
         }
 
-        public PortfolioModel[] GetPortfolioPerforance()
+        public PortfolioModel[] GetPortfolioPerformance()
         {
             var portfolios = _portfolioWithPerformanceRepository.GetAll();
 
             var currentMonthYear = new MonthYear(_clock.GetCurrentDate());
+            var previousMonthYear = currentMonthYear.AddMonths(-1);
+
+            var portfolioModels = new List<PortfolioModel>();
+
+            foreach (var portfolioWithPerformance in portfolios)
+            {
+                var portfolioModel = CreatePortfolioModel(portfolioWithPerformance, previousMonthYear);
+
+                portfolioModels.Add(portfolioModel);
+            }
+
+            return portfolioModels.ToArray();
+        }
+
+        public PortfolioModel[] GetPortfolioPerformance(MonthYear currentMonthYear)
+        {
+            var portfolios = _portfolioWithPerformanceRepository.GetAll();
+
             var previousMonthYear = currentMonthYear.AddMonths(-1);
 
             var portfolioModels = new List<PortfolioModel>();

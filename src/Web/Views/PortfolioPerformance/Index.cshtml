@@ -6,6 +6,8 @@
 
 <div>
 
+    @Html.ActionLink("go to a past month", "PastMonths")
+
     <table class="table table-condensed">
         <thead>
             <tr>
@@ -20,7 +22,7 @@
         </thead>
         <tbody>
 
-            @foreach (var portfolio in Model)
+        @foreach (var portfolio in Model)
             {
                 <tr style="background: lavenderblush">
                     <td>@portfolio.Number</td>
