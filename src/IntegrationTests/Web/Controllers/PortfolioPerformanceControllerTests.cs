@@ -10,6 +10,7 @@ using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using Dimensional.TinyReturns.IntegrationTests.Core;
 using Dimensional.TinyReturns.Web.Controllers;
+using Dimensional.TinyReturns.Web.Models;
 using FluentAssertions;
 using Xunit;
 
@@ -665,8 +666,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             actionResult.Should().BeAssignableTo<ViewResult>();
             var viewResult = (ViewResult) actionResult;
 
-            viewResult.Model.Should().BeAssignableTo<PublicWebReportFacade.PortfolioModel[]>();
-            return (PublicWebReportFacade.PortfolioModel[]) viewResult.Model;
+            viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceIndexModel>();
+            var portfolioPerformanceIndexModel = (PortfolioPerformanceIndexModel) viewResult.Model;
+
+            return portfolioPerformanceIndexModel.Portfolios;
         }
     }
 }

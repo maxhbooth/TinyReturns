@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
+using Dimensional.TinyReturns.Web.Models;
 
 namespace Dimensional.TinyReturns.Web.Controllers
 {
@@ -22,7 +23,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
         public ActionResult Index()
         {
-            return View(_publicWebReportFacade.GetPortfolioPerforance());
+            var model = new PortfolioPerformanceIndexModel()
+            {
+                Portfolios = _publicWebReportFacade.GetPortfolioPerforance()
+            };
+
+            return View(model);
         }
     }
 }
