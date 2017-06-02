@@ -36,14 +36,20 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
         private SelectListItem[] CreateLetterSelectItems()
         {
-            var selectListItems = new SelectListItem[26];
+            var selectListItems = new SelectListItem[27];
 
-            for (int i = 0; i < 26; i++)
+            selectListItems[0] = new SelectListItem()
+            {
+                Value = "0",
+                Text = "Show All"
+            };
+
+            for (int i = 1; i < 27; i++)
             {
                 selectListItems[i] = new SelectListItem()
                 {
-                    Value = GetCharsAddedToA(i),
-                    Text = "Letter " + GetCharsAddedToA(i)
+                    Value = GetCharsAddedToA(i - 1),
+                    Text = "Letter " + GetCharsAddedToA(i - 1)
                 };
             }
 
