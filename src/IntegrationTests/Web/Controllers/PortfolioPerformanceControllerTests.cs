@@ -169,9 +169,13 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     var actionResult = controller.Index();
 
                     // Assert
-                    var viewResultModel = GetModelFromActionResult(actionResult);
+                    var viewResultModel = GetPortfoliosFromActionResult(actionResult);
 
                     viewResultModel.Length.Should().Be(0);
+
+                    var resultModel = GetModelFromActionResult(actionResult);
+
+                    resultModel.Letters.Should().NotBeNull();
                 });
         }
 
@@ -196,7 +200,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = GetPortfoliosFromActionResult(actionResult);
 
                 viewResultModel.Length.Should().Be(1);
 
@@ -258,7 +262,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = GetPortfoliosFromActionResult(actionResult);
 
                 viewResultModel.Length.Should().Be(1);
 
@@ -361,7 +365,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = GetPortfoliosFromActionResult(actionResult);
 
                 viewResultModel.Length.Should().Be(1);
 
@@ -490,7 +494,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = GetPortfoliosFromActionResult(actionResult);
 
                 viewResultModel.Length.Should().Be(1);
 
@@ -616,7 +620,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = GetPortfoliosFromActionResult(actionResult);
 
                 var expectedViewOneMonth = (1 + 0.812m) - 1;
                 var expectedViewThreeMonth = (1 + 0.812m) * (1 + 0.1177m) * (1 -0.588m) - 1;
@@ -660,7 +664,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         }
 
 
-        private static PublicWebReportFacade.PortfolioModel[] GetModelFromActionResult(
+        private static PublicWebReportFacade.PortfolioModel[] GetPortfoliosFromActionResult(
             ActionResult actionResult)
         {
             actionResult.Should().BeAssignableTo<ViewResult>();
@@ -671,5 +675,16 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             return portfolioPerformanceIndexModel.Portfolios;
         }
+
+        private static PortfolioPerformanceIndexModel GetModelFromActionResult(
+            ActionResult actionResult)
+        {
+            actionResult.Should().BeAssignableTo<ViewResult>();
+            var viewResult = (ViewResult)actionResult;
+
+            viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceIndexModel>();
+            return (PortfolioPerformanceIndexModel)viewResult.Model;
+        }
+
     }
 }
