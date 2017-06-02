@@ -34,6 +34,15 @@ namespace Dimensional.TinyReturns.Web.Controllers
             return View(model);
         }
 
+
+        [HttpPost]
+        public ActionResult Index(
+            PortfolioPerformanceIndexModel model)
+        {
+            // Stuff
+            return null;
+        }
+
         private SelectListItem[] CreateLetterSelectItems()
         {
             var selectListItems = new SelectListItem[27];

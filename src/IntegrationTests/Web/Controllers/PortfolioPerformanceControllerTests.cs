@@ -697,6 +697,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             });
         }
 
+        // *******************************
+
+        // *******************************
 
         private static PublicWebReportFacade.PortfolioModel[] GetPortfoliosFromActionResult(
             ActionResult actionResult)
