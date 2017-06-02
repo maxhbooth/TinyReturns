@@ -187,6 +187,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     arrayLetters[1].Value.Should().Be("B");
                     arrayLetters[1].Text.Should().Be("Letter B");
 
+                    arrayLetters[25].Value.Should().Be("Z");
+                    arrayLetters[25].Text.Should().Be("Letter Z");
+
+                    arrayLetters.All(l => l != null).Should().BeTrue();
+
                 });
         }
 

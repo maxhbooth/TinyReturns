@@ -25,17 +25,16 @@ namespace Dimensional.TinyReturns.Web.Controllers
         {
             var selectListItems = new SelectListItem[26];
 
-            selectListItems[0] = new SelectListItem()
-            {
-                Value = "A",
-                Text = "Letter A"
-            };
+            char letterA = 'A';
 
-            selectListItems[1] = new SelectListItem()
+            for (int i = 0; i < 26; i++)
             {
-                Value = "B",
-                Text = "Letter B"
-            };
+                selectListItems[i] = new SelectListItem()
+                {
+                    Value = GetCharsAddedToA(letterA, i),
+                    Text = "Letter " + GetCharsAddedToA(letterA, i)
+                };
+            }
 
             var model = new PortfolioPerformanceIndexModel()
             {
@@ -44,6 +43,11 @@ namespace Dimensional.TinyReturns.Web.Controllers
             };
 
             return View(model);
+        }
+
+        private static string GetCharsAddedToA(char letterA, int i)
+        {
+            return ((char)(letterA + i)).ToString();
         }
     }
 }
