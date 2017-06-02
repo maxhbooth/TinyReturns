@@ -8,5 +8,6 @@ namespace Dimensional.TinyReturns.Web.Models
     {
         public PublicWebReportFacade.PortfolioModel[] Portfolios { get; set; }
         public IEnumerable<SelectListItem> Letters { get; set; }
+        public string SelectedLetter { get; set; }
     }
 }
