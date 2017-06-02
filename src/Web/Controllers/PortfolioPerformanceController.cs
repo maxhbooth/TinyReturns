@@ -13,11 +13,11 @@ namespace Dimensional.TinyReturns.Web.Controllers
     public class PortfolioPerformanceController : Controller
     {
         private readonly PublicWebReportFacade _publicWebReportFacade;
-        private readonly PastMonthsModel pastMonthsModel;
+        private readonly PastMonthsModel _pastMonthsModel;
         public PortfolioPerformanceController()
         {
             _publicWebReportFacade = MasterFactory.GetPublicWebReportFacade();
-            pastMonthsModel = WebHelper.GetAllPossibleMonths();
+            _pastMonthsModel = WebHelper.GetAllPossibleMonths();
         }
 
         // Used for tests
@@ -25,7 +25,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
             PublicWebReportFacade publicWebReportFacade)
         {
             _publicWebReportFacade = publicWebReportFacade;
-            pastMonthsModel = WebHelper.GetAllPossibleMonths();
+            _pastMonthsModel = WebHelper.GetAllPossibleMonths();
         }
 
 
@@ -37,22 +37,22 @@ namespace Dimensional.TinyReturns.Web.Controllers
                         var monthYearArray = pastMonths.MonthYear.Split('/');
                         var monthYear = new MonthYear(int.Parse(monthYearArray[1]), int.Parse(monthYearArray[0]));
 
-                        pastMonthsModel.Portfolios = _publicWebReportFacade.GetPortfolioPerformance(monthYear);
+                        _pastMonthsModel.Portfolios = _publicWebReportFacade.GetPortfolioPerformance(monthYear);
                     }
                     else
                     {
-                        pastMonthsModel.Portfolios = _publicWebReportFacade.GetPortfolioPerformance();
+                        _pastMonthsModel.Portfolios = _publicWebReportFacade.GetPortfolioPerformance();
                     }
-                    return View(pastMonthsModel);
+                    return View(_pastMonthsModel);
                 }
 
         [HttpGet]
         public ActionResult Index()
         {
 
-            pastMonthsModel.Portfolios = _publicWebReportFacade.GetPortfolioPerformance();
+            _pastMonthsModel.Portfolios = _publicWebReportFacade.GetPortfolioPerformance();
 
-            return View(pastMonthsModel);
+            return View(_pastMonthsModel);
         }
     }
 
