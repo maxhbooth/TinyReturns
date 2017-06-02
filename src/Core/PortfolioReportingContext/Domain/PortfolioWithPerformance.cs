@@ -36,6 +36,15 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return _netReturnSeries.GetMonthlyReturn(monthYear);
         }
 
+        public decimal? GetGrossMonthlyReturn(
+            MonthYear monthYear)
+        {
+            if (_grossReturnSeries == null)
+                return null;
+            
+            return _grossReturnSeries.GetMonthlyReturn(monthYear);
+        }
+
         public decimal? GetNetMonthlyReturnPercent(
             MonthYear monthYear)
         {
@@ -56,6 +65,14 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return _netReturnSeries.CalculateReturnAsDecimal(request);
         }
 
+        public decimal? CalculateGrossReturnAsDecimal(
+            CalculateReturnRequest request)
+        {
+            if (_grossReturnSeries == null)
+                return null;
+
+            return _grossReturnSeries.CalculateReturnAsDecimal(request);
+        }
 
         internal decimal? CalculateNetReturnAsPercent(CalculateReturnRequest request)
         {
