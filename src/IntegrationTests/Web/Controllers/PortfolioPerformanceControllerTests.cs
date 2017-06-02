@@ -175,24 +175,27 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     viewResultModel.Length.Should().Be(0);
 
                     var resultModel = GetModelFromActionResult(actionResult);
-
-                    resultModel.Letters.Should().NotBeNull();
-                    resultModel.Letters.Count().Should().Be(26);
-
-                    var arrayLetters = resultModel.Letters.ToArray();
-
-                    arrayLetters[0].Value.Should().Be("A");
-                    arrayLetters[0].Text.Should().Be("Letter A");
-
-                    arrayLetters[1].Value.Should().Be("B");
-                    arrayLetters[1].Text.Should().Be("Letter B");
-
-                    arrayLetters[25].Value.Should().Be("Z");
-                    arrayLetters[25].Text.Should().Be("Letter Z");
-
-                    arrayLetters.All(l => l != null).Should().BeTrue();
-
+                    AssertLetterSelectItemsArePopulated(resultModel);
                 });
+        }
+
+        private static void AssertLetterSelectItemsArePopulated(PortfolioPerformanceIndexModel resultModel)
+        {
+            resultModel.Letters.Should().NotBeNull();
+            resultModel.Letters.Count().Should().Be(26);
+
+            var arrayLetters = resultModel.Letters.ToArray();
+
+            arrayLetters[0].Value.Should().Be("A");
+            arrayLetters[0].Text.Should().Be("Letter A");
+
+            arrayLetters[1].Value.Should().Be("B");
+            arrayLetters[1].Text.Should().Be("Letter B");
+
+            arrayLetters[25].Value.Should().Be("Z");
+            arrayLetters[25].Text.Should().Be("Letter Z");
+
+            arrayLetters.All(l => l != null).Should().BeTrue();
         }
 
         [Fact]
@@ -223,6 +226,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].Number.Should().Be(100);
                 viewResultModel[0].Name.Should().Be("Portfolio 100");
                 viewResultModel[0].Benchmarks.Should().BeEmpty();
+
+                var resultModel = GetModelFromActionResult(actionResult);
+                AssertLetterSelectItemsArePopulated(resultModel);
             });
         }
 
@@ -289,6 +295,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00001m);
                 viewResultModel[0].ThreeMonth.Should().NotHaveValue();
                 viewResultModel[0].YearToDate.Should().BeApproximately(0.02m, 0.00001m);
+
+                var resultModel = GetModelFromActionResult(actionResult);
+                AssertLetterSelectItemsArePopulated(resultModel);
+
             });
         }
 
@@ -392,6 +402,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
                 viewResultModel[0].ThreeMonth.Should().BeApproximately(0.039584m, 0.00000001m);
                 viewResultModel[0].YearToDate.Should().BeApproximately(0.0394800416m, 0.00000001m);
+
+                var resultModel = GetModelFromActionResult(actionResult);
+                AssertLetterSelectItemsArePopulated(resultModel);
+
             });
         }
 
