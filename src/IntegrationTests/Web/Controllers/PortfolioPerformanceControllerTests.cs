@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Web.Mvc;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
@@ -176,6 +177,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     var resultModel = GetModelFromActionResult(actionResult);
 
                     resultModel.Letters.Should().NotBeNull();
+                    resultModel.Letters.Count().Should().Be(26);
+
+                    resultModel.Letters.First().Value.Should().Be("A");
+                    resultModel.Letters.First().Text.Should().Be("Letter A");
                 });
         }
 

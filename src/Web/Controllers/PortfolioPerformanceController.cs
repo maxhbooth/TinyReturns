@@ -23,10 +23,18 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
         public ActionResult Index()
         {
+            var selectListItems = new SelectListItem[26];
+
+            selectListItems[0] = new SelectListItem()
+            {
+                Value = "A",
+                Text = "Letter A"
+            };
+
             var model = new PortfolioPerformanceIndexModel()
             {
                 Portfolios = _publicWebReportFacade.GetPortfolioPerforance(),
-                Letters = new SelectListItem[0]
+                Letters = selectListItems
             };
 
             return View(model);
