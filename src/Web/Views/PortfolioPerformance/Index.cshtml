@@ -6,12 +6,14 @@
 }
 
 <div>
-    
-    @using (Html.BeginForm())
-    {
-        @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears)
-        <input type="submit" value="save" />
-    }
+    <br/>
+    <div align="center">
+        @using (Html.BeginForm())
+        {
+            @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears)
+            <input type="submit" value="save" class="btn-primary" />
+        }
+    </div>
 
     <table class="table table-condensed">
         <thead>
