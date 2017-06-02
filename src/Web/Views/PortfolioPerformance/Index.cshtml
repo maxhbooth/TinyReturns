@@ -1,4 +1,4 @@
-﻿@model Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport.PublicWebReportFacade.PortfolioModel[]
+﻿@model Dimensional.TinyReturns.Web.Models.PortfolioPerformanceIndexModel
 
 @{
     ViewBag.Title = "Portfolio Performance";
@@ -20,7 +20,7 @@
         </thead>
         <tbody>
 
-            @foreach (var portfolio in Model)
+            @foreach (var portfolio in Model.Portfolios)
             {
                 <tr style="background: lavenderblush">
                     <td>@portfolio.Number</td>
