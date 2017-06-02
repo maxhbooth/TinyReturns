@@ -155,7 +155,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         }
 
         [Fact]
-        public void ShouldReturnNoRecrodsWhenNoPortfolioAreFound()
+        public void ShouldReturnNoRecordsWhenNoPortfolioAreFound()
         {
             // Arrange
             var testHelper = new TestHelper();
