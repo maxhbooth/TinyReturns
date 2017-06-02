@@ -31,6 +31,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 Text = "Letter A"
             };
 
+            selectListItems[1] = new SelectListItem()
+            {
+                Value = "B",
+                Text = "Letter B"
+            };
+
             var model = new PortfolioPerformanceIndexModel()
             {
                 Portfolios = _publicWebReportFacade.GetPortfolioPerforance(),

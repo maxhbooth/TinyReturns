@@ -179,8 +179,14 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     resultModel.Letters.Should().NotBeNull();
                     resultModel.Letters.Count().Should().Be(26);
 
-                    resultModel.Letters.First().Value.Should().Be("A");
-                    resultModel.Letters.First().Text.Should().Be("Letter A");
+                    var arrayLetters = resultModel.Letters.ToArray();
+
+                    arrayLetters[0].Value.Should().Be("A");
+                    arrayLetters[0].Text.Should().Be("Letter A");
+
+                    arrayLetters[1].Value.Should().Be("B");
+                    arrayLetters[1].Text.Should().Be("Letter B");
+
                 });
         }
 
