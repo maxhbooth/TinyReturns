@@ -219,6 +219,10 @@
       <Project>{2adcfc94-e855-4ad1-a873-c125b8da96e7}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{1C8320F8-DD40-4716-9128-B139EDFFCE5F}</Project>
+      <Name>Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DependencyManagement\DependencyManagement.csproj">
       <Project>{36de3a59-1a39-4680-b5a5-83e1f933d0a6}</Project>
       <Name>DependencyManagement</Name>

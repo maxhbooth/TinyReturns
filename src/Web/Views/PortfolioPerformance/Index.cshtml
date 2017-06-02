@@ -7,11 +7,15 @@
 
 <div>
     <br/>
-    <div align="center">
+    <div align="center" >
         @using (Html.BeginForm())
         {
-            @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears)
-            <input type="submit" value="save" class="btn-primary" />
+            if (Model.MonthYears != null)//just in case
+            {
+                @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new {@class = "form-control"})
+                ;
+                <input type="submit" value="save" class="btn-primary"/>
+            }
         }
     </div>
 
