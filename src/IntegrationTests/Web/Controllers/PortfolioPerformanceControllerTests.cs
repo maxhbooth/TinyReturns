@@ -366,9 +366,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].Name.Should().Be(portfolioName);
                 viewResultModel[0].Benchmarks.Should().BeEmpty();
 
-                viewResultModel[0].OneMonth.Should().BeApproximately(0.02m*100, 0.01m);
-                viewResultModel[0].ThreeMonth.Should().BeApproximately(0.039584m*100, 0.01m);
-                viewResultModel[0].YearToDate.Should().BeApproximately(0.0394800416m*100, 0.01m);
+                viewResultModel[0].OneMonth.Should().BeApproximately(0.02m*100, 0.000001m);
+                viewResultModel[0].ThreeMonth.Should().BeApproximately(0.039584m*100, 0.000001m);
+                viewResultModel[0].YearToDate.Should().BeApproximately(0.0394800416m*100, 0.000001m);
             });
         }
 
@@ -469,18 +469,18 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].Number.Should().Be(portfolioNumber);
                 viewResultModel[0].Name.Should().Be(portfolioName);
 
-                viewResultModel[0].OneMonth.Should().BeApproximately(-0.588m*100, 0.01m);
-                viewResultModel[0].ThreeMonth.Should().BeApproximately(-0.2935696384m * 100, 0.01m);
-                viewResultModel[0].YearToDate.Should().BeApproximately(0.677131404719243m * 100, 0.01m);
+                viewResultModel[0].OneMonth.Should().BeApproximately(-0.588m*100, 0.000001m);
+                viewResultModel[0].ThreeMonth.Should().BeApproximately(-0.2935696384m * 100, 0.000001m);
+                viewResultModel[0].YearToDate.Should().BeApproximately(0.677131404719243m * 100, 0.000001m);
 
                 viewResultModel[0].Benchmarks.Should().HaveCount(1);
 
                 var benchmarkModel = viewResultModel[0].Benchmarks[0];
 
                 benchmarkModel.Name.Should().Be(benchmarkName);
-                benchmarkModel.OneMonth.Should().BeApproximately(0.6358m * 100, 0.01m);
-                benchmarkModel.ThreeMonth.Should().BeApproximately(-0.374303686424m * 100, 0.01m);
-                benchmarkModel.YearToDate.Should().BeApproximately(-0.62681709897m * 100, 0.01m);
+                benchmarkModel.OneMonth.Should().BeApproximately(0.6358m * 100, 0.000001m);
+                benchmarkModel.ThreeMonth.Should().BeApproximately(-0.374303686424m * 100, 0.000001m);
+                benchmarkModel.YearToDate.Should().BeApproximately(-0.62681709897m * 100, 0.000001m);
 
             });
         }

@@ -63,9 +63,10 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             if (_netReturnSeries == null)
                 return null;
             decimal? result = _netReturnSeries.CalculateReturnAsDecimal(request);
-            if (result != null) {
+            if (result.HasValue) {
                 result = (result * 100);
-                return decimal.Round((decimal)result, 2, MidpointRounding.AwayFromZero);
+                //return decimal.Round((decimal)result, 2, MidpointRounding.AwayFromZero);
+                return result;
             }
             return null;
             //throw new NotImplementedException();

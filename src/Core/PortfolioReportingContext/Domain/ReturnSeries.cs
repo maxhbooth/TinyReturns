@@ -44,8 +44,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             //monthlyReturn.Value cannot be null
             decimal val = monthlyReturn.Value;
             decimal percent = (val * 100);
-            return decimal.Round(percent, 2, MidpointRounding.AwayFromZero);
-            //throw new NotImplementedException();
+            //return decimal.Round(percent, 2, MidpointRounding.AwayFromZero);
+            return percent;
         }
         public class MonthlyReturn
         {

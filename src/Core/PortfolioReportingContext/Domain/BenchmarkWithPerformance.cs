@@ -61,8 +61,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
                 decimal? orig = _returnSeries.CalculateReturnAsDecimal(request);
                 if (orig != null)
                 {
-                    decimal original = (decimal)orig * 100;
-                    return decimal.Round(original, 2, MidpointRounding.AwayFromZero);
+                    decimal original = orig.Value * 100m;
+                    //return decimal.Round(original, 2, MidpointRounding.AwayFromZero);
+                    return original;
                 }
             }
 
