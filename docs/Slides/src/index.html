@@ -191,9 +191,40 @@
 				</section>
 
 				<section>
-					<img src="images/MonthlyReturns.png" />
-					<p><small>Monthly Returns Diagram</small></p>
+					<section>
+						<h2>Helpful Diagrams</h2>
+					</section>
+
+					<section>
+						<img src="images/MonthlyReturns.png" />
+						<p><small>Monthly Returns Diagram</small></p>
+					</section>
+
+					<section>
+						<img src="images/PortfolioReportingContextClassDiagram.png" style="background-color: white;" />
+						<p><small>Portfolio Performance Reporting Context</small></p>
+
+						<!--
+
+						https://yuml.me
+
+[PortfolioWithPerformance|Number;Name;-_netReturnSeries: ReturnSeries 0..1;-_grossReturnSeries: ReturnSeries 0..1|CalculateNetReturn();CalculateGrossReturn()]
+[PortfolioWithPerformance]->[ReturnSeries]
+[PortfolioWithPerformance]-*>[BenchmarkWithPerformance]
+
+[MonthlyReturn|MonthYear;Value]
+
+[ReturnSeries|CalculateReturn()]
+[ReturnSeries]-*>[MonthlyReturn]
+
+[BenchmarkWithPerformance|Number;Name|CalculateReturn()]
+[BenchmarkWithPerformance]-0..1>[ReturnSeries]
+
+						-->
+
+					</section>
 				</section>
+
 			</div>
 		</div>
 
