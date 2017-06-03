@@ -70,7 +70,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h3>Quarter to Date</h3>
+            <h3>Quarter to Date Return</h3>
             <p>As a Financial Adviser Service (FAS) team member we would like to include a quarter to date performance value in our adviser reports.</p>
             <ul>
                 <li>All FAS teams use both the Web Report and the Excel report to create their adviser reports.</li>
@@ -99,6 +99,18 @@
 
     <div class="row">
         <div class="col-md-12">
+            <h3>Add Since First Full Month Return</h3>
+            <p>As an Institutional team user I would like to include a Since First Full Month return value for the portfolio and related benchmarks in our reports.</p>
+            <ul>
+                <li>All Institutional teams use both the Web Report and the Excel report to create reports.</li>
+                <li>Do not assume that the list of monthly return values attached to the portfolio is the exact number of months that is needed to calculate the return.  Instead use in the inception date of the portfolio to find the EXPECTED first full month return.</li>
+                <li>The related benchmarks should use the same time period portfolio since first full month.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
             <h3>Standard Deviation</h3>
             <p>As a FAS user I would to include a standard deviation value with the global adviser reports.</p>
             <ul>
@@ -112,17 +124,22 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h3>TECH TASK: Automated Deployment - Web Site</h3>
-            <p>Add an automated deployment for the web site project in Team City.</p>
+            <h3>TECH TASK: Created Artifacts on Successful Build</h3>
+            <p>Modify the build script to that a single artifact zip file will be created when a build has successfully completed.</p>
+            <ul>
+                <li>The artifact zip file should have all the files needed to deploy the entire system.</li>
+                <li>It should include the database scripts.</li>
+                <li>It should include all deployment scripts to deploy the application.</li>
+                <li>It should include all software to deploy the application.</li>
+                <li>Artifact should NOT be created on a feature branch build.</li>
+            </ul>
         </div>
-
     </div>
+
+    <!-- Build to run all reports -->
 
     <h2>Intermediate</h2>
     <hr/>
-
-    <!-- Date updated and date created -->
-
 
     <div class="row">
 
@@ -132,6 +149,25 @@
             <ul>
                 <li>Currently, system does not support disclosures in any way.</li>
             </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>TECH TASK: Add Updated / Created Dates on All Tables</h3>
+            <p>Add two date columns on all tables in the Tiny return database.</p>
+            <ul>
+                <li>Column 1: DateCreated - Is the date that the given record with created.</li>
+                <li>Column 2: DateUpdated - The date the record was last changed.  If never changed this it should have the same value as the DateCreated column.</li>
+                <li>Both columns should be required (not null).</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>TECH TASK: Automated Deployment - Web Site</h3>
+            <p>Add an automated deployment for the web site project in Team City.</p>
         </div>
     </div>
 
