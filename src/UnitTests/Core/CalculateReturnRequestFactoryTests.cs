@@ -58,6 +58,211 @@ namespace Dimensional.TinyReturns.UnitTests.Core
             AssertRequestAreEqual(request, expected);
         }
 
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForOneBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 1);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 1
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForTwoBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 2);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 2
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForThreeBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 3);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 3
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForFourBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 4);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 1
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForFiveBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 5);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 2
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForSixBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 6);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 3
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForSevenBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 7);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 1
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForNineBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 9);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 3
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForNinceBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 9);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 3
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForTenBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 10);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 1
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForElvenBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 11);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 2
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+        [Fact]
+        public void QuarterMonthShouldReturnRequestForTwelveBeforeTheGivenEndDate()
+        {
+            var monthYear = new MonthYear(2000, 12);
+
+            var request = CalculateReturnRequestFactory.QuarterToDate(monthYear);
+
+            var expected = new CalculateReturnRequest()
+            {
+                AnnualizeAction = AnnualizeActionEnum.Annualize,
+                EndMonth = monthYear,
+                NumberOfMonths = 3
+            };
+
+            AssertRequestAreEqual(request, expected);
+        }
+
+
         [Theory]
         [InlineData(2000, 5, 5)]
         [InlineData(2000, 1, 1)]
