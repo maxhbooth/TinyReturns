@@ -14,8 +14,10 @@
         public string FeeType { get; set; }
         public decimal? OneMonth { get; set; }
         public decimal? ThreeMonths { get; set; }
+        public decimal? SixMonths { get; set; }
         public decimal? TwelveMonths { get; set; }
         public decimal? YearToDate { get; set; }
+        public decimal? QuarterToDate { get; set; }
     }
 
 }

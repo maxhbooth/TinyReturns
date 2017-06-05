@@ -100,4 +100,3 @@ Want to display the values in percent format with 2 decimal places
 
 
 
-

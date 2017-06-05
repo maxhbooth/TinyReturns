@@ -42,6 +42,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             MonthYear previousMonthYear)
         {
             var threeMonthCalculationRequest = CalculateReturnRequestFactory.ThreeMonth(previousMonthYear);
+            var sixMonthCalculationRequest = CalculateReturnRequestFactory.SixMonth(previousMonthYear);
+            var quarterToDateCalculationRequest = CalculateReturnRequestFactory.QuarterToDate(previousMonthYear);
             var yearToDateCalculationRequest = CalculateReturnRequestFactory.YearToDate(previousMonthYear);
 
             var portfolioModel = new PortfolioModel()
@@ -51,7 +53,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 //OneMonth = portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear),
                 OneMonth = portfolioWithPerformance.GetNetMonthlyReturnPercent(previousMonthYear),
                 ThreeMonth = portfolioWithPerformance.CalculateNetReturnAsPercent(threeMonthCalculationRequest),
-                YearToDate = portfolioWithPerformance.CalculateNetReturnAsPercent(yearToDateCalculationRequest)
+                SixMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(sixMonthCalculationRequest),
+                YearToDate = portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest),
+                QuarterToDate = portfolioWithPerformance.CalculateNetReturnAsDecimal(quarterToDateCalculationRequest),
             };
 
             var benchmarkModels = new List<BenchmarkModel>();
@@ -65,7 +69,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                     Name = benchmarkWithPerformance.Name,
                     OneMonth = benchmarkWithPerformance.GetNetMonthlyReturnPercent(previousMonthYear),
                     ThreeMonth = benchmarkWithPerformance.CalculateReturnAsPercent(threeMonthCalculationRequest),
-                    YearToDate = benchmarkWithPerformance.CalculateReturnAsPercent(yearToDateCalculationRequest)
+                    SixMonth = benchmarkWithPerformance.CalculateReturnAsDecimal(sixMonthCalculationRequest),
+                    QuarterToDate = benchmarkWithPerformance.CalculateReturnAsDecimal(quarterToDateCalculationRequest),
+                    YearToDate = benchmarkWithPerformance.CalculateReturnAsDecimal(yearToDateCalculationRequest),
                 };
 
                 benchmarkModels.Add(benchmarkModel);
@@ -88,6 +94,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
             public decimal? OneMonth { get; set; }
             public decimal? ThreeMonth { get; set; }
+            public decimal? SixMonth { get; set; }
+            public decimal? QuarterToDate { get; set; }
             public decimal? YearToDate { get; set; }
 
             public BenchmarkModel[] Benchmarks { get; set; }
@@ -98,6 +106,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public string Name { get; set; }
             public decimal? OneMonth { get; set; }
             public decimal? ThreeMonth { get; set; }
+            public decimal? SixMonth { get; set; }
+            public decimal? QuarterToDate { get; set; }
             public decimal? YearToDate { get; set; }
         }
     }
