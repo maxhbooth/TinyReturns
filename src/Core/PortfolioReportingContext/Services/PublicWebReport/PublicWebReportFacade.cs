@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.AccessControl;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
@@ -18,7 +19,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             _clock = clock;
         }
 
-        public PortfolioModel[] GetPortfolioPerforance()
+        public PortfolioModel[] GetPortfolioPerformance()
         {
             var portfolios = _portfolioWithPerformanceRepository.GetAll();
 
@@ -55,6 +56,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 SixMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(sixMonthCalculationRequest),
                 YearToDate = portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest),
                 QuarterToDate = portfolioWithPerformance.CalculateNetReturnAsDecimal(quarterToDateCalculationRequest),
+                StandardDeviation = portfolioWithPerformance.CalculateNetStandardDeviation(),
+                Mean = portfolioWithPerformance.CalculateNetMean()
             };
 
             var benchmarkModels = new List<BenchmarkModel>();
@@ -71,6 +74,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                     SixMonth = benchmarkWithPerformance.CalculateReturnAsDecimal(sixMonthCalculationRequest),
                     QuarterToDate = benchmarkWithPerformance.CalculateReturnAsDecimal(quarterToDateCalculationRequest),
                     YearToDate = benchmarkWithPerformance.CalculateReturnAsDecimal(yearToDateCalculationRequest),
+                    StandardDeviation = benchmarkWithPerformance.CalculateStandardDeviation(),
+                    Mean = benchmarkWithPerformance.CalculateMean()
                 };
 
                 benchmarkModels.Add(benchmarkModel);
@@ -96,6 +101,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public decimal? SixMonth { get; set; }
             public decimal? QuarterToDate { get; set; }
             public decimal? YearToDate { get; set; }
+            public decimal? StandardDeviation { get; set; }
+            public decimal? Mean { get; set; }
 
             public BenchmarkModel[] Benchmarks { get; set; }
         }
@@ -108,6 +115,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public decimal? SixMonth { get; set; }
             public decimal? QuarterToDate { get; set; }
             public decimal? YearToDate { get; set; }
+            public decimal? StandardDeviation { get; set; }
+            public decimal? Mean { get; set; }
+
         }
     }
 }

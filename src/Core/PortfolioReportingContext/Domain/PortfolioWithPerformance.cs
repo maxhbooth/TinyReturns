@@ -62,6 +62,36 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return _grossReturnSeries.CalculateReturn(request);
         }
 
+        public decimal? CalculateNetStandardDeviation()
+        {
+            if (_netReturnSeries == null)
+                return null;
+
+            return _netReturnSeries.CalculateStandardDeviation(CalculateNetMean());
+        }
+
+        public decimal? CalculateNetMean()
+        {
+            if (_netReturnSeries == null)
+                return null;
+            return _netReturnSeries.CalculateMean();
+        }
+
+        public decimal? CalculateGrossStandardDeviation()
+        {
+            if (_grossReturnSeries == null)
+                return null;
+
+            return _grossReturnSeries.CalculateStandardDeviation(CalculateGrossMean());
+        }
+
+        public decimal? CalculateGrossMean()
+        {
+            if (_grossReturnSeries == null)
+                return null;
+            return _grossReturnSeries.CalculateMean();
+        }
+
         public bool HasNetReturnSeries
         {
             get { return _netReturnSeries != null; }

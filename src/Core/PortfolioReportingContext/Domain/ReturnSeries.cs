@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
@@ -52,6 +54,34 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             var result = CalculateReturn(request);
 
             return result.GetNullValueOnError();
+        }
+
+        public decimal? CalculateStandardDeviation(decimal? mean)
+        {
+            if (mean == null || _monthlyReturns.Length < 12)
+            {
+                return null;
+            }
+
+            var values = _monthlyReturns.Select(x => x.Value).ToArray();
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = (mean.Value - values[i]) * (mean.Value - values[i]);
+            }
+
+            var standardDeviation = (Decimal) Math.Sqrt((Double) values.Sum() / values.Length);
+            return standardDeviation;
+            
+        }
+
+        public decimal? CalculateMean()
+        {
+            if (_monthlyReturns == null)
+            {
+                return null;
+            }
+            return _monthlyReturns.Select(x => x.Value).ToArray().Sum() / _monthlyReturns.Length;
         }
 
         public ReturnResult CalculateReturn(

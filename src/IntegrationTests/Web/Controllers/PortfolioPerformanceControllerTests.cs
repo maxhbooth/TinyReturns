@@ -508,7 +508,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].SixMonth.Should().BeApproximately(
                  expectedSixMonthResult, 0.00000001m);
 		        viewResultModel[0].QuarterToDate.Should().BeApproximately(expectedQuarterToDateResult, 0.00000001m);
-
                 viewResultModel[0].YearToDate.Should().BeApproximately(expectedYearToDateResult, 0.00000001m);
             });
         }
