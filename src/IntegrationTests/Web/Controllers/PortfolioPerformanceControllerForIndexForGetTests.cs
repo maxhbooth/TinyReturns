@@ -16,7 +16,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
     public class PortfolioPerformanceControllerForIndexForGetTests
     {
         [Fact]
-        public void ShouldReturnNoRecrodsWhenNoPortfolioAreFound()
+        public void ShouldReturnNoRecordsWhenNoPortfolioAreFound()
         {
             // Arrange
             var testHelper = new PortfolioPerformanceControllerTestHelper();
@@ -34,31 +34,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     viewResultModel.Length.Should().Be(0);
 
                     var resultModel = GetModelFromActionResult(actionResult);
-                    AssertLetterSelectItemsArePopulated(resultModel);
+                    testHelper.AssertLetterSelectItemsArePopulated(resultModel);
                 });
-        }
-
-        private static void AssertLetterSelectItemsArePopulated(
-            PortfolioPerformanceIndexModel resultModel)
-        {
-            resultModel.Letters.Should().NotBeNull();
-            resultModel.Letters.Count().Should().Be(27);
-
-            var arrayLetters = resultModel.Letters.ToArray();
-
-            arrayLetters[0].Value.Should().Be("0");
-            arrayLetters[0].Text.Should().Be("Show All");
-
-            arrayLetters[1].Value.Should().Be("A");
-            arrayLetters[1].Text.Should().Be("Letter A");
-
-            arrayLetters[2].Value.Should().Be("B");
-            arrayLetters[2].Text.Should().Be("Letter B");
-
-            arrayLetters[26].Value.Should().Be("Z");
-            arrayLetters[26].Text.Should().Be("Letter Z");
-
-            arrayLetters.All(l => l != null).Should().BeTrue();
         }
 
         [Fact]
@@ -91,7 +68,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].Benchmarks.Should().BeEmpty();
 
                 var resultModel = GetModelFromActionResult(actionResult);
-                AssertLetterSelectItemsArePopulated(resultModel);
+                testHelper.AssertLetterSelectItemsArePopulated(resultModel);
             });
         }
 
@@ -160,7 +137,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].YearToDate.Should().BeApproximately(0.02m, 0.00001m);
 
                 var resultModel = GetModelFromActionResult(actionResult);
-                AssertLetterSelectItemsArePopulated(resultModel);
+                testHelper.AssertLetterSelectItemsArePopulated(resultModel);
 
             });
         }
@@ -267,7 +244,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].YearToDate.Should().BeApproximately(0.0394800416m, 0.00000001m);
 
                 var resultModel = GetModelFromActionResult(actionResult);
-                AssertLetterSelectItemsArePopulated(resultModel);
+                testHelper.AssertLetterSelectItemsArePopulated(resultModel);
 
             });
         }
@@ -555,10 +532,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 benchmarkModel.YearToDate.Should().BeApproximately(expectedBenchYearToDate, 0.00000001m);
             });
         }
-
-        // *******************************
-
-        // *******************************
 
         private static PublicWebReportFacade.PortfolioModel[] GetPortfoliosFromActionResult(
             ActionResult actionResult)

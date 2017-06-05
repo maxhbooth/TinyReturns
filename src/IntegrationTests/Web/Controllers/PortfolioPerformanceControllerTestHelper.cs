@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
@@ -7,6 +8,8 @@ using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using Dimensional.TinyReturns.IntegrationTests.Core;
 using Dimensional.TinyReturns.Web.Controllers;
+using Dimensional.TinyReturns.Web.Models;
+using FluentAssertions;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 {
@@ -145,5 +148,29 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 databaseSettings.TinyReturnsDatabaseConnectionString,
                 new AllTablesDeleter.TableInfoDto[0]);
         }
+
+        public void AssertLetterSelectItemsArePopulated(
+            PortfolioPerformanceIndexModel resultModel)
+        {
+            resultModel.Letters.Should().NotBeNull();
+            resultModel.Letters.Count().Should().Be(27);
+
+            var arrayLetters = resultModel.Letters.ToArray();
+
+            arrayLetters[0].Value.Should().Be("0");
+            arrayLetters[0].Text.Should().Be("Show All");
+
+            arrayLetters[1].Value.Should().Be("A");
+            arrayLetters[1].Text.Should().Be("Letter A");
+
+            arrayLetters[2].Value.Should().Be("B");
+            arrayLetters[2].Text.Should().Be("Letter B");
+
+            arrayLetters[26].Value.Should().Be("Z");
+            arrayLetters[26].Text.Should().Be("Letter Z");
+
+            arrayLetters.All(l => l != null).Should().BeTrue();
+        }
+
     }
 }
