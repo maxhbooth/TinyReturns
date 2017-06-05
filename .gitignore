@@ -104,3 +104,5 @@ UpgradeLog*.XML
 src/packages/
 .idea
 *.swp
+
+src/.vs/
