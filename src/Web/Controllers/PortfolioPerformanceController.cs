@@ -41,9 +41,14 @@ namespace Dimensional.TinyReturns.Web.Controllers
         {
             var selectListItems = CreateLetterSelectItems();
 
+            var portfolioPerforance = _publicWebReportFacade.GetPortfolioPerforance();
+
+            if (model.SelectedLetter != "0")
+                portfolioPerforance = new PublicWebReportFacade.PortfolioModel[0];
+
             var resultModel = new PortfolioPerformanceIndexModel()
             {
-                Portfolios = _publicWebReportFacade.GetPortfolioPerforance(),
+                Portfolios = portfolioPerforance,
                 Letters = selectListItems
             };
 
