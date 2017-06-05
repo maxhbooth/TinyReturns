@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Web.Mvc;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
@@ -268,6 +269,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00001m);
                 viewResultModel[0].ThreeMonth.Should().NotHaveValue();
                 viewResultModel[0].YearToDate.Should().BeApproximately(0.02m, 0.00001m);
+                viewResultModel[0].StandardDeviation.Should().NotHaveValue();
             });
         }
 
@@ -371,6 +373,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
                 viewResultModel[0].ThreeMonth.Should().BeApproximately(0.039584m, 0.00000001m);
                 viewResultModel[0].YearToDate.Should().BeApproximately(0.0394800416m, 0.00000001m);
+                viewResultModel[0].StandardDeviation.Should().NotHaveValue();
             });
         }
 
@@ -654,6 +657,161 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 benchmarkModel.SixMonth.Should().BeApproximately(expectedBenchSixMonth, 0.00000001m);
                 benchmarkModel.QuarterToDate.Should().BeApproximately(expectedBenchQuarterToDate, 0.00000001m);
                 benchmarkModel.YearToDate.Should().BeApproximately(expectedBenchYearToDate, 0.00000001m);
+            });
+        }
+
+        [Fact]
+        public void ShouldReturnPortfolioWithBenchmarkForAYear()
+        {
+            // Arrange
+            var testHelper = new TestHelper();
+
+            testHelper.DatabaseDataDeleter(() =>
+            {
+                var portfolioNumber = 100;
+                var portfolioName = "Portfolio 100";
+
+                var benchmarkNumber = 10000;
+                var benchmarkName = "Benchmark 10000";
+
+                var monthYear = new MonthYear(2016, 5);
+                var nextMonth = monthYear.AddMonths(1);
+
+                testHelper.CurrentDate = new DateTime(
+                    nextMonth.Year,
+                    nextMonth.Month,
+                    5);
+
+                // **
+
+                testHelper.InsertPortfolioDto(new PortfolioDto()
+                {
+                    Number = portfolioNumber,
+                    Name = portfolioName,
+                    InceptionDate = new DateTime(2010, 1, 1)
+                });
+
+                var portfolioReturnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Return Series for Portfolio 100"
+                });
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber,
+                    ReturnSeriesId = portfolioReturnSeriesId,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+
+                var portfolioMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    portfolioReturnSeriesId,
+                    new MonthYearRange(monthYear.AddMonths(-11), monthYear)); // should give 12 months
+
+                foreach (var portfolioMonthlyReturnDto in portfolioMonthlyReturnDtos)
+                {
+                    Debug.WriteLine(portfolioMonthlyReturnDto.ReturnValue);
+                }
+
+                testHelper.InsertMonthlyReturnDtos(portfolioMonthlyReturnDtos);
+
+                // **
+
+                testHelper.InsertBenchmarkDto(new BenchmarkDto()
+                {
+                    Number = benchmarkNumber,
+                    Name = benchmarkName
+                });
+
+                var benchmarkReturnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Return Series for Benchmark X"
+                });
+
+                testHelper.InsertBenchmarkToReturnSeriesDto(new BenchmarkToReturnSeriesDto()
+                {
+                    BenchmarkNumber = benchmarkNumber,
+                    ReturnSeriesId = benchmarkReturnSeriesId
+                });
+
+                var benchmarkMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    benchmarkReturnSeriesId,
+                    new MonthYearRange(monthYear.AddMonths(-11), monthYear), //should give 12 months
+                    seed: 8);
+                foreach (var benchmarkMonthlyReturnDto in benchmarkMonthlyReturnDtos)
+                {
+                    Debug.WriteLine(benchmarkMonthlyReturnDto.ReturnValue);
+                }
+
+                testHelper.InsertMonthlyReturnDtos(benchmarkMonthlyReturnDtos);
+
+                // **
+
+                testHelper.InsertPortfolioToBenchmarkDto(new PortfolioToBenchmarkDto()
+                {
+                    PortfolioNumber = portfolioNumber,
+                    BenchmarkNumber = benchmarkNumber,
+                    SortOrder = 1
+                });
+
+                var controller = testHelper.CreateController();
+
+                // Act
+                var actionResult = controller.Index();
+
+                // Assert
+                var viewResultModel = GetModelFromActionResult(actionResult);
+
+
+                var viewValues = new decimal[]
+                {
+                    0.4524m, 0.6346m, 0.536m, 0.1163m, -0.588m, 0.1177m, 0.812m, -0.1157m, 0.955m, -0.4526m, -0.4162m, -
+                        0.0654m
+                };
+
+
+
+                var viewMean = viewValues.Sum() / viewValues.Length;
+
+                for (int i = 0; i < viewValues.Length; i++)
+                {
+                    viewValues[i] = (viewMean - viewValues[i]) * (viewMean - viewValues[i]);
+                }
+
+                var expectedViewStandardDevation = (Decimal)Math.Sqrt((Double)viewValues.Sum() / viewValues.Length);
+
+                viewResultModel.Length.Should().Be(1);
+
+                viewResultModel[0].Number.Should().Be(portfolioNumber);
+                viewResultModel[0].Name.Should().Be(portfolioName);
+
+                viewResultModel[0].StandardDeviation.Should()
+                    .BeApproximately(expectedViewStandardDevation, 0.00000001m);
+
+                viewResultModel[0].Mean.Should()
+                    .BeApproximately(viewMean, 0.00000001m);
+
+                viewResultModel[0].Benchmarks.Should().HaveCount(1);
+
+                var benchmarkModel = viewResultModel[0].Benchmarks[0];
+
+                var benchValues = new decimal[]
+                {
+                    0.426m, -0.6285m, -0.5526m, 0.9345m, -0.0887m, -0.0191m,
+                    0.1001m, 0.6358m, -0.4686m, -0.2802m, -0.6707m, 0.8112m
+                };
+
+                var benchMean = benchValues.Sum() / benchValues.Length;
+
+                for (int i = 0; i < benchValues.Length; i++)
+                {
+                    benchValues[i] = (benchMean - benchValues[i]) * (benchMean- benchValues[i]);
+                }
+
+                var expectedBenchStandardDevation = (Decimal)Math.Sqrt((Double)benchValues.Sum() / benchValues.Length);
+
+                benchmarkModel.StandardDeviation.Should().BeApproximately(expectedBenchStandardDevation, 0.00000001m);
+                benchmarkModel.Mean.Should().BeApproximately(benchMean, 0.00000001m);
+
             });
         }
 
