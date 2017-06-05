@@ -16,6 +16,7 @@
                 <th>6 Month</th>
                 <th>Quarter to Date</th>
                 <th>Year to Date</th>
+                <th>First Full Month</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +31,7 @@
                     <td>@portfolio.SixMonth</td>
                     <td>@portfolio.QuarterToDate</td>
                     <td>@portfolio.YearToDate</td>
+                    <td>@portfolio.FirstFullMonth</td>
                 </tr>
 
                 foreach (var benchmark in portfolio.Benchmarks)
@@ -42,6 +44,7 @@
                         <td>@benchmark.SixMonth</td>
                         <td>@benchmark.QuarterToDate</td>
                         <td>@benchmark.YearToDate</td>
+                        <td>@portfolio.FirstFullMonth</td>
                     </tr>
                 }
             }
