@@ -321,6 +321,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 netRecordModel.ThreeMonths.Should().BeApproximately(-0.375236505m, 0.00000001m);
                 netRecordModel.SixMonths.Should().BeApproximately(expectedNetSixMonth, 0.00000001m);
                 netRecordModel.TwelveMonths.Should().NotHaveValue();
+                netRecordModel.StandardDeviation.Should().NotHaveValue();
                 netRecordModel.YearToDate.Should().BeApproximately(0.0010907851939m, 0.00000001m);
                 netRecordModel.QuarterToDate.Should().BeApproximately(expectedNetQuarterToDate, 0.00000001m);
 
@@ -341,6 +342,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 grossRecordModel.ThreeMonths.Should().BeApproximately(-0.9845739727m, 0.00000001m);
                 grossRecordModel.SixMonths.Should().BeApproximately(expectedGrossSixMonth, 0.00000001m);
                 grossRecordModel.TwelveMonths.Should().NotHaveValue();
+                grossRecordModel.StandardDeviation.Should().NotHaveValue();
                 grossRecordModel.YearToDate.Should().BeApproximately(-0.977950928298953m, 0.00000001m);
                 grossRecordModel.QuarterToDate.Should().BeApproximately(expectedGrossQuarterToDate, 0.00000001m);
 

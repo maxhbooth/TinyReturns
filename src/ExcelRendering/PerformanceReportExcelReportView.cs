@@ -37,6 +37,7 @@ namespace Dimensional.TinyReturns.ExcelRendering
                     worksheet.Cells[rowIndex, 8].Value = record.YearToDate;
                     worksheet.Cells[rowIndex, 9].Value = record.QuarterToDate;
                     worksheet.Cells[rowIndex, 10].Value = record.YearToDate;
+                    worksheet.Cells[rowIndex, 11].Value = record.StandardDeviation;
                     rowIndex++;
                 }
 
