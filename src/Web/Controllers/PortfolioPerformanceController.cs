@@ -25,23 +25,6 @@ namespace Dimensional.TinyReturns.Web.Controllers
         {
             return View(_publicWebReportFacade.GetPortfolioPerforance());
         }
-
-        public ActionResult LoadNetGross()
-        {
-            List<SelectListItem> netgrossList = new List<SelectListItem>();
-            netgrossList.Add(new SelectListItem
-            {
-                Selected = true,
-                Text = "Net",
-                Value = "Net"
-            });
-            netgrossList.Add(new SelectListItem
-            {
-                Text = "Gross",
-                Value = "Gross"
-            });
-            ViewData["netgross"] = netgrossList;
-            return View();
-        }
+        
     }
 }

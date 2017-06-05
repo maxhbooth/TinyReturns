@@ -29,7 +29,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
             foreach (var portfolioWithPerformance in portfolios)
             {
-                //var portfolioModel = CreatePortfolioModel(portfolioWithPerformance, previousMonthYear, net);
                 var portfolioModel = CreatePortfolioModel(portfolioWithPerformance, previousMonthYear);
 
                 portfolioModels.Add(portfolioModel);
@@ -76,79 +75,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
                 benchmarkModels.Add(benchmarkModel);
             }
-
-            portfolioModel.Benchmarks = benchmarkModels.ToArray();
-
-            return portfolioModel;
-        }
-
-        //this  needs boolean for net or gross
-        private static PortfolioModel CreatePortfolioModel(
-            PortfolioWithPerformance portfolioWithPerformance,
-            MonthYear previousMonthYear, bool net)
-        {
-            PortfolioModel portfolioModel = new PortfolioModel();
-            var threeMonthCalculationRequest = CalculateReturnRequestFactory.ThreeMonth(previousMonthYear);
-            var yearToDateCalculationRequest = CalculateReturnRequestFactory.YearToDate(previousMonthYear);
-            if (net == true)
-            {
-                portfolioModel = new PortfolioModel()
-                {
-                    Number = portfolioWithPerformance.Number,
-                    Name = portfolioWithPerformance.Name,
-                    OneMonth = portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear),
-                    ThreeMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(threeMonthCalculationRequest),
-                    YearToDate = portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest)
-                };
-            }
-            else
-            {
-                portfolioModel = new PortfolioModel()
-                {
-                    Number = portfolioWithPerformance.Number,
-                    Name = portfolioWithPerformance.Name,
-                    OneMonth = portfolioWithPerformance.GetGrossMonthlyReturn(previousMonthYear),
-                    ThreeMonth = portfolioWithPerformance.CalculateGrossReturnAsDecimal(threeMonthCalculationRequest),
-                    YearToDate = portfolioWithPerformance.CalculateGrossReturnAsDecimal(yearToDateCalculationRequest)
-                };
-            }
-           
-
-            var benchmarkModels = new List<BenchmarkModel>();
-
-            var benchmarkWithPerformances = portfolioWithPerformance.GetAllBenchmarks();
-            if (net == true)
-            {
-                foreach (var benchmarkWithPerformance in benchmarkWithPerformances)
-                {
-                    var benchmarkModel = new BenchmarkModel()
-                    {
-                        Name = benchmarkWithPerformance.Name,
-                        OneMonth = benchmarkWithPerformance.GetNetMonthlyReturn(previousMonthYear),
-                        ThreeMonth = benchmarkWithPerformance.CalculateReturnAsDecimal(threeMonthCalculationRequest),
-                        YearToDate = benchmarkWithPerformance.CalculateReturnAsDecimal(yearToDateCalculationRequest)
-                    };
-
-                    benchmarkModels.Add(benchmarkModel);
-                }
-            }
-            else
-            {
-                foreach (var benchmarkWithPerformance in benchmarkWithPerformances)
-                {
-                    var benchmarkModel = new BenchmarkModel()
-                    {
-                        Name = benchmarkWithPerformance.Name,
-                        OneMonth = benchmarkWithPerformance.GetGrossMonthlyReturn(previousMonthYear),
-                        //DO WE CARE ABOUT GROSS HERE? FOR BENCHMARKS
-                        ThreeMonth = benchmarkWithPerformance.CalculateReturnAsDecimal(threeMonthCalculationRequest),
-                        YearToDate = benchmarkWithPerformance.CalculateReturnAsDecimal(yearToDateCalculationRequest)
-                    };
-
-                    benchmarkModels.Add(benchmarkModel);
-                }
-            }
-
 
             portfolioModel.Benchmarks = benchmarkModels.ToArray();
 

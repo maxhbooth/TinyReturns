@@ -35,15 +35,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return null;
         }
 
-        public decimal? GetGrossMonthlyReturn(
-            MonthYear monthYear)
-        {
-            if (HasReturnSeries)
-                return _returnSeries.GetMonthlyReturn(monthYear);
-
-            return null;
-        }
-
         public decimal? GetNetMonthlyReturnPercent(
             MonthYear monthYear)
         {
