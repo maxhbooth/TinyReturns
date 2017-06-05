@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Web.Mvc;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
@@ -171,6 +172,17 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             arrayLetters.All(l => l != null).Should().BeTrue();
         }
+
+        public PortfolioPerformanceIndexModel GetModelFromActionResult(
+            ActionResult actionResult)
+        {
+            actionResult.Should().BeAssignableTo<ViewResult>();
+            var viewResult = (ViewResult)actionResult;
+
+            viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceIndexModel>();
+            return (PortfolioPerformanceIndexModel)viewResult.Model;
+        }
+
 
     }
 }

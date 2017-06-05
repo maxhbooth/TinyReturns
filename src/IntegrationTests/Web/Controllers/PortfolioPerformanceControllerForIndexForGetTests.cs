@@ -33,7 +33,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                     viewResultModel.Length.Should().Be(0);
 
-                    var resultModel = GetModelFromActionResult(actionResult);
+                    var resultModel = testHelper.GetModelFromActionResult(actionResult);
                     testHelper.AssertLetterSelectItemsArePopulated(resultModel);
                 });
         }
@@ -67,7 +67,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].Name.Should().Be("Portfolio 100");
                 viewResultModel[0].Benchmarks.Should().BeEmpty();
 
-                var resultModel = GetModelFromActionResult(actionResult);
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
                 testHelper.AssertLetterSelectItemsArePopulated(resultModel);
             });
         }
@@ -136,7 +136,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].ThreeMonth.Should().NotHaveValue();
                 viewResultModel[0].YearToDate.Should().BeApproximately(0.02m, 0.00001m);
 
-                var resultModel = GetModelFromActionResult(actionResult);
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
                 testHelper.AssertLetterSelectItemsArePopulated(resultModel);
 
             });
@@ -243,7 +243,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].ThreeMonth.Should().BeApproximately(0.039584m, 0.00000001m);
                 viewResultModel[0].YearToDate.Should().BeApproximately(0.0394800416m, 0.00000001m);
 
-                var resultModel = GetModelFromActionResult(actionResult);
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
                 testHelper.AssertLetterSelectItemsArePopulated(resultModel);
 
             });
@@ -545,15 +545,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             return portfolioPerformanceIndexModel.Portfolios;
         }
 
-        private static PortfolioPerformanceIndexModel GetModelFromActionResult(
-            ActionResult actionResult)
-        {
-            actionResult.Should().BeAssignableTo<ViewResult>();
-            var viewResult = (ViewResult)actionResult;
-
-            viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceIndexModel>();
-            return (PortfolioPerformanceIndexModel)viewResult.Model;
-        }
 
     }
 }
