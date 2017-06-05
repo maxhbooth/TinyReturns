@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Web.Models;
@@ -44,7 +45,11 @@ namespace Dimensional.TinyReturns.Web.Controllers
             var portfolioPerforance = _publicWebReportFacade.GetPortfolioPerforance();
 
             if (model.SelectedLetter != "0")
-                portfolioPerforance = new PublicWebReportFacade.PortfolioModel[0];
+            {
+                portfolioPerforance = portfolioPerforance
+                    .Where(p => p.Name.ToUpper().StartsWith(model.SelectedLetter.ToUpper()))
+                    .ToArray();
+            }
 
             var resultModel = new PortfolioPerformanceIndexModel()
             {
