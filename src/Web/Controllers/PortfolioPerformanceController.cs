@@ -43,5 +43,18 @@ namespace Dimensional.TinyReturns.Web.Controllers
             ViewData["netgross"] = netgrossList;
             return View();
         }
+
+        private SelectListItem[] CreateLetterSelectItems()
+        {
+            var selectListItems = new SelectListItem[27];
+
+            selectListItems[0] = new SelectListItem()
+            {
+                Value = "0",
+                Text = "Net"
+            };
+
+            return selectListItems;
+        }
     }
 }

@@ -9,6 +9,7 @@ using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using Dimensional.TinyReturns.IntegrationTests.Core;
 using Dimensional.TinyReturns.Web.Controllers;
+using Dimensional.TinyReturns.Web.Models;
 using FluentAssertions;
 using Xunit;
 
@@ -151,6 +152,21 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     databaseSettings.TinyReturnsDatabaseConnectionString,
                     new AllTablesDeleter.TableInfoDto[0]);
             }
+            public void AssertSelectItemsArePopulated(
+                PortfolioPerformanceNetGrossModel resultModel)
+            {
+                resultModel.Should().NotBeNull();
+            }
+
+            public PortfolioPerformanceNetGrossModel GetModelFromActionResult(
+                ActionResult actionResult)
+            {
+                actionResult.Should().BeAssignableTo<ViewResult>();
+                var viewResult = (ViewResult)actionResult;
+
+                viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceNetGrossModel>();
+                return (PortfolioPerformanceNetGrossModel)viewResult.Model;
+            }
         }
 
         [Fact]
@@ -170,6 +186,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     var viewResultModel = GetModelFromActionResult(actionResult);
 
                     viewResultModel.Length.Should().Be(0);
+
+
+                    var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                    testHelper.AssertSelectItemsArePopulated(resultModel);
                 });
         }
 
@@ -201,6 +221,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].Number.Should().Be(100);
                 viewResultModel[0].Name.Should().Be("Portfolio 100");
                 viewResultModel[0].Benchmarks.Should().BeEmpty();
+
             });
         }
 
@@ -495,5 +516,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             viewResult.Model.Should().BeAssignableTo<PublicWebReportFacade.PortfolioModel[]>();
             return (PublicWebReportFacade.PortfolioModel[]) viewResult.Model;
         }
+
+        
     }
 }
