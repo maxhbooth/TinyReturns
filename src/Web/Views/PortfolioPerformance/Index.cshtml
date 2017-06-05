@@ -5,9 +5,12 @@
 }
 
 <div>
-    
-    @Html.DropDownListFor(m => m.SelectedLetter, Model.Letters)
-    <input type="submit" value="Go"/>
+
+    @using (Html.BeginForm())
+    { 
+        @Html.DropDownListFor(m => m.SelectedLetter, Model.Letters)
+        <input type="submit" value="Go" />
+    }
 
     <table class="table table-condensed">
         <thead>
