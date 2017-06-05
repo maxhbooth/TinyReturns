@@ -20,7 +20,9 @@ CREATE TABLE [Portfolio].[Portfolio](
 	[Number] [int] NOT NULL,
 	[Name] [nvarchar](255) NOT NULL,
 	[InceptionDate] [datetime] NOT NULL,
-	[CloseDate] [datetime] NULL
+	[CloseDate] [datetime] NULL,
+	[DateCreated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	[DateUpdated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP
  CONSTRAINT [PK_Portfolio_Portfolio] PRIMARY KEY CLUSTERED 
 (
 	[Number] ASC
