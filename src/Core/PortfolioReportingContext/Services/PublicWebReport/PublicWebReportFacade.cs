@@ -53,9 +53,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 //OneMonth = portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear),
                 OneMonth = portfolioWithPerformance.GetNetMonthlyReturnPercent(previousMonthYear),
                 ThreeMonth = portfolioWithPerformance.CalculateNetReturnAsPercent(threeMonthCalculationRequest),
-                SixMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(sixMonthCalculationRequest),
-                YearToDate = portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest),
-                QuarterToDate = portfolioWithPerformance.CalculateNetReturnAsDecimal(quarterToDateCalculationRequest),
+                SixMonth = portfolioWithPerformance.CalculateNetReturnAsPercent(sixMonthCalculationRequest),
+                YearToDate = portfolioWithPerformance.CalculateNetReturnAsPercent(yearToDateCalculationRequest),
+                QuarterToDate = portfolioWithPerformance.CalculateNetReturnAsPercent(quarterToDateCalculationRequest),
             };
 
             var benchmarkModels = new List<BenchmarkModel>();
@@ -69,9 +69,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                     Name = benchmarkWithPerformance.Name,
                     OneMonth = benchmarkWithPerformance.GetNetMonthlyReturnPercent(previousMonthYear),
                     ThreeMonth = benchmarkWithPerformance.CalculateReturnAsPercent(threeMonthCalculationRequest),
-                    SixMonth = benchmarkWithPerformance.CalculateReturnAsDecimal(sixMonthCalculationRequest),
-                    QuarterToDate = benchmarkWithPerformance.CalculateReturnAsDecimal(quarterToDateCalculationRequest),
-                    YearToDate = benchmarkWithPerformance.CalculateReturnAsDecimal(yearToDateCalculationRequest),
+                    SixMonth = benchmarkWithPerformance.CalculateReturnAsPercent(sixMonthCalculationRequest),
+                    QuarterToDate = benchmarkWithPerformance.CalculateReturnAsPercent(quarterToDateCalculationRequest),
+                    YearToDate = benchmarkWithPerformance.CalculateReturnAsPercent(yearToDateCalculationRequest),
                 };
 
                 benchmarkModels.Add(benchmarkModel);

@@ -36,6 +36,14 @@
                     {
                         portfolio.YearToDate = decimal.Round((decimal) portfolio.YearToDate, 2, MidpointRounding.AwayFromZero);
                     }
+                    @if (portfolio.QuarterToDate != null)
+                    {
+                        portfolio.QuarterToDate = decimal.Round((decimal) portfolio.QuarterToDate, 2, MidpointRounding.AwayFromZero);
+                    }
+                    @if (portfolio.SixMonth != null)
+                    {
+                        portfolio.SixMonth = decimal.Round((decimal)portfolio.SixMonth, 2, MidpointRounding.AwayFromZero);
+                    }
                     <td>@portfolio.Number</td>
                     <td>@portfolio.Name</td>
                     <td>@portfolio.OneMonth</td>
@@ -59,6 +67,14 @@
                         @if (benchmark.YearToDate != null)
                         {
                             benchmark.YearToDate = decimal.Round((decimal)benchmark.YearToDate, 2, MidpointRounding.AwayFromZero);
+                        }
+                        @if (benchmark.SixMonth != null)
+                        {
+                            benchmark.SixMonth = decimal.Round((decimal)benchmark.SixMonth, 2, MidpointRounding.AwayFromZero);
+                        }
+                        @if (benchmark.QuarterToDate != null)
+                        {
+                            benchmark.QuarterToDate = decimal.Round((decimal)benchmark.QuarterToDate, 2, MidpointRounding.AwayFromZero);
                         }
                         <td></td>
                         <td style="padding-left: 20px;">@benchmark.Name</td>
