@@ -43,6 +43,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
             var resultModel = new PortfolioPerformanceIndexModel()
             {
+                Portfolios = _publicWebReportFacade.GetPortfolioPerforance(),
                 Letters = selectListItems
             };
 
