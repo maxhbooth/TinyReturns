@@ -67,7 +67,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             if (_netReturnSeries == null)
                 return null;
 
-            return _netReturnSeries.CalculateStandardDeviation(CalculateNetMean());
+            return _netReturnSeries.CalculateStandardDeviation();
         }
 
         public decimal? CalculateNetMean()
@@ -82,7 +82,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             if (_grossReturnSeries == null)
                 return null;
 
-            return _grossReturnSeries.CalculateStandardDeviation(CalculateGrossMean());
+            return _grossReturnSeries.CalculateStandardDeviation();
         }
 
         public decimal? CalculateGrossMean()

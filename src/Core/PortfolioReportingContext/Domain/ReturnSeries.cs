@@ -56,8 +56,10 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return result.GetNullValueOnError();
         }
 
-        public decimal? CalculateStandardDeviation(decimal? mean)
+        public decimal? CalculateStandardDeviation()
         {
+            var mean = CalculateMean();
+
             if (mean == null || _monthlyReturns.Length < 12)
             {
                 return null;
