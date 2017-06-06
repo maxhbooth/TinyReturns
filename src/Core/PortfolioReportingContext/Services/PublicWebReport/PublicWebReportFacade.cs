@@ -29,7 +29,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
             foreach (var portfolioWithPerformance in portfolios)
             {
-                //var portfolioModel = CreatePortfolioModel(portfolioWithPerformance, previousMonthYear, net);
                 var portfolioModel = CreatePortfolioModel(portfolioWithPerformance, previousMonthYear);
 
                 portfolioModels.Add(portfolioModel);
