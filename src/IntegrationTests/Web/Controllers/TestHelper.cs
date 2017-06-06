@@ -149,12 +149,17 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 new AllTablesDeleter.TableInfoDto[0]);
         }
         public void AssertSelectItemsArePopulated(
-            PublicWebReportFacade.PortfolioModel[] resultModel)
+            PublicWebReportFacade.PortfolioModel[] resultPortfolio)
         {
-            resultModel.Should().NotBeNull();
+            resultPortfolio.Should().NotBeNull();
+        }
+        public void AssertSelectItemDefaultsNet(
+            PortfolioPerformanceNetGrossModel resultModel)
+        {
+            resultModel.Selected.Should().Be("Net");
         }
 
-        public PublicWebReportFacade.PortfolioModel[] GetModelFromActionResult(
+        public PublicWebReportFacade.PortfolioModel[] GetPortfolioModelFromActionResult(
             ActionResult actionResult)
         {
             actionResult.Should().BeAssignableTo<ViewResult>();
@@ -163,6 +168,16 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceNetGrossModel>();
             var portfolioPerformanceNetGrossModelModel = (PortfolioPerformanceNetGrossModel)viewResult.Model;
             return portfolioPerformanceNetGrossModelModel.Portfolios;
+        }
+        public PortfolioPerformanceNetGrossModel GetModelFromActionResult(
+            ActionResult actionResult)
+        {
+            actionResult.Should().BeAssignableTo<ViewResult>();
+            var viewResult = (ViewResult)actionResult;
+
+            viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceNetGrossModel>();
+            var portfolioPerformanceNetGrossModelModel = (PortfolioPerformanceNetGrossModel)viewResult.Model;
+            return portfolioPerformanceNetGrossModelModel;
         }
     }
 }

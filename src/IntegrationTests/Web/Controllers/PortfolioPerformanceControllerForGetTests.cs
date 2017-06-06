@@ -27,12 +27,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     var actionResult = controller.Index();
 
                     // Assert
-                    var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
+                    var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
 
                     viewResultModel.Length.Should().Be(0);
 
 
-                    var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                    var resultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
                     testHelper.AssertSelectItemsArePopulated(resultModel);
                 });
         }
@@ -58,7 +58,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
 
                 viewResultModel.Length.Should().Be(1);
 
@@ -121,7 +121,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
 
                 viewResultModel.Length.Should().Be(1);
 
@@ -223,7 +223,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
 
                 viewResultModel.Length.Should().Be(1);
 
@@ -327,7 +327,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
 
                 viewResultModel.Length.Should().Be(1);
 

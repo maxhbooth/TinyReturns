@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 {
-    class PortfolioPerformanceControllerForPostTests
+    public class PortfolioPerformanceControllerForPostTests
     {
+        [Fact]
         public void ShouldReturnNetByDefault()
         {
             var testHelper = new TestHelper();
@@ -21,13 +23,14 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
 
                 viewResultModel.Length.Should().Be(0);
 
-
                 var resultModel = testHelper.GetModelFromActionResult(actionResult);
-                testHelper.AssertSelectItemsArePopulated(resultModel);
+                var resultPortfolioModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
+                testHelper.AssertSelectItemsArePopulated(resultPortfolioModel);
+                testHelper.AssertSelectItemDefaultsNet(resultModel);
             });
 
         }
