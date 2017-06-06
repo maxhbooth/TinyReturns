@@ -87,6 +87,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 for (int i = 0; i < resultModel.Portfolios.Length; i++)
                 {
                     testHelper.AssertPortfolioModelIsGross(resultModel.Portfolios[i]);
+                    testHelper.AssertModelIsGross(resultModel);
                 }
             });
         }

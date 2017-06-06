@@ -55,7 +55,8 @@ namespace Dimensional.TinyReturns.Web.Controllers
             var resultModel = new PortfolioPerformanceNetGrossModel()
             {
                 Portfolios = portfolioPerforance,
-                NetGrossList = selectListItems
+                NetGrossList = selectListItems,
+                Selected = "Gross"
             };
             return View(resultModel);
         }
