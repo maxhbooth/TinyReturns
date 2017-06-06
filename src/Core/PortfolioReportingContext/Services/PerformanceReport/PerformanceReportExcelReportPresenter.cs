@@ -90,6 +90,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
             recordModel.YearToDate = yearToDateResult.GetNullValueOnError();
 
             recordModel.StandardDeviation = portfolio.CalculateNetStandardDeviation();
+            recordModel.Mean = portfolio.CalculateNetMean();
 
             return recordModel;
         }
@@ -132,6 +133,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
             recordModel.YearToDate = yearToDateResult.GetNullValueOnError();
 
             recordModel.StandardDeviation = portfolio.CalculateGrossStandardDeviation();
+            recordModel.Mean= portfolio.CalculateGrossMean();
 
             return recordModel;
         }

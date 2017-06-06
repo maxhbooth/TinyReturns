@@ -39,7 +39,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             if (_returnSeries == null)
                 return null;
 
-            return _returnSeries.CalculateStandardDeviation(CalculateMean());
+            return _returnSeries.CalculateStandardDeviation();
         }
 
         public decimal? CalculateMean()
