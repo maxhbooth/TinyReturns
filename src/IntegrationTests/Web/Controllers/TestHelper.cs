@@ -154,6 +154,16 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         {
             resultModel.NetGrossList.Should().NotBeNull();
             resultModel.NetGrossList.Count().Should().Be(2);
+
+            var arrayBinary = resultModel.NetGrossList.ToArray();
+
+            arrayBinary[0].Value.Should().Be("0");
+            arrayBinary[0].Text.Should().Be("Net");
+
+            arrayBinary[1].Value.Should().Be("1");
+            arrayBinary[1].Text.Should().Be("Gross");
+
+            arrayBinary.All(m => m != null).Should().BeTrue();
         }
         public void AssertSelectItemDefaultsNet(
             PortfolioPerformanceNetGrossModel resultModel)
