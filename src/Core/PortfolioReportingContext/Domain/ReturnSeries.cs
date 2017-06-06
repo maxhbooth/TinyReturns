@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
+using System;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 {
@@ -32,6 +33,20 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return monthlyReturn.Value;
         }
 
+
+        public decimal? GetMonthlyReturnPercent(
+            MonthYear monthYear)
+        {
+            var monthlyReturn = _monthlyReturns.FirstOrDefault(r => r.MonthYear.Equals(monthYear));
+
+            if (monthlyReturn == null)
+                return null;
+            //monthlyReturn.Value cannot be null
+            decimal val = monthlyReturn.Value;
+            decimal percent = (val * 100);
+            //return decimal.Round(percent, 2, MidpointRounding.AwayFromZero);
+            return percent;
+        }
         public class MonthlyReturn
         {
             public MonthlyReturn(
@@ -50,10 +65,11 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             CalculateReturnRequest request)
         {
             var result = CalculateReturn(request);
-
+            
             return result.GetNullValueOnError();
         }
-
+        
+        
         public ReturnResult CalculateReturn(
             CalculateReturnRequest request)
         {
@@ -62,6 +78,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             var returnsInRange = GetMonthsInRange(monthRange);
 
             var result = new ReturnResult();
+
 
             if (!returnsInRange.Any())
                 return ReturnResult.CreateWithError("Could not find return(s) for month(s).");
