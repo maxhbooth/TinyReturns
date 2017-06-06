@@ -45,6 +45,10 @@
                     {
                         portfolio.SixMonth = decimal.Round((decimal)portfolio.SixMonth, 2, MidpointRounding.AwayFromZero);
                     }
+                    @if (portfolio.StandardDeviation != null)
+                    {
+                        portfolio.StandardDeviation = decimal.Round(portfolio.StandardDeviation.Value*100, 2, MidpointRounding.AwayFromZero);
+                    }
                     <td>@portfolio.Number</td>
                     <td>@portfolio.Name</td>
                     <td>@portfolio.OneMonth</td>
@@ -77,6 +81,10 @@
                         @if (benchmark.QuarterToDate != null)
                         {
                             benchmark.QuarterToDate = decimal.Round((decimal)benchmark.QuarterToDate, 2, MidpointRounding.AwayFromZero);
+                        }
+                        @if (benchmark.StandardDeviation != null)
+                        {
+                            benchmark.StandardDeviation = decimal.Round(benchmark.StandardDeviation.Value*100, 2, MidpointRounding.AwayFromZero);
                         }
                         <td></td>
                         <td style="padding-left: 20px;">@benchmark.Name</td>
