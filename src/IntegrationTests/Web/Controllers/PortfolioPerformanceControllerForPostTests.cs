@@ -40,7 +40,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         [Fact]
         public void ShouldReturnNetValuesWhenNetIsSelected()
         {
-            
             //Arrange
             var testHelper = new TestHelper();
             testHelper.DatabaseDataDeleter(() =>
@@ -72,7 +71,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 // Act
                 var requestModel = new PortfolioPerformanceNetGrossModel()
                 {
-                    Selected = "0"
+                    Selected = "1"
                 };
 
                 var actionResult = controller.Index(requestModel);
@@ -84,9 +83,14 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 testHelper.AssertSelectItemsArePopulated(resultModel);
 
                 resultModel.Portfolios.Length.Should().Be(3);
+                //var result = resultModel.Portfolios[0];
+                for (int i = 0; i < resultModel.Portfolios.Length; i++)
+                {
+                    testHelper.AssertPortfolioModelIsGross(resultModel.Portfolios[i]);
+                }
             });
         }
-
+/*
         [Fact]
         public void ShouldReturnSinglePortfolioSingleNetMonthOfPerformance()
         {
@@ -151,7 +155,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultPortfolioModel[0].ThreeMonth.Should().NotHaveValue();
                 viewResultPortfolioModel[0].YearToDate.Should().BeApproximately(0.02m, 0.00001m);
             });
-        }
+        }*/
 
 
     }

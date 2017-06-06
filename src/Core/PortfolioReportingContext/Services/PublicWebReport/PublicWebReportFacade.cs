@@ -68,7 +68,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 Name = portfolioWithPerformance.Name,
                 OneMonth = portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear),
                 ThreeMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(threeMonthCalculationRequest),
-                YearToDate = portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest)
+                YearToDate = portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest),
+                NetNotGross = true
             };
 
             var benchmarkModels = new List<BenchmarkModel>();
@@ -105,7 +106,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 Name = portfolioWithPerformance.Name,
                 OneMonth = portfolioWithPerformance.GetGrossMonthlyReturn(previousMonthYear),
                 ThreeMonth = portfolioWithPerformance.CalculateGrossReturnAsDecimal(threeMonthCalculationRequest),
-                YearToDate = portfolioWithPerformance.CalculateGrossReturnAsDecimal(yearToDateCalculationRequest)
+                YearToDate = portfolioWithPerformance.CalculateGrossReturnAsDecimal(yearToDateCalculationRequest),
+                NetNotGross = false
             };
 
             var benchmarkModels = new List<BenchmarkModel>();
@@ -144,6 +146,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public decimal? OneMonth { get; set; }
             public decimal? ThreeMonth { get; set; }
             public decimal? YearToDate { get; set; }
+            public bool NetNotGross { get; set; }
 
             public BenchmarkModel[] Benchmarks { get; set; }
         }

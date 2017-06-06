@@ -91,6 +91,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 publicWebReportFacade);
         }
 
+        
+
         public void InsertPortfolioDto(
             PortfolioDto dto)
         {
@@ -169,6 +171,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             PortfolioPerformanceNetGrossModel resultModel)
         {
             resultModel.Selected.Should().Be("Net");
+        }
+        internal void AssertPortfolioModelIsGross(PublicWebReportFacade.PortfolioModel portfolioModel)
+        {
+            portfolioModel.NetNotGross.Should().BeFalse();
         }
 
         public PublicWebReportFacade.PortfolioModel[] GetPortfolioModelFromActionResult(
