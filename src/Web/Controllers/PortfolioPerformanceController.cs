@@ -36,7 +36,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
             return View(model);
             //return View(_publicWebReportFacade.GetPortfolioPerforance());
         }
-
+        public ActionResult Index(
+            PortfolioPerformanceNetGrossModel model)
+        {
+            
+            return View(model);
+        }
         private SelectListItem[] CreateLetterSelectItems()
         {
             var selectListItems = new SelectListItem[2];

@@ -32,7 +32,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     viewResultModel.Length.Should().Be(0);
 
 
-                    var resultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
+                    var resultModel = testHelper.GetModelFromActionResult(actionResult);
                     testHelper.AssertSelectItemsArePopulated(resultModel);
                 });
         }

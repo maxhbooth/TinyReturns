@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Web.Mvc;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
@@ -149,9 +150,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 new AllTablesDeleter.TableInfoDto[0]);
         }
         public void AssertSelectItemsArePopulated(
-            PublicWebReportFacade.PortfolioModel[] resultPortfolio)
+            PortfolioPerformanceNetGrossModel resultModel)
         {
-            resultPortfolio.Should().NotBeNull();
+            resultModel.NetGrossList.Should().NotBeNull();
+            resultModel.NetGrossList.Count().Should().Be(2);
         }
         public void AssertSelectItemDefaultsNet(
             PortfolioPerformanceNetGrossModel resultModel)
