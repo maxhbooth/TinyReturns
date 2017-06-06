@@ -186,7 +186,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 });
 
                 var monthYearRange = new MonthYearRange(
-                    monthYear.AddMonths(-11),
+                    monthYear.AddMonths(-10),
                     monthYear);
 
                 var monthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
