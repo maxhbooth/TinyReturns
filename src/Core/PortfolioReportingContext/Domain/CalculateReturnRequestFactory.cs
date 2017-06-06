@@ -40,26 +40,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             MonthYear endMonth)
         {
 
-            int quarterMonth;
 
-            if(endMonth.Month <= 3)
-            {
-                quarterMonth = 1;
-            }
-            else if (endMonth.Month <= 6 )
-            {
-                quarterMonth = 4;
-            }
-            else if (endMonth.Month <= 9)
-            {
-                quarterMonth = 7;
-            }
-            else
-            {
-                quarterMonth = 10;
-            }
 
-            var diffMonths = endMonth.Month - quarterMonth + 1;
+            var diffMonths = endMonth - endMonth.getQuarterMonth() + 1;
 
             return new CalculateReturnRequest(
                 endMonth,diffMonths);
