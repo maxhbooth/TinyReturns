@@ -2,6 +2,7 @@
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using System.Collections.Generic;
+using System.Linq;
 using Dimensional.TinyReturns.Web.Models;
 
 namespace Dimensional.TinyReturns.Web.Controllers
@@ -36,11 +37,24 @@ namespace Dimensional.TinyReturns.Web.Controllers
             return View(model);
             //return View(_publicWebReportFacade.GetPortfolioPerforance());
         }
+        [HttpPost]
         public ActionResult Index(
             PortfolioPerformanceNetGrossModel model)
         {
-            
-            return View(model);
+            var selectListItems = CreateLetterSelectItems();
+
+            var portfolioPerforance = _publicWebReportFacade.GetPortfolioPerforance();
+            if (model.Selected != "Net")
+            {
+                //need to display Gross
+                //portfolioPerforance = portfolioPerforance.Where();
+            }
+            var resultModel = new PortfolioPerformanceNetGrossModel()
+            {
+                Portfolios = portfolioPerforance,
+                NetGrossList = selectListItems
+            };
+            return View(resultModel);
         }
         private SelectListItem[] CreateLetterSelectItems()
         {

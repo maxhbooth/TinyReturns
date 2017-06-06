@@ -37,9 +37,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             });
 
         }
-
+        [Fact]
         public void ShouldReturnNetValuesWhenNetIsSelected()
         {
+            
             //Arrange
             var testHelper = new TestHelper();
             testHelper.DatabaseDataDeleter(() =>
