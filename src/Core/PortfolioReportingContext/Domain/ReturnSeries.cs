@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
@@ -52,6 +55,43 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             var result = CalculateReturn(request);
 
             return result.GetNullValueOnError();
+        }
+
+        public decimal? CalculateStandardDeviation(MonthYear inceptionMonth)
+        {
+            var mean = CalculateMean(inceptionMonth);
+
+            var values = _monthlyReturns.Where(
+                x => (x.MonthYear.Month >= inceptionMonth.Month && x.MonthYear.Year == inceptionMonth.Year) ||
+                     (x.MonthYear.Year > inceptionMonth.Year)).Select(x => x.Value).ToArray();
+
+            if (mean == null || values.Length < 12)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = (mean.Value - values[i]) * (mean.Value - values[i]);
+            }
+
+            var standardDeviation = (Decimal) Math.Sqrt((Double) values.Sum() / values.Length);
+
+            return standardDeviation;
+        }
+
+        public decimal? CalculateMean(MonthYear inceptionMonth)
+        {
+            var valuesSinceInception = _monthlyReturns.Where(
+                x => (x.MonthYear.Month >= inceptionMonth.Month && x.MonthYear.Year == inceptionMonth.Year) ||
+                     (x.MonthYear.Year > inceptionMonth.Year)).Select(x => x.Value).ToArray();
+
+            if (valuesSinceInception == null || valuesSinceInception.Length == 0)
+            {
+                return null;
+            }
+
+            return valuesSinceInception.Sum() / valuesSinceInception.Length;
         }
 
         public ReturnResult CalculateReturn(

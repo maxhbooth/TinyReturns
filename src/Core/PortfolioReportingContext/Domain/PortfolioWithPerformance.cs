@@ -14,17 +14,20 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             string name,
             ReturnSeries netReturnSeries,
             ReturnSeries grossReturnSeries,
-            BenchmarkWithPerformance[] benchmarks)
+            BenchmarkWithPerformance[] benchmarks, 
+            System.DateTime inceptionDate)
         {
             _benchmarkWithPerformances = benchmarks;
             _grossReturnSeries = grossReturnSeries;
             _netReturnSeries = netReturnSeries;
             Name = name;
             Number = number;
+            InceptionDate = inceptionDate;
         }
 
         public int Number { get; private set; }
         public string Name { get; private set; }
+        public System.DateTime InceptionDate { get; private set; }
 
         public decimal? GetNetMonthlyReturn(
             MonthYear monthYear)
@@ -60,6 +63,36 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
                 return ReturnResult.CreateWithError("Portfolio has not gross return series.");
 
             return _grossReturnSeries.CalculateReturn(request);
+        }
+
+        public decimal? CalculateNetStandardDeviation(MonthYear inceptionMonth)
+        {
+            if (_netReturnSeries == null)
+                return null;
+
+            return _netReturnSeries.CalculateStandardDeviation(inceptionMonth);
+        }
+
+        public decimal? CalculateNetMean(MonthYear inceptionMonth)
+        {
+            if (_netReturnSeries == null)
+                return null;
+            return _netReturnSeries.CalculateMean(inceptionMonth);
+        }
+
+        public decimal? CalculateGrossStandardDeviation(MonthYear inceptionMonth)
+        {
+            if (_grossReturnSeries == null)
+                return null;
+
+            return _grossReturnSeries.CalculateStandardDeviation(inceptionMonth);
+        }
+
+        public decimal? CalculateGrossMean(MonthYear inceptionMonth)
+        {
+            if (_grossReturnSeries == null)
+                return null;
+            return _grossReturnSeries.CalculateMean(inceptionMonth);
         }
 
         public bool HasNetReturnSeries
