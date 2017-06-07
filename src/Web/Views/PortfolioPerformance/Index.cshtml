@@ -23,6 +23,8 @@
                 <th>Quarter to Date</th>
             <th>Year to Date</th>
                 <th>First Full Month</th>
+                <th>Standard Deviation</th>
+                <th>Mean</th>
         </tr>
         </thead>
         <tbody>
@@ -38,6 +40,8 @@
                     <td>@portfolio.QuarterToDate</td>
                 <td>@portfolio.YearToDate</td>
                     <td>@portfolio.FirstFullMonth</td>
+                    <td>@portfolio.StandardDeviation</td>
+                    <td>@portfolio.Mean</td>
             </tr>
 
             foreach (var benchmark in portfolio.Benchmarks)

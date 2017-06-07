@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
@@ -89,9 +90,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                         PercentHelper.AsPercent(
                             portfolioWithPerformance.CalculateNetReturnAsDecimal(quarterToDateCalculationRequest)),
                     NetNotGross = true,
-                    FirstFullMonth =
-                        PercentHelper.AsPercent(
-                            portfolioWithPerformance.CalculateNetReturnAsDecimal(firstFullMonthCalculationRequest))
+                    FirstFullMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(firstFullMonthCalculationRequest)),
+                    StandardDeviation = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetStandardDeviation()),  
+                    Mean = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetMean())
                 };
             }
             else if(!netReturn)
@@ -152,6 +153,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             //used solely for test; not in UI
             public bool NetNotGross { get; set; }
             public decimal? FirstFullMonth { get; set; }
+            public decimal? StandardDeviation { get; set; }
+            public decimal? Mean { get; set; }
 
             public BenchmarkModel[] Benchmarks { get; set; }
         }
@@ -165,6 +168,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public decimal? QuarterToDate { get; set; }
             public decimal? YearToDate { get; set; }
             public decimal? FirstFullMonth { get; set; }
+            public decimal? StandardDeviation { get; set; }
+            public decimal? Mean { get; set; }
         }
     }
 
@@ -180,7 +185,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
         }
         public static decimal AsPercent(decimal decimalToChange)
         {
-
             return decimal.Round(decimalToChange* 100, 2, MidpointRounding.AwayFromZero);
         }
     }

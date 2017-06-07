@@ -9,6 +9,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
         private readonly ReturnSeries _netReturnSeries;
         private readonly ReturnSeries _grossReturnSeries;
         private BenchmarkWithPerformance[] _benchmarkWithPerformances;
+        private MonthYear _inceptionMonth;
 
         public PortfolioWithPerformance(
             int number,
@@ -24,6 +25,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             Name = name;
             Number = number;
             InceptionDate = inceptionDate;
+            _inceptionMonth = new MonthYear(InceptionDate);
         }
 
         public int Number { get; private set; }
@@ -81,6 +83,36 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
                 return ReturnResult.CreateWithError("Portfolio has not gross return series.");
 
             return _grossReturnSeries.CalculateReturn(request);
+        }
+
+        public decimal? CalculateNetStandardDeviation()
+        {
+            if (_netReturnSeries == null)
+                return null;
+
+            return _netReturnSeries.CalculateStandardDeviation(_inceptionMonth);
+        }
+
+        public decimal? CalculateNetMean()
+        {
+            if (_netReturnSeries == null)
+                return null;
+            return _netReturnSeries.CalculateMean(_inceptionMonth);
+        }
+
+        public decimal? CalculateGrossStandardDeviation()
+        {
+            if (_grossReturnSeries == null)
+                return null;
+
+            return _grossReturnSeries.CalculateStandardDeviation(_inceptionMonth);
+        }
+
+        public decimal? CalculateGrossMean()
+        {
+            if (_grossReturnSeries == null)
+                return null;
+            return _grossReturnSeries.CalculateMean(_inceptionMonth);
         }
 
         public bool HasNetReturnSeries
