@@ -11,12 +11,9 @@
         <div class="input-group-btn">
             @using (Html.BeginForm())
             {
-                if (Model.MonthYears != null) //just in case
-                {
-                    @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
-                    ;
-                    <input type="submit" value="Go" class="btn btn-primary" />
-                }
+                @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
+                ;
+                <input type="submit" value="Go" class="btn btn-primary" />
             }
         </div>
     </div>
