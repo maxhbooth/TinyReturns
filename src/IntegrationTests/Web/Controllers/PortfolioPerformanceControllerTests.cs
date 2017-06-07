@@ -690,11 +690,13 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     nextMonth.Month,
                     5);
 
+                // **
+
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
                     Number = portfolioNumber,
                     Name = portfolioName,
-                    InceptionDate = new DateTime(2010, 1, 1)
+                    InceptionDate = new DateTime(2016, 1, 1)
                 });
 
                 var portfolioReturnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
@@ -711,7 +713,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var portfolioMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
                     portfolioReturnSeriesId,
-                    new MonthYearRange(monthYear.AddMonths(-11), monthYear)); // should give 12 months
+                    new MonthYearRange(monthYear.AddMonths(-6), monthYear));// should give 7 months
 
                 foreach (var portfolioMonthlyReturnDto in portfolioMonthlyReturnDtos)
                 {
@@ -719,8 +721,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 }
 
                 testHelper.InsertMonthlyReturnDtos(portfolioMonthlyReturnDtos);
-
-                // **
 
                 // **
 
@@ -739,85 +739,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 {
                     BenchmarkNumber = benchmarkNumber,
                     ReturnSeriesId = benchmarkReturnSeriesId
-                var benchmarkMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
-                    benchmarkReturnSeriesId,
-                    new MonthYearRange(monthYear.AddMonths(-11), monthYear), //should give 12 months
-                    seed: 8);
-                foreach (var benchmarkMonthlyReturnDto in benchmarkMonthlyReturnDtos)
-                {
-                    Debug.WriteLine(benchmarkMonthlyReturnDto.ReturnValue);
-                }
-
-                testHelper.InsertMonthlyReturnDtos(benchmarkMonthlyReturnDtos);
-
-                // **
-
-                testHelper.InsertPortfolioToBenchmarkDto(new PortfolioToBenchmarkDto()
-                {
-                    PortfolioNumber = portfolioNumber,
-                    BenchmarkNumber = benchmarkNumber,
-                    SortOrder = 1
-                });
-
-                var controller = testHelper.CreateController();
-
-                // Act
-                var actionResult = controller.Index();
-
-                // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
-
-
-                var viewValues = new decimal[]
-                {
-                    0.4524m, 0.6346m, 0.536m, 0.1163m, -0.588m, 0.1177m, 0.812m, -0.1157m, 0.955m, -0.4526m, -0.4162m, -
-                        0.0654m
-                };
-
-
-
-                var viewMean = viewValues.Sum() / viewValues.Length;
-
-                for (int i = 0; i < viewValues.Length; i++)
-                {
-                    viewValues[i] = (viewMean - viewValues[i]) * (viewMean - viewValues[i]);
-                }
-
-                var expectedViewStandardDevation = (Decimal)Math.Sqrt((Double)viewValues.Sum() / viewValues.Length);
-
-                viewResultModel.Length.Should().Be(1);
-
-                viewResultModel[0].Number.Should().Be(portfolioNumber);
-                viewResultModel[0].Name.Should().Be(portfolioName);
-
-                viewResultModel[0].StandardDeviation.Should()
-                    .BeApproximately(PercentHelper.AsPercent(expectedViewStandardDevation), 0.00000001m);
-
-                viewResultModel[0].Mean.Should()
-                    .BeApproximately(PercentHelper.AsPercent(viewMean), 0.00000001m);
-
-                viewResultModel[0].Benchmarks.Should().HaveCount(1);
-
-                var benchmarkModel = viewResultModel[0].Benchmarks[0];
-
-                var benchValues = new decimal[]
-                {
-                    0.426m, -0.6285m, -0.5526m, 0.9345m, -0.0887m, -0.0191m,
-                    0.1001m, 0.6358m, -0.4686m, -0.2802m, -0.6707m, 0.8112m
-                };
-
-                var benchMean = benchValues.Sum() / benchValues.Length;
-
-                for (int i = 0; i < benchValues.Length; i++)
-                {
-                    benchValues[i] = (benchMean - benchValues[i]) * (benchMean- benchValues[i]);
-                }
-
-                var expectedBenchStandardDevation = (Decimal)Math.Sqrt((Double)benchValues.Sum() / benchValues.Length);
-
-                benchmarkModel.StandardDeviation.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchStandardDevation), 0.00000001m);
-                benchmarkModel.Mean.Should().BeApproximately(PercentHelper.AsPercent(benchMean), 0.00000001m);
-
                 });
 
                 var benchmarkMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
@@ -858,7 +779,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 // note we only include 5 months because the monthyear actually starts with may.
 
                 var expectedViewFirstFullMonth = (1 + 0.812m) * (1 + 0.1177m) * (1 - 0.588m) * (1 + 0.1163m)
-                                              - 1;
+                                                 - 1;
                 //FirstFullMonth goes from may until the month after the inception date, which is 4 months.
                 viewResultModel.Length.Should().Be(1);
 
@@ -884,7 +805,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var expectedBenchYearToDate = (1 - 0.0191m) * (1 + .1001m) * (1 + 0.6358m) * (1 - 0.4686m)
                                               * (1 - 0.2802m) - 1;
                 var expectedBenchFirstFullMonth = (1 - 0.0191m) * (1 + .1001m) * (1 + 0.6358m) * (1 - 0.4686m)
-                                               - 1;
+                                                  - 1;
 
                 benchmarkModel.Name.Should().Be(benchmarkName);
                 benchmarkModel.OneMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchOneMonth), 0.00000001m);
@@ -896,6 +817,159 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             });
         }
+
+        [Fact]
+        public void ShouldReturnPortfolioWithBenchmarkForAYear()
+        {
+            // Arrange
+            var testHelper = new TestHelper();
+
+            testHelper.DatabaseDataDeleter(() =>
+            {
+                var portfolioNumber = 100;
+                var portfolioName = "Portfolio 100";
+
+                var benchmarkNumber = 10000;
+                var benchmarkName = "Benchmark 10000";
+
+                var monthYear = new MonthYear(2016, 5);
+                var nextMonth = monthYear.AddMonths(1);
+
+                testHelper.CurrentDate = new DateTime(
+                    nextMonth.Year,
+                    nextMonth.Month,
+                    5);
+
+                // **
+
+                testHelper.InsertPortfolioDto(new PortfolioDto()
+                {
+                    Number = portfolioNumber,
+                    Name = portfolioName,
+                    InceptionDate = new DateTime(2010, 1, 1)
+                });
+
+                var portfolioReturnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Return Series for Portfolio 100"
+                });
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber,
+                    ReturnSeriesId = portfolioReturnSeriesId,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+
+                var portfolioMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    portfolioReturnSeriesId,
+                    new MonthYearRange(monthYear.AddMonths(-11), monthYear)); // should give 12 months
+
+                foreach (var portfolioMonthlyReturnDto in portfolioMonthlyReturnDtos)
+                {
+                    Debug.WriteLine(portfolioMonthlyReturnDto.ReturnValue);
+                }
+
+                testHelper.InsertMonthlyReturnDtos(portfolioMonthlyReturnDtos);
+
+                // **
+
+                testHelper.InsertBenchmarkDto(new BenchmarkDto()
+                {
+                    Number = benchmarkNumber,
+                    Name = benchmarkName
+                });
+
+                var benchmarkReturnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Return Series for Benchmark X"
+                });
+
+                testHelper.InsertBenchmarkToReturnSeriesDto(new BenchmarkToReturnSeriesDto()
+                {
+                    BenchmarkNumber = benchmarkNumber,
+                    ReturnSeriesId = benchmarkReturnSeriesId
+                });
+
+                var benchmarkMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    benchmarkReturnSeriesId,
+                    new MonthYearRange(monthYear.AddMonths(-11), monthYear), //should give 12 months
+                    seed: 8);
+                foreach (var benchmarkMonthlyReturnDto in benchmarkMonthlyReturnDtos)
+                {
+                    Debug.WriteLine(benchmarkMonthlyReturnDto.ReturnValue);
+                }
+
+                testHelper.InsertMonthlyReturnDtos(benchmarkMonthlyReturnDtos);
+
+                // **
+
+                testHelper.InsertPortfolioToBenchmarkDto(new PortfolioToBenchmarkDto()
+                {
+                    PortfolioNumber = portfolioNumber,
+                    BenchmarkNumber = benchmarkNumber,
+                    SortOrder = 1
+                });
+
+                var controller = testHelper.CreateController();
+
+                // Act
+                var actionResult = controller.Index();
+
+                // Assert
+                var viewResultModel = GetModelFromActionResult(actionResult);
+
+                var viewValues = new decimal[]
+                {
+                    0.4524m, 0.6346m, 0.536m, 0.1163m, -0.588m, 0.1177m, 0.812m, -0.1157m, 0.955m, -0.4526m, -0.4162m, -
+                        0.0654m
+                };
+
+                var viewMean = viewValues.Sum() / viewValues.Length;
+
+                for (int i = 0; i < viewValues.Length; i++)
+                {
+                    viewValues[i] = (viewMean - viewValues[i]) * (viewMean - viewValues[i]);
+                }
+
+                var expectedViewStandardDevation = (Decimal)Math.Sqrt((Double)viewValues.Sum() / viewValues.Length);
+
+                viewResultModel.Length.Should().Be(1);
+
+                viewResultModel[0].Number.Should().Be(portfolioNumber);
+                viewResultModel[0].Name.Should().Be(portfolioName);
+
+                viewResultModel[0].StandardDeviation.Should()
+                    .BeApproximately(PercentHelper.AsPercent(expectedViewStandardDevation), 0.00000001m);
+
+                viewResultModel[0].Mean.Should()
+                    .BeApproximately(PercentHelper.AsPercent(viewMean), 0.00000001m);
+
+                viewResultModel[0].Benchmarks.Should().HaveCount(1);
+
+                var benchmarkModel = viewResultModel[0].Benchmarks[0];
+
+                var benchValues = new decimal[]
+                {
+                    0.426m, -0.6285m, -0.5526m, 0.9345m, -0.0887m, -0.0191m,
+                    0.1001m, 0.6358m, -0.4686m, -0.2802m, -0.6707m, 0.8112m
+                };
+
+                var benchMean = benchValues.Sum() / benchValues.Length;
+
+                for (int i = 0; i < benchValues.Length; i++)
+                {
+                    benchValues[i] = (benchMean - benchValues[i]) * (benchMean - benchValues[i]);
+                }
+
+                var expectedBenchStandardDevation = (Decimal)Math.Sqrt((Double)benchValues.Sum() / benchValues.Length);
+
+                benchmarkModel.StandardDeviation.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchStandardDevation), 0.00000001m);
+                benchmarkModel.Mean.Should().BeApproximately(PercentHelper.AsPercent(benchMean), 0.00000001m);
+
+            });
+        }
+
 
         private static PublicWebReportFacade.PortfolioModel[] GetModelFromActionResult(
             ActionResult actionResult)
