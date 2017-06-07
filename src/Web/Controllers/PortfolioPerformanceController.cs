@@ -31,7 +31,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
             var model = new PortfolioPerformanceNetGrossModel()
             {
                 Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
-                Selected = "Net",
+                Selected = "0",
                 NetGrossList = selectListItems
             };
 
