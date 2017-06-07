@@ -1,4 +1,5 @@
-﻿@model Dimensional.TinyReturns.Web.Models.PastMonthsModel
+﻿@using System.Web.UI.WebControls
+@model Dimensional.TinyReturns.Web.Models.PastMonthsModel
 
 
 @{
@@ -11,9 +12,9 @@
         <div class="input-group-btn">
             @using (Html.BeginForm())
             {
-                @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
-                ;
-                <input type="submit" value="Go" class="btn btn-primary" />
+               @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new {@class = "form-control"});
+              
+                  <input type="submit" value="Go" class="btn btn-primary" />
             }
         </div>
     </div>

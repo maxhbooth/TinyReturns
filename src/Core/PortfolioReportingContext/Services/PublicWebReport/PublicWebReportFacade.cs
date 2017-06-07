@@ -11,6 +11,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
     {
         private readonly IClock _clock;
         private readonly PortfolioWithPerformanceRepository _portfolioWithPerformanceRepository;
+        public  MonthYear monthBeingReportedOn;
 
         public PublicWebReportFacade(
             PortfolioWithPerformanceRepository portfolioWithPerformanceRepository,
@@ -26,6 +27,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
             var currentMonthYear = new MonthYear(_clock.GetCurrentDate());
             var previousMonthYear = currentMonthYear.AddMonths(-1);
+
+            monthBeingReportedOn = previousMonthYear;
 
             var portfolioModels = new List<PortfolioModel>();
 

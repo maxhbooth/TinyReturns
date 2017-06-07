@@ -15,11 +15,11 @@ namespace Dimensional.TinyReturns.Web.Controllers
     public class PortfolioPerformanceController : Controller
     {
         private readonly PublicWebReportFacade _publicWebReportFacade;
-        private readonly PastMonthsModel _pastMonthsModel;
+        private readonly SelectListItem[] _allMonths;
         public PortfolioPerformanceController()
         {
             _publicWebReportFacade = MasterFactory.GetPublicWebReportFacade();
-            _pastMonthsModel = WebHelper.GetAllPossibleMonths();
+            _allMonths = WebHelper.GetAllPossibleMonths();
         }
 
         // Used for tests
@@ -27,50 +27,64 @@ namespace Dimensional.TinyReturns.Web.Controllers
             PublicWebReportFacade publicWebReportFacade, MonthlyReturnDataTableGateway monthlyReturnDataTableGateway)
         {
             _publicWebReportFacade = publicWebReportFacade;
-            _pastMonthsModel = WebHelper.GetAllPossibleMonths(monthlyReturnDataTableGateway);
+            _allMonths = WebHelper.GetAllPossibleMonths(monthlyReturnDataTableGateway);
         }
 
 
         [HttpPost]
                 public ActionResult Index(PastMonthsModel pastMonths)
-                {
+        {
+            PastMonthsModel pastMonthsModel;
                     if (pastMonths != null)
                     {
                         var monthYearArray = pastMonths.MonthYear.Split('/');
                         var monthYear = new MonthYear(int.Parse(monthYearArray[1]), int.Parse(monthYearArray[0]));
 
-                        _pastMonthsModel.Portfolios = _publicWebReportFacade.GetPortfolioPerformance(monthYear);
+                        pastMonthsModel = new PastMonthsModel()
+                        {
+                            Portfolios = _publicWebReportFacade.GetPortfolioPerformance(monthYear),
+                            MonthYears = _allMonths,
+                            MonthYear = monthYear.Stringify()
+                        };
                     }
                     else
                     {
-                        _pastMonthsModel.Portfolios = _publicWebReportFacade.GetPortfolioPerformance();
+                        pastMonthsModel = new PastMonthsModel()
+                        {
+                            Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
+                            MonthYears = _allMonths,
+                            MonthYear = _publicWebReportFacade.monthBeingReportedOn.Stringify()
+                        };
                     }
-                    return View(_pastMonthsModel);
+                    return View(pastMonthsModel);
                 }
 
         [HttpGet]
         public ActionResult Index()
         {
-
-            _pastMonthsModel.Portfolios = _publicWebReportFacade.GetPortfolioPerformance();
-
-            return View(_pastMonthsModel);
+            var pastMonthsModel = new PastMonthsModel()
+            {
+                Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
+                MonthYears = _allMonths
+            };
+            if (_publicWebReportFacade.monthBeingReportedOn != null)
+            {
+                pastMonthsModel.MonthYear = _publicWebReportFacade.monthBeingReportedOn.Stringify();
+            }
+            return View(pastMonthsModel);
         }
     }
 
     public static class WebHelper
     {
-        public static PastMonthsModel GetAllPossibleMonths()
+        public static SelectListItem[] GetAllPossibleMonths()
         {
             var allMonthlyReturns = MasterFactory.MonthlyReturnDataTableGateway.GetAll();
 
             if (allMonthlyReturns.Length == 0)
             {
-                return new PastMonthsModel()
-                {
-                    MonthYears = new SelectListItem[0],
-                    MonthYear = ""
-                };
+
+               return new SelectListItem[0];
 
             }
 
@@ -104,32 +118,28 @@ namespace Dimensional.TinyReturns.Web.Controllers
                     }
                 }
             }
-            var pastMonthsModel = new PastMonthsModel
-            {
-                MonthYears = allPossibleMonths.Select(x => new SelectListItem()
-                {
-                    Text = x.Month.ToString() + "/" + x.Year.ToString(),
-                    Value = x.Month.ToString() + "/" + x.Year.ToString(),
-                }).ToArray()
-            };
 
-            return pastMonthsModel;
+            var monthYears = allPossibleMonths.Select(x => new SelectListItem()
+            {
+                Text = x.Stringify(),
+                Value = x.Stringify(),
+            }).ToArray();
+
+            return monthYears;
         }
 
         //for testing
 
-        public static PastMonthsModel GetAllPossibleMonths(MonthlyReturnDataTableGateway monthlyReturnDataTableGateway)
+        public static SelectListItem[] GetAllPossibleMonths(MonthlyReturnDataTableGateway monthlyReturnDataTableGateway)
         {
             var allMonthlyReturns = monthlyReturnDataTableGateway.GetAll();
 
             if (allMonthlyReturns.Length == 0)
-                return new PastMonthsModel()
-                {
-                    MonthYears = new SelectListItem[0],
-                    MonthYear=""
-                };
+            {
+                return new SelectListItem[0];
+            }
 
-            var minMonthlyReturnYear = allMonthlyReturns.Min(monthlyReturn => monthlyReturn.Year);
+        var minMonthlyReturnYear = allMonthlyReturns.Min(monthlyReturn => monthlyReturn.Year);
 
             var minMonthlyReturnMonth = allMonthlyReturns.Where(m => m.Year == minMonthlyReturnYear)
                 .Min(monthlyReturn => monthlyReturn.Month);
@@ -159,16 +169,15 @@ namespace Dimensional.TinyReturns.Web.Controllers
                     }
                 }
             }
-            var pastMonthsModel = new PastMonthsModel
-            {
-                MonthYears = allPossibleMonths.Select(x => new SelectListItem()
-                {
-                    Text = x.Month.ToString() + "/" + x.Year.ToString(),
-                    Value = x.Month.ToString() + "/" + x.Year.ToString(),
-                }).ToArray()
-            };
 
-            return pastMonthsModel;
+            var monthYears = allPossibleMonths.Select(x => new SelectListItem()
+            {
+                Text = x.Stringify(),
+                Value = x.Stringify(),
+            }).ToArray();
+
+
+            return monthYears;
         }
 
     }

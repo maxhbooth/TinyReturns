@@ -39,7 +39,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
 
                     viewResultModel.MonthYears.Count().Should().Be(0);
-                    viewResultModel.MonthYear.Should().BeEmpty();
+                    viewResultModel.MonthYear.Should().NotBeEmpty();
                     viewResultPortfolio.Length.Should().Be(0);
                 });
         }
@@ -69,7 +69,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
 
                 viewResultModel.MonthYears.Count().Should().Be(0); //only care about performance numbers so.
-                viewResultModel.MonthYear.Should().BeEmpty();
+                viewResultModel.MonthYear.Should().NotBeEmpty();
 
                 viewResultPortfolio.Length.Should().Be(1);
 
