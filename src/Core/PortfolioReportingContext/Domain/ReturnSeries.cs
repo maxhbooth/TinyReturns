@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
@@ -56,16 +57,18 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return result.GetNullValueOnError();
         }
 
-        public decimal? CalculateStandardDeviation()
+        public decimal? CalculateStandardDeviation(MonthYear inceptionMonth)
         {
-            var mean = CalculateMean();
+            var mean = CalculateMean(inceptionMonth);
 
-            if (mean == null || _monthlyReturns.Length < 12)
+            var values = _monthlyReturns.Where(
+                x => (x.MonthYear.Month >= inceptionMonth.Month && x.MonthYear.Year == inceptionMonth.Year) ||
+                     (x.MonthYear.Year > inceptionMonth.Year)).Select(x => x.Value).ToArray();
+
+            if (mean == null || values.Length < 12)
             {
                 return null;
             }
-
-            var values = _monthlyReturns.Select(x => x.Value).ToArray();
 
             for (int i = 0; i < values.Length; i++)
             {
@@ -73,17 +76,22 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             }
 
             var standardDeviation = (Decimal) Math.Sqrt((Double) values.Sum() / values.Length);
+
             return standardDeviation;
-            
         }
 
-        public decimal? CalculateMean()
+        public decimal? CalculateMean(MonthYear inceptionMonth)
         {
-            if (_monthlyReturns == null)
+            var valuesSinceInception = _monthlyReturns.Where(
+                x => (x.MonthYear.Month >= inceptionMonth.Month && x.MonthYear.Year == inceptionMonth.Year) ||
+                     (x.MonthYear.Year > inceptionMonth.Year)).Select(x => x.Value).ToArray();
+
+            if (valuesSinceInception == null || valuesSinceInception.Length == 0)
             {
                 return null;
             }
-            return _monthlyReturns.Select(x => x.Value).ToArray().Sum() / _monthlyReturns.Length;
+
+            return valuesSinceInception.Sum() / valuesSinceInception.Length;
         }
 
         public ReturnResult CalculateReturn(

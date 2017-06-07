@@ -500,6 +500,164 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
             });
         }
 
+        [Fact]
+        public void ShouldOnlyRecordStandardDeviationOfMonthlyReturnsAfterInception()
+        {
+            var testHelper = new TestHelper();
+
+            testHelper.DatabaseDataDeleter(() =>
+            {
+                var presenter = testHelper.CreatePresenter();
+
+                var portfolioNumber = 100;
+                var portfolioName = "Portfolio 100";
+
+                var monthYear = new MonthYear(2016, 5);
+
+                testHelper.InsertPortfolioDto(new PortfolioDto()
+                {
+                    Number = portfolioNumber,
+                    Name = portfolioName,
+                    InceptionDate = new DateTime(2015, 6, 1)
+                });
+
+                var returnSeriesIdNet = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Net Return Series for Portfolio 100"
+                });
+
+                var returnSeriesIdGross = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Net Return Series for Portfolio 100"
+                });
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber,
+                    ReturnSeriesId = returnSeriesIdNet,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+
+                var monthYearRange = new MonthYearRange(
+                    monthYear.AddMonths(-56),
+                    monthYear);
+
+                var netMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    returnSeriesIdNet,
+                    monthYearRange);
+
+                Debug.WriteLine("Net Returns:");
+                foreach (var monthlyReturn in netMonthlyReturnDtos)
+                {
+                    Debug.Write(monthlyReturn.ReturnValue + "m, ");
+                }
+
+                testHelper.InsertMonthlyReturnDtos(netMonthlyReturnDtos);
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber,
+                    ReturnSeriesId = returnSeriesIdGross,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.GrossSeriesTypeCode
+                });
+
+                var grossMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    returnSeriesIdGross,
+                    monthYearRange,
+                    seed: 2);
+
+                Debug.WriteLine("Gross Returns:");
+                foreach (var monthlyReturn in grossMonthlyReturnDtos)
+                {
+
+                    Debug.Write(monthlyReturn.ReturnValue + "m, ");
+                }
+                foreach (var portfolioMonthlyReturnDto in grossMonthlyReturnDtos)
+                {
+                    Debug.WriteLine(portfolioMonthlyReturnDto.ReturnValue + " and Montheyar " + portfolioMonthlyReturnDto.Month + "/" + portfolioMonthlyReturnDto.Year);
+                }
+
+
+                testHelper.InsertMonthlyReturnDtos(grossMonthlyReturnDtos);
+
+                presenter.CreateReport(
+                    monthYear,
+                    "c:\\temp\\excel.xlsx");
+
+                var viewSpy = testHelper.PerformanceReportExcelReportViewSpy;
+
+                viewSpy.RenderReportWasCalled.Should().BeTrue();
+
+                viewSpy.PerformanceReportExcelReportModel.Records.Length.Should().Be(2);
+
+                var netRecordModel = viewSpy.PerformanceReportExcelReportModel.Records[0];
+
+                netRecordModel.EntityNumber.Should().Be(portfolioNumber);
+                netRecordModel.Name.Should().Be(portfolioName);
+                netRecordModel.Type.Should().Be("Portfolio");
+                netRecordModel.FeeType.Should().Be("Net");
+
+
+
+//                var netValues = new decimal[]
+//                {
+//                    0.4524m, 0.6346m, 0.536m, 0.1163m, -0.588m, 0.1177m,
+//                    0.812m, -0.1157m, 0.955m, -0.4526m, -0.4162m, -0.0654m
+//                };
+
+
+                var netValues = new decimal[]
+                {
+                    0.58950000m, -0.32570000m, -0.08560000m, -0.70640000m, -0.55740000m, -0.17990000m,
+                    0.43740000m, 0.23960000m, -0.02410000m, -0.61020000m, 0.75630000m, 0.65080000m
+                };
+                var netMean = netValues.Sum() / netValues.Length;
+
+                for (int i = 0; i < netValues.Length; i++)
+                {
+                    netValues[i] = (netMean - netValues[i]) * (netMean - netValues[i]);
+                }
+
+                var expectedNetStandardDeviation = (Decimal)Math.Sqrt((Double)netValues.Sum() / netValues.Length);
+
+
+                netRecordModel.StandardDeviation.Should().BeApproximately(
+                    expectedNetStandardDeviation, 0.00000001m);
+
+
+                var grossRecordModel = viewSpy.PerformanceReportExcelReportModel.Records[1];
+
+                grossRecordModel.EntityNumber.Should().Be(portfolioNumber);
+                grossRecordModel.Name.Should().Be(portfolioName);
+                grossRecordModel.Type.Should().Be("Portfolio");
+                grossRecordModel.FeeType.Should().Be("Gross");
+
+//                var grossValues = new decimal[]
+//                {0.5421m, -0.1917m, -0.6681m, 0.97m, -0.782m,
+//                    -0.3867m, 0.6042m, -0.109m, -0.5501m, -0.9776m,
+//                    0.5307m, -0.9426m
+//                };
+
+                var grossValues = new decimal[]
+                {
+                    0.11200000m, -0.96480000m, -0.02300000m, -0.31560000m, -0.02870000m, 0.28480000m,
+                    0.24020000m, -0.85340000m, 0.79080000m, 0.19070000m, -0.13530000m, -0.85150000m
+                };
+
+                var grossMean = grossValues.Sum() / grossValues.Length;
+
+                for (int i = 0; i < grossValues.Length; i++)
+                {
+                    grossValues[i] = (grossMean - grossValues[i]) * (grossMean - grossValues[i]);
+                }
+                decimal expectedGrossStandardDeviation = (Decimal)Math.Sqrt((Double)grossValues.Sum() / grossValues.Length); ;
+
+
+                grossRecordModel.StandardDeviation.Should().BeApproximately(expectedGrossStandardDeviation, 0.00000001m);
+
+                viewSpy.PerformanceReportExcelReportModel.MonthText.Should().Be("Month: 5/2016");
+            });
+        }
 
         public class PerformanceReportExcelReportViewSpy : IPerformanceReportExcelReportView
         {

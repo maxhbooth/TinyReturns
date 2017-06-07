@@ -34,19 +34,19 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return null;
         }
 
-        public decimal? CalculateStandardDeviation()
+        public decimal? CalculateStandardDeviation(MonthYear inceptionMonth)
         {
             if (_returnSeries == null)
                 return null;
 
-            return _returnSeries.CalculateStandardDeviation();
+            return _returnSeries.CalculateStandardDeviation(inceptionMonth);
         }
 
-        public decimal? CalculateMean()
+        public decimal? CalculateMean(MonthYear inceptionMonth)
         {
             if (_returnSeries == null)
                 return null;
-            return _returnSeries.CalculateMean();
+            return _returnSeries.CalculateMean(inceptionMonth);
         }
 
         public decimal? CalculateReturnAsDecimal(

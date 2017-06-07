@@ -969,7 +969,126 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             });
         }
+        [Fact]
+        public void ShouldOnlyReturnStandardDeviationForMonthsSinceInception()
+        {
+            // Arrange
+            var testHelper = new TestHelper();
 
+            testHelper.DatabaseDataDeleter(() =>
+            {
+                var portfolioNumber = 100;
+                var portfolioName = "Portfolio 100";
+
+                var benchmarkNumber = 10000;
+                var benchmarkName = "Benchmark 10000";
+
+                var monthYear = new MonthYear(2016, 5);
+                var nextMonth = monthYear.AddMonths(1);
+
+                testHelper.CurrentDate = new DateTime(
+                    nextMonth.Year,
+                    nextMonth.Month,
+                    5);
+
+                // **
+
+                testHelper.InsertPortfolioDto(new PortfolioDto()
+                {
+                    Number = portfolioNumber,
+                    Name = portfolioName,
+                    InceptionDate = new DateTime(2015, 6, 1)
+                });
+
+                var portfolioReturnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Return Series for Portfolio 100"
+                });
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber,
+                    ReturnSeriesId = portfolioReturnSeriesId,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+
+                var portfolioMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    portfolioReturnSeriesId,
+                    new MonthYearRange(monthYear.AddMonths(-35), monthYear)); 
+
+                foreach (var portfolioMonthlyReturnDto in portfolioMonthlyReturnDtos)
+                {
+                    Debug.WriteLine(portfolioMonthlyReturnDto.ReturnValue + " and Montheyar " + portfolioMonthlyReturnDto.Month + "/" + portfolioMonthlyReturnDto.Year);
+                }
+
+                Array.Reverse(portfolioMonthlyReturnDtos);
+
+                testHelper.InsertMonthlyReturnDtos(portfolioMonthlyReturnDtos);
+
+                // **
+
+                testHelper.InsertBenchmarkDto(new BenchmarkDto()
+                {
+                    Number = benchmarkNumber,
+                    Name = benchmarkName
+                });
+
+                var benchmarkReturnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Return Series for Benchmark X"
+                });
+
+                testHelper.InsertBenchmarkToReturnSeriesDto(new BenchmarkToReturnSeriesDto()
+                {
+                    BenchmarkNumber = benchmarkNumber,
+                    ReturnSeriesId = benchmarkReturnSeriesId
+                });
+
+                testHelper.InsertPortfolioToBenchmarkDto(new PortfolioToBenchmarkDto()
+                {
+                    PortfolioNumber = portfolioNumber,
+                    BenchmarkNumber = benchmarkNumber,
+                    SortOrder = 1
+                });
+
+                var controller = testHelper.CreateController();
+
+                // Act
+                var actionResult = controller.Index();
+
+                // Assert
+                var viewResultModel = GetModelFromActionResult(actionResult);
+
+                var viewValues = new decimal[]
+                {
+                    0.39980000m, 0.05250000m, 0.86800000m, 0.37520000m, 0.09360000m, -0.83780000m,
+                    -0.62580000m, -0.09340000m, -0.40570000m, 0.97700000m, 0.28530000m, 0.52590000m
+                };
+
+                var viewMean = viewValues.Sum() / viewValues.Length;
+
+                for (int i = 0; i < viewValues.Length; i++)
+                {
+                    viewValues[i] = (viewMean - viewValues[i]) * (viewMean - viewValues[i]);
+                }
+
+                var expectedViewStandardDevation = (Decimal)Math.Sqrt((Double)viewValues.Sum() / viewValues.Length);
+
+                viewResultModel.Length.Should().Be(1);
+
+                viewResultModel[0].Number.Should().Be(portfolioNumber);
+                viewResultModel[0].Name.Should().Be(portfolioName);
+
+                viewResultModel[0].Mean.Should()
+                    .BeApproximately(PercentHelper.AsPercent(viewMean), 0.00000001m);
+
+                viewResultModel[0].StandardDeviation.Should()
+                    .BeApproximately(PercentHelper.AsPercent(expectedViewStandardDevation), 0.00000001m);
+
+
+
+            });
+        }
 
         private static PublicWebReportFacade.PortfolioModel[] GetModelFromActionResult(
             ActionResult actionResult)

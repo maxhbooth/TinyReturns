@@ -65,34 +65,34 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return _grossReturnSeries.CalculateReturn(request);
         }
 
-        public decimal? CalculateNetStandardDeviation()
+        public decimal? CalculateNetStandardDeviation(MonthYear inceptionMonth)
         {
             if (_netReturnSeries == null)
                 return null;
 
-            return _netReturnSeries.CalculateStandardDeviation();
+            return _netReturnSeries.CalculateStandardDeviation(inceptionMonth);
         }
 
-        public decimal? CalculateNetMean()
+        public decimal? CalculateNetMean(MonthYear inceptionMonth)
         {
             if (_netReturnSeries == null)
                 return null;
-            return _netReturnSeries.CalculateMean();
+            return _netReturnSeries.CalculateMean(inceptionMonth);
         }
 
-        public decimal? CalculateGrossStandardDeviation()
+        public decimal? CalculateGrossStandardDeviation(MonthYear inceptionMonth)
         {
             if (_grossReturnSeries == null)
                 return null;
 
-            return _grossReturnSeries.CalculateStandardDeviation();
+            return _grossReturnSeries.CalculateStandardDeviation(inceptionMonth);
         }
 
-        public decimal? CalculateGrossMean()
+        public decimal? CalculateGrossMean(MonthYear inceptionMonth)
         {
             if (_grossReturnSeries == null)
                 return null;
-            return _grossReturnSeries.CalculateMean();
+            return _grossReturnSeries.CalculateMean(inceptionMonth);
         }
 
         public bool HasNetReturnSeries
