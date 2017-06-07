@@ -216,7 +216,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 recordModel.ThreeMonths.Should().BeApproximately(-0.375236505m, 0.00000001m);
                 recordModel.TwelveMonths.Should().NotHaveValue();
                 recordModel.YearToDate.Should().BeApproximately(0.0010907851939m, 0.00000001m);
-
+                recordModel.FirstFullMonth.Should().NotHaveValue();
                 viewSpy.PerformanceReportExcelReportModel.MonthText.Should().Be("Month: 5/2016");
             });
         }
@@ -239,7 +239,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 {
                     Number = portfolioNumber,
                     Name = portfolioName,
-                    InceptionDate = new DateTime(2010, 1, 1)
+                    InceptionDate = new DateTime(2016, 1, 1)
                 });
 
                 var returnSeriesIdNet = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
@@ -316,7 +316,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 var expectedNetSixMonth = (1 - 0.4162m) * (1 - 0.4526m) * (1 + 0.955m)
                                             * (1 - 0.1157m) * (1 + 0.812m) * (1 + 0.1177m) - 1;
                 var expectedNetQuarterToDate = (1-0.4162m)* (1 - 0.4526m) - 1;
-
+                var expectedNetFirstFullMonth= (1 - 0.4162m) * (1 - 0.4526m) * (1 + 0.955m)
+                                          * (1 - 0.1157m) - 1;
 
                 netRecordModel.OneMonth.Should().BeApproximately(-0.4162m, 0.00000001m);
                 netRecordModel.ThreeMonths.Should().BeApproximately(-0.375236505m, 0.00000001m);
@@ -325,6 +326,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 netRecordModel.StandardDeviation.Should().NotHaveValue();
                 netRecordModel.YearToDate.Should().BeApproximately(0.0010907851939m, 0.00000001m);
                 netRecordModel.QuarterToDate.Should().BeApproximately(expectedNetQuarterToDate, 0.00000001m);
+                netRecordModel.FirstFullMonth.Should().BeApproximately(expectedNetFirstFullMonth, 0.00000001m);
 
 
                 var grossRecordModel = viewSpy.PerformanceReportExcelReportModel.Records[1];
@@ -337,7 +339,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 var expectedGrossSixMonth = (1 + 0.5307m) * (1 - 0.9776m) * (1 - 0.5501m)
                                             * (1 - 0.109m) * (1 + 0.6042m) * (1 - 0.3867m) - 1;
                 var expectedGrossQuarterToDate = (1+0.5307m) * (1 - 0.9776m) -1;
-
+                var expectedGrossFirstFullMonth = (1 + 0.5307m) * (1 - 0.9776m) * (1 - 0.5501m)
+                                            * (1 - 0.109m) - 1;
 
                 grossRecordModel.OneMonth.Should().BeApproximately(0.5307m, 0.00000001m);
                 grossRecordModel.ThreeMonths.Should().BeApproximately(-0.9845739727m, 0.00000001m);
@@ -346,6 +349,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 grossRecordModel.StandardDeviation.Should().NotHaveValue();
                 grossRecordModel.YearToDate.Should().BeApproximately(-0.977950928298953m, 0.00000001m);
                 grossRecordModel.QuarterToDate.Should().BeApproximately(expectedGrossQuarterToDate, 0.00000001m);
+                grossRecordModel.FirstFullMonth.Should().BeApproximately(expectedGrossFirstFullMonth, 0.00000001m);
 
                 viewSpy.PerformanceReportExcelReportModel.MonthText.Should().Be("Month: 5/2016");
             });
