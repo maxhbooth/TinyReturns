@@ -2,10 +2,10 @@
 *Max Booth and Emily Johnson*
 
 
-# Week 0
+#Week 0
 
 
-## GIT setup
+##GIT setup
 
 **Pulling from a Repository**
 After receiving local admin priviledges and downloading the GIT extensions, you can begin 
@@ -60,7 +60,7 @@ telling you to use --set-upstream to set it to the origin (which is good, just c
 Now you should have pushed your branch to dimensional server!
 
 
-## SQL setup
+##SQL setup
 
 
 http://itproguru.com/expert/2014/09/how-to-fix-login-failed-for-user-microsoft-sql-server-error-18456-step-by-step-add-sql-administrator-to-sql-management-studio/
@@ -68,32 +68,3 @@ http://itproguru.com/expert/2014/09/how-to-fix-login-failed-for-user-microsoft-s
 https://stackoverflow.com/questions/20923015/login-to-microsoft-sql-server-error-18456
 
 https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/connect-to-sql-server-when-system-administrators-are-locked-out
-
-
-
-## Tiny Returns Project
-
-We look at the computed data through the following entry points: Web Report
-and Excel Report
-
-
-### Web Report
-
-Through Visual Studio, right click on External.Web to Set as StartUp Project. The website is 
-implemented through Web.Controllers.PortfolioPerformanceController and called with Index().
-We need to GetPortfolioPerformance() for each of the portfolios we want to display.
-We CreatePortfolioModel(PortfolioWithPerformance, MonthYear) where the PortfolioWithPerformance 
-is an entry in the TinyReturns webpage chart. Each entry has a number, name, and ReturnSeries 
-and a benchmark array where each benchmark has a number, name, and ReturnSeries
-where ReturnSeries: an array of monthly returns; financial math
-An entry is created by:
-PublicWebReportFacade creates an entry (Number, Name, OneMonth,ThreeMonth, YearToDate)
-
-#### Six Month Returns
-
-Had to add variables for sixMonth in all classes that include threeMonth. Then had to jump into 
-code to find html files that display the monthly returns to add Six Month Returns
-
-#### percentFormat
-
-Want to display the values in percent format with 2 decimal places

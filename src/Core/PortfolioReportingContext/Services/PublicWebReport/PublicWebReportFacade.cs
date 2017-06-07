@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
@@ -60,15 +61,19 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             MonthYear previousMonthYear)
         {
             var threeMonthCalculationRequest = CalculateReturnRequestFactory.ThreeMonth(previousMonthYear);
+            var sixMonthCalculationRequest = CalculateReturnRequestFactory.SixMonth(previousMonthYear);
+            var quarterToDateCalculationRequest = CalculateReturnRequestFactory.QuarterToDate(previousMonthYear);
             var yearToDateCalculationRequest = CalculateReturnRequestFactory.YearToDate(previousMonthYear);
 
             var portfolioModel = new PortfolioModel()
             {
                 Number = portfolioWithPerformance.Number,
                 Name = portfolioWithPerformance.Name,
-                OneMonth = portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear),
-                ThreeMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(threeMonthCalculationRequest),
-                YearToDate = portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest),
+                OneMonth = PercentHelper.AsPercent(portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear)),
+                ThreeMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(threeMonthCalculationRequest)),
+                SixMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(sixMonthCalculationRequest)),
+                YearToDate = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest)),
+                QuarterToDate = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(quarterToDateCalculationRequest)),
                 NetNotGross = true
             };
 
@@ -81,11 +86,12 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 var benchmarkModel = new BenchmarkModel()
                 {
                     Name = benchmarkWithPerformance.Name,
-                    OneMonth = benchmarkWithPerformance.GetNetMonthlyReturn(previousMonthYear),
-                    ThreeMonth = benchmarkWithPerformance.CalculateReturnAsDecimal(threeMonthCalculationRequest),
-                    YearToDate = benchmarkWithPerformance.CalculateReturnAsDecimal(yearToDateCalculationRequest)
+                     OneMonth = PercentHelper.AsPercent(benchmarkWithPerformance.GetNetMonthlyReturn(previousMonthYear)),
+                    ThreeMonth = PercentHelper.AsPercent(benchmarkWithPerformance.CalculateReturnAsDecimal(threeMonthCalculationRequest)),
+                    SixMonth = PercentHelper.AsPercent(benchmarkWithPerformance.CalculateReturnAsDecimal(sixMonthCalculationRequest)),
+                    QuarterToDate = PercentHelper.AsPercent(benchmarkWithPerformance.CalculateReturnAsDecimal(quarterToDateCalculationRequest)),
+                    YearToDate = PercentHelper.AsPercent(benchmarkWithPerformance.CalculateReturnAsDecimal(yearToDateCalculationRequest)),
                 };
-
                 benchmarkModels.Add(benchmarkModel);
             }
 
@@ -145,6 +151,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
             public decimal? OneMonth { get; set; }
             public decimal? ThreeMonth { get; set; }
+            public decimal? SixMonth { get; set; }
+            public decimal? QuarterToDate { get; set; }
             public decimal? YearToDate { get; set; }
             public bool NetNotGross { get; set; }
 
@@ -156,7 +164,26 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public string Name { get; set; }
             public decimal? OneMonth { get; set; }
             public decimal? ThreeMonth { get; set; }
+            public decimal? SixMonth { get; set; }
+            public decimal? QuarterToDate { get; set; }
             public decimal? YearToDate { get; set; }
+        }
+    }
+
+    public static class PercentHelper
+    {
+        public static decimal? AsPercent(decimal? decimalToChange)
+        {
+            if (decimalToChange == null)
+            {
+                return null;
+            }
+            return decimal.Round(decimalToChange.Value * 100, 2, MidpointRounding.AwayFromZero);
+        }
+        public static decimal AsPercent(decimal decimalToChange)
+        {
+
+            return decimal.Round(decimalToChange* 100, 2, MidpointRounding.AwayFromZero);
         }
     }
 }

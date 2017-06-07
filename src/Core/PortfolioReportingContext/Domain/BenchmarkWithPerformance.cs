@@ -1,5 +1,4 @@
 ﻿using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
-using System;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 {
@@ -44,15 +43,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return null;
         }
 
-        public decimal? GetNetMonthlyReturnPercent(
-            MonthYear monthYear)
-        {
-            if (HasReturnSeries)
-                return _returnSeries.GetMonthlyReturnPercent(monthYear);
-
-            return null;
-        }
-
         public decimal? CalculateReturnAsDecimal(
             CalculateReturnRequest request)
         {
@@ -61,21 +51,11 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 
             return null;
         }
-
-        public decimal? CalculateReturnAsPercent(
-            CalculateReturnRequest request)
-        {
-            if (HasReturnSeries)//THIS MEANS NOT NULL
-            {
                 decimal? orig = _returnSeries.CalculateReturnAsDecimal(request);
                 if (orig != null)
                 {
                     decimal original = (decimal)orig * 100;
                     return decimal.Round(original, 2, MidpointRounding.AwayFromZero);
                 }
-            }
-
-            return null;
-        }
     }
 }

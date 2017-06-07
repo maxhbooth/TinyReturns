@@ -126,6 +126,58 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.ShareContext.Services.Ci
             testHelper.DeleteAllDataInDatabase();
         }
 
+        [Fact(DisplayName = "ImportMonthyPortfolioNetReturnsFile should not duplicate repeated data.")]
+        public void ImportMonthyPortfolioNetReturnsFileShouldntDuplicateReturnSeries()
+        {
+            // Arrange
+            var testHelper = new TestHelper();
+
+            testHelper.DeleteAllDataInDatabase();
+
+            var importer = testHelper.CreateImporter();
+
+            var filePath = GetReturnsTestFilePath();
+
+            // Act
+            importer.ImportMonthyPortfolioNetReturnsFile(filePath);
+            importer.ImportMonthyPortfolioNetReturnsFile(filePath);
+            importer.ImportMonthyPortfolioNetReturnsFile(filePath);
+
+            // Assert
+            var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
+
+            Assert.Equal(3, returnSeriesDtos.Length);
+
+            // **
+
+            var returnSeriesPortfolio100 = returnSeriesDtos.FirstOrDefault(d =>
+                d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(100));
+
+            Assert.NotNull(returnSeriesPortfolio100);
+            Assert.True(returnSeriesPortfolio100.ReturnSeriesId > 0);
+
+            // **
+
+            var returnSeriesPortfolio101 = returnSeriesDtos.FirstOrDefault(d =>
+                d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(101));
+
+            Assert.NotNull(returnSeriesPortfolio101);
+            Assert.True(returnSeriesPortfolio101.ReturnSeriesId > 0);
+
+            // **
+
+            var returnSeriesPortfolio102 = returnSeriesDtos.FirstOrDefault(d =>
+                d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(102));
+
+            Assert.NotNull(returnSeriesPortfolio102);
+            Assert.True(returnSeriesPortfolio102.ReturnSeriesId > 0);
+
+            // **
+
+            // Teardown
+            testHelper.DeleteAllDataInDatabase();
+        }
+
         [Fact(DisplayName = "ImportMonthyPortfolioNetReturnsFile should populate the table Performance.MonthlyReturn with monthly returns from file.")]
         public void ImportMonthyPortfolioNetReturnsFileShouldPopulateMonthlyReturns()
         {
@@ -139,6 +191,48 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.ShareContext.Services.Ci
             var filePath = GetReturnsTestFilePath();
 
             // Act
+            importer.ImportMonthyPortfolioNetReturnsFile(filePath);
+
+            // Assert
+            var returnSeriesDtos = testHelper.GetAllReturnSeriesDtos();
+
+            var returnSeriesPortfolio100 = returnSeriesDtos.FirstOrDefault(d =>
+                d.Name == CitiMonthyReturnImporter.CreateReturnSeriesName(100));
+
+            Assert.NotNull(returnSeriesPortfolio100);
+
+            var allMonthlyReturnDtos = testHelper.GetAllMonthlyReturnDtos();
+
+            var monthlyReturnDtos = allMonthlyReturnDtos
+                .Where(d => d.ReturnSeriesId == returnSeriesPortfolio100.ReturnSeriesId)
+                .ToArray();
+
+            Assert.Equal(9, monthlyReturnDtos.Length);
+
+            var monthlyReturnDto = monthlyReturnDtos.FirstOrDefault(d => d.Month == 10 && d.Year == 2013);
+            Assert.NotNull(monthlyReturnDto);
+
+            Assert.Equal(0.04400550m, monthlyReturnDto.ReturnValue, 5);
+
+            // Teardown
+            testHelper.DeleteAllDataInDatabase();
+        }
+
+        [Fact(DisplayName = "ImportMonthlyPortfolioNetReturnsFile should not duplicate repeated data.")]
+        public void ImportMonthyPortfolioNetReturnsFileShouldntDuplicateMonthlyReturns()
+        {
+            // Arrange
+            var testHelper = new TestHelper();
+
+            testHelper.DeleteAllDataInDatabase();
+
+            var importer = testHelper.CreateImporter();
+
+            var filePath = GetReturnsTestFilePath();
+
+            // Act
+            importer.ImportMonthyPortfolioNetReturnsFile(filePath);
+            importer.ImportMonthyPortfolioNetReturnsFile(filePath);
             importer.ImportMonthyPortfolioNetReturnsFile(filePath);
 
             // Assert
