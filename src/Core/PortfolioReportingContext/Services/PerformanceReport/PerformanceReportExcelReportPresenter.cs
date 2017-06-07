@@ -96,8 +96,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
             var firstFullMonthResult = portfolio.CalculateNetReturn(firstFullMonthRequest);
             recordModel.FirstFullMonth= firstFullMonthResult.GetNullValueOnError();
 
-            recordModel.StandardDeviation = portfolio.CalculateNetStandardDeviation(inceptionMonth);
-            recordModel.Mean = portfolio.CalculateNetMean(inceptionMonth);
+            recordModel.StandardDeviation = portfolio.CalculateNetStandardDeviation();
+            recordModel.Mean = portfolio.CalculateNetMean();
 
             return recordModel;
         }
@@ -146,8 +146,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
             var firstFullMonthResult = portfolio.CalculateGrossReturn(firstFullMonthRequest);
             recordModel.FirstFullMonth = firstFullMonthResult.GetNullValueOnError();
 
-            recordModel.StandardDeviation = portfolio.CalculateGrossStandardDeviation(inceptionMonth);
-            recordModel.Mean= portfolio.CalculateGrossMean(inceptionMonth);
+            recordModel.StandardDeviation = portfolio.CalculateGrossStandardDeviation();
+            recordModel.Mean= portfolio.CalculateGrossMean();
 
             return recordModel;
         }

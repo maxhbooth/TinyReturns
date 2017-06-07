@@ -61,9 +61,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
         {
             var mean = CalculateMean(inceptionMonth);
 
-            var values = _monthlyReturns.Where(
-                x => (x.MonthYear.Month >= inceptionMonth.Month && x.MonthYear.Year == inceptionMonth.Year) ||
-                     (x.MonthYear.Year > inceptionMonth.Year)).Select(x => x.Value).ToArray();
+            var values = _monthlyReturns.Where(x => x.MonthYear >= inceptionMonth).Select(x => x.Value).ToArray();
 
             if (mean == null || values.Length < 12)
             {
@@ -82,9 +80,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 
         public decimal? CalculateMean(MonthYear inceptionMonth)
         {
-            var valuesSinceInception = _monthlyReturns.Where(
-                x => (x.MonthYear.Month >= inceptionMonth.Month && x.MonthYear.Year == inceptionMonth.Year) ||
-                     (x.MonthYear.Year > inceptionMonth.Year)).Select(x => x.Value).ToArray();
+            var valuesSinceInception = _monthlyReturns.Where(x => x.MonthYear >= inceptionMonth).Select(x => x.Value).ToArray();
 
             if (valuesSinceInception == null || valuesSinceInception.Length == 0)
             {
