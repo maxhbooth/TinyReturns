@@ -372,10 +372,5 @@ namespace Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend
             return new MonthYear(Year, quarterMonth);
 
         }
-        public static bool operator <= (MonthYear monthYear, MonthYear monthToBeCompared)
-        {
-            return (monthYear.Month >= monthToBeCompared.Month && monthYear.Year == monthToBeCompared.Year) ||
-            (monthYear.Year > monthToBeCompared.Year);
-        }
     }
 }
