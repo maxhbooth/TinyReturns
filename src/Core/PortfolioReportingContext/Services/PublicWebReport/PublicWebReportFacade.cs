@@ -59,7 +59,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 SixMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(sixMonthCalculationRequest)),
                 YearToDate = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest)),
                 QuarterToDate = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(quarterToDateCalculationRequest)),
-                FirstFullMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(firstFullMonthCalculationRequest),
+                FirstFullMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(firstFullMonthCalculationRequest))
             };
 
             var benchmarkModels = new List<BenchmarkModel>();
@@ -76,7 +76,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                     SixMonth = PercentHelper.AsPercent(benchmarkWithPerformance.CalculateReturnAsDecimal(sixMonthCalculationRequest)),
                     QuarterToDate = PercentHelper.AsPercent(benchmarkWithPerformance.CalculateReturnAsDecimal(quarterToDateCalculationRequest)),
                     YearToDate = PercentHelper.AsPercent(benchmarkWithPerformance.CalculateReturnAsDecimal(yearToDateCalculationRequest)),
-                    FirstFullMonth = benchmarkWithPerformance.CalculateReturnAsDecimal(firstFullMonthCalculationRequest),
+                    FirstFullMonth = PercentHelper.AsPercent(benchmarkWithPerformance.CalculateReturnAsDecimal(firstFullMonthCalculationRequest)),
                 };
 
                 benchmarkModels.Add(benchmarkModel);
