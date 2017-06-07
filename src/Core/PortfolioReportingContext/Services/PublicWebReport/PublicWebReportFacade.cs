@@ -19,16 +19,14 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
         {
             _portfolioWithPerformanceRepository = portfolioWithPerformanceRepository;
             _clock = clock;
+            monthBeingReportedOn = new MonthYear(_clock.GetCurrentDate());
         }
 
         public PortfolioModel[] GetPortfolioPerformance()
         {
             var portfolios = _portfolioWithPerformanceRepository.GetAll();
 
-            var currentMonthYear = new MonthYear(_clock.GetCurrentDate());
-            var previousMonthYear = currentMonthYear.AddMonths(-1);
-
-            monthBeingReportedOn = previousMonthYear;
+            var previousMonthYear = monthBeingReportedOn.AddMonths(-1);
 
             var portfolioModels = new List<PortfolioModel>();
 
@@ -44,20 +42,11 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
         public PortfolioModel[] GetPortfolioPerformance(MonthYear currentMonthYear)
         {
-            var portfolios = _portfolioWithPerformanceRepository.GetAll();
-
-            var previousMonthYear = currentMonthYear.AddMonths(-1);
-
-            var portfolioModels = new List<PortfolioModel>();
-
-            foreach (var portfolioWithPerformance in portfolios)
+            if (currentMonthYear != null)
             {
-                var portfolioModel = CreatePortfolioModel(portfolioWithPerformance, previousMonthYear);
-
-                portfolioModels.Add(portfolioModel);
+                monthBeingReportedOn = currentMonthYear;
             }
-
-            return portfolioModels.ToArray();
+            return GetPortfolioPerformance();
         }
 
         private static PortfolioModel CreatePortfolioModel(
