@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Web.Mvc;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
@@ -10,9 +11,9 @@ using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using Dimensional.TinyReturns.IntegrationTests.Core;
 using Dimensional.TinyReturns.Web.Controllers;
+using Dimensional.TinyReturns.Web.Models;
 using FluentAssertions;
 using Xunit;
-using System.Diagnostics;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 {
@@ -92,7 +93,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     new ClockStub(CurrentDate));
 
                 return new PortfolioPerformanceController(
-                    publicWebReportFacade);
+                    publicWebReportFacade, _monthlyReturnDataTableGateway);
             }
 
             public void InsertPortfolioDto(
@@ -156,7 +157,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         }
 
         [Fact]
-        public void ShouldReturnNoRecrodsWhenNoPortfolioAreFound()
+        public void ShouldReturnNoRecordsWhenNoPortfolioAreFound()
         {
             // Arrange
             var testHelper = new TestHelper();
@@ -169,9 +170,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     var actionResult = controller.Index();
 
                     // Assert
+                    var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
                     var viewResultModel = GetModelFromActionResult(actionResult);
 
-                    viewResultModel.Length.Should().Be(0);
+                    viewResultModel.MonthYears.Count().Should().Be(0);
+                    viewResultModel.MonthYear.Should().BeEmpty();
+                    viewResultPortfolio.Length.Should().Be(0);
                 });
         }
 
@@ -196,13 +200,17 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
+                var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
                 var viewResultModel = GetModelFromActionResult(actionResult);
 
-                viewResultModel.Length.Should().Be(1);
+                viewResultModel.MonthYears.Count().Should().Be(0); //only care about performance numbers so.
+                viewResultModel.MonthYear.Should().BeEmpty();
 
-                viewResultModel[0].Number.Should().Be(100);
-                viewResultModel[0].Name.Should().Be("Portfolio 100");
-                viewResultModel[0].Benchmarks.Should().BeEmpty();
+                viewResultPortfolio.Length.Should().Be(1);
+
+                viewResultPortfolio[0].Number.Should().Be(100);
+                viewResultPortfolio[0].Name.Should().Be("Portfolio 100");
+                viewResultPortfolio[0].Benchmarks.Should().BeEmpty();
             });
         }
 
@@ -258,27 +266,36 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
+                var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
                 var viewResultModel = GetModelFromActionResult(actionResult);
 
-                viewResultModel.Length.Should().Be(1);
+                viewResultModel.MonthYears.Count().Should().Be(1);
+                viewResultModel.MonthYears.First().Value.Should()
+                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
+                viewResultModel.MonthYears.First().Text.Should()
+                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
 
-                viewResultModel[0].Number.Should().Be(portfolioNumber);
-                viewResultModel[0].Name.Should().Be(portfolioName);
-                viewResultModel[0].Benchmarks.Should().BeEmpty();
+                viewResultPortfolio.Length.Should().Be(1);
 
-                viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00001m);
+                viewResultPortfolio[0].Number.Should().Be(portfolioNumber);
+                viewResultPortfolio[0].Name.Should().Be(portfolioName);
+                viewResultPortfolio[0].Benchmarks.Should().BeEmpty();
+
+<<<<<<< HEAD
+                viewResultPortfolio[0].OneMonth.Should().BeApproximately(0.02m, 0.00001m);
+                viewResultPortfolio[0].ThreeMonth.Should().NotHaveValue();
+                viewResultPortfolio[0].YearToDate.Should().BeApproximately(0.02m, 0.00001m);
+=======
+                viewResultModel[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00001m);
                 viewResultModel[0].ThreeMonth.Should().NotHaveValue();
-                viewResultModel[0].YearToDate.Should().BeApproximately(0.02m, 0.00001m);
+                viewResultModel[0].YearToDate.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00001m);
+>>>>>>> develop
             });
         }
 
 
         [Fact]
-<<<<<<< HEAD
         public void ShouldReturnSinglePortfolioWithReturnsForfiveMonths()
-=======
-        public void ShouldReturnSinglePortfolioWithReturnsForFourMonths()
->>>>>>> develop
         {
             // Arrange
             var testHelper = new TestHelper();
@@ -365,7 +382,38 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
+                var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
                 var viewResultModel = GetModelFromActionResult(actionResult);
+<<<<<<< HEAD
+                var viewResultModelArray = viewResultModel.MonthYears.ToArray();
+
+                viewResultModel.MonthYears.Count().Should().Be(5);
+
+                viewResultModelArray[0].Value.Should()
+                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
+                viewResultModelArray[0].Text.Should()
+                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
+                viewResultModelArray[1].Value.Should()
+                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
+                viewResultModelArray[1].Text.Should()
+                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
+                viewResultModelArray[2].Value.Should()
+                    .Be(monthYearMinus2.Month.ToString() + "/" + monthYearMinus2.Year.ToString());
+                viewResultModelArray[2].Text.Should()
+                    .Be(monthYearMinus2.Month.ToString() + "/" + monthYearMinus2.Year.ToString());
+
+                viewResultModelArray.All(m => m != null).Should().BeTrue();
+
+                viewResultPortfolio.Length.Should().Be(1);
+
+                viewResultPortfolio[0].Number.Should().Be(portfolioNumber);
+                viewResultPortfolio[0].Name.Should().Be(portfolioName);
+                viewResultPortfolio[0].Benchmarks.Should().BeEmpty();
+
+                viewResultPortfolio[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
+                viewResultPortfolio[0].ThreeMonth.Should().BeApproximately(0.039584m, 0.00000001m);
+                viewResultPortfolio[0].YearToDate.Should().BeApproximately(0.0394800416m, 0.00000001m);
+=======
 
                 viewResultModel.Length.Should().Be(1);
 
@@ -373,28 +421,19 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].Name.Should().Be(portfolioName);
                 viewResultModel[0].Benchmarks.Should().BeEmpty();
 
-                viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
-                viewResultModel[0].ThreeMonth.Should().BeApproximately(0.039584m, 0.00000001m);
-                viewResultModel[0].YearToDate.Should().BeApproximately(0.0394800416m, 0.00000001m);
+                viewResultModel[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00000001m);
+                viewResultModel[0].ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(0.039584m), 0.00000001m);
+                viewResultModel[0].YearToDate.Should().BeApproximately(PercentHelper.AsPercent(0.0394800416m), 0.00000001m);
+>>>>>>> develop
             });
         }
+        
 
-
-<<<<<<< HEAD
         [Fact]
         public void ShouldReturnSinglePortfolioWithReturnsForEightMonths()
         {
             // Arrange
             var testHelper = new TestHelper();
-=======
-
-        [Fact]
-        public void ShouldReturnSinglePortfolioWithReturnsForQuarterToDate()
-        {
-            // Arrange
-            var testHelper = new TestHelper();
-
->>>>>>> develop
             testHelper.DatabaseDataDeleter(() =>
             {
                 var portfolioNumber = 100;
@@ -504,40 +543,58 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
+                var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
                 var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModelArray = viewResultModel.MonthYears.ToArray();
 
-                viewResultModel.Length.Should().Be(1);
+                viewResultModel.MonthYears.Count().Should().Be(8);
 
-                viewResultModel[0].Number.Should().Be(portfolioNumber);
-                viewResultModel[0].Name.Should().Be(portfolioName);
-                viewResultModel[0].Benchmarks.Should().BeEmpty();
+                viewResultModelArray[0].Value.Should()
+                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
+                viewResultModelArray[0].Text.Should()
+                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
+                viewResultModelArray[1].Value.Should()
+                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
+                viewResultModelArray[1].Text.Should()
+                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
+                viewResultModelArray[2].Value.Should()
+                    .Be(monthYearMinus2.Month.ToString() + "/" + monthYearMinus2.Year.ToString());
+                viewResultModelArray[2].Text.Should()
+                    .Be(monthYearMinus2.Month.ToString() + "/" + monthYearMinus2.Year.ToString());
 
-<<<<<<< HEAD
+                viewResultModelArray.All(m => m != null).Should().BeTrue();
+
+                viewResultPortfolio.Length.Should().Be(1);
+
+                viewResultPortfolio[0].Number.Should().Be(portfolioNumber);
+                viewResultPortfolio[0].Name.Should().Be(portfolioName);
+                viewResultPortfolio[0].Benchmarks.Should().BeEmpty();
+
                 var expectedThreeMonthResult = (1.02m) * (.98m) * (1.04m) - 1;
                 var expectedSixMonthResult = (1.02m) * (.98m) * (1.04m) * (1.01m) * (.99m) * (1.03m) - 1;
+                var expectedQuarterToDateResult = (1.02m) * (.98m) - 1;
                 var expectedYearToDateResult = (1.02m) * (.98m) * (1.04m) * (1.01m)
                                                 * (.99m) * (1.03m) * (1.02m) * (1.01m)- 1;
 
-                viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
-                viewResultModel[0].ThreeMonth.Should().BeApproximately(expectedThreeMonthResult, 0.00000001m);
-                viewResultModel[0].SixMonth.Should().BeApproximately(
-                expectedSixMonthResult, 0.00000001m);
-                viewResultModel[0].YearToDate.Should().BeApproximately(expectedYearToDateResult, 0.00000001m);
+<<<<<<< HEAD
+                viewResultPortfolio[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
+                viewResultPortfolio[0].ThreeMonth.Should().BeApproximately(expectedThreeMonthResult, 0.00000001m);
+                viewResultPortfolio[0].SixMonth.Should().BeApproximately(
+                 expectedSixMonthResult, 0.00000001m);
+		        viewResultPortfolio[0].QuarterToDate.Should().BeApproximately(expectedQuarterToDateResult, 0.00000001m);
+
+                viewResultPortfolio[0].YearToDate.Should().BeApproximately(expectedYearToDateResult, 0.00000001m);
 =======
-                var ExpectedThreeMonthResult = (1.02m) * (.98m) * (1.04m) - 1;
-                var ExpectedYearToDateResult = (1.02m) * (.98m) * (1.04m) * (1.01m)
-                                                * (.99m) * (1.03m) * (1.02m) * (1.01m) - 1;
-                var ExpectedQuarterToDateResult = (1.02m) * (.98m) - 1;
+                viewResultModel[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00000001m);
+                viewResultModel[0].ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedThreeMonthResult), 0.00000001m);
+                viewResultModel[0].SixMonth.Should().BeApproximately(
+                 expectedSixMonthResult, 0.00000001m);
+		        viewResultModel[0].QuarterToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedQuarterToDateResult), 0.00000001m);
 
-                viewResultModel[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
-                viewResultModel[0].ThreeMonth.Should().BeApproximately(ExpectedThreeMonthResult, 0.00000001m);
-                viewResultModel[0].YearToDate.Should().BeApproximately(ExpectedYearToDateResult, 0.00000001m);
-                viewResultModel[0].QuarterToDate.Should().BeApproximately(ExpectedQuarterToDateResult, 0.00000001m);
-
+                viewResultModel[0].YearToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedYearToDateResult), 0.00000001m);
 >>>>>>> develop
             });
         }
-
 
         [Fact]
         public void ShouldReturnPortfolioWithBenchmark()
@@ -618,15 +675,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     seed: 8);
                 foreach (var benchmarkMonthlyReturnDto in benchmarkMonthlyReturnDtos)
                 {
-<<<<<<< HEAD
-                        Debug.WriteLine(benchmarkMonthlyReturnDto.ReturnValue);
-                }
-                
-=======
                     Debug.WriteLine(benchmarkMonthlyReturnDto.ReturnValue);
                 }
-
->>>>>>> develop
+                
                 testHelper.InsertMonthlyReturnDtos(benchmarkMonthlyReturnDtos);
 
                 // **
@@ -644,75 +695,76 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
 
                 var expectedViewOneMonth = (1 + 0.812m) - 1;
-<<<<<<< HEAD
                 var expectedViewThreeMonth = (1 + 0.812m) * (1 + 0.1177m) * (1 -0.588m) - 1;
                 var expectedViewSixMonth = (1 + 0.812m) * (1 + 0.1177m) * (1 -0.588m) * (1 + 0.1163m)
                                            * (1 + 0.536m) * (1 + 0.6346m) - 1;
-                var expectedViewYearToDate = (1 + 0.812m) * (1 + 0.1177m) * (1 -0.588m) * (1 + 0.1163m)
-=======
-                var expectedViewThreeMonth = (1 + 0.812m) * (1 + 0.1177m) * (1 - 0.588m) - 1;
                 var expectedViewQuarterToDate= (1 + 0.812m) * (1 + 0.1177m) -1;
-                var expectedViewYearToDate = (1 + 0.812m) * (1 + 0.1177m) * (1 - 0.588m) * (1 + 0.1163m)
->>>>>>> develop
+                var expectedViewYearToDate = (1 + 0.812m) * (1 + 0.1177m) * (1 -0.588m) * (1 + 0.1163m)
                                              * (1 + 0.536m) - 1;
                 // note we only include 5 months because the monthyear actually starts with may.
 
-                viewResultModel.Length.Should().Be(1);
+                viewResultPortfolio.Length.Should().Be(1);
 
-                viewResultModel[0].Number.Should().Be(portfolioNumber);
-                viewResultModel[0].Name.Should().Be(portfolioName);
+                viewResultPortfolio[0].Number.Should().Be(portfolioNumber);
+                viewResultPortfolio[0].Name.Should().Be(portfolioName);
 
-                viewResultModel[0].OneMonth.Should().BeApproximately(expectedViewOneMonth, 0.00000001m);
-                viewResultModel[0].ThreeMonth.Should().BeApproximately(expectedViewThreeMonth, 0.00000001m);
 <<<<<<< HEAD
-                viewResultModel[0].SixMonth.Should().BeApproximately(expectedViewSixMonth, 0.00000001m);
-                viewResultModel[0].YearToDate.Should().BeApproximately(expectedViewYearToDate, 0.00000001m);
-
+                viewResultPortfolio[0].OneMonth.Should().BeApproximately(expectedViewOneMonth, 0.00000001m);
+                viewResultPortfolio[0].ThreeMonth.Should().BeApproximately(expectedViewThreeMonth, 0.00000001m);
+                viewResultPortfolio[0].SixMonth.Should().BeApproximately(expectedViewSixMonth, 0.00000001m);
+                viewResultPortfolio[0].QuarterToDate.Should().BeApproximately(expectedViewQuarterToDate, 0.00000001m);
+                viewResultPortfolio[0].YearToDate.Should().BeApproximately(expectedViewYearToDate, 0.00000001m);
 =======
-                viewResultModel[0].QuarterToDate.Should().BeApproximately(expectedViewQuarterToDate, 0.00000001m);
-                viewResultModel[0].YearToDate.Should().BeApproximately(expectedViewYearToDate, 0.00000001m);
+                viewResultModel[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedViewOneMonth), 0.00000001m);
+                viewResultModel[0].ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedViewThreeMonth), 0.00000001m);
+                viewResultModel[0].SixMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedViewSixMonth), 0.00000001m);
+                viewResultModel[0].QuarterToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedViewQuarterToDate), 0.00000001m);
+                viewResultModel[0].YearToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedViewYearToDate), 0.00000001m);
 >>>>>>> develop
-                viewResultModel[0].Benchmarks.Should().HaveCount(1);
 
-                var benchmarkModel = viewResultModel[0].Benchmarks[0];
+                viewResultPortfolio[0].Benchmarks.Should().HaveCount(1);
+
+                var benchmarkModel = viewResultPortfolio[0].Benchmarks[0];
 
                 var expectedBenchOneMonth = (1 - 0.0191m) - 1;
                 var expectedBenchThreeMonth = (1 - 0.0191m) * (1 + .1001m) * (1 + 0.6358m) - 1;
-<<<<<<< HEAD
                 var expectedBenchSixMonth = (1 - 0.0191m) * (1 + .1001m) * (1 + 0.6358m) * (1 - 0.4686m)
                                             * (1 - 0.2802m) * (1 - 0.6707m) - 1;
-                var expectedBenchYearToDate = (1 - 0.0191m) * (1 + .1001m) * (1 + 0.6358m) * (1 - 0.4686m)
-                                              * (1 - 0.2802m)  - 1;
-=======
                 var expectedBenchQuarterToDate = (1 - 0.0191m) * (1 + .1001m) - 1;
                 var expectedBenchYearToDate = (1 - 0.0191m) * (1 + .1001m) * (1 + 0.6358m) * (1 - 0.4686m)
-                                              * (1 - 0.2802m) - 1;
->>>>>>> develop
+                                              * (1 - 0.2802m)  - 1;
 
                 benchmarkModel.Name.Should().Be(benchmarkName);
-                benchmarkModel.OneMonth.Should().BeApproximately(expectedBenchOneMonth, 0.00000001m);
-                benchmarkModel.ThreeMonth.Should().BeApproximately(expectedBenchThreeMonth, 0.00000001m);
-<<<<<<< HEAD
-                benchmarkModel.SixMonth.Should().BeApproximately(expectedBenchSixMonth, 0.00000001m);
-=======
-                benchmarkModel.QuarterToDate.Should().BeApproximately(expectedBenchQuarterToDate, 0.00000001m);
->>>>>>> develop
-                benchmarkModel.YearToDate.Should().BeApproximately(expectedBenchYearToDate, 0.00000001m);
+                benchmarkModel.OneMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchOneMonth), 0.00000001m);
+                benchmarkModel.ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchThreeMonth), 0.00000001m);
+                benchmarkModel.SixMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchSixMonth), 0.00000001m);
+                benchmarkModel.QuarterToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchQuarterToDate), 0.00000001m);
+                benchmarkModel.YearToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchYearToDate), 0.00000001m);
             });
         }
 
 
-        private static PublicWebReportFacade.PortfolioModel[] GetModelFromActionResult(
+        private static PublicWebReportFacade.PortfolioModel[] GetPortfolioFromActionResult(
             ActionResult actionResult)
         {
             actionResult.Should().BeAssignableTo<ViewResult>();
             var viewResult = (ViewResult) actionResult;
 
-            viewResult.Model.Should().BeAssignableTo<PublicWebReportFacade.PortfolioModel[]>();
-            return (PublicWebReportFacade.PortfolioModel[]) viewResult.Model;
+            ((PastMonthsModel)viewResult.Model).Portfolios.Should().BeAssignableTo<PublicWebReportFacade.PortfolioModel[]>();
+            return ((PastMonthsModel)viewResult.Model).Portfolios;
+        }
+
+        private static PastMonthsModel GetModelFromActionResult(
+            ActionResult actionResult)
+        {
+            actionResult.Should().BeAssignableTo<ViewResult>();
+            var viewResult = (ViewResult)actionResult;
+
+            viewResult.Model.Should().BeAssignableTo<PastMonthsModel>();
+            return (PastMonthsModel)viewResult.Model;
         }
     }
 }
