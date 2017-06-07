@@ -39,8 +39,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
         public static CalculateReturnRequest QuarterToDate(
             MonthYear endMonth)
         {
-            //var QuarterMonth = (endMonth.Month) % 3;    
-            //var diffMonths = endMonth.Month - QuarterMonth + 1; 
 
             var quarterMonth = 0;
 
@@ -73,5 +71,12 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return new CalculateReturnRequest(
                 endMonth, 12);
         }
+
+        public static CalculateReturnRequest FirstFullMonth(MonthYear endMonth, int monthsBack)
+        {
+            return new CalculateReturnRequest(
+                endMonth, monthsBack);
+        }
+
     }
 }

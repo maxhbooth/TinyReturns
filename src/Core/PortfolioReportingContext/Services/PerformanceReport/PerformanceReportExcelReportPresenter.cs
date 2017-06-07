@@ -64,6 +64,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
                 Type = entityType,
                 FeeType = "Net",
             };
+            var firstFullMonth = new MonthYear(portfolio.InceptionDate).AddMonths(1);
+            int fullMonthsSinceInception = new MonthYearRange(firstFullMonth, monthYear).NumberOfMonthsInRange;
 
             var oneMonthRequest = CalculateReturnRequestFactory.OneMonth(monthYear);
             var oneMonthResult = portfolio.CalculateNetReturn(oneMonthRequest);
@@ -89,6 +91,10 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
             var yearToDateResult = portfolio.CalculateNetReturn(yearToDateRequest);
             recordModel.YearToDate = yearToDateResult.GetNullValueOnError();
 
+            var firstFullMonthRequest = CalculateReturnRequestFactory.FirstFullMonth(monthYear, fullMonthsSinceInception);
+            var firstFullMonthResult = portfolio.CalculateNetReturn(firstFullMonthRequest);
+            recordModel.FirstFullMonth= firstFullMonthResult.GetNullValueOnError();
+
             return recordModel;
         }
 
@@ -104,6 +110,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
                 Type = entityType,
                 FeeType = "Gross",
             };
+            var firstFullMonth = new MonthYear(portfolio.InceptionDate).AddMonths(1);
+            int fullMonthsSinceInception = new MonthYearRange(firstFullMonth, monthYear).NumberOfMonthsInRange;
 
             var oneMonthRequest = CalculateReturnRequestFactory.OneMonth(monthYear);
             var oneMonthResult = portfolio.CalculateGrossReturn(oneMonthRequest);
@@ -128,6 +136,10 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Perfor
             var yearToDateRequest = CalculateReturnRequestFactory.YearToDate(monthYear);
             var yearToDateResult = portfolio.CalculateGrossReturn(yearToDateRequest);
             recordModel.YearToDate = yearToDateResult.GetNullValueOnError();
+
+            var firstFullMonthRequest = CalculateReturnRequestFactory.FirstFullMonth(monthYear, fullMonthsSinceInception);
+            var firstFullMonthResult = portfolio.CalculateGrossReturn(firstFullMonthRequest);
+            recordModel.FirstFullMonth = firstFullMonthResult.GetNullValueOnError();
 
             return recordModel;
         }
