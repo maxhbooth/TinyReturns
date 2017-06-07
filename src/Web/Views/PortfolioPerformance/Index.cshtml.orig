@@ -1,0 +1,88 @@
+﻿@model Dimensional.TinyReturns.Web.Models.PortfolioPerformanceNetGrossModel
+
+@{
+    ViewBag.Title = "Portfolio Performance";
+}
+
+<div>
+    <br>
+    @using (Html.BeginForm())
+    {
+        @Html.DropDownListFor(m => m.Selected, Model.NetGrossList)
+        <input type="submit" value="Go"/>
+    }
+    <br />
+    <table class="table table-condensed">
+        <thead>
+<<<<<<< HEAD
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>1 Month</th>
+            <th>3 Month</th>
+            <th>Year to Date</th>
+        </tr>
+=======
+            <tr>
+                <th>Number</th>
+                <th>Name</th>
+                <th>1 Month</th>
+                <th>3 Month</th>
+                <th>6 Month</th>
+                <th>Quarter to Date</th>
+                <th>Year to Date</th>
+            </tr>
+>>>>>>> develop
+        </thead>
+        <tbody>
+
+        @foreach (var portfolio in Model.Portfolios)
+        {
+            <tr style="background: lavenderblush">
+                <td>@portfolio.Number</td>
+                <td>@portfolio.Name</td>
+                <td>@portfolio.OneMonth</td>
+                <td>@portfolio.ThreeMonth</td>
+                <td>@portfolio.YearToDate</td>
+            </tr>
+
+            foreach (var benchmark in portfolio.Benchmarks)
+            {
+<<<<<<< HEAD
+                <tr>
+                    <td></td>
+                    <td style="padding-left: 20px;">@benchmark.Name</td>
+                    <td>@benchmark.OneMonth</td>
+                    <td>@benchmark.ThreeMonth</td>
+                    <td>@benchmark.YearToDate</td>
+                </tr>
+=======
+                <tr style="background: lavenderblush">
+                    <td>@portfolio.Number</td>
+                    <td>@portfolio.Name</td>
+                    <td>@portfolio.OneMonth</td>
+                    <td>@portfolio.ThreeMonth</td>
+                    <td>@portfolio.SixMonth</td>
+                    <td>@portfolio.QuarterToDate</td>
+                    <td>@portfolio.YearToDate</td>
+                </tr>
+
+                foreach (var benchmark in portfolio.Benchmarks)
+                {
+                    <tr>
+                        <td></td>
+                        <td style="padding-left: 20px;">@benchmark.Name</td>
+                        <td>@benchmark.OneMonth</td>
+                        <td>@benchmark.ThreeMonth</td>
+                        <td>@benchmark.SixMonth</td>
+                        <td>@benchmark.QuarterToDate</td>
+                        <td>@benchmark.YearToDate</td>
+                    </tr>
+                }
+>>>>>>> develop
+            }
+        }
+
+        </tbody>
+    </table>
+</div>
