@@ -170,7 +170,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         public void AssertSelectItemDefaultsNet(
             PortfolioPerformanceNetGrossModel resultModel)
         {
-            resultModel.Selected.Should().Be("Net");
+            resultModel.Selected.Should().Be("0");
         }
 
         internal void AssertPortfolioModelIsNet(
@@ -181,7 +181,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
         internal void AssertModelIsNet(PortfolioPerformanceNetGrossModel model)
         {
-            model.Selected.Should().Be("Net");
+            model.Selected.Should().Be("0");
         }
 
         internal void AssertPortfolioModelIsGross(
@@ -192,7 +192,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
         internal void AssertModelIsGross(PortfolioPerformanceNetGrossModel model)
         {
-            model.Selected.Should().Be("Gross");
+            model.Selected.Should().Be("1");
         }
 
         public PublicWebReportFacade.PortfolioModel[] GetPortfolioModelFromActionResult(
