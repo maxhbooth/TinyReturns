@@ -26,11 +26,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
         public ActionResult Index()
         {
+<<<<<<< HEAD
             var selectListItems = CreateLetterSelectItems();
             //initialize all properties of model
             var model = new PortfolioPerformanceNetGrossModel()
             {
-                Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
+                Portfolios = _publicWebReportFacade.GetPortfolioPerforance(),
                 Selected = "Net",
                 NetGrossList = selectListItems
             };
@@ -47,7 +48,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
             PublicWebReportFacade.PortfolioModel[] portfolioPerforance;
             if (model.Selected == "0")
             {
-                portfolioPerforance = _publicWebReportFacade.GetPortfolioPerformance();
+                portfolioPerforance = _publicWebReportFacade.GetPortfolioPerforance();
                 select = "0";
             }
             else if (model.Selected == "1")
@@ -83,6 +84,9 @@ namespace Dimensional.TinyReturns.Web.Controllers
             };
 
             return selectListItems;
+=======
+            return View(_publicWebReportFacade.GetPortfolioPerformance());
+>>>>>>> 309c5a2864074d146b38093946426f4feecbad87
         }
     }
 }

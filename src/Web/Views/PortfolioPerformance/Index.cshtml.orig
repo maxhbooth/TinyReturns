@@ -14,25 +14,21 @@
     <br />
     <table class="table table-condensed">
         <thead>
-<<<<<<< HEAD
         <tr>
             <th>Number</th>
             <th>Name</th>
             <th>1 Month</th>
             <th>3 Month</th>
+                <th>6 Month</th>
+                <th>Quarter to Date</th>
+<<<<<<< HEAD
             <th>Year to Date</th>
         </tr>
 =======
-            <tr>
-                <th>Number</th>
-                <th>Name</th>
-                <th>1 Month</th>
-                <th>3 Month</th>
-                <th>6 Month</th>
-                <th>Quarter to Date</th>
                 <th>Year to Date</th>
+                <th>First Full Month</th>
             </tr>
->>>>>>> develop
+>>>>>>> 309c5a2864074d146b38093946426f4feecbad87
         </thead>
         <tbody>
 
@@ -43,43 +39,35 @@
                 <td>@portfolio.Name</td>
                 <td>@portfolio.OneMonth</td>
                 <td>@portfolio.ThreeMonth</td>
+                    <td>@portfolio.SixMonth</td>
+                    <td>@portfolio.QuarterToDate</td>
+<<<<<<< HEAD
                 <td>@portfolio.YearToDate</td>
             </tr>
+=======
+                    <td>@portfolio.YearToDate</td>
+                    <td>@portfolio.FirstFullMonth</td>
+                </tr>
+>>>>>>> 309c5a2864074d146b38093946426f4feecbad87
 
             foreach (var benchmark in portfolio.Benchmarks)
             {
-<<<<<<< HEAD
                 <tr>
                     <td></td>
                     <td style="padding-left: 20px;">@benchmark.Name</td>
                     <td>@benchmark.OneMonth</td>
                     <td>@benchmark.ThreeMonth</td>
+                        <td>@benchmark.SixMonth</td>
+                        <td>@benchmark.QuarterToDate</td>
+<<<<<<< HEAD
                     <td>@benchmark.YearToDate</td>
                 </tr>
 =======
-                <tr style="background: lavenderblush">
-                    <td>@portfolio.Number</td>
-                    <td>@portfolio.Name</td>
-                    <td>@portfolio.OneMonth</td>
-                    <td>@portfolio.ThreeMonth</td>
-                    <td>@portfolio.SixMonth</td>
-                    <td>@portfolio.QuarterToDate</td>
-                    <td>@portfolio.YearToDate</td>
-                </tr>
-
-                foreach (var benchmark in portfolio.Benchmarks)
-                {
-                    <tr>
-                        <td></td>
-                        <td style="padding-left: 20px;">@benchmark.Name</td>
-                        <td>@benchmark.OneMonth</td>
-                        <td>@benchmark.ThreeMonth</td>
-                        <td>@benchmark.SixMonth</td>
-                        <td>@benchmark.QuarterToDate</td>
                         <td>@benchmark.YearToDate</td>
+                        <td>@portfolio.FirstFullMonth</td>
                     </tr>
                 }
->>>>>>> develop
+>>>>>>> 309c5a2864074d146b38093946426f4feecbad87
             }
         }
 
