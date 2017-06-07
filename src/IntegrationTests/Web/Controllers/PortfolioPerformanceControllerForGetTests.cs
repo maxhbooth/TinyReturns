@@ -795,7 +795,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult).Portfolios;
 
                 var viewValues = new decimal[]
                 {
@@ -935,7 +935,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult).Portfolios;
 
                 var viewValues = new decimal[]
                 {
