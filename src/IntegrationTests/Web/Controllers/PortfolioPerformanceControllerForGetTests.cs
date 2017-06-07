@@ -31,10 +31,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
 
                     viewResultModel.Length.Should().Be(0);
-
-
+                    
                     var resultModel = testHelper.GetModelFromActionResult(actionResult);
                     testHelper.AssertSelectItemsArePopulated(resultModel);
+                    testHelper.AssertSelectItemDefaultsNet(resultModel);
                 });
         }
 
@@ -67,6 +67,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].Name.Should().Be("Portfolio 100");
                 viewResultModel[0].Benchmarks.Should().BeEmpty();
 
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                testHelper.AssertSelectItemsArePopulated(resultModel);
+                testHelper.AssertSelectItemDefaultsNet(resultModel);
             });
         }
 
@@ -133,6 +136,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00001m);
                 viewResultModel[0].ThreeMonth.Should().NotHaveValue();
                 viewResultModel[0].YearToDate.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00001m);
+
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                testHelper.AssertSelectItemsArePopulated(resultModel);
+                testHelper.AssertSelectItemDefaultsNet(resultModel);
             });
         }
 
@@ -236,6 +243,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00000001m);
                 viewResultModel[0].ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(0.039584m), 0.00000001m);
                 viewResultModel[0].YearToDate.Should().BeApproximately(PercentHelper.AsPercent(0.0394800416m), 0.00000001m);
+
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                testHelper.AssertSelectItemsArePopulated(resultModel);
+                testHelper.AssertSelectItemDefaultsNet(resultModel);
             });
         }
         
@@ -354,7 +365,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult).Portfolios;
 
                 viewResultModel.Length.Should().Be(1);
 
@@ -370,16 +381,15 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 viewResultModel[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00000001m);
                 viewResultModel[0].ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedThreeMonthResult), 0.00000001m);
-                viewResultModel[0].SixMonth.Should().BeApproximately(
-                 expectedSixMonthResult, 0.00000001m);
+                viewResultModel[0].SixMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedSixMonthResult), 0.00000001m);
 		        viewResultModel[0].QuarterToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedQuarterToDateResult), 0.00000001m);
-
                 viewResultModel[0].YearToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedYearToDateResult), 0.00000001m);
+
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                testHelper.AssertSelectItemsArePopulated(resultModel);
+                testHelper.AssertSelectItemDefaultsNet(resultModel);
             });
         }
-
-
-
 
         [Fact]
         public void ShouldReturnPortfolioWithBenchmark()
@@ -520,9 +530,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 benchmarkModel.SixMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchSixMonth), 0.00000001m);
                 benchmarkModel.QuarterToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchQuarterToDate), 0.00000001m);
                 benchmarkModel.YearToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchYearToDate), 0.00000001m);
+
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                testHelper.AssertSelectItemsArePopulated(resultModel);
+                testHelper.AssertSelectItemDefaultsNet(resultModel);
             });
         }
-
 
     }
 }

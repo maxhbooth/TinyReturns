@@ -15,7 +15,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
     public class PortfolioPerformanceControllerForPostTests
     {
         [Fact]
-        public void ShouldReturnNetByDefault()
+        public void ShouldReturnNetWhenNoPortfolioAreFound()
         {
             var testHelper = new TestHelper();
 
