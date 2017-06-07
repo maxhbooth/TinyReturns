@@ -44,15 +44,15 @@ namespace Dimensional.TinyReturns.Web.Controllers
             var selectListItems = CreateLetterSelectItems();
             string select;
             PublicWebReportFacade.PortfolioModel[] portfolioPerforance;
-            if (model.Selected == "Net")
+            if (model.Selected == "0")
             {
                 portfolioPerforance = _publicWebReportFacade.GetPortfolioPerforance();
-                select = "Net";
+                select = "0";
             }
             else
             {
                 portfolioPerforance = _publicWebReportFacade.GetGrossPortfolioPerforance();
-                select = "Gross";
+                select = "1";
             }
             var resultModel = new PortfolioPerformanceNetGrossModel()
             {
