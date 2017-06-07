@@ -170,7 +170,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         public void AssertSelectItemDefaultsNet(
             PortfolioPerformanceNetGrossModel resultModel)
         {
-            resultModel.Selected.Should().Be("0");
+            resultModel.Selected.Should().Be("Net");
         }
 
         internal void AssertPortfolioModelIsNet(

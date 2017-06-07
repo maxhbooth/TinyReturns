@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using System.Collections.Generic;
@@ -49,10 +50,14 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 portfolioPerforance = _publicWebReportFacade.GetPortfolioPerforance();
                 select = "0";
             }
-            else
+            else if (model.Selected == "1")
             {
                 portfolioPerforance = _publicWebReportFacade.GetGrossPortfolioPerforance();
                 select = "1";
+            }
+            else
+            {
+                throw new InvalidOperationException();
             }
             var resultModel = new PortfolioPerformanceNetGrossModel()
             {
