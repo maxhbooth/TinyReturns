@@ -19,6 +19,8 @@
         public decimal? YearToDate { get; set; }
         public decimal? QuarterToDate { get; set; }
         public decimal? FirstFullMonth { get; set; }
+        public decimal? StandardDeviation { get; set; }
+        public decimal? Mean { get; set; }
     }
 
 }
