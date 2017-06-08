@@ -11,29 +11,27 @@ namespace Dimensional.TinyReturns.Web.Controllers
     public class PortfolioPerformanceController : Controller
     {
         private readonly PublicWebReportFacade _publicWebReportFacade;
+        private readonly IClock _clock;
 
         public PortfolioPerformanceController()
         {
             _publicWebReportFacade = MasterFactory.GetPublicWebReportFacade();
+            _clock = new Clock();
         }
 
         // Used for tests
         public PortfolioPerformanceController(
-            PublicWebReportFacade publicWebReportFacade)
+            PublicWebReportFacade publicWebReportFacade, IClock clock)
         {
             _publicWebReportFacade = publicWebReportFacade;
+            _clock = clock;
         }
 
 
         [HttpPost]
         public ActionResult Index(PastMonthsModel pastMonths)
         {
-            MonthYear previousMonth;
-            if (pastMonths.currentMonth == null)
-
-                previousMonth = new MonthYear(new Clock().GetCurrentDate()).AddMonths(-1);
-            else
-                previousMonth = pastMonths.currentMonth; //for testing
+            var previousMonth = new MonthYear(_clock.GetCurrentDate()).AddMonths(-1);
 
             PastMonthsModel pastMonthsModel;
 
@@ -53,7 +51,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var previousMonth = new MonthYear(new Clock().GetCurrentDate()).AddMonths(-1);
+            var previousMonth = new MonthYear(_clock.GetCurrentDate()).AddMonths(-1);
 
             var pastMonthsModel = new PastMonthsModel
             {
@@ -61,26 +59,9 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 MonthYears = WebHelper.GetDesiredMonths(previousMonth),
                 MonthYear = previousMonth.Stringify()
             };
-
             return View(pastMonthsModel);
         }
 
-
-        [HttpGet]
-        public ActionResult TestIndex(MonthYear currentMonth)
-        {
-            var previousMonth = currentMonth.AddMonths(-1);
-
-            var pastMonthsModel = new PastMonthsModel
-            {
-                Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
-                MonthYears = WebHelper.GetDesiredMonths(previousMonth),
-                MonthYear = previousMonth.Stringify(),
-                currentMonth = currentMonth
-            };
-
-            return View("Index", pastMonthsModel);
-        }
     }
 
     public static class WebHelper

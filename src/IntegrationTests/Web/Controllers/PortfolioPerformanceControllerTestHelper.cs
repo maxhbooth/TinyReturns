@@ -91,7 +91,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 new ClockStub(CurrentDate));
 
             return new PortfolioPerformanceController(
-                publicWebReportFacade);
+                publicWebReportFacade, new ClockStub(CurrentDate.AddMonths(-1)));
+            //subtract one since the currentDate is the nextMonth but we expect to get this month into the controller
         }
 
         public void InsertPortfolioDto(
