@@ -347,5 +347,30 @@ namespace Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend
         {
             get { return Month >= 12; }
         }
+
+        public MonthYear getQuarterMonth()
+        {
+            int quarterMonth;
+
+            if (this.Month <= 3)
+            {
+                quarterMonth = 1;
+            }
+            else if (this.Month <= 6)
+            {
+                quarterMonth = 4;
+            }
+            else if (this.Month <= 9)
+            {
+                quarterMonth = 7;
+            }
+            else
+            {
+                quarterMonth = 10;
+            }
+
+            return new MonthYear(Year, quarterMonth);
+
+        }
     }
 }

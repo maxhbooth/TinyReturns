@@ -37,6 +37,9 @@ namespace Dimensional.TinyReturns.ExcelRendering
                     worksheet.Cells[rowIndex, 8].Value = record.YearToDate;
                     worksheet.Cells[rowIndex, 9].Value = record.QuarterToDate;
                     worksheet.Cells[rowIndex, 10].Value = record.YearToDate;
+                    worksheet.Cells[rowIndex, 11].Value = record.FirstFullMonth;
+                    worksheet.Cells[rowIndex, 12].Value = record.StandardDeviation;
+                    worksheet.Cells[rowIndex, 13].Value = record.Mean;
                     rowIndex++;
                 }
 

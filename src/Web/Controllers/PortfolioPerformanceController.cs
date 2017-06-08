@@ -22,7 +22,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
         public ActionResult Index()
         {
-            return View(_publicWebReportFacade.GetPortfolioPerforance());
+            return View(_publicWebReportFacade.GetPortfolioPerformance());
         }
     }
 }
