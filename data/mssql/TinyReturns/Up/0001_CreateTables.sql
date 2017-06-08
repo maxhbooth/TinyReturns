@@ -3,7 +3,9 @@ GO
 
 CREATE TABLE [Portfolio].[Benchmark](
 	[Number] [int] NOT NULL,
-	[Name] [nvarchar](255) NOT NULL
+	[Name] [nvarchar](255) NOT NULL,
+	[DateCreated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	[DateUpdated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
  CONSTRAINT [PK_Portfolio_Benchmark] PRIMARY KEY CLUSTERED 
 (
 	[Number] ASC
@@ -20,7 +22,9 @@ CREATE TABLE [Portfolio].[Portfolio](
 	[Number] [int] NOT NULL,
 	[Name] [nvarchar](255) NOT NULL,
 	[InceptionDate] [datetime] NOT NULL,
-	[CloseDate] [datetime] NULL
+	[CloseDate] [datetime] NULL,
+	[DateCreated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	[DateUpdated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
  CONSTRAINT [PK_Portfolio_Portfolio] PRIMARY KEY CLUSTERED 
 (
 	[Number] ASC
@@ -37,6 +41,8 @@ CREATE TABLE [Portfolio].[PortfolioToBenchmark](
 	[PortfolioNumber] [int] NOT NULL,
 	[BenchmarkNumber] [int] NOT NULL,
 	[SortOrder] [int] NOT NULL,
+	[DateCreated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	[DateUpdated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
  CONSTRAINT [PK_Portfolio_PortfolioToBenchmark] PRIMARY KEY CLUSTERED 
 (
 	[PortfolioNumber] ASC,
@@ -65,6 +71,8 @@ CREATE TABLE [Performance].[MonthlyReturn](
 	[Year] [int] NOT NULL,
 	[Month] [int] NOT NULL,
 	[ReturnValue] [decimal](18, 8) NOT NULL,
+	[DateCreated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	[DateUpdated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
  CONSTRAINT [PK_Performance_MonthlyReturn] PRIMARY KEY CLUSTERED 
 (
 	[ReturnSeriesId] ASC,
@@ -77,7 +85,9 @@ GO
 
 CREATE TABLE [Performance].[ReturnSeries](
 	[ReturnSeriesId] [int] IDENTITY(1,1) NOT NULL,
-	[Name] NVARCHAR(255) NOT NULL
+	[Name] NVARCHAR(255) NOT NULL,
+	[DateCreated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	[DateUpdated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
  CONSTRAINT [PK_Performance_ReturnSeries] PRIMARY KEY CLUSTERED 
 (
 	[ReturnSeriesId] ASC
@@ -99,6 +109,8 @@ CREATE TABLE [Performance].[PortfolioToReturnSeries](
 	[PortfolioNumber] [int] NOT NULL,
 	[ReturnSeriesId] [int] NOT NULL,
 	[SeriesTypeCode] [char](1) NOT NULL,
+	[DateCreated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	[DateUpdated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
  CONSTRAINT [PK_Performance_PortfolioToReturnSeries] PRIMARY KEY CLUSTERED 
 (
 	[PortfolioNumber] ASC,
@@ -112,6 +124,8 @@ GO
 CREATE TABLE [Performance].[BenchmarkToReturnSeries](
 	[BenchmarkNumber] [int] NOT NULL,
 	[ReturnSeriesId] [int] NOT NULL,
+	[DateCreated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	[DateUpdated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
  CONSTRAINT [PK_Performance_BenchmarkToReturnSeries] PRIMARY KEY CLUSTERED 
 (
 	[BenchmarkNumber] ASC,
