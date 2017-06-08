@@ -107,7 +107,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var requestModel = new PortfolioPerformanceIndexModel()
                 {
-                    MonthYear = "2/2016"
+                    MonthYear = "2/2016",
+                    Selected = "0"
                 };
 
                 var actionResult = controller.Index(requestModel);
@@ -211,7 +212,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var requestModel = new PortfolioPerformanceIndexModel()
                 {
-                    MonthYear = "4/2016"
+                    MonthYear = "4/2016",
+                    Selected = "0"
                 };
 
                 var actionResult = controller.Index(requestModel);

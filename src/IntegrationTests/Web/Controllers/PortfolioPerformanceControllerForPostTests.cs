@@ -88,6 +88,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 testHelper.AssertModelIsNet(resultModel);
             });
         }
+
         [Fact]
         public void ShouldReturnGrossValuesWhenGrossIsSelected()
         {
@@ -96,6 +97,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             testHelper.DatabaseDataDeleter(() =>
             {
                 var controller = testHelper.CreateController();
+
+                var previousMonthYear = new MonthYear(testHelper.CurrentDate).AddMonths(-1);
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
@@ -107,16 +110,18 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 // Act
                 var requestModel = new PortfolioPerformanceIndexModel()
                 {
+                    MonthYear = previousMonthYear.Stringify(),
                     Selected = "1"
                 };
                 int returnId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
                     Name = "Month"
                 });
+
                 testHelper.InsertMonthlyReturnDto(new MonthlyReturnDto()
                 {
-                    Month = 1,
-                    Year = 2017,
+                    Month = previousMonthYear.Month,
+                    Year = previousMonthYear.Year,
                     ReturnValue = 0.02m,
                     ReturnSeriesId = returnId
                 });
