@@ -20,8 +20,8 @@ Import-Module $psakeModule
 
 # you can write statements in multiple lines using `
 Invoke-psake -buildFile .\src\Build\default.ps1 `
-			 -taskList default `
-			 -framework 4.6
+			 -taskList teamcity `
+			 -framework 4.6 `
 
 Write-Host "Build exit code:" $LastExitCode
 

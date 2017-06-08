@@ -11,6 +11,10 @@ properties {
 	
 	$buildTargetFolder = "$buildFolder\$buildConfig"
 
+	$buildLibFolder = "$buildFolder\lib"
+	$buildDataFolder = "$buildFolder\data"
+	$buildWebFolder = "$buildFolder\Web"
+
 	$databaseServer = "(local)\sqlexpress"
 	$databaseName = $projectName
 
@@ -31,6 +35,11 @@ properties {
 task default -depends CleanSolution, UpdateNuGetPackages, BuildSolution, RebuildDatabase, RunUnitTests, RunIntegrationTests, PopulateReturnsData
 
 task databaseonly -depends RebuildDatabase, PopulateReturnsData
+
+ task teamcity -depends CleanSolution, UpdateNuGetPackages, BuildSolution, `
+ RebuildDatabase, RunUnitTests, RunIntegrationTests, PopulateReturnsData,RebuildDatabase,  ZipFile
+
+
 
 formatTaskName {
 	param($taskName)
@@ -83,4 +92,38 @@ task RebuildDatabase {
 
 task PopulateReturnsData -depends BuildSolution {
 	Exec { &"$buildFolder\Release\Dimensional.TinyReturns.TestDataPopulatorConsole.exe" }
+}
+
+task copyBuildFiles -depends BuildSolution {
+    #buildsolution runs cleansolution, which removes all these directories for us,
+    # so we don't have conflicts.
+    
+    mkdir $buildWebFolder | out-null
+	
+	$sourceFiles = "$buildTargetFolder\_PublishedWebsites\Web\*"
+	Write-Host "Copying files from '$sourceFiles' to '$buildWebFolder'"
+	copy-item $sourceFiles "$buildWebFolder" -recurse
+
+	mkdir $buildLibFolder | out-null
+
+	$destXunitFolder = "$buildLibFolder\xunit"
+	mkdir $destXunitFolder | out-null
+	copy-item "$srcFolder\packages\xunit.runner.console.2.0.0\tools\*" $destXunitFolder -recurse
+	
+    $destRoundhouseFolder = "$buildLibFolder\roundhouse"
+	mkdir $destRoundhouseFolder | out-null
+	copy-item "$srcFolder\packages\roundhouse.0.8.6\bin\*" $destRoundhouseFolder  -recurse
+
+	$msSqlFolder = "$buildDataFolder\mssql"
+	mkdir $msSqlFolder | out-null
+	copy-item "$dataFolder\mssql\*" $msSqlFolder -recurse
+
+}
+
+task ZipFile -depends copyBuildFiles {
+
+    $zipExec = "$srcFolder\packages\7-Zip.CommandLine.9.20.0\tools\7za.exe"
+
+    Exec { &$zipExec a "-x!*.zip" "-x!*.dat" "$buildFolder\TinyReturns_App.zip" "$buildFolder\*" }
+
 }
