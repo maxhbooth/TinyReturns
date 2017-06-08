@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
+using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
@@ -15,19 +16,20 @@ namespace Dimensional.TinyReturns.Web.Controllers
     public class PortfolioPerformanceController : Controller
     {
         private readonly PublicWebReportFacade _publicWebReportFacade;
-        private readonly SelectListItem[] _allMonths;
+        private readonly MonthYear _currentMonth;
+
         public PortfolioPerformanceController()
         {
             _publicWebReportFacade = MasterFactory.GetPublicWebReportFacade();
-            _allMonths = WebHelper.GetAllPossibleMonths();
+            _currentMonth = new MonthYear(new Clock().GetCurrentDate());
         }
 
         // Used for tests
         public PortfolioPerformanceController(
-            PublicWebReportFacade publicWebReportFacade, MonthlyReturnDataTableGateway monthlyReturnDataTableGateway)
+            PublicWebReportFacade publicWebReportFacade, MonthYear currentMonth)
         {
             _publicWebReportFacade = publicWebReportFacade;
-            _allMonths = WebHelper.GetAllPossibleMonths(monthlyReturnDataTableGateway);
+            _currentMonth = currentMonth;
         }
 
 
@@ -43,7 +45,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
                         pastMonthsModel = new PastMonthsModel()
                         {
                             Portfolios = _publicWebReportFacade.GetPortfolioPerformance(monthYear),
-                            MonthYears = _allMonths,
+                            MonthYears = WebHelper.GetDesiredMonths(_currentMonth),
                             MonthYear = monthYear.Stringify()
                         };
                     }
@@ -52,8 +54,8 @@ namespace Dimensional.TinyReturns.Web.Controllers
                         pastMonthsModel = new PastMonthsModel()
                         {
                             Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
-                            MonthYears = _allMonths,
-                            MonthYear = _publicWebReportFacade.monthBeingReportedOn.Stringify()
+                            MonthYears = WebHelper.GetDesiredMonths(_currentMonth),
+                            MonthYear = _currentMonth.Stringify()
                         };
                     }
                     return View(pastMonthsModel);
@@ -65,61 +67,21 @@ namespace Dimensional.TinyReturns.Web.Controllers
             var pastMonthsModel = new PastMonthsModel()
             {
                 Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
-                MonthYears = _allMonths
+                MonthYears = WebHelper.GetDesiredMonths(_currentMonth),
+                MonthYear = _currentMonth.Stringify()
             };
-            if (_publicWebReportFacade.monthBeingReportedOn != null)
-            {
-                pastMonthsModel.MonthYear = _publicWebReportFacade.monthBeingReportedOn.Stringify();
-            }
             return View(pastMonthsModel);
         }
     }
 
     public static class WebHelper
     {
-        public static SelectListItem[] GetAllPossibleMonths()
+        public static SelectListItem[] GetDesiredMonths(MonthYear currentMonth)
         {
-            var allMonthlyReturns = MasterFactory.MonthlyReturnDataTableGateway.GetAll();
 
-            if (allMonthlyReturns.Length == 0)
-            {
+            var monthsInRange = MonthYearRange.CreateForEndMonthAndMonthsBack(currentMonth, 36).GetMonthsInRange();
 
-               return new SelectListItem[0];
-
-            }
-
-            var minMonthlyReturnYear = allMonthlyReturns.Min(monthlyReturn => monthlyReturn.Year);
-
-            var minMonthlyReturnMonth = allMonthlyReturns.Where(m => m.Year == minMonthlyReturnYear)
-                .Min(monthlyReturn => monthlyReturn.Month);
-
-            var maxMonthlyReturnYear = allMonthlyReturns.Max(monthlyReturn => monthlyReturn.Year);
-
-            var maxMonthlyReturnMonth = allMonthlyReturns.Where(m => m.Year == minMonthlyReturnYear)
-                .Max(monthlyReturn => monthlyReturn.Month);
-
-            var allPossibleMonths = new List<MonthYear>();
-
-            for (var year = maxMonthlyReturnYear; year >= minMonthlyReturnYear; year--)
-            {
-                for (var month = 12; month >= 1; month--)
-                {
-                    if (year == maxMonthlyReturnYear && month >= maxMonthlyReturnMonth)
-                    {
-                        //do nothing
-                    }
-                    else if (year == minMonthlyReturnYear && month <= minMonthlyReturnMonth)
-                    {
-                        //do nothing
-                    }
-                    else
-                    {
-                        allPossibleMonths.Add(new MonthYear(year, month));
-                    }
-                }
-            }
-
-            var monthYears = allPossibleMonths.Select(x => new SelectListItem()
+            var monthYears = monthsInRange.Select(x => new SelectListItem()
             {
                 Text = x.Stringify(),
                 Value = x.Stringify(),
@@ -127,58 +89,5 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
             return monthYears;
         }
-
-        //for testing
-
-        public static SelectListItem[] GetAllPossibleMonths(MonthlyReturnDataTableGateway monthlyReturnDataTableGateway)
-        {
-            var allMonthlyReturns = monthlyReturnDataTableGateway.GetAll();
-
-            if (allMonthlyReturns.Length == 0)
-            {
-                return new SelectListItem[0];
-            }
-
-        var minMonthlyReturnYear = allMonthlyReturns.Min(monthlyReturn => monthlyReturn.Year);
-
-            var minMonthlyReturnMonth = allMonthlyReturns.Where(m => m.Year == minMonthlyReturnYear)
-                .Min(monthlyReturn => monthlyReturn.Month);
-
-            var maxMonthlyReturnYear = allMonthlyReturns.Max(monthlyReturn => monthlyReturn.Year);
-
-            var maxMonthlyReturnMonth = allMonthlyReturns.Where(m => m.Year == minMonthlyReturnYear)
-                .Max(monthlyReturn => monthlyReturn.Month);
-
-            var allPossibleMonths = new List<MonthYear>();
-
-            for (var year = maxMonthlyReturnYear; year >= minMonthlyReturnYear; year--)
-            {
-                for (var month = 12; month >= 1; month--)
-                {
-                    if (year == maxMonthlyReturnYear && month > maxMonthlyReturnMonth)
-                    {
-                        //do nothing
-                    }
-                    else if (year == minMonthlyReturnYear && month < minMonthlyReturnMonth)
-                    {
-                        //do nothing
-                    }
-                    else
-                    {
-                        allPossibleMonths.Add(new MonthYear(year, month));
-                    }
-                }
-            }
-
-            var monthYears = allPossibleMonths.Select(x => new SelectListItem()
-            {
-                Text = x.Stringify(),
-                Value = x.Stringify(),
-            }).ToArray();
-
-
-            return monthYears;
-        }
-
     }
 }

@@ -29,7 +29,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             testHelper.DatabaseDataDeleter(() =>
             {
-                                var portfolioNumber = 100;
+                var portfolioNumber = 100;
                 var portfolioName = "Portfolio 100";
 
                 var monthYear = new MonthYear(2016, 5);
@@ -118,7 +118,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult)[0];
                 var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
 
-                viewResultModel.MonthYears.Count().Should().Be(5);
+                viewResultModel.MonthYears.Count().Should().Be(37);
                 viewResultPortfolio.ThreeMonth.Should().NotHaveValue();
                 viewResultPortfolio.QuarterToDate.Should().HaveValue();
                 viewResultPortfolio.YearToDate.Should().HaveValue();
@@ -222,7 +222,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult)[0];
                 var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
 
-                viewResultModel.MonthYears.Count().Should().Be(5);
+                viewResultModel.MonthYears.Count().Should().Be(37);
                 viewResultPortfolio.ThreeMonth.Should().HaveValue();
             });
         }

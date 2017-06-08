@@ -38,7 +38,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
                     var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
 
-                    viewResultModel.MonthYears.Count().Should().Be(0);
+                    viewResultModel.MonthYears.Count().Should().Be(37);
                     viewResultModel.MonthYear.Should().NotBeEmpty();
                     viewResultPortfolio.Length.Should().Be(0);
                 });
@@ -68,7 +68,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
                 var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
 
-                viewResultModel.MonthYears.Count().Should().Be(0); //only care about performance numbers so.
+                viewResultModel.MonthYears.Count().Should().Be(37); //only care about performance numbers so.
                 viewResultModel.MonthYear.Should().NotBeEmpty();
 
                 viewResultPortfolio.Length.Should().Be(1);
@@ -134,7 +134,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
                 var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
 
-                viewResultModel.MonthYears.Count().Should().Be(1);
+                viewResultModel.MonthYears.Count().Should().Be(37);
                 viewResultModel.MonthYears.First().Value.Should()
                     .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
                 viewResultModel.MonthYears.First().Text.Should()
@@ -245,7 +245,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
                 var viewResultModelArray = viewResultModel.MonthYears.ToArray();
 
-                viewResultModel.MonthYears.Count().Should().Be(5);
+                viewResultModel.MonthYears.Count().Should().Be(37);
 
                 viewResultModelArray[0].Value.Should()
                     .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
@@ -393,7 +393,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
                 var viewResultModelArray = viewResultModel.MonthYears.ToArray();
 
-                viewResultModel.MonthYears.Count().Should().Be(8);
+                viewResultModel.MonthYears.Count().Should().Be(37);
 
                 viewResultModelArray[0].Value.Should()
                     .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());

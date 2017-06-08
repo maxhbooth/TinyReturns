@@ -91,7 +91,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 new ClockStub(CurrentDate));
 
             return new PortfolioPerformanceController(
-                publicWebReportFacade, _monthlyReturnDataTableGateway);
+                publicWebReportFacade, new MonthYear(new ClockStub(CurrentDate).GetCurrentDate()).AddMonths(-1));
+            //add -1 since the next month is being passed in, and I want the current month.
         }
 
         public void InsertPortfolioDto(
