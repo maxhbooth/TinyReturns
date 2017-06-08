@@ -22,16 +22,22 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
         public PortfolioModel[] GetPortfolioPerformance()
         {
-            var portfolios = _portfolioWithPerformanceRepository.GetAll();
-
             var currentMonthYear = new MonthYear(_clock.GetCurrentDate());
+
             var previousMonthYear = currentMonthYear.AddMonths(-1);
+
+            return GetPortfolioPerformance(previousMonthYear);
+        }
+
+        public PortfolioModel[] GetPortfolioPerformance(MonthYear currentMonthYear)
+        {
+            var portfolios = _portfolioWithPerformanceRepository.GetAll();
 
             var portfolioModels = new List<PortfolioModel>();
 
             foreach (var portfolioWithPerformance in portfolios)
             {
-                var portfolioModel = CreatePortfolioModel(portfolioWithPerformance, previousMonthYear);
+                var portfolioModel = CreatePortfolioModel(portfolioWithPerformance, currentMonthYear, true);
 
                 portfolioModels.Add(portfolioModel);
             }
@@ -39,9 +45,24 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             return portfolioModels.ToArray();
         }
 
+        public PortfolioModel[] GetGrossPortfolioPerforance(MonthYear currentMonthYear)
+        {
+            var portfolios = _portfolioWithPerformanceRepository.GetAll();
+
+            var portfolioModels = new List<PortfolioModel>();
+
+            foreach (var portfolioWithPerformance in portfolios)
+            {
+                var portfolioModel = CreatePortfolioModel(portfolioWithPerformance, currentMonthYear, false);
+
+                portfolioModels.Add(portfolioModel);
+            }
+
+            return portfolioModels.ToArray();
+        }
         private static PortfolioModel CreatePortfolioModel(
             PortfolioWithPerformance portfolioWithPerformance,
-            MonthYear previousMonthYear)
+            MonthYear previousMonthYear, bool netReturn)
         {
             var firstFullMonth = new MonthYear(portfolioWithPerformance.InceptionDate).AddMonths(1);
             int fullMonthsSinceInception = new MonthYearRange(firstFullMonth, previousMonthYear).NumberOfMonthsInRange;
@@ -51,20 +72,46 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             var quarterToDateCalculationRequest = CalculateReturnRequestFactory.QuarterToDate(previousMonthYear);
             var yearToDateCalculationRequest = CalculateReturnRequestFactory.YearToDate(previousMonthYear);
             var firstFullMonthCalculationRequest = CalculateReturnRequestFactory.FirstFullMonth(previousMonthYear, fullMonthsSinceInception);
-            var portfolioModel = new PortfolioModel()
-            {
-                Number = portfolioWithPerformance.Number,
-                Name = portfolioWithPerformance.Name,
-                OneMonth = PercentHelper.AsPercent(portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear)),
-                ThreeMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(threeMonthCalculationRequest)),
-                SixMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(sixMonthCalculationRequest)),
-                YearToDate = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest)),
-                QuarterToDate = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(quarterToDateCalculationRequest)),
-                FirstFullMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(firstFullMonthCalculationRequest)),
-                StandardDeviation = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetStandardDeviation()),
-                Mean = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetMean())
-            };
+            PortfolioModel portfolioModel = null;
 
+            if (netReturn)
+            {
+                portfolioModel = new PortfolioModel()
+                {
+                    Number = portfolioWithPerformance.Number,
+                    Name = portfolioWithPerformance.Name,
+                    OneMonth = PercentHelper.AsPercent(portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear)),
+                    ThreeMonth =
+                        PercentHelper.AsPercent(
+                            portfolioWithPerformance.CalculateNetReturnAsDecimal(threeMonthCalculationRequest)),
+                    SixMonth = PercentHelper.AsPercent(
+                        portfolioWithPerformance.CalculateNetReturnAsDecimal(sixMonthCalculationRequest)),
+                    YearToDate =
+                        PercentHelper.AsPercent(
+                            portfolioWithPerformance.CalculateNetReturnAsDecimal(yearToDateCalculationRequest)),
+                    QuarterToDate =
+                        PercentHelper.AsPercent(
+                            portfolioWithPerformance.CalculateNetReturnAsDecimal(quarterToDateCalculationRequest)),
+                    FirstFullMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(firstFullMonthCalculationRequest)),
+                    StandardDeviation = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetStandardDeviation()),  
+                    Mean = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetMean())
+                };
+            }
+            else if(!netReturn)
+            {
+                portfolioModel = new PortfolioModel()
+                {
+                    Number = portfolioWithPerformance.Number,
+                    Name = portfolioWithPerformance.Name,
+                    OneMonth = PercentHelper.AsPercent(portfolioWithPerformance.GetGrossMonthlyReturn(previousMonthYear)),
+                    ThreeMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateGrossReturnAsDecimal(threeMonthCalculationRequest)),
+                    SixMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateGrossReturnAsDecimal(sixMonthCalculationRequest)),
+                    QuarterToDate = PercentHelper.AsPercent(portfolioWithPerformance.CalculateGrossReturnAsDecimal(quarterToDateCalculationRequest)),
+                    YearToDate = PercentHelper.AsPercent(portfolioWithPerformance.CalculateGrossReturnAsDecimal(yearToDateCalculationRequest)),
+                    FirstFullMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateGrossReturnAsDecimal(firstFullMonthCalculationRequest)),
+                };
+            }
+            
             var benchmarkModels = new List<BenchmarkModel>();
 
             var benchmarkWithPerformances = portfolioWithPerformance.GetAllBenchmarks();
@@ -81,7 +128,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                     YearToDate = PercentHelper.AsPercent(benchmarkWithPerformance.CalculateReturnAsDecimal(yearToDateCalculationRequest)),
                     FirstFullMonth = PercentHelper.AsPercent(benchmarkWithPerformance.CalculateReturnAsDecimal(firstFullMonthCalculationRequest)),
                 };
-
                 benchmarkModels.Add(benchmarkModel);
             }
 
@@ -89,7 +135,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
             return portfolioModel;
         }
-
+       
         public class PortfolioModel
         {
             public PortfolioModel()

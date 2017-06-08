@@ -1,57 +1,71 @@
-﻿@model Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport.PublicWebReportFacade.PortfolioModel[]
+﻿@model Dimensional.TinyReturns.Web.Models.PortfolioPerformanceIndexModel
+
 
 @{
     ViewBag.Title = "Portfolio Performance";
 }
 
 <div>
+    <br/>
+    <div class="form-inline">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new { @class = "form-control" })
+            </div>
 
+            <input type="submit" value="Go" class="btn btn-default" />
+        }
+    </div>
     <table class="table table-condensed">
         <thead>
-            <tr>
-                <th>Number</th>
-                <th>Name</th>
-                <th>1 Month</th>
-                <th>3 Month</th>
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>1 Month</th>
+            <th>3 Month</th>
                 <th>6 Month</th>
                 <th>Quarter to Date</th>
-                <th>Year to Date</th>
+            <th>Year to Date</th>
                 <th>First Full Month</th>
                 <th>Standard Deviation</th>
                 <th>Mean</th>
-            </tr>
+        </tr>
         </thead>
         <tbody>
 
-            @foreach (var portfolio in Model)
-            {
-                <tr style="background: lavenderblush">
-                    <td>@portfolio.Number</td>
-                    <td>@portfolio.Name</td>
-                    <td>@portfolio.OneMonth</td>
-                    <td>@portfolio.ThreeMonth</td>
+        @foreach (var portfolio in Model.Portfolios)
+        {
+            <tr style="background: lavenderblush">
+                <td>@portfolio.Number</td>
+                <td>@portfolio.Name</td>
+                <td>@portfolio.OneMonth</td>
+                <td>@portfolio.ThreeMonth</td>
                     <td>@portfolio.SixMonth</td>
                     <td>@portfolio.QuarterToDate</td>
-                    <td>@portfolio.YearToDate</td>
+                <td>@portfolio.YearToDate</td>
                     <td>@portfolio.FirstFullMonth</td>
                     <td>@portfolio.StandardDeviation</td>
                     <td>@portfolio.Mean</td>
-                </tr>
+            </tr>
 
-                foreach (var benchmark in portfolio.Benchmarks)
-                {
-                    <tr>
-                        <td></td>
-                        <td style="padding-left: 20px;">@benchmark.Name</td>
-                        <td>@benchmark.OneMonth</td>
-                        <td>@benchmark.ThreeMonth</td>
+            foreach (var benchmark in portfolio.Benchmarks)
+            {
+                <tr>
+                    <td></td>
+                    <td style="padding-left: 20px;">@benchmark.Name</td>
+                    <td>@benchmark.OneMonth</td>
+                    <td>@benchmark.ThreeMonth</td>
                         <td>@benchmark.SixMonth</td>
                         <td>@benchmark.QuarterToDate</td>
-                        <td>@benchmark.YearToDate</td>
+                    <td>@benchmark.YearToDate</td>
                         <td>@portfolio.FirstFullMonth</td>
-                    </tr>
-                }
+                </tr>
             }
+        }
 
         </tbody>
     </table>

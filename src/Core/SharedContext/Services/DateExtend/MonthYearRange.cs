@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend
 {
@@ -145,21 +146,63 @@ namespace Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend
             }
         }
 
-//        public void ForEachFullQuarter(Action<QuarterYear> quarterYearAction)
-//        {
-//            ForEachMonthInRange(my =>
-//            {
-//                if (my.IsLastMonthOfQuarter)
-//                {
-//                    var twoMonthBack = my.AddMonths(-2);
-//
-//                    if (IsMonthInRange(twoMonthBack))
-//                    {
-//                        var quarterYear = new QuarterYear(my);
-//                        quarterYearAction(quarterYear);
-//                    }
-//                }
-//            });
-//        }
-    }
+
+        public MonthYear[] GetMonthsInRange()
+        {
+            var allPossibleMonths = new List<MonthYear>();
+
+            for (var i = 0; i <= 36; i++)
+            {
+                allPossibleMonths.Add(EndMonth.AddMonths(-i));
+            }
+
+
+            return allPossibleMonths.ToArray();
+        }
+
+
+            //        public MonthYear[] GetMonthsInRange()
+            //        {
+            //            var allPossibleMonths = new List<MonthYear>();
+            //
+            //            for (var year = EndMonth.Year; year >= StartMonth.Year; year--)
+            //            {
+            //                for (var month = 12; month >= 1; month--)
+            //                {
+            //                    if (year == EndMonth.Year && month > EndMonth.Month)
+            //                    {
+            //                        //do nothing
+            //                    }
+            //                    else if (year == StartMonth.Year && month < StartMonth.Month)
+            //                    {
+            //                        //do nothing
+            //                    }
+            //                    else
+            //                    {
+            //                        allPossibleMonths.Add(new MonthYear(year, month));
+            //                    }
+            //                }
+            //            }
+            //            return allPossibleMonths.ToArray();
+            //        }
+
+
+
+            //        public void ForEachFullQuarter(Action<QuarterYear> quarterYearAction)
+            //        {
+            //            ForEachMonthInRange(my =>
+            //            {
+            //                if (my.IsLastMonthOfQuarter)
+            //                {
+            //                    var twoMonthBack = my.AddMonths(-2);
+            //
+            //                    if (IsMonthInRange(twoMonthBack))
+            //                    {
+            //                        var quarterYear = new QuarterYear(my);
+            //                        quarterYearAction(quarterYear);
+            //                    }
+            //                }
+            //            });
+            //        }
+        }
 }
