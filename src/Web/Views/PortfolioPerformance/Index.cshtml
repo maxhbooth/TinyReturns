@@ -7,14 +7,18 @@
 
 <div>
     <br/>
-    <div align="center" class="input-group">
-    @using (Html.BeginForm())
-    {
-        @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" });
-        @Html.DropDownListFor(m => m.Selected, Model.NetGrossList)
-        <input type="submit" value="Go"/>
-    }
-        </div>
+    <div class="form-inline">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new { @class = "form-control" })
+            </div>
+
+            <input type="submit" value="Go" class="btn btn-default" />
+        }
     </div>
     <table class="table table-condensed">
         <thead>
