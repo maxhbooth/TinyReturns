@@ -95,7 +95,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var previousMonthYear = monthYear.AddMonths(-1);
 
                 testHelper.CurrentDate = new DateTime(
-                    nextMonth.Year,
+                    monthYear.Year,
                     nextMonth.Month,
                     5);
 
@@ -129,7 +129,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var controller = testHelper.CreateController();
 
                 // Act
-                var actionResult = controller.TestIndex(monthYear);
+                var actionResult = controller.Index();
 
                 // Assert
                 var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
@@ -239,7 +239,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var controller = testHelper.CreateController();
 
                 // Act
-                var actionResult = controller.TestIndex(monthYear);
+                var actionResult = controller.Index();
 
                 // Assert
                 var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
@@ -384,7 +384,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var controller = testHelper.CreateController();
 
                 // Act
-                var actionResult = controller.TestIndex(monthYear);
+                var actionResult = controller.Index();
 
                 // Assert
                 var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);

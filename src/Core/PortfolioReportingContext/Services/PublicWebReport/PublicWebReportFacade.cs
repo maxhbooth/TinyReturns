@@ -45,11 +45,10 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             return portfolioModels.ToArray();
         }
 
-        public PortfolioModel[] GetGrossPortfolioPerforance()
+        public PortfolioModel[] GetGrossPortfolioPerforance(MonthYear currentMonthYear)
         {
             var portfolios = _portfolioWithPerformanceRepository.GetAll();
 
-            var currentMonthYear = new MonthYear(_clock.GetCurrentDate());
             var previousMonthYear = currentMonthYear.AddMonths(-1);
 
             var portfolioModels = new List<PortfolioModel>();

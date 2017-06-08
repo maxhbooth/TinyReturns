@@ -67,45 +67,71 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
             return selectListItems;
         }
-        
+
+
         [HttpPost]
-        public ActionResult Index(
-            PortfolioPerformanceIndexModel model)
+        public ActionResult Index(PortfolioPerformanceIndexModel pastMonths)
         {
             var previousMonth = new MonthYear(_clock.GetCurrentDate()).AddMonths(-1);
 
-            var selectListItems = CreateLetterSelectItems();
-            string select;
+            PastMonthsModel pastMonthsModel;
 
-            PublicWebReportFacade.PortfolioModel[] portfolioPerforance;
-            if (model.Selected == "0")
-            {
-                portfolioPerforance = _publicWebReportFacade.GetPortfolioPerformance(previousMonth);
-                select = "0";
-            }
-            else if (model.Selected == "1")
-            {
-                portfolioPerforance = _publicWebReportFacade.GetGrossPortfolioPerforance(previousMonth);
-                select = "1";
-            }
-            else
-            {
-                throw new InvalidOperationException();
-            }
+            var monthYearArray = pastMonths.MonthYear.Split('/');
+            var monthYear = new MonthYear(int.Parse(monthYearArray[1]), int.Parse(monthYearArray[0]));
 
-            var resultModel = new PortfolioPerformanceIndexModel()
+            pastMonthsModel = new PastMonthsModel
             {
-                Portfolios = portfolioPerforance,
-                NetGrossList = selectListItems,
-                Selected = select,
+                Portfolios = _publicWebReportFacade.GetPortfolioPerformance(monthYear.AddMonths(1)),
                 MonthYears = WebHelper.GetDesiredMonths(previousMonth),
-                MonthYear = previousMonth.Stringify()
+                MonthYear = monthYear.Stringify()
             };
 
-            return View(resultModel);
+            return View(pastMonthsModel);
         }
 
-        public static class WebHelper
+<<<<<<< HEAD
+
+        [HttpGet]
+        public ActionResult TestIndex(MonthYear currentMonth)
+            return View(model);
+            //return View(_publicWebReportFacade.GetPortfolioPerforance());
+        }
+        [HttpPost]
+        public ActionResult Index(
+            PortfolioPerformanceNetGrossModel model)
+        {
+            var previousMonth = currentMonth.AddMonths(-1);
+=======
+        [HttpGet]
+        public ActionResult Index()
+        {
+            var previousMonth = new MonthYear(_clock.GetCurrentDate()).AddMonths(-1);
+>>>>>>> origin/feature/PastMonths
+
+            var pastMonthsModel = new PastMonthsModel
+            {
+                Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
+                MonthYears = WebHelper.GetDesiredMonths(previousMonth),
+<<<<<<< HEAD
+                MonthYear = previousMonth.Stringify(),
+                currentMonth = currentMonth
+            };
+
+            return View("Index", pastMonthsModel);
+        }
+
+
+
+=======
+                MonthYear = previousMonth.Stringify()
+            };
+            return View(pastMonthsModel);
+        }
+
+>>>>>>> origin/feature/PastMonths
+    }
+
+    public static class WebHelper
     {
         public static SelectListItem[] GetDesiredMonths(MonthYear currentMonth)
         {
@@ -118,6 +144,30 @@ namespace Dimensional.TinyReturns.Web.Controllers
             }).ToArray();
 
             return monthYears;
+            var selectListItems = CreateLetterSelectItems();
+            string select;
+            PublicWebReportFacade.PortfolioModel[] portfolioPerforance;
+            if (model.Selected == "0")
+            {
+                portfolioPerforance = _publicWebReportFacade.GetPortfolioPerformance();
+                select = "0";
+            }
+            else if (model.Selected == "1")
+            {
+                portfolioPerforance = _publicWebReportFacade.GetGrossPortfolioPerforance();
+                select = "1";
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+            var resultModel = new PortfolioPerformanceIndexModel()
+            {
+                Portfolios = portfolioPerforance,
+                NetGrossList = selectListItems,
+                Selected = select
+            };
+            return View(resultModel);
         }
     }
 }
