@@ -2,160 +2,21 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
-using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Portfolio;
-using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
-using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using Dimensional.TinyReturns.IntegrationTests.Core;
-using Dimensional.TinyReturns.Web.Controllers;
+using Dimensional.TinyReturns.Web.Models;
 using Dimensional.TinyReturns.Web.Models;
 using FluentAssertions;
 using Xunit;
 
 namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 {
-    public class PortfolioPerformanceControllerTests
+    public class PortfolioPerformanceControllerForGetTests
     {
-        public class TestHelper
-        {
-            private readonly AllTablesDeleter _allTablesDeleter;
-            private readonly PortfolioDataTableGateway _portfolioDataTableGateway;
-            private readonly ReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
-            private readonly MonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
-            private readonly PortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
-            private readonly BenchmarkDataTableGateway _benchmarkDataTableGateway;
-            private readonly BenchmarkToReturnSeriesDataTableGateway _benchmarkToReturnSeriesDataTableGateway;
-            private readonly PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
-
-            public TestHelper()
-            {
-                var databaseSettings = new DatabaseSettings();
-                var systemLogForIntegrationTests = new SystemLogForIntegrationTests();
-
-                CurrentDate = new DateTime(2017, 2, 3);
-
-                _allTablesDeleter = new AllTablesDeleter();
-
-                _portfolioDataTableGateway = new PortfolioDataTableGateway(
-                    databaseSettings,
-                    systemLogForIntegrationTests);
-
-                _benchmarkDataTableGateway = new BenchmarkDataTableGateway(
-                    databaseSettings,
-                    systemLogForIntegrationTests);
-
-                _returnSeriesDataTableGateway = new ReturnSeriesDataTableGateway(
-                    databaseSettings,
-                    systemLogForIntegrationTests);
-
-                _monthlyReturnDataTableGateway = new MonthlyReturnDataTableGateway(
-                    databaseSettings,
-                    systemLogForIntegrationTests);
-
-                _portfolioToReturnSeriesDataTableGateway = new PortfolioToReturnSeriesDataTableGateway(
-                    databaseSettings,
-                    systemLogForIntegrationTests);
-
-                _benchmarkToReturnSeriesDataTableGateway = new BenchmarkToReturnSeriesDataTableGateway(
-                    databaseSettings,
-                    systemLogForIntegrationTests);
-
-                _portfolioToBenchmarkDataTableGateway = new PortfolioToBenchmarkDataTableGateway(
-                    databaseSettings,
-                    systemLogForIntegrationTests);
-            }
-
-            public DateTime CurrentDate { get; set; }
-
-            public PortfolioPerformanceController CreateController()
-            {
-                var returnSeriesRepository = new ReturnSeriesRepository(
-                    _returnSeriesDataTableGateway,
-                    _monthlyReturnDataTableGateway);
-
-                var benchmarkWithPerformanceRepository = new BenchmarkWithPerformanceRepository(
-                    _benchmarkDataTableGateway,
-                    _benchmarkToReturnSeriesDataTableGateway,
-                    returnSeriesRepository);
-
-                var portfolioWithPerformanceRepository = new PortfolioWithPerformanceRepository(
-                    _portfolioDataTableGateway,
-                    _portfolioToReturnSeriesDataTableGateway,
-                    _portfolioToBenchmarkDataTableGateway,
-                    returnSeriesRepository,
-                    benchmarkWithPerformanceRepository);
-
-                var publicWebReportFacade = new PublicWebReportFacade(
-                    portfolioWithPerformanceRepository, 
-                    new ClockStub(CurrentDate));
-
-                return new PortfolioPerformanceController(
                     publicWebReportFacade, _monthlyReturnDataTableGateway);
-            }
-
-            public void InsertPortfolioDto(
-                PortfolioDto dto)
-            {
-                _portfolioDataTableGateway.Insert(dto);
-            }
-
-            public void InsertBenchmarkDto(
-                BenchmarkDto dto)
-            {
-                _benchmarkDataTableGateway.Insert(new []{ dto });
-            }
-
-            public int InsertReturnSeriesDto(ReturnSeriesDto dto)
-            {
-                return _returnSeriesDataTableGateway.Insert(dto);
-            }
-
-            public void InsertMonthlyReturnDto(MonthlyReturnDto dto)
-            {
-                _monthlyReturnDataTableGateway.Insert(new []{ dto });
-            }
-
-            public void InsertMonthlyReturnDtos(MonthlyReturnDto[] dtos)
-            {
-                _monthlyReturnDataTableGateway.Insert(dtos);
-            }
-
-            public void InsertPortfolioToReturnSeriesDto(PortfolioToReturnSeriesDto dto)
-            {
-                _portfolioToReturnSeriesDataTableGateway.Insert(new []{ dto });
-            }
-
-            public void InsertBenchmarkToReturnSeriesDto(BenchmarkToReturnSeriesDto dto)
-            {
-                _benchmarkToReturnSeriesDataTableGateway.Insert(new []{ dto });
-            }
-
-            public void InsertPortfolioToBenchmarkDto(
-                PortfolioToBenchmarkDto dto)
-            {
-                _portfolioToBenchmarkDataTableGateway.Insert(new []{ dto });
-            }
-
-            public void DatabaseDataDeleter(
-                Action act)
-            {
-                var databaseSettings = new DatabaseSettings();
-
-                _allTablesDeleter.DeleteAllDataFromTables(
-                    databaseSettings.TinyReturnsDatabaseConnectionString,
-                    new AllTablesDeleter.TableInfoDto[0]);
-
-                act();
-
-                _allTablesDeleter.DeleteAllDataFromTables(
-                    databaseSettings.TinyReturnsDatabaseConnectionString,
-                    new AllTablesDeleter.TableInfoDto[0]);
-            }
-        }
-
         [Fact]
         public void ShouldReturnNoRecordsWhenNoPortfolioAreFound()
         {
@@ -171,11 +32,15 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                     // Assert
                     var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
-                    var viewResultModel = GetModelFromActionResult(actionResult);
+                    var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
 
                     viewResultModel.MonthYears.Count().Should().Be(0);
                     viewResultModel.MonthYear.Should().BeEmpty();
                     viewResultPortfolio.Length.Should().Be(0);
+                    
+                    var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                    testHelper.AssertSelectItemsArePopulated(resultModel);
+                    testHelper.AssertSelectItemDefaultsNet(resultModel);
                 });
         }
 
@@ -201,7 +66,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 // Assert
                 var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
 
                 viewResultModel.MonthYears.Count().Should().Be(0); //only care about performance numbers so.
                 viewResultModel.MonthYear.Should().BeEmpty();
@@ -212,6 +77,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultPortfolio[0].Name.Should().Be("Portfolio 100");
                 viewResultModel[0].FirstFullMonth.Should().NotHaveValue();
                 viewResultPortfolio[0].Benchmarks.Should().BeEmpty();
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                testHelper.AssertSelectItemsArePopulated(resultModel);
+                testHelper.AssertSelectItemDefaultsNet(resultModel);
             });
         }
 
@@ -268,7 +136,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 // Assert
                 var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
 
                 viewResultModel.MonthYears.Count().Should().Be(1);
                 viewResultModel.MonthYears.First().Value.Should()
@@ -289,6 +157,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultPortfolio[0].OneMonth.Should().BeApproximately(0.02m, 0.00001m);
                 viewResultPortfolio[0].ThreeMonth.Should().NotHaveValue();
                 viewResultPortfolio[0].YearToDate.Should().BeApproximately(0.02m, 0.00001m);
+                
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                testHelper.AssertSelectItemsArePopulated(resultModel);
+                testHelper.AssertSelectItemDefaultsNet(resultModel);
             });
         }
 
@@ -382,7 +254,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 // Assert
                 var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
                 var viewResultModelArray = viewResultModel.MonthYears.ToArray();
 
                 viewResultModel.MonthYears.Count().Should().Be(5);
@@ -411,6 +283,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultPortfolio[0].Benchmarks.Should().BeEmpty();
 
                 viewResultPortfolio[0].OneMonth.Should().BeApproximately(0.02m, 0.00000001m);
+                
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                testHelper.AssertSelectItemsArePopulated(resultModel);
+                testHelper.AssertSelectItemDefaultsNet(resultModel);
                 viewResultPortfolio[0].ThreeMonth.Should().BeApproximately(0.039584m, 0.00000001m);
                 viewResultPortfolio[0].YearToDate.Should().BeApproximately(0.0394800416m, 0.00000001m);
             });
@@ -532,7 +408,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 // Assert
                 var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult).Portfolios;
                 var viewResultModelArray = viewResultModel.MonthYears.ToArray();
 
                 viewResultModel.MonthYears.Count().Should().Be(8);
@@ -565,17 +441,19 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                                                 * (.99m) * (1.03m) * (1.02m) * (1.01m)- 1;
 
                 viewResultModel[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00000001m);
-                viewResultModel[0].ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedThreeMonthResult), 0.00000001m);
+                viewResultModel[0].ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedThreeMonthResult), 0.00000001m);                viewResultModel[0].SixMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedSixMonthResult), 0.00000001m);
                 viewResultPortfolio[0].SixMonth.Should().BeApproximately(
-                    PercentHelper.AsPercent(expectedSixMonthResult), 0.00000001m);
+                viewResultModel[0].SixMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedSixMonthResult), 0.00000001m);
 		        viewResultPortfolio[0].QuarterToDate.Should().BeApproximately(expectedQuarterToDateResult, 0.00000001m);
+		viewResultModel[0].QuarterToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedQuarterToDateResult), 0.00000001m);
                 viewResultModel[0].FirstFullMonth.Should().NotHaveValue();
                 viewResultPortfolio[0].YearToDate.Should().BeApproximately(expectedYearToDateResult, 0.00000001m);
+
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                testHelper.AssertSelectItemsArePopulated(resultModel);
+                testHelper.AssertSelectItemDefaultsNet(resultModel);
             });
         }
-
-
-
 
         [Fact]
         public void ShouldReturnPortfolioWithBenchmark()
@@ -677,6 +555,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 // Assert
                 var viewResultPortfolio = GetPortfolioFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
 
                 var expectedViewOneMonth = (1 + 0.812m) - 1;
                 var expectedViewThreeMonth = (1 + 0.812m) * (1 + 0.1177m) * (1 -0.588m) - 1;
@@ -717,8 +596,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 benchmarkModel.SixMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchSixMonth), 0.00000001m);
                 benchmarkModel.QuarterToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchQuarterToDate), 0.00000001m);
                 benchmarkModel.YearToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchYearToDate), 0.00000001m);
-                benchmarkModel.FirstFullMonth.Should().NotHaveValue();
+		        benchmarkModel.FirstFullMonth.Should().NotHaveValue();
 
+                var resultModel = testHelper.GetModelFromActionResult(actionResult);
+                testHelper.AssertSelectItemsArePopulated(resultModel);
+                testHelper.AssertSelectItemDefaultsNet(resultModel);                
             });
         }
 
@@ -821,7 +703,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult).Portfolios;
 
                 var expectedViewOneMonth = (1 + 0.812m) - 1;
                 var expectedViewThreeMonth = (1 + 0.812m) * (1 + 0.1177m) * (1 - 0.588m) - 1;
@@ -971,7 +853,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult).Portfolios;
 
                 var viewValues = new decimal[]
                 {
@@ -1111,7 +993,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = GetModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult).Portfolios;
 
                 var viewValues = new decimal[]
                 {
@@ -1143,13 +1025,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             });
         }
-
         private static PublicWebReportFacade.PortfolioModel[] GetPortfolioFromActionResult(
-            ActionResult actionResult)
-        {
-            actionResult.Should().BeAssignableTo<ViewResult>();
-            var viewResult = (ViewResult) actionResult;
-
             ((PastMonthsModel)viewResult.Model).Portfolios.Should().BeAssignableTo<PublicWebReportFacade.PortfolioModel[]>();
             return ((PastMonthsModel)viewResult.Model).Portfolios;
         }
@@ -1162,6 +1038,5 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             viewResult.Model.Should().BeAssignableTo<PastMonthsModel>();
             return (PastMonthsModel)viewResult.Model;
-        }
     }
 }

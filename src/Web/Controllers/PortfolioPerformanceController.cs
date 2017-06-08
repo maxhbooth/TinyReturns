@@ -1,9 +1,12 @@
 ﻿using System.Linq;
+using System;
 using System.Web.Mvc;
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
+using System.Collections.Generic;
+using System.Linq;
 using Dimensional.TinyReturns.Web.Models;
 
 namespace Dimensional.TinyReturns.Web.Controllers
@@ -56,10 +59,15 @@ namespace Dimensional.TinyReturns.Web.Controllers
             var previousMonth = new MonthYear(new Clock().GetCurrentDate()).AddMonths(-1);
 
             var pastMonthsModel = new PastMonthsModel
+            var selectListItems = CreateLetterSelectItems();
+            //initialize all properties of model
+            var model = new PortfolioPerformanceNetGrossModel()
             {
                 Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
                 MonthYears = WebHelper.GetDesiredMonths(previousMonth),
                 MonthYear = previousMonth.Stringify()
+                Selected = "0",
+                NetGrossList = selectListItems
             };
 
             return View(pastMonthsModel);
@@ -68,6 +76,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
         [HttpGet]
         public ActionResult TestIndex(MonthYear currentMonth)
+            return View(model);
+            //return View(_publicWebReportFacade.GetPortfolioPerforance());
+        }
+        [HttpPost]
+        public ActionResult Index(
+            PortfolioPerformanceNetGrossModel model)
         {
             var previousMonth = currentMonth.AddMonths(-1);
 
@@ -96,6 +110,47 @@ namespace Dimensional.TinyReturns.Web.Controllers
             }).ToArray();
 
             return monthYears;
+            var selectListItems = CreateLetterSelectItems();
+            string select;
+            PublicWebReportFacade.PortfolioModel[] portfolioPerforance;
+            if (model.Selected == "0")
+            {
+                portfolioPerforance = _publicWebReportFacade.GetPortfolioPerformance();
+                select = "0";
+            }
+            else if (model.Selected == "1")
+            {
+                portfolioPerforance = _publicWebReportFacade.GetGrossPortfolioPerforance();
+                select = "1";
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+            var resultModel = new PortfolioPerformanceNetGrossModel()
+            {
+                Portfolios = portfolioPerforance,
+                NetGrossList = selectListItems,
+                Selected = select
+            };
+            return View(resultModel);
+        }
+        private SelectListItem[] CreateLetterSelectItems()
+        {
+            var selectListItems = new SelectListItem[2];
+
+            selectListItems[0] = new SelectListItem()
+            {
+                Value = "0",
+                Text = "Net"
+            };
+            selectListItems[1] = new SelectListItem()
+            {
+                Value = "1",
+                Text = "Gross"
+            };
+
+            return selectListItems;
         }
     }
 }
