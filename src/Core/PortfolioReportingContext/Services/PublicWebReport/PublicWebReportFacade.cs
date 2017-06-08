@@ -89,7 +89,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                     QuarterToDate =
                         PercentHelper.AsPercent(
                             portfolioWithPerformance.CalculateNetReturnAsDecimal(quarterToDateCalculationRequest)),
-                    NetNotGross = true,
                     FirstFullMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(firstFullMonthCalculationRequest)),
                     StandardDeviation = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetStandardDeviation()),  
                     Mean = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetMean())
@@ -107,7 +106,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                     QuarterToDate = PercentHelper.AsPercent(portfolioWithPerformance.CalculateGrossReturnAsDecimal(quarterToDateCalculationRequest)),
                     YearToDate = PercentHelper.AsPercent(portfolioWithPerformance.CalculateGrossReturnAsDecimal(yearToDateCalculationRequest)),
                     FirstFullMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateGrossReturnAsDecimal(firstFullMonthCalculationRequest)),
-                    NetNotGross = false
                 };
             }
             
@@ -150,8 +148,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public decimal? SixMonth { get; set; }
             public decimal? QuarterToDate { get; set; }
             public decimal? YearToDate { get; set; }
-            //used solely for test; not in UI
-            public bool NetNotGross { get; set; }
             public decimal? FirstFullMonth { get; set; }
             public decimal? StandardDeviation { get; set; }
             public decimal? Mean { get; set; }
