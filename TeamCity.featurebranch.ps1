@@ -20,6 +20,9 @@ Import-Module $psakeModule
 
 # you can write statements in multiple lines using `
 Invoke-psake -buildFile .\src\Build\default.ps1 `
+			 -parameters @{
+				 "projectVersion" = $args[0]
+				} `
 			 -taskList teamcity `
 			 -framework 4.6 `
 

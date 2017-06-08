@@ -120,10 +120,13 @@ task copyBuildFiles -depends BuildSolution {
 
 }
 
-task ZipFile -depends copyBuildFiles {
+task ZipFile -depends copyBuildFiles -requiredVariables projectVersion{
+    Copy-Item "$baseDir\etc\deployment\application\*" "$buildFolder"
 
     $zipExec = "$srcFolder\packages\7-Zip.CommandLine.9.20.0\tools\7za.exe"
 
-    Exec { &$zipExec a "-x!*.zip" "-x!*.dat" "$buildFolder\TinyReturns_App.zip" "$buildFolder\*" }
+    $versionStamp = $projectVersion -replace "\.", "_"
+
+    Exec { &$zipExec a "-x!*.zip" "-x!*.dat" "$buildFolder\TinyReturns_App_.zip" "$buildFolder\*" }
 
 }
