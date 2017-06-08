@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
-using System.Web.Mvc;
-using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
-using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Portfolio;
-using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
-using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
-using Dimensional.TinyReturns.IntegrationTests.Core;
-using Dimensional.TinyReturns.Web.Controllers;
 using Dimensional.TinyReturns.Web.Models;
 using FluentAssertions;
 using Xunit;
