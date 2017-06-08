@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Dimensional.TinyReturns.Core;
-using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
-using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
-using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Web.Models;
 
 namespace Dimensional.TinyReturns.Web.Controllers
@@ -16,61 +11,75 @@ namespace Dimensional.TinyReturns.Web.Controllers
     public class PortfolioPerformanceController : Controller
     {
         private readonly PublicWebReportFacade _publicWebReportFacade;
-        private readonly MonthYear _currentMonth;
 
         public PortfolioPerformanceController()
         {
             _publicWebReportFacade = MasterFactory.GetPublicWebReportFacade();
-            _currentMonth = new MonthYear(new Clock().GetCurrentDate());
         }
 
         // Used for tests
         public PortfolioPerformanceController(
-            PublicWebReportFacade publicWebReportFacade, MonthYear currentMonth)
+            PublicWebReportFacade publicWebReportFacade)
         {
             _publicWebReportFacade = publicWebReportFacade;
-            _currentMonth = currentMonth;
         }
 
 
         [HttpPost]
-                public ActionResult Index(PastMonthsModel pastMonths)
+        public ActionResult Index(PastMonthsModel pastMonths)
         {
-            PastMonthsModel pastMonthsModel;
-                    if (pastMonths != null)
-                    {
-                        var monthYearArray = pastMonths.MonthYear.Split('/');
-                        var monthYear = new MonthYear(int.Parse(monthYearArray[1]), int.Parse(monthYearArray[0]));
+            MonthYear previousMonth;
+            if (pastMonths.currentMonth == null)
 
-                        pastMonthsModel = new PastMonthsModel()
-                        {
-                            Portfolios = _publicWebReportFacade.GetPortfolioPerformance(monthYear),
-                            MonthYears = WebHelper.GetDesiredMonths(_currentMonth),
-                            MonthYear = monthYear.Stringify()
-                        };
-                    }
-                    else
-                    {
-                        pastMonthsModel = new PastMonthsModel()
-                        {
-                            Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
-                            MonthYears = WebHelper.GetDesiredMonths(_currentMonth),
-                            MonthYear = _currentMonth.Stringify()
-                        };
-                    }
-                    return View(pastMonthsModel);
-                }
+                previousMonth = new MonthYear(new Clock().GetCurrentDate()).AddMonths(-1);
+            else
+                previousMonth = pastMonths.currentMonth; //for testing
+
+            PastMonthsModel pastMonthsModel;
+
+            var monthYearArray = pastMonths.MonthYear.Split('/');
+            var monthYear = new MonthYear(int.Parse(monthYearArray[1]), int.Parse(monthYearArray[0]));
+
+            pastMonthsModel = new PastMonthsModel
+            {
+                Portfolios = _publicWebReportFacade.GetPortfolioPerformance(monthYear.AddMonths(1)),
+                MonthYears = WebHelper.GetDesiredMonths(previousMonth),
+                MonthYear = monthYear.Stringify()
+            };
+
+            return View(pastMonthsModel);
+        }
 
         [HttpGet]
         public ActionResult Index()
         {
-            var pastMonthsModel = new PastMonthsModel()
+            var previousMonth = new MonthYear(new Clock().GetCurrentDate()).AddMonths(-1);
+
+            var pastMonthsModel = new PastMonthsModel
             {
                 Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
-                MonthYears = WebHelper.GetDesiredMonths(_currentMonth),
-                MonthYear = _currentMonth.Stringify()
+                MonthYears = WebHelper.GetDesiredMonths(previousMonth),
+                MonthYear = previousMonth.Stringify()
             };
+
             return View(pastMonthsModel);
+        }
+
+
+        [HttpGet]
+        public ActionResult TestIndex(MonthYear currentMonth)
+        {
+            var previousMonth = currentMonth.AddMonths(-1);
+
+            var pastMonthsModel = new PastMonthsModel
+            {
+                Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
+                MonthYears = WebHelper.GetDesiredMonths(previousMonth),
+                MonthYear = previousMonth.Stringify(),
+                currentMonth = currentMonth
+            };
+
+            return View("Index", pastMonthsModel);
         }
     }
 
@@ -78,13 +87,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
     {
         public static SelectListItem[] GetDesiredMonths(MonthYear currentMonth)
         {
-
             var monthsInRange = MonthYearRange.CreateForEndMonthAndMonthsBack(currentMonth, 36).GetMonthsInRange();
 
-            var monthYears = monthsInRange.Select(x => new SelectListItem()
+            var monthYears = monthsInRange.Select(x => new SelectListItem
             {
                 Text = x.Stringify(),
-                Value = x.Stringify(),
+                Value = x.Stringify()
             }).ToArray();
 
             return monthYears;

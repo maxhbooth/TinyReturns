@@ -92,6 +92,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var monthYear = new MonthYear(2017, 1);
                 var nextMonth = monthYear.AddMonths(1);
+                var previousMonthYear = monthYear.AddMonths(-1);
 
                 testHelper.CurrentDate = new DateTime(
                     nextMonth.Year,
@@ -128,7 +129,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var controller = testHelper.CreateController();
 
                 // Act
-                var actionResult = controller.Index();
+                var actionResult = controller.TestIndex(monthYear);
 
                 // Assert
                 var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
@@ -136,9 +137,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 viewResultModel.MonthYears.Count().Should().Be(37);
                 viewResultModel.MonthYears.First().Value.Should()
-                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
+                    .Be(previousMonthYear.Month.ToString() + "/" + previousMonthYear.Year.ToString());
                 viewResultModel.MonthYears.First().Text.Should()
-                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
+                    .Be(previousMonthYear.Month.ToString() + "/" + previousMonthYear.Year.ToString());
 
                 viewResultPortfolio.Length.Should().Be(1);
 
@@ -238,7 +239,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var controller = testHelper.CreateController();
 
                 // Act
-                var actionResult = controller.Index();
+                var actionResult = controller.TestIndex(monthYear);
 
                 // Assert
                 var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
@@ -247,17 +248,14 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 viewResultModel.MonthYears.Count().Should().Be(37);
 
+             
                 viewResultModelArray[0].Value.Should()
-                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
+                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
                 viewResultModelArray[0].Text.Should()
-                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
+                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
                 viewResultModelArray[1].Value.Should()
-                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
-                viewResultModelArray[1].Text.Should()
-                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
-                viewResultModelArray[2].Value.Should()
                     .Be(monthYearMinus2.Month.ToString() + "/" + monthYearMinus2.Year.ToString());
-                viewResultModelArray[2].Text.Should()
+                viewResultModelArray[1].Text.Should()
                     .Be(monthYearMinus2.Month.ToString() + "/" + monthYearMinus2.Year.ToString());
 
                 viewResultModelArray.All(m => m != null).Should().BeTrue();
@@ -386,7 +384,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var controller = testHelper.CreateController();
 
                 // Act
-                var actionResult = controller.Index();
+                var actionResult = controller.TestIndex(monthYear);
 
                 // Assert
                 var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
@@ -396,16 +394,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModel.MonthYears.Count().Should().Be(37);
 
                 viewResultModelArray[0].Value.Should()
-                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
+                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
                 viewResultModelArray[0].Text.Should()
-                    .Be(monthYear.Month.ToString() + "/" + monthYear.Year.ToString());
+                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
                 viewResultModelArray[1].Value.Should()
-                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
-                viewResultModelArray[1].Text.Should()
-                    .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
-                viewResultModelArray[2].Value.Should()
                     .Be(monthYearMinus2.Month.ToString() + "/" + monthYearMinus2.Year.ToString());
-                viewResultModelArray[2].Text.Should()
+                viewResultModelArray[1].Text.Should()
                     .Be(monthYearMinus2.Month.ToString() + "/" + monthYearMinus2.Year.ToString());
 
                 viewResultModelArray.All(m => m != null).Should().BeTrue();

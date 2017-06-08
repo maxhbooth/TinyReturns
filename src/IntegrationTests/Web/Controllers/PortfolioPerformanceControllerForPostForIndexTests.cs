@@ -109,7 +109,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var requestModel = new PastMonthsModel()
                 {
-                    MonthYear = "3/2016"
+                    MonthYear = "2/2016"
                 };
 
                 var actionResult = controller.Index(requestModel);
