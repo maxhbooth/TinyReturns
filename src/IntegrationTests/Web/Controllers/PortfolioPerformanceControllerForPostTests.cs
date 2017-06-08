@@ -42,6 +42,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             {
                 var controller = testHelper.CreateController();
 
+                var currentMonthYear = new MonthYear(testHelper.CurrentDate);
+                var previousMonthYear = currentMonthYear.AddMonths(-1);
+
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
                     Number = 100,
@@ -52,6 +55,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 // Act
                 var requestModel = new PortfolioPerformanceIndexModel()
                 {
+                    MonthYear = previousMonthYear.Stringify(),
                     Selected = "0"
                 };
                 int returnId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
@@ -94,7 +98,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             {
                 var controller = testHelper.CreateController();
 
-                var previousMonthYear = new MonthYear(testHelper.CurrentDate).AddMonths(-1);
+                var currentMonthYear = new MonthYear(testHelper.CurrentDate);
+                var previousMonthYear = currentMonthYear.AddMonths(-1);
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
@@ -109,6 +114,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     MonthYear = previousMonthYear.Stringify(),
                     Selected = "1"
                 };
+
                 int returnId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
                     Name = "Month"

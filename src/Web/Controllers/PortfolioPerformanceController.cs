@@ -32,7 +32,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var previousMonth = new MonthYear(new Clock().GetCurrentDate()).AddMonths(-1);
+            var previousMonth = new MonthYear(_clock.GetCurrentDate()).AddMonths(-1);
 
             var selectListItems = CreateLetterSelectItems();
 
@@ -70,7 +70,8 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public ActionResult Index(
             PortfolioPerformanceIndexModel model)
         {
-            var previousMonth = new MonthYear(_clock.GetCurrentDate()).AddMonths(-1);
+            var monthYearArray = model.MonthYear.Split('/');
+            var monthYear = new MonthYear(int.Parse(monthYearArray[1]), int.Parse(monthYearArray[0]));
 
             var selectListItems = CreateLetterSelectItems();
             string select;
@@ -78,12 +79,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
             PublicWebReportFacade.PortfolioModel[] portfolioPerforance;
             if (model.Selected == "0")
             {
-                portfolioPerforance = _publicWebReportFacade.GetPortfolioPerformance(previousMonth);
+                portfolioPerforance = _publicWebReportFacade.GetPortfolioPerformance(monthYear);
                 select = "0";
             }
             else if (model.Selected == "1")
             {
-                portfolioPerforance = _publicWebReportFacade.GetGrossPortfolioPerforance(previousMonth);
+                portfolioPerforance = _publicWebReportFacade.GetGrossPortfolioPerforance(monthYear);
                 select = "1";
             }
             else
@@ -96,8 +97,8 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 Portfolios = portfolioPerforance,
                 NetGrossList = selectListItems,
                 Selected = select,
-                MonthYears = WebHelper.GetDesiredMonths(previousMonth),
-                MonthYear = previousMonth.Stringify()
+                MonthYears = WebHelper.GetDesiredMonths(monthYear),
+                MonthYear = monthYear.Stringify()
             };
 
             return View(resultModel);
