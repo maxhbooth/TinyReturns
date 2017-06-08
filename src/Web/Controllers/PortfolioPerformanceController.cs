@@ -70,6 +70,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public ActionResult Index(
             PortfolioPerformanceIndexModel model)
         {
+            var previousMonth = new MonthYear(_clock.GetCurrentDate()).AddMonths(-1);
             var monthYearArray = model.MonthYear.Split('/');
             var monthYear = new MonthYear(int.Parse(monthYearArray[1]), int.Parse(monthYearArray[0]));
 
@@ -97,7 +98,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 Portfolios = portfolioPerforance,
                 NetGrossList = selectListItems,
                 Selected = select,
-                MonthYears = WebHelper.GetDesiredMonths(monthYear),
+                MonthYears = WebHelper.GetDesiredMonths(previousMonth),
                 MonthYear = monthYear.Stringify()
             };
 
