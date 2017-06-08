@@ -28,8 +28,46 @@ namespace Dimensional.TinyReturns.Web.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult Index()
+        {
+            var previousMonth = new MonthYear(new Clock().GetCurrentDate()).AddMonths(-1);
+
+            var selectListItems = CreateLetterSelectItems();
+            
+            var model = new PortfolioPerformanceIndexModel()
+            {
+                Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
+                MonthYears = WebHelper.GetDesiredMonths(previousMonth),
+                MonthYear = previousMonth.Stringify(),
+                Selected = "0",
+                NetGrossList = selectListItems
+            };
+
+            return View(model);
+        }
+
+        private SelectListItem[] CreateLetterSelectItems()
+        {
+            var selectListItems = new SelectListItem[2];
+
+            selectListItems[0] = new SelectListItem()
+            {
+                Value = "0",
+                Text = "Net"
+            };
+            selectListItems[1] = new SelectListItem()
+            {
+                Value = "1",
+                Text = "Gross"
+            };
+
+            return selectListItems;
+        }
+
+
         [HttpPost]
-        public ActionResult Index(PastMonthsModel pastMonths)
+        public ActionResult Index(PortfolioPerformanceIndexModel pastMonths)
         {
             MonthYear previousMonth;
             if (pastMonths.currentMonth == null)
@@ -48,26 +86,6 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 Portfolios = _publicWebReportFacade.GetPortfolioPerformance(monthYear.AddMonths(1)),
                 MonthYears = WebHelper.GetDesiredMonths(previousMonth),
                 MonthYear = monthYear.Stringify()
-            };
-
-            return View(pastMonthsModel);
-        }
-
-        [HttpGet]
-        public ActionResult Index()
-        {
-            var previousMonth = new MonthYear(new Clock().GetCurrentDate()).AddMonths(-1);
-
-            var pastMonthsModel = new PastMonthsModel
-            var selectListItems = CreateLetterSelectItems();
-            //initialize all properties of model
-            var model = new PortfolioPerformanceNetGrossModel()
-            {
-                Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
-                MonthYears = WebHelper.GetDesiredMonths(previousMonth),
-                MonthYear = previousMonth.Stringify()
-                Selected = "0",
-                NetGrossList = selectListItems
             };
 
             return View(pastMonthsModel);
@@ -95,6 +113,9 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
             return View("Index", pastMonthsModel);
         }
+
+
+
     }
 
     public static class WebHelper
@@ -127,30 +148,13 @@ namespace Dimensional.TinyReturns.Web.Controllers
             {
                 throw new InvalidOperationException();
             }
-            var resultModel = new PortfolioPerformanceNetGrossModel()
+            var resultModel = new PortfolioPerformanceIndexModel()
             {
                 Portfolios = portfolioPerforance,
                 NetGrossList = selectListItems,
                 Selected = select
             };
             return View(resultModel);
-        }
-        private SelectListItem[] CreateLetterSelectItems()
-        {
-            var selectListItems = new SelectListItem[2];
-
-            selectListItems[0] = new SelectListItem()
-            {
-                Value = "0",
-                Text = "Net"
-            };
-            selectListItems[1] = new SelectListItem()
-            {
-                Value = "1",
-                Text = "Gross"
-            };
-
-            return selectListItems;
         }
     }
 }

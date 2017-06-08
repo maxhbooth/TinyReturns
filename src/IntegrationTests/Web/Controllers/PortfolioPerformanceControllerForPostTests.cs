@@ -54,7 +54,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 });
 
                 // Act
-                var requestModel = new PortfolioPerformanceNetGrossModel()
+                var requestModel = new PortfolioPerformanceIndexModel()
                 {
                     Selected = "0"
                 };
@@ -105,7 +105,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 });
 
                 // Act
-                var requestModel = new PortfolioPerformanceNetGrossModel()
+                var requestModel = new PortfolioPerformanceIndexModel()
                 {
                     Selected = "1"
                 };

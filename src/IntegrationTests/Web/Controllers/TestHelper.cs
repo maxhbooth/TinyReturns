@@ -152,7 +152,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 new AllTablesDeleter.TableInfoDto[0]);
         }
         public void AssertSelectItemsArePopulated(
-            PortfolioPerformanceNetGrossModel resultModel)
+            PortfolioPerformanceIndexModel resultModel)
         {
             resultModel.NetGrossList.Should().NotBeNull();
             resultModel.NetGrossList.Count().Should().Be(2);
@@ -168,17 +168,17 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             arrayBinary.All(m => m != null).Should().BeTrue();
         }
         public void AssertSelectItemDefaultsNet(
-            PortfolioPerformanceNetGrossModel resultModel)
+            PortfolioPerformanceIndexModel resultModel)
         {
             resultModel.Selected.Should().Be("0");
         }
 
-        internal void AssertModelIsNet(PortfolioPerformanceNetGrossModel model)
+        internal void AssertModelIsNet(PortfolioPerformanceIndexModel model)
         {
             model.Selected.Should().Be("0");
         }
 
-        internal void AssertModelIsGross(PortfolioPerformanceNetGrossModel model)
+        internal void AssertModelIsGross(PortfolioPerformanceIndexModel model)
         {
             model.Selected.Should().Be("1");
         }
@@ -189,18 +189,18 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             actionResult.Should().BeAssignableTo<ViewResult>();
             var viewResult = (ViewResult)actionResult;
 
-            viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceNetGrossModel>();
-            var portfolioPerformanceNetGrossModelModel = (PortfolioPerformanceNetGrossModel)viewResult.Model;
+            viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceIndexModel>();
+            var portfolioPerformanceNetGrossModelModel = (PortfolioPerformanceIndexModel)viewResult.Model;
             return portfolioPerformanceNetGrossModelModel.Portfolios;
         }
-        public PortfolioPerformanceNetGrossModel GetModelFromActionResult(
+        public PortfolioPerformanceIndexModel GetModelFromActionResult(
             ActionResult actionResult)
         {
             actionResult.Should().BeAssignableTo<ViewResult>();
             var viewResult = (ViewResult)actionResult;
 
-            viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceNetGrossModel>();
-            var portfolioPerformanceNetGrossModelModel = (PortfolioPerformanceNetGrossModel)viewResult.Model;
+            viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceIndexModel>();
+            var portfolioPerformanceNetGrossModelModel = (PortfolioPerformanceIndexModel)viewResult.Model;
             return portfolioPerformanceNetGrossModelModel;
         }
     }
