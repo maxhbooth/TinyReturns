@@ -1,9 +1,12 @@
-﻿using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.OmniFileExport;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PerformanceReport;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.CitiFileImport;
+using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 using Dimensional.TinyReturns.Core.SharedContext.Services.FlatFiles;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
@@ -79,5 +82,6 @@ namespace Dimensional.TinyReturns.Core
                 returnSeriesRepository,
                 benchmarkWithPerformanceRepository);
         }
+      
     }
 }

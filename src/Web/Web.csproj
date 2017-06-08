@@ -158,6 +158,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\PastMonthsModel.cs" />
     <Compile Include="Controllers\PortfolioPerformanceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -204,7 +205,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -218,6 +218,10 @@
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{2adcfc94-e855-4ad1-a873-c125b8da96e7}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{1C8320F8-DD40-4716-9128-B139EDFFCE5F}</Project>
+      <Name>Database</Name>
     </ProjectReference>
     <ProjectReference Include="..\DependencyManagement\DependencyManagement.csproj">
       <Project>{36de3a59-1a39-4680-b5a5-83e1f933d0a6}</Project>

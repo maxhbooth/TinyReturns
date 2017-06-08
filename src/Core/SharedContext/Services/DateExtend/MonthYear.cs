@@ -372,5 +372,11 @@ namespace Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend
             return new MonthYear(Year, quarterMonth);
 
         }
+
+        public string Stringify()
+        {
+            return Month.ToString() + "/" + Year.ToString();
+        }
+
     }
 }

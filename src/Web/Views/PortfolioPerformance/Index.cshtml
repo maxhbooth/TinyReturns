@@ -1,10 +1,23 @@
-﻿@model Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport.PublicWebReportFacade.PortfolioModel[]
+﻿@using System.Web.UI.WebControls
+@model Dimensional.TinyReturns.Web.Models.PastMonthsModel
+
 
 @{
     ViewBag.Title = "Portfolio Performance";
 }
 
 <div>
+    <br/>
+    <div align="center" class="input-group">
+        <div class="input-group-btn">
+            @using (Html.BeginForm())
+            {
+               @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new {@class = "form-control"});
+              
+                  <input type="submit" value="Go" class="btn btn-primary" />
+            }
+        </div>
+    </div>
 
     <table class="table table-condensed">
         <thead>
@@ -23,7 +36,7 @@
         </thead>
         <tbody>
 
-            @foreach (var portfolio in Model)
+        @foreach (var portfolio in Model.Portfolios)
             {
                 <tr style="background: lavenderblush">
                     <td>@portfolio.Number</td>
