@@ -1,6 +1,4 @@
-﻿@using System.Web.UI.WebControls
-@model Dimensional.TinyReturns.Web.Models.PortfolioPerformanceNetGrossModel
-@model Dimensional.TinyReturns.Web.Models.PastMonthsModel
+﻿@model Dimensional.TinyReturns.Web.Models.PortfolioPerformanceIndexModel
 
 
 @{
@@ -10,20 +8,12 @@
 <div>
     <br/>
     <div align="center" class="input-group">
-        <div class="input-group-btn">
-            @using (Html.BeginForm())
-            {
-               @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new {@class = "form-control"});
-              
-    <br>
     @using (Html.BeginForm())
     {
+        @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" });
         @Html.DropDownListFor(m => m.Selected, Model.NetGrossList)
         <input type="submit" value="Go"/>
     }
-    <br />
-                  <input type="submit" value="Go" class="btn btn-primary" />
-            }
         </div>
     </div>
     <table class="table table-condensed">

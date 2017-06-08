@@ -5,8 +5,6 @@ using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
-using System.Collections.Generic;
-using System.Linq;
 using Dimensional.TinyReturns.Web.Models;
 
 namespace Dimensional.TinyReturns.Web.Controllers
@@ -37,7 +35,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
             var previousMonth = new MonthYear(new Clock().GetCurrentDate()).AddMonths(-1);
 
             var selectListItems = CreateLetterSelectItems();
-            
+
             var model = new PortfolioPerformanceIndexModel()
             {
                 Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
@@ -67,7 +65,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
             return selectListItems;
         }
-        
+
         [HttpPost]
         public ActionResult Index(
             PortfolioPerformanceIndexModel model)
@@ -106,18 +104,19 @@ namespace Dimensional.TinyReturns.Web.Controllers
         }
 
         public static class WebHelper
-    {
-        public static SelectListItem[] GetDesiredMonths(MonthYear currentMonth)
         {
-            var monthsInRange = MonthYearRange.CreateForEndMonthAndMonthsBack(currentMonth, 36).GetMonthsInRange();
-
-            var monthYears = monthsInRange.Select(x => new SelectListItem
+            public static SelectListItem[] GetDesiredMonths(MonthYear currentMonth)
             {
-                Text = x.Stringify(),
-                Value = x.Stringify()
-            }).ToArray();
+                var monthsInRange = MonthYearRange.CreateForEndMonthAndMonthsBack(currentMonth, 36).GetMonthsInRange();
 
-            return monthYears;
+                var monthYears = monthsInRange.Select(x => new SelectListItem
+                {
+                    Text = x.Stringify(),
+                    Value = x.Stringify()
+                }).ToArray();
+
+                return monthYears;
+            }
         }
     }
 }

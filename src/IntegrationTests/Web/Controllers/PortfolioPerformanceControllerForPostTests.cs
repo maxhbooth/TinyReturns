@@ -27,7 +27,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultModel = testHelper.GetPortfolioModelFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetPortfoliosFromActionResult(actionResult);
 
                 viewResultModel.Length.Should().Be(0);
 

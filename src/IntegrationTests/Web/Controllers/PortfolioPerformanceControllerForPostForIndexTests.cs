@@ -19,8 +19,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 {
     public class PortfolioPerformanceControllerForPostForIndexTests
     {
-        private TestHelper _testhelper = new TestHelper();
-
         [Fact]
         public void ShouldNotReturnInvalidCalculatationsForPastMonth()
         {
@@ -107,7 +105,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 // Act
 
-                var requestModel = new PastMonthsModel()
+                var requestModel = new PortfolioPerformanceIndexModel()
                 {
                     MonthYear = "2/2016"
                 };
@@ -115,8 +113,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index(requestModel);
 
                 // Assert
-                var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult)[0];
-                var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
+                var viewResultPortfolio = testHelper.GetPortfoliosFromActionResult(actionResult)[0];
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
 
                 viewResultModel.MonthYears.Count().Should().Be(37);
                 viewResultPortfolio.ThreeMonth.Should().NotHaveValue();
@@ -211,7 +209,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 // Act
 
-                var requestModel = new PastMonthsModel()
+                var requestModel = new PortfolioPerformanceIndexModel()
                 {
                     MonthYear = "4/2016"
                 };
@@ -219,8 +217,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index(requestModel);
 
                 // Assert
-                var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult)[0];
-                var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
+                var viewResultPortfolio = testHelper.GetPortfoliosFromActionResult(actionResult)[0];
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
 
                 viewResultModel.MonthYears.Count().Should().Be(37);
                 viewResultPortfolio.ThreeMonth.Should().HaveValue();

@@ -115,7 +115,6 @@
     <Compile Include="Web\Controllers\PortfolioPerformanceControllerForGetForIndexTests.cs" />
     <Compile Include="Web\Controllers\PortfolioPerformanceControllerForPostTests.cs" />
     <Compile Include="Web\Controllers\PortfolioPerformanceControllerForGetTests.cs" />
-    <Compile Include="Web\Controllers\TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\TestNetReturnsForEntity100.csv">

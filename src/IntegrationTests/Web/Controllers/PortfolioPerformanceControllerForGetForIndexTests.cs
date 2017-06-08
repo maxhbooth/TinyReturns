@@ -19,8 +19,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 {
     public class PortfolioPerformanceControllerForGetForIndexTests
     {
-        private TestHelper _testhelper = new TestHelper();
-
         [Fact]
         public void ShouldReturnNoRecordsWhenNoPortfolioAreFound()
         {
@@ -35,8 +33,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     var actionResult = controller.Index();
 
                     // Assert
-                    var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
-                    var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
+                    var viewResultPortfolio = testHelper.GetPortfoliosFromActionResult(actionResult);
+                    var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
 
                     viewResultModel.MonthYears.Count().Should().Be(37);
                     viewResultModel.MonthYear.Should().NotBeEmpty();
@@ -65,8 +63,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
-                var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
+                var viewResultPortfolio = testHelper.GetPortfoliosFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
 
                 viewResultModel.MonthYears.Count().Should().Be(37); //only care about performance numbers so.
                 viewResultModel.MonthYear.Should().NotBeEmpty();
@@ -132,8 +130,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
-                var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
+                var viewResultPortfolio = testHelper.GetPortfoliosFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
 
                 viewResultModel.MonthYears.Count().Should().Be(37);
                 viewResultModel.MonthYears.First().Value.Should()
@@ -242,8 +240,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
-                var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
+                var viewResultPortfolio = testHelper.GetPortfoliosFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
                 var viewResultModelArray = viewResultModel.MonthYears.ToArray();
 
                 viewResultModel.MonthYears.Count().Should().Be(37);
@@ -387,8 +385,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
-                var viewResultModel = _testhelper.GetModelFromActionResult(actionResult);
+                var viewResultPortfolio = testHelper.GetPortfoliosFromActionResult(actionResult);
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
                 var viewResultModelArray = viewResultModel.MonthYears.ToArray();
 
                 viewResultModel.MonthYears.Count().Should().Be(37);
@@ -524,7 +522,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var actionResult = controller.Index();
 
                 // Assert
-                var viewResultPortfolio = _testhelper.GetPortfoliosFromActionResult(actionResult);
+                var viewResultPortfolio = testHelper.GetPortfoliosFromActionResult(actionResult);
 
                 var expectedViewOneMonth = (1 + 0.812m) - 1;
                 var expectedViewThreeMonth = (1 + 0.812m) * (1 + 0.1177m) * (1 -0.588m) - 1;

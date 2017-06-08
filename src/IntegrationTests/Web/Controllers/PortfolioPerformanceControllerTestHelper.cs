@@ -160,18 +160,62 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             actionResult.Should().BeAssignableTo<ViewResult>();
             var viewResult = (ViewResult)actionResult;
 
-            ((PastMonthsModel)viewResult.Model).Portfolios.Should().BeAssignableTo<PublicWebReportFacade.PortfolioModel[]>();
-            return ((PastMonthsModel)viewResult.Model).Portfolios;
+            ((PortfolioPerformanceIndexModel)viewResult.Model).Portfolios.Should().BeAssignableTo<PublicWebReportFacade.PortfolioModel[]>();
+            return ((PortfolioPerformanceIndexModel)viewResult.Model).Portfolios;
         }
 
-        public PastMonthsModel GetModelFromActionResult(
+        public PortfolioPerformanceIndexModel GetModelFromActionResult(
             ActionResult actionResult)
         {
             actionResult.Should().BeAssignableTo<ViewResult>();
             var viewResult = (ViewResult)actionResult;
 
-            viewResult.Model.Should().BeAssignableTo<PastMonthsModel>();
-            return (PastMonthsModel)viewResult.Model;
+            viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceIndexModel>();
+            return (PortfolioPerformanceIndexModel)viewResult.Model;
+        }
+
+        public PortfolioPerformanceIndexModel GetPortfolioModelFromActionResult(
+            ActionResult actionResult)
+        {
+            actionResult.Should().BeAssignableTo<ViewResult>();
+            var viewResult = (ViewResult)actionResult;
+
+            viewResult.Model.Should().BeAssignableTo<PortfolioPerformanceIndexModel>();
+            var portfolioPerformanceNetGrossModelModel = (PortfolioPerformanceIndexModel)viewResult.Model;
+
+            return portfolioPerformanceNetGrossModelModel;
+        }
+
+        public void AssertSelectItemsArePopulated(
+            PortfolioPerformanceIndexModel resultModel)
+        {
+            resultModel.NetGrossList.Should().NotBeNull();
+            resultModel.NetGrossList.Count().Should().Be(2);
+
+            var arrayBinary = resultModel.NetGrossList.ToArray();
+
+            arrayBinary[0].Value.Should().Be("0");
+            arrayBinary[0].Text.Should().Be("Net");
+
+            arrayBinary[1].Value.Should().Be("1");
+            arrayBinary[1].Text.Should().Be("Gross");
+
+            arrayBinary.All(m => m != null).Should().BeTrue();
+        }
+        public void AssertSelectItemDefaultsNet(
+            PortfolioPerformanceIndexModel resultModel)
+        {
+            resultModel.Selected.Should().Be("0");
+        }
+
+        internal void AssertModelIsNet(PortfolioPerformanceIndexModel model)
+        {
+            model.Selected.Should().Be("0");
+        }
+
+        internal void AssertModelIsGross(PortfolioPerformanceIndexModel model)
+        {
+            model.Selected.Should().Be("1");
         }
     }
 
