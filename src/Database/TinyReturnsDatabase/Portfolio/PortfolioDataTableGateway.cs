@@ -47,6 +47,7 @@ INSERT INTO [Portfolio].[Portfolio]
             const string sql = @"
 SELECT
         [Number]
+        ,[CountryId]
         ,[Name]
         ,[InceptionDate]
         ,[CloseDate]

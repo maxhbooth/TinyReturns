@@ -20,6 +20,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [Portfolio].[Portfolio](
 	[Number] [int] NOT NULL,
+	[CountryId][int] NOT NULL DEFAULT 0,
 	[Name] [nvarchar](255) NOT NULL,
 	[InceptionDate] [datetime] NOT NULL,
 	[CloseDate] [datetime] NULL,
@@ -32,6 +33,25 @@ CREATE TABLE [Portfolio].[Portfolio](
 ) ON [PRIMARY]
 
 GO
+
+/****** Object:  Table [Portfolio].[Countries]    Script Date: 4/15/2017 7:37:24 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [Portfolio].[Countries](
+	[CountryId] [int] NOT NULL,
+	[CountryName] [nvarchar](255) NOT NULL,
+	[DateCreated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	[DateUpdated] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ CONSTRAINT [PK_Portfolio_Portfolio] PRIMARY KEY CLUSTERED 
+(
+	[CountryId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
 /****** Object:  Table [Portfolio].[PortfolioToBenchmark]    Script Date: 4/15/2017 7:37:24 AM ******/
 SET ANSI_NULLS ON
 GO
