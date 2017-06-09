@@ -4,7 +4,9 @@ param(
 
 cls
 
-Write-Host $projectVersion
+# Sample Call...
+#	.\TeamCity.masterbranch.ps1 -projectVersion 1.0.0.1
+
 
 $nugetExe = (get-childItem (".\src\.NuGet\NuGet.exe")).FullName
 &$nugetExe "restore" ".\src\build\packages.config" "-outputDirectory" ".\src\packages"
