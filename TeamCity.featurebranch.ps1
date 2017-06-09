@@ -1,15 +1,3 @@
-param(
-	[string]$buildEnv="local",
-	[Int32]$buildNumber=0,
-	[String]$branchName="localBuild",
-	[String]$gitCommitHash="unknownHash",
-	[Switch]$isMainBranch=$False,
-    [Parameter(
-            ParameterSetName='projectVersion'
-        )]
-        [String]$projectVersion=123
-    )
-
 cls
 
 $nugetExe = (get-childItem (".\src\.NuGet\NuGet.exe")).FullName
@@ -25,11 +13,8 @@ Import-Module $psakeModule
 
 # you can write statements in multiple lines using `
 Invoke-psake -buildFile .\src\Build\default.ps1 `
-			 -taskList teamcity `
-             -parameters @{
-                "projectVersion" = $projectVersion
-                } `
-			 -framework 4.6 `
+			 -taskList default `
+			 -framework 4.6
 
 Write-Host "Build exit code:" $LastExitCode
 
