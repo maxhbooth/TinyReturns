@@ -3,7 +3,12 @@ param(
 	[Int32]$buildNumber=0,
 	[String]$branchName="localBuild",
 	[String]$gitCommitHash="unknownHash",
-	[Switch]$isMainBranch=$False)
+	[Switch]$isMainBranch=$False,
+    [Parameter(
+            ParameterSetName='projectVersion'
+        )]
+        [String]$projectVersion=123
+    )
 
 cls
 
@@ -20,10 +25,10 @@ Import-Module $psakeModule
 
 # you can write statements in multiple lines using `
 Invoke-psake -buildFile .\src\Build\default.ps1 `
-			 -parameters @{
-				 "projectVersion" = 123
-				} `
 			 -taskList teamcity `
+             -parameters @{
+                "projectVersion" = $projectVersion
+                } `
 			 -framework 4.6 `
 
 Write-Host "Build exit code:" $LastExitCode
