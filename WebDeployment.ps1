@@ -13,19 +13,20 @@
 #hostnamejo
 Get-PSSession | Remove-PSSession
 $sess = New-PSSession -ComputerName astof-retcal02d 
-$baseDir = (resolve-path temp/$ProjectName)
-$targetServerName = 'astof-retcal02d'
 $ProjectName = 'tinyreturns'
+$baseDir = (resolve-path temp)
+$targetServerName = 'astof-retcal02d'
+
 $remoteServerPath = '\\' + $targetServerName + '\c$\temp\' + $ProjectName + '\'
 
-	If (Test-Path "$remoteServerPath") {
-		Write-Host "Deleting contents: $remoteServerPath"
-		Remove-Item "$remoteServerPath\*" -recurse
-	}
-	Else {
-		Write-Host "Creating folder: $remoteServerPath"
-		New-Item -ItemType directory -Path $remoteServerPath
-	}
+If (Test-Path "$remoteServerPath") {
+	Write-Host "Deleting contents: $remoteServerPath"
+	Remove-Item "$remoteServerPath\*" -recurse
+}
+Else {
+	Write-Host "Creating folder: $remoteServerPath"
+	New-Item -ItemType directory -Path $remoteServerPath
+}
 
 Copy-Item "$baseDir\*" $remoteServerPath -recurse
 
