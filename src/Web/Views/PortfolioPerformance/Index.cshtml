@@ -4,10 +4,48 @@
     ViewBag.Title = "Portfolio Performance";
 }
 
-<div>
+<head>
+    <style>
+        div.outer {
+            position: fixed;
+            padding: 20px;
 
-    <table class="table table-condensed">
-        <thead>
+        }
+
+        div.Myporfolios {
+            position: fixed;
+            align-content: center;
+            overflow: auto;
+            padding: 10px;
+            height: 30%;
+            width: 70%;
+            border-style: solid;
+            border-width: medium;
+            border-color: black;
+        }
+        div.Edit {
+            position: relative;
+            text-align: left;
+            padding: 10px;
+            height: 30%;
+            width: 70%;
+            border-style: solid;
+            border-width: medium;
+            border-color: black;
+        }
+        
+    </style>
+
+</head>
+
+
+<div class="outer">
+    <br>
+    <br>
+    <div class="Myporfolios">
+        <div><h2>Portfolios</h2></div>
+        <table class="table table-condensed">
+            <thead>
             <tr>
                 <th>Number</th>
                 <th>Name</th>
@@ -20,8 +58,8 @@
                 <th>Standard Deviation</th>
                 <th>Mean</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
 
             @foreach (var portfolio in Model)
             {
@@ -53,6 +91,11 @@
                 }
             }
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <div class="search">Search bar</div>
+    </div>
+@*    <div class="Edit">
+        <h2>Edit Portfolio</h2>
+    </div>*@
 </div>
