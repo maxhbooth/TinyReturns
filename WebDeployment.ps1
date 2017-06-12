@@ -13,14 +13,47 @@
 #hostnamejo
 Get-PSSession | Remove-PSSession
 $sess = New-PSSession -ComputerName astof-retcal02d 
+$baseDir = (resolve-path temp/$ProjectName)
+$targetServerName = 'astof-retcal02d'
+$ProjectName = 'tinyreturns'
+$remoteServerPath = '\\' + $targetServerName + '\c$\temp\' + $ProjectName + '\'
+
+	If (Test-Path "$remoteServerPath") {
+		Write-Host "Deleting contents: $remoteServerPath"
+		Remove-Item "$remoteServerPath\*" -recurse
+	}
+	Else {
+		Write-Host "Creating folder: $remoteServerPath"
+		New-Item -ItemType directory -Path $remoteServerPath
+	}
+
+Copy-Item "$baseDir\*" $remoteServerPath -recurse
 
 
 
-Invoke-Command -Session $sess -Scriptblock {$test = "team city works"
+
+Invoke-Command -Session $sess -ArgumentList ("temp/TinyReturns", "temp/scriptreturns")  -Scriptblock {$test = "team city works"
 cd \
 ls
 hostname
 
+
 }
 
 #Enter-PSSession $sess
+
+
+
+
+
+
+
+
+
+
+
+#write-host "Local Path: " $args[0]
+#write-host "Script: " $args[1]
+#Join-Path -Path $args[0] -childpath $args[1]
+#$path = Join-Path -Path $args[0] -childpath $args[1]
+#&$path
