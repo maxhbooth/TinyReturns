@@ -22,11 +22,11 @@
             border-color: black;
         }
 
-        div.ScollPanel{
-            margin-top: 60px;
+        div.ScollPanel {
             align-content: center;
             overflow: auto;
         }
+
         div.Edit {
             position: relative;
             text-align: left;
@@ -47,9 +47,25 @@
 
         #header {
             position: fixed;
-            background-color: aliceblue;
         }
     </style>
+
+    <script>
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+
+    </script>
 
 </head>
 
@@ -77,8 +93,12 @@
                 </thead>
                 <tbody style="margin-top: 50px">
 
+                    <tr id="myDrag" draggable="true" ondragstart="drag(event)">
+                        <td>Draggable to Edit panel</td>
+                    </tr>
+
                     @foreach (var portfolio in Model)
-            {
+                    {
                         <tr style="background: lavenderblush">
                             <td>@portfolio.Number</td>
                             <td>@portfolio.Name</td>
@@ -123,19 +143,29 @@
 
         <table class="table table-condensed">
             <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Name</th>
-                    <th>1 Month</th>
-                    <th>3 Month</th>
-                    <th>6 Month</th>
-                    <th>Quarter to Date</th>
-                    <th>Year to Date</th>
-                    <th>First Full Month</th>
-                    <th>Standard Deviation</th>
-                    <th>Mean</th>
-                </tr>
+            <tr>
+                <th>Number</th>
+                <th>Name</th>
+                <th>1 Month</th>
+                <th>3 Month</th>
+                <th>6 Month</th>
+                <th>Quarter to Date</th>
+                <th>Year to Date</th>
+                <th>First Full Month</th>
+                <th>Standard Deviation</th>
+                <th>Mean</th>
+            </tr>
             </thead>
+            <tbody style="margin-top: 50px">
+
+            <tr id="dropZone" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <th></th>
+            </tr>
+            
+            </tbody>
         </table>
+    </div>
+    <div id="result">
+        
     </div>
 </div>
