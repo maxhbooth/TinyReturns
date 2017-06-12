@@ -10,11 +10,12 @@ namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio
 {
     public class CountriesDataTableGateway : BaseTinyReturnsDataTableGateway, ICountriesDataTableGateway
     {
-        public CountriesDataTableGateway(ITinyReturnsDatabaseSettings tinyReturnsDatabaseSettings, ISystemLog systemLog) : base(tinyReturnsDatabaseSettings, systemLog)
+        public CountriesDataTableGateway(ITinyReturnsDatabaseSettings tinyReturnsDatabaseSettings,
+            ISystemLog systemLog) : base(tinyReturnsDatabaseSettings, systemLog)
         {
         }
 
-        public void Insert(CountryDto[]  dtos)
+        public void Insert(CountryDto[] dtos)
         {
             const string sql = @"
     INSERT INTO [Portfolio].[Countries]
@@ -54,5 +55,6 @@ namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio
 
                 return result;
             }
+        }
     }
 }

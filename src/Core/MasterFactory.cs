@@ -28,6 +28,7 @@ namespace Dimensional.TinyReturns.Core
         public static IBenchmarkDataTableGateway BenchmarkDataTableGateway { get; set; }
         public static IBenchmarkToReturnSeriesDataTableGateway BenchmarkToReturnSeriesDataTableGateway { get; set; }
         public static IPortfolioToBenchmarkDataTableGateway PortfolioToBenchmarkDataTableGateway { get; set; }
+        public static ICountriesDataTableGateway CountriesDataTableGateway { get; set; }
 
         public static CitiMonthyReturnImporter GetCitiReturnSeriesImporter()
         {

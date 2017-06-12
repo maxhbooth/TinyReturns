@@ -50,6 +50,7 @@
     <Compile Include="TinyReturnsDatabase\Performance\ReturnSeriesDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\BenchmarkDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Performance\BenchmarkToReturnSeriesDataTableGateway.cs" />
+    <Compile Include="TinyReturnsDatabase\Portfolio\CountriesDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioDataTableGateway.cs" />
     <Compile Include="TinyReturnsDatabase\Portfolio\PortfolioToBenchmarkDataTableGateway.cs" />
   </ItemGroup>
