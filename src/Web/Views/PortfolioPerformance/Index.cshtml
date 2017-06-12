@@ -6,7 +6,6 @@
 
 <head>
     <style>
-
         div.outer {
             position: absolute;
             padding: 20px;
@@ -23,6 +22,11 @@
             border-color: black;
         }
 
+        div.ScollPanel{
+            margin-top: 60px;
+            align-content: center;
+            overflow: auto;
+        }
         div.Edit {
             position: relative;
             text-align: left;
@@ -31,6 +35,19 @@
             border-style: solid;
             border-width: medium;
             border-color: black;
+        }
+
+        div.searchbar {
+            position: fixed;
+        }
+
+        input[type=text] {
+            background-color: pink;
+        }
+
+        #header {
+            position: fixed;
+            background-color: aliceblue;
         }
     </style>
 
@@ -41,63 +58,69 @@
     <br>
     <br>
     <div class="Myporfolios">
-        <div><h2>Portfolios</h2></div>
-        <table class="table table-condensed">
-            <thead>
-            <tr>
-                <th>Number</th>
-                <th>Name</th>
-                <th>1 Month</th>
-                <th>3 Month</th>
-                <th>6 Month</th>
-                <th>Quarter to Date</th>
-                <th>Year to Date</th>
-                <th>First Full Month</th>
-                <th>Standard Deviation</th>
-                <th>Mean</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            @foreach (var portfolio in Model)
-            {
-                <tr style="background: lavenderblush">
-                    <td>@portfolio.Number</td>
-                    <td>@portfolio.Name</td>
-                    <td>@portfolio.OneMonth</td>
-                    <td>@portfolio.ThreeMonth</td>
-                    <td>@portfolio.SixMonth</td>
-                    <td>@portfolio.QuarterToDate</td>
-                    <td>@portfolio.YearToDate</td>
-                    <td>@portfolio.FirstFullMonth</td>
-                    <td>@portfolio.StandardDeviation</td>
-                    <td>@portfolio.Mean</td>
-                </tr>
-
-                foreach (var benchmark in portfolio.Benchmarks)
-                {
+        <div id="header"><h2 style="position: relative;">Portfolios</h2></div>
+        <div class="ScollPanel">
+            <table class="table table-condensed" style="margin-top: 70px">
+                <thead>
                     <tr>
-                        <td></td>
-                        <td style="padding-left: 20px;">@benchmark.Name</td>
-                        <td>@benchmark.OneMonth</td>
-                        <td>@benchmark.ThreeMonth</td>
-                        <td>@benchmark.SixMonth</td>
-                        <td>@benchmark.QuarterToDate</td>
-                        <td>@benchmark.YearToDate</td>
-                        <td>@portfolio.FirstFullMonth</td>
+                        <th scope="col">Number</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">1 Month</th>
+                        <th scope="col">3 Month</th>
+                        <th scope="col">6 Month</th>
+                        <th scope="col">Quarter to Date</th>
+                        <th scope="col">Year to Date</th>
+                        <th scope="col">First Full Month</th>
+                        <th scope="col">Standard Deviation</th>
+                        <th scope="col">Mean</th>
                     </tr>
-                }
-            }
+                </thead>
+                <tbody style="margin-top: 50px">
 
-            </tbody>
-        </table>
-        <div class="search">Search bar</div>
+                    @foreach (var portfolio in Model)
+            {
+                        <tr style="background: lavenderblush">
+                            <td>@portfolio.Number</td>
+                            <td>@portfolio.Name</td>
+                            <td>@portfolio.OneMonth</td>
+                            <td>@portfolio.ThreeMonth</td>
+                            <td>@portfolio.SixMonth</td>
+                            <td>@portfolio.QuarterToDate</td>
+                            <td>@portfolio.YearToDate</td>
+                            <td>@portfolio.FirstFullMonth</td>
+                            <td>@portfolio.StandardDeviation</td>
+                            <td>@portfolio.Mean</td>
+                        </tr>
+
+                        foreach (var benchmark in portfolio.Benchmarks)
+                        {
+                            <tr>
+                                <td></td>
+                                <td style="padding-left: 20px;">@benchmark.Name</td>
+                                <td>@benchmark.OneMonth</td>
+                                <td>@benchmark.ThreeMonth</td>
+                                <td>@benchmark.SixMonth</td>
+                                <td>@benchmark.QuarterToDate</td>
+                                <td>@benchmark.YearToDate</td>
+                                <td>@portfolio.FirstFullMonth</td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div class="searchbar">
+            <form>
+                <input type="text" name="search" placeholder="Search..">
+            </form>
+        </div>
     </div>
     <br>
 
     <div class="Edit">
         <h2>Edit Portfolio</h2>
-        
+
         <table class="table table-condensed">
             <thead>
                 <tr>
