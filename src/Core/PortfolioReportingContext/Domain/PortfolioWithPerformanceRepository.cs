@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Performance;
 using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Portfolio;
@@ -75,11 +76,18 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
                     .Select(b => b.BenchmarkNumber)
                     .ToArray();
 
+                String countryName="";
+
                 var country = countryDtos.FirstOrDefault(d => d.CountryId == portfolioDto.CountryId);
 
+                if (country != null)
+                {
+                    countryName = country.CountryName;
+                }
+                
                 var withPerformances = benchmarkWithPerformances.Where(b => benchmarkNumbers.Any(n => n == b.Number)).ToArray();
 
-                portfolioModels.Add(new PortfolioWithPerformance(portfolioDto.Number, portfolioDto.Name, netReturnSeries, grossReturnSeries, withPerformances, inceptionDate, country));
+                portfolioModels.Add(new PortfolioWithPerformance(portfolioDto.Number, portfolioDto.Name, netReturnSeries, grossReturnSeries, withPerformances, inceptionDate, countryName));
             }
 
             return portfolioModels.ToArray();

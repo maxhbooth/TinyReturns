@@ -79,6 +79,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 portfolioModel = new PortfolioModel()
                 {
                     Number = portfolioWithPerformance.Number,
+                    Country = portfolioWithPerformance.GetCountry(),
                     Name = portfolioWithPerformance.Name,
                     OneMonth = PercentHelper.AsPercent(portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear)),
                     ThreeMonth =
@@ -155,6 +156,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public decimal? StandardDeviation { get; set; }
             public decimal? Mean { get; set; }
 
+            public string Country { get; set; }
+
             public BenchmarkModel[] Benchmarks { get; set; }
         }
 
@@ -169,6 +172,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public decimal? FirstFullMonth { get; set; }
             public decimal? StandardDeviation { get; set; }
             public decimal? Mean { get; set; }
+
         }
     }
 

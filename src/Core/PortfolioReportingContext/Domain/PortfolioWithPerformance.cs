@@ -152,5 +152,10 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
                 .OrderBy(b => b.Number)
                 .ToArray();
         }
+
+        public String GetCountry()
+        {
+            return _country;
+        }
     }
 }
