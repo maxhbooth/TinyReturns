@@ -17,10 +17,9 @@ $sess = New-PSSession -ComputerName astof-retcal02d
 
 
 Invoke-Command -Session $sess -Scriptblock {$test = "team city works"
-
-
-
-
+cd \
+ls
+hostname
 
 }
 
