@@ -12,10 +12,15 @@
 #cd \
 #hostnamejo
 Get-PSSession | Remove-PSSession
+
+
+
 $sess = New-PSSession -ComputerName astof-retcal02d 
 $ProjectName = 'tinyreturns'
-$baseDir = (resolve-path temp)
+$baseDir = (resolve-path temp\$ProjectName)
 $targetServerName = 'astof-retcal02d'
+
+
 
 $remoteServerPath = '\\' + $targetServerName + '\c$\temp\' + $ProjectName + '\'
 
@@ -31,22 +36,27 @@ Else {
 Copy-Item "$baseDir\*" $remoteServerPath -recurse
 
 
-
-
-Invoke-Command -Session $sess -ArgumentList ("temp/TinyReturns", "temp/scriptreturns")  -Scriptblock {$test = "team city works"
-cd \
-ls
+Invoke-Command -Session $sess -ArgumentList ($ProjectName)  -Scriptblock {
 hostname
+sl "C:\temp\TinyReturns"
+rm *.zip
 
+$siteLocation = "C:\UtilityApps\TinyReturns"
+
+If (Test-Path "$siteLocation") {
+	Write-Host "Deletilsng contents: $siteLocation"
+	Remove-Item "$siteLocation\*" -recurse
+}
+Else {
+	Write-Host "Creating folder: $siteLocation"
+	New-Item -ItemType directory -Path $siteLocation
+}
+
+Copy-Item "C:\temp\TinyReturns\*" $siteLocation -recurse
 
 }
 
 #Enter-PSSession $sess
-
-
-
-
-
 
 
 
