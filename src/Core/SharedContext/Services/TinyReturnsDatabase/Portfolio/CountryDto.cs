@@ -2,7 +2,7 @@
 {
     public class CountryDto
     {
-        private string CountryName { get; set; }
-        private int CountryId { get; set; }
+        public string CountryName { get; set; }
+        public int CountryId { get; set; }
     }
 }
