@@ -6,34 +6,32 @@
 
 <head>
     <style>
-        div.outer {
-            position: fixed;
-            padding: 20px;
 
+        div.outer {
+            position: absolute;
+            padding: 20px;
         }
 
         div.Myporfolios {
-            position: fixed;
             align-content: center;
             overflow: auto;
             padding: 10px;
-            height: 30%;
-            width: 70%;
+            height: 30vh;
+            width: 70vw;
             border-style: solid;
             border-width: medium;
             border-color: black;
         }
+
         div.Edit {
             position: relative;
             text-align: left;
             padding: 10px;
-            height: 30%;
-            width: 70%;
+            width: 70vw;
             border-style: solid;
             border-width: medium;
             border-color: black;
         }
-        
     </style>
 
 </head>
@@ -95,7 +93,26 @@
         </table>
         <div class="search">Search bar</div>
     </div>
-@*    <div class="Edit">
+    <br>
+
+    <div class="Edit">
         <h2>Edit Portfolio</h2>
-    </div>*@
+        
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th>1 Month</th>
+                    <th>3 Month</th>
+                    <th>6 Month</th>
+                    <th>Quarter to Date</th>
+                    <th>Year to Date</th>
+                    <th>First Full Month</th>
+                    <th>Standard Deviation</th>
+                    <th>Mean</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
