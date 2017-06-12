@@ -126,6 +126,6 @@ task ZipFile -depends copyBuildFiles -requiredVariables projectVersion{
 
     $versionStamp = $projectVersion -replace "\.", "_"
 
-    Exec { &$zipExec a "-x!*.zip" "-x!*.dat" "$buildFolder\TinyReturns_App_$projectVersion.zip" "$buildFolder\*" }
+    Exec { &$zipExec a "-x!*.zip" "-x!*.dat" "$buildFolder\TinyReturns_App_$versionStamp.zip" "$buildFolder\*" }
 
 }
