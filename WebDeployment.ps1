@@ -56,7 +56,7 @@ if (Test-Path $iisAppName -pathType container)
     return
 }
 
-$iisApp = New-Item $iisAppName -bindings @{protocol="http";bindingInformation=":1704:"+ $iisAppName} -physicalPath $directoryPath
+$iisApp = New-Item $iisAppName -bindings @{protocol="http";bindingInformation=":1704:"} -physicalPath $directoryPath
 
 
 }
