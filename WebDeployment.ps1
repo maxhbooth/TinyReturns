@@ -1,7 +1,4 @@
-﻿Get-PSSession | Remove-PSSession
-
-
-$sess = New-PSSession -ComputerName astof-retcal02d 
+﻿$sess = New-PSSession -ComputerName astof-retcal02d 
 $ProjectName = 'tinyreturns'
 $baseDir = (resolve-path .)
 $baseDir = "$baseDir\temp\tinyreturns"
@@ -59,13 +56,3 @@ $iisApp = New-Item $iisAppName -bindings @{protocol="http *";bindingInformation=
 
 #Enter-PSSession $sess
 
-
-
-
-
-
-#write-host "Local Path: " $args[0]
-#write-host "Script: " $args[1]
-#Join-Path -Path $args[0] -childpath $args[1]
-#$path = Join-Path -Path $args[0] -childpath $args[1]
-#&$path
