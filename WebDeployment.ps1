@@ -1,23 +1,10 @@
-﻿#Get-Job | Remove-Job | out-null
-
-#$job = Start-Job -ScriptBlock { Enter-PSSession -ComputerName astof-retcal02d }
-#$job | Wait-Job 
-#Receive-Job $job
-
-#$job = Invoke-Command -ScriptBlock { Enter-PSSession -ComputerName astof-retcal02d }
-
-#$job = Invoke-Command -ScriptBlock { Enter-PSSession $sess} -ComputerName $hostname -AsJob
-#$job | Wait-Job 
-#sl c:\
-#cd \
-#hostnamejo
-Get-PSSession | Remove-PSSession
-
+﻿Get-PSSession | Remove-PSSession
 
 
 $sess = New-PSSession -ComputerName astof-retcal02d 
 $ProjectName = 'tinyreturns'
-$baseDir = (resolve-path \temp\$ProjectName)
+$baseDir = (resolve-path .)
+$baseDir = $baseDir\temp\tinyreturns
 $targetServerName = 'astof-retcal02d'
 
 $remoteServerPath = '\\' + $targetServerName + '\c$\temp\' + $ProjectName + '\'
