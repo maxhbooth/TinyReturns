@@ -1,8 +1,11 @@
-﻿$sess = New-PSSession -ComputerName astof-retcal02d 
-$ProjectName = 'tinyreturns'
+﻿GET-PSSession | Remove-PSSession
+$ProjectName = 'TinyReturns'           #name of project
 $baseDir = (resolve-path .)
-$baseDir = "$baseDir\temp\tinyreturns"
-$targetServerName = 'astof-retcal02d'
+$baseDir = "$baseDir\temp\tinyreturns"  #where the files in the team city agent are located/
+
+$targetServerName = '***REMOVED***'   #machine name where we are connecting to
+
+$sess = New-PSSession -ComputerName $targetServerName 
 
 $remoteServerPath = '\\' + $targetServerName + '\c$\temp\' + $ProjectName + '\'
 
@@ -15,15 +18,18 @@ Else {
 	New-Item -ItemType directory -Path $remoteServerPath
 }
 
+#copies from team city agent into temporary workign directory
 Write-Host "copying from $baseDir\* to  $remoteServerPath"
 Copy-Item "$baseDir\*" $remoteServerPath -recurse
 
 
 Invoke-Command -Session $sess -ArgumentList ($ProjectName)  -Scriptblock {
-sl "C:\temp\TinyReturns"
-rm *.zip
+$ProjectName = $($args[0])
+sl "C:\temp\$ProjectName"
 
-$siteLocation = "C:\UtilityApps\TinyReturns"
+rm *.zip #removes artifact zip.  Should have files already unpacked by team city
+
+$siteLocation = "C:\UtilityApps\$ProjectName"
 
 If (Test-Path "$siteLocation") {
 	Write-Host "Deleting contents: $siteLocation"
@@ -34,13 +40,14 @@ Else {
 	New-Item -ItemType directory -Path $siteLocation
 }
 
-Copy-Item "C:\temp\TinyReturns\*" $siteLocation -recurse
+#Move from temp to the site folder.
+Copy-Item "C:\temp\$ProjectName\*" $siteLocation -recurse
 
 
 #Set up Site using iis
 Import-Module WebAdministration
-$iisAppName = "TinyReturns"
-$directoryPath = "C:\UtilityApps\TinyReturns"
+$iisAppName = "$ProjectName"
+$directoryPath = "C:\UtilityApps\$ProjectName\Release\_PublishedWebsites\Web" #path where the website is at
 
 cd IIS:\Sites\
 
