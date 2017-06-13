@@ -20,8 +20,6 @@ $ProjectName = 'tinyreturns'
 $baseDir = (resolve-path temp\$ProjectName)
 $targetServerName = 'astof-retcal02d'
 
-
-
 $remoteServerPath = '\\' + $targetServerName + '\c$\temp\' + $ProjectName + '\'
 
 If (Test-Path "$remoteServerPath") {
@@ -39,7 +37,7 @@ Copy-Item "$baseDir\*" $remoteServerPath -recurse
 Invoke-Command -Session $sess -ArgumentList ($ProjectName)  -Scriptblock {
 hostname
 sl "C:\temp\TinyReturns"
-#rm *.zip
+rm *.zip
 
 $siteLocation = "C:\UtilityApps\TinyReturns"
 
