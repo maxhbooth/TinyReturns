@@ -65,6 +65,13 @@
             ev.target.appendChild(document.getElementById(data));
         }
 
+        function myEdit(values) {
+            document.getElementById("filled").value = values.Name;
+        }
+        function EditPortfolio() {
+            document.getElementById("filled").value = document.getElementById("filler").value;
+        }
+
     </script>
 
 </head>
@@ -89,13 +96,14 @@
                         <th scope="col">First Full Month</th>
                         <th scope="col">Standard Deviation</th>
                         <th scope="col">Mean</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody style="margin-top: 50px">
-
+@*
                     <tr id="myDrag" draggable="true" ondragstart="drag(event)">
                         <td>Draggable to Edit panel</td>
-                    </tr>
+                    </tr>*@
 
                     @foreach (var portfolio in Model)
                     {
@@ -110,6 +118,8 @@
                             <td>@portfolio.FirstFullMonth</td>
                             <td>@portfolio.StandardDeviation</td>
                             <td>@portfolio.Mean</td>
+                            @*                            <td><p id="filler" onclick="myEdit(@portfolio)">Edit</p></td>*@
+                            <td><p id="filler" type ="PortfolioModel" value=@portfolio onclick="EditPortfolio()">Edit</p></td>
                         </tr>
 
                         foreach (var benchmark in portfolio.Benchmarks)
@@ -159,9 +169,8 @@
             <tbody style="margin-top: 50px">
 
             <tr id="dropZone" ondrop="drop(event)" ondragover="allowDrop(event)">
-                <th></th>
+                <th><input id="filled"></th>
             </tr>
-            
             </tbody>
         </table>
     </div>
