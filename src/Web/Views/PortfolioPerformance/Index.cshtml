@@ -25,14 +25,16 @@
         <tr>
             <th>Number</th>
             <th>Name</th>
+            <th>Country</th>
             <th>1 Month</th>
             <th>3 Month</th>
-                <th>6 Month</th>
-                <th>Quarter to Date</th>
+            <th>6 Month</th>
+            <th>Quarter to Date</th>
             <th>Year to Date</th>
-                <th>First Full Month</th>
-                <th>Standard Deviation</th>
-                <th>Mean</th>
+            <th>First Full Month</th>
+            <th>Standard Deviation</th>
+            <th>Mean</th>
+
         </tr>
         </thead>
         <tbody>
@@ -42,14 +44,15 @@
             <tr style="background: lavenderblush">
                 <td>@portfolio.Number</td>
                 <td>@portfolio.Name</td>
+                <td>@portfolio.Country</td>
                 <td>@portfolio.OneMonth</td>
                 <td>@portfolio.ThreeMonth</td>
-                    <td>@portfolio.SixMonth</td>
-                    <td>@portfolio.QuarterToDate</td>
+                <td>@portfolio.SixMonth</td>
+                <td>@portfolio.QuarterToDate</td>
                 <td>@portfolio.YearToDate</td>
-                    <td>@portfolio.FirstFullMonth</td>
-                    <td>@portfolio.StandardDeviation</td>
-                    <td>@portfolio.Mean</td>
+                <td>@portfolio.FirstFullMonth</td>
+                <td>@portfolio.StandardDeviation</td>
+                <td>@portfolio.Mean</td>
             </tr>
 
             foreach (var benchmark in portfolio.Benchmarks)
@@ -57,12 +60,13 @@
                 <tr>
                     <td></td>
                     <td style="padding-left: 20px;">@benchmark.Name</td>
+                    <td></td>
                     <td>@benchmark.OneMonth</td>
                     <td>@benchmark.ThreeMonth</td>
-                        <td>@benchmark.SixMonth</td>
-                        <td>@benchmark.QuarterToDate</td>
+                    <td>@benchmark.SixMonth</td>
+                    <td>@benchmark.QuarterToDate</td>
                     <td>@benchmark.YearToDate</td>
-                        <td>@portfolio.FirstFullMonth</td>
+                    <td>@benchmark.FirstFullMonth</td>
                 </tr>
             }
         }

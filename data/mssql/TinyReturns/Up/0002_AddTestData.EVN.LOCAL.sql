@@ -148,3 +148,11 @@ INSERT [Portfolio].[PortfolioToBenchmark] ([PortfolioNumber], [BenchmarkNumber],
 GO
 INSERT [Portfolio].[PortfolioToBenchmark] ([PortfolioNumber], [BenchmarkNumber], [SortOrder]) VALUES (120, 10005, 1)
 GO
+INSERT [Portfolio].[Countries] ([CountryId], [CountryName]) VALUES (0, N'None selected')
+GO
+INSERT [Portfolio].[Countries] ([CountryId], [CountryName]) VALUES (1, N'Australia')
+GO
+INSERT [Portfolio].[Countries] ([CountryId], [CountryName]) VALUES (2, N'United Kingdom')
+GO
+INSERT [Portfolio].[Countries] ([CountryId], [CountryName]) VALUES (3, N'United States')
+GO

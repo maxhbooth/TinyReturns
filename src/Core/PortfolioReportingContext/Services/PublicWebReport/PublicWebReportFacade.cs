@@ -66,7 +66,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
         {
             var firstFullMonth = new MonthYear(portfolioWithPerformance.InceptionDate).AddMonths(1);
             int fullMonthsSinceInception = new MonthYearRange(firstFullMonth, previousMonthYear).NumberOfMonthsInRange;
-
             var threeMonthCalculationRequest = CalculateReturnRequestFactory.ThreeMonth(previousMonthYear);
             var sixMonthCalculationRequest = CalculateReturnRequestFactory.SixMonth(previousMonthYear);
             var quarterToDateCalculationRequest = CalculateReturnRequestFactory.QuarterToDate(previousMonthYear);

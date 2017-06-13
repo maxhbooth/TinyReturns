@@ -42,7 +42,7 @@ namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio
          [CountryId]
         ,[CountryName]
     FROM
-         [Portfolio].[PortfolioToBenchmark]";
+         [Portfolio].[Countries]";
 
                 CountryDto[] result = null;
 

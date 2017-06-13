@@ -24,6 +24,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
             private readonly PortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
             private readonly PerformanceReportExcelReportViewSpy _performanceReportExcelReportViewSpy;
             private readonly PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
+            private readonly CountriesDataTableGateway _countriesDataTableGateway;
             private readonly BenchmarkDataTableGateway _benchmarkDataTableGateway;
             private readonly BenchmarkToReturnSeriesDataTableGateway _benchmarkToReturnSeriesDataTableGateway;
 
@@ -47,6 +48,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                     systemLogForIntegrationTests);
 
                 _portfolioToReturnSeriesDataTableGateway = new PortfolioToReturnSeriesDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
+                _countriesDataTableGateway = new CountriesDataTableGateway(
                     databaseSettings,
                     systemLogForIntegrationTests);
 
@@ -122,6 +127,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                     _portfolioDataTableGateway,
                     _portfolioToReturnSeriesDataTableGateway,
                     _portfolioToBenchmarkDataTableGateway,
+                    _countriesDataTableGateway,
                     returnSeriesRepository,
                     benchmarkWithPerformanceRepository);
 

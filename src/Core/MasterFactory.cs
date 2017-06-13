@@ -25,10 +25,11 @@ namespace Dimensional.TinyReturns.Core
         public static IPerformanceReportExcelReportView PerformanceReportExcelReportView { get; set; }
         public static IFlatFileIo FlatFileIo { get; set; }
         public static IPortfolioDataTableGateway PortfolioDataTableGateway { get; set; }
+        public static ICountriesDataTableGateway CountriesDataTableGateway { get; set; }
         public static IBenchmarkDataTableGateway BenchmarkDataTableGateway { get; set; }
         public static IBenchmarkToReturnSeriesDataTableGateway BenchmarkToReturnSeriesDataTableGateway { get; set; }
         public static IPortfolioToBenchmarkDataTableGateway PortfolioToBenchmarkDataTableGateway { get; set; }
-        public static ICountriesDataTableGateway CountriesDataTableGateway { get; set; }
+        
 
         public static CitiMonthyReturnImporter GetCitiReturnSeriesImporter()
         {
@@ -80,6 +81,7 @@ namespace Dimensional.TinyReturns.Core
                 PortfolioDataTableGateway,
                 PortfolioToReturnSeriesDataTableGateway,
                 PortfolioToBenchmarkDataTableGateway,
+                CountriesDataTableGateway,
                 returnSeriesRepository,
                 benchmarkWithPerformanceRepository);
         }
