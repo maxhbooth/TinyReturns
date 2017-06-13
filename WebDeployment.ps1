@@ -4,7 +4,7 @@
 $sess = New-PSSession -ComputerName astof-retcal02d 
 $ProjectName = 'tinyreturns'
 $baseDir = (resolve-path .)
-$baseDir = $baseDir\temp\tinyreturns
+$baseDir = "$baseDir\temp\tinyreturns"
 $targetServerName = 'astof-retcal02d'
 
 $remoteServerPath = '\\' + $targetServerName + '\c$\temp\' + $ProjectName + '\'
