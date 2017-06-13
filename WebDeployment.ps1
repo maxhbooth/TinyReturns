@@ -18,6 +18,7 @@ Else {
 	New-Item -ItemType directory -Path $remoteServerPath
 }
 
+Write-Host "copying from $baseDir\* to  $remoteServerPath"
 Copy-Item "$baseDir\*" $remoteServerPath -recurse
 
 
