@@ -17,7 +17,7 @@ Get-PSSession | Remove-PSSession
 
 $sess = New-PSSession -ComputerName astof-retcal02d 
 $ProjectName = 'tinyreturns'
-$baseDir = (resolve-path temp\$ProjectName)
+$baseDir = (resolve-path \temp\$ProjectName)
 $targetServerName = 'astof-retcal02d'
 
 $remoteServerPath = '\\' + $targetServerName + '\c$\temp\' + $ProjectName + '\'
@@ -35,14 +35,13 @@ Copy-Item "$baseDir\*" $remoteServerPath -recurse
 
 
 Invoke-Command -Session $sess -ArgumentList ($ProjectName)  -Scriptblock {
-hostname
 sl "C:\temp\TinyReturns"
 rm *.zip
 
 $siteLocation = "C:\UtilityApps\TinyReturns"
 
 If (Test-Path "$siteLocation") {
-	Write-Host "Deletilsng contents: $siteLocation"
+	Write-Host "Deleting contents: $siteLocation"
 	Remove-Item "$siteLocation\*" -recurse
 }
 Else {
@@ -51,6 +50,22 @@ Else {
 }
 
 Copy-Item "C:\temp\TinyReturns\*" $siteLocation -recurse
+
+
+#Set up Site using iis
+Import-Module WebAdministration
+$iisAppName = "TinyReturns"
+$directoryPath = "C:\UtilityApps\TinyReturns"
+
+cd IIS:\Sites\
+
+if (Test-Path $iisAppName -pathType container)
+{
+    return
+}
+
+$iisApp = New-Item $iisAppName -bindings @{protocol="http *";bindingInformation=":1704:"} -physicalPath $directoryPath
+
 
 }
 
