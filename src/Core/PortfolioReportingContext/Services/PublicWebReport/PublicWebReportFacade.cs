@@ -163,7 +163,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
             public BenchmarkModel[] Benchmarks { get; set; }
 
-            public int CountryId { get; set; }
             public DateTime InceptionDate { get; set; }
             public DateTime? CloseDate { get; set; }
         }

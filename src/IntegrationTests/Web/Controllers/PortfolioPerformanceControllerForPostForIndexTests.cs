@@ -248,32 +248,116 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             testHelper.DatabaseDataDeleter(() =>
                 {
-                    var portfolioNumber = 100;
-                    var portfolioName = "Portfolio 100";
 
-                    var monthYear = new MonthYear(2016, 5);
+                    testHelper.InsertCountryDto(new CountryDto()
+                    {
+                        CountryId = 0,
+                        CountryName = "None Selected"
+                    });
+
+                    testHelper.InsertCountryDto(new CountryDto()
+                    {
+                        CountryId = 1,
+                        CountryName = "Country 1"
+                    });
+
+                    testHelper.InsertCountryDto(new CountryDto()
+                    {
+                        CountryId = 2,
+                        CountryName = "Country 2"
+                    });
+
+                    var portfolioNumber1 = 100;
+                    var portfolioName1 = "Portfolio 100";
 
                     testHelper.InsertPortfolioDto(new PortfolioDto()
                     {
-                        Number = portfolioNumber,
-                        Name = portfolioName,
-                        InceptionDate = new DateTime(2016, 1, 1)
+                        Number = portfolioNumber1,
+                        Name = portfolioName1,
+                        InceptionDate = new DateTime(2016, 1, 1),
                     });
 
-                    var returnSeriesIdNet = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                    var returnSeriesIdNet1 = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                     {
                         Name = "Net Return Series for Portfolio 100"
                     });
 
                     testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
                     {
-                        PortfolioNumber = portfolioNumber,
-                        ReturnSeriesId = returnSeriesIdNet,
+                        PortfolioNumber = portfolioNumber1,
+                        ReturnSeriesId = returnSeriesIdNet1,
                         SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
                     });
 
-                    
+                    var portfolioNumber2 = 101;
+                    var portfolioName2 = "Portfolio 101";
 
+                    testHelper.InsertPortfolioDto(new PortfolioDto()
+                    {
+                        Number = portfolioNumber2,
+                        Name = portfolioName2,
+                        InceptionDate = new DateTime(2016, 1, 1),
+                        CountryId = 1
+                    });
+
+                    var returnSeriesIdNet2 = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                    {
+                        Name = "Net Return Series for Portfolio 101"
+                    });
+
+                    testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                    {
+                        PortfolioNumber = portfolioNumber2,
+                        ReturnSeriesId = returnSeriesIdNet2,
+                        SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                    });
+
+                    var portfolioNumber3 = 102;
+                    var portfolioName3 = "Portfolio 102";
+
+                    testHelper.InsertPortfolioDto(new PortfolioDto()
+                    {
+                        Number = portfolioNumber3,
+                        Name = portfolioName3,
+                        InceptionDate = new DateTime(2016, 1, 1),
+                        CountryId = 2
+                    });
+
+                    var returnSeriesIdNet3 = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                    {
+                        Name = "Net Return Series for Portfolio 102"
+                    });
+
+                    testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                    {
+                        PortfolioNumber = portfolioNumber3,
+                        ReturnSeriesId = returnSeriesIdNet3,
+                        SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                    });
+
+                    var controller = testHelper.CreateController();
+
+                    // Act
+                    var actionResult = controller.Index(new PortfolioPerformanceIndexModel()
+                    {
+                        PortfolioCountries = new string[]
+                        {
+                            "None Selected", "Country 2", "None Selected"
+                        },
+                        MonthYear = "4/2016",
+                        Selected = "0"
+
+                    });
+
+                    var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
+
+                    viewResultModel.Countries.Count().Should().Be(3);
+                    viewResultModel.PortfolioCountries[0].Should().Be("None Selected");
+                    viewResultModel.PortfolioCountries[1].Should().Be("Country 2");
+                    viewResultModel.PortfolioCountries[2].Should().Be("None Selected");
+                    viewResultModel.Portfolios[0].Country.Should().Be("None Selected");
+                    viewResultModel.Portfolios[1].Country.Should().Be("Country 2");
+                    viewResultModel.Portfolios[2].Country.Should().Be("None Selected");
 
                 });
         }
@@ -286,52 +370,139 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             testHelper.DatabaseDataDeleter(() =>
             {
-                var portfolioNumber = 100;
-                var portfolioName = "Portfolio 100";
+                var monthYear = new MonthYear(2016, 8);
 
-                var monthYear = new MonthYear(2016, 5);
+                testHelper.InsertCountryDto(new CountryDto()
+                {
+                    CountryId = 0,
+                    CountryName = "None Selected"
+                });
+
+                testHelper.InsertCountryDto(new CountryDto()
+                {
+                    CountryId = 1,
+                    CountryName = "Country 1"
+                });
+
+                testHelper.InsertCountryDto(new CountryDto()
+                {
+                    CountryId = 2,
+                    CountryName = "Country 2"
+                });
+
+                var portfolioNumber1 = 100;
+                var portfolioName1 = "Portfolio 100";
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
-                    Number = portfolioNumber,
-                    Name = portfolioName,
-                    InceptionDate = new DateTime(2016, 1, 1)
+                    Number = portfolioNumber1,
+                    Name = portfolioName1,
+                    InceptionDate = new DateTime(2016, 1, 1),
                 });
 
-                var returnSeriesIdNet = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                var returnSeriesIdNet1 = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
                     Name = "Net Return Series for Portfolio 100"
                 });
 
                 testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
                 {
-                    PortfolioNumber = portfolioNumber,
-                    ReturnSeriesId = returnSeriesIdNet,
+                    PortfolioNumber = portfolioNumber1,
+                    ReturnSeriesId = returnSeriesIdNet1,
                     SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
                 });
+
+                var portfolioNumber2 = 101;
+                var portfolioName2 = "Portfolio 101";
+
+                testHelper.InsertPortfolioDto(new PortfolioDto()
+                {
+                    Number = portfolioNumber2,
+                    Name = portfolioName2,
+                    InceptionDate = new DateTime(2016, 1, 1),
+                    CountryId = 1
+                });
+
+                var returnSeriesIdNet2 = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Net Return Series for Portfolio 101"
+                });
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber2,
+                    ReturnSeriesId = returnSeriesIdNet2,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+
+                var portfolioNumber3 = 102;
+                var portfolioName3 = "Portfolio 102";
+
+                testHelper.InsertPortfolioDto(new PortfolioDto()
+                {
+                    Number = portfolioNumber3,
+                    Name = portfolioName3,
+                    InceptionDate = new DateTime(2016, 1, 1),
+                    CountryId = 2
+                });
+
+                var returnSeriesIdNet3 = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Net Return Series for Portfolio 102"
+                });
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber3,
+                    ReturnSeriesId = returnSeriesIdNet3,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+
 
                 var monthYearRange = new MonthYearRange(
                     monthYear.AddMonths(-10),
                     monthYear);
 
-                var netMonthlyReturnDtos = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
-                    returnSeriesIdNet,
+                var netMonthlyReturnDtos1 = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    returnSeriesIdNet1,
                     monthYearRange);
 
-                foreach (var monthlyReturn in netMonthlyReturnDtos)
+                var netMonthlyReturnDtos2 = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    returnSeriesIdNet2,
+                    monthYearRange);
+
+                var netMonthlyReturnDtos3 = MonthlyReturnDtoDataBuilder.CreateMonthlyReturns(
+                    returnSeriesIdNet3,
+                    monthYearRange);
+
+                testHelper.InsertMonthlyReturnDtos(netMonthlyReturnDtos1);
+                testHelper.InsertMonthlyReturnDtos(netMonthlyReturnDtos2);
+                testHelper.InsertMonthlyReturnDtos(netMonthlyReturnDtos3);
+
+                var controller = testHelper.CreateController();
+
+                // Act
+                var actionResult = controller.Index(new PortfolioPerformanceIndexModel()
                 {
-                    Debug.WriteLine("Net Returns:");
-                    Debug.WriteLine(monthlyReturn.ReturnValue);
-                }
+                    PortfolioCountries = new string[]
+                    {
+                        "None Selected", "Country 2", "None Selected"
+                    },
+                    MonthYear = "4/2016",
+                    Selected = "0"
 
-                testHelper.InsertMonthlyReturnDtos(netMonthlyReturnDtos);
+                });
 
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
 
-
-
+                viewResultModel.Countries.Count().Should().Be(3);
+                viewResultModel.PortfolioCountries[0].Should().Be("None Selected");
+                viewResultModel.PortfolioCountries[1].Should().Be("Country 2");
+                viewResultModel.PortfolioCountries[2].Should().Be("None Selected");
+                viewResultModel.Portfolios[0].Country.Should().Be("None Selected");
+                viewResultModel.Portfolios[1].Country.Should().Be("Country 2");
+                viewResultModel.Portfolios[2].Country.Should().Be("None Selected");
             });
-
         }
-
     }
 }

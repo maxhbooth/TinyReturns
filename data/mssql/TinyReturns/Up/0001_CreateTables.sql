@@ -147,5 +147,3 @@ GO
 
 ALTER TABLE [Performance].[PortfolioToReturnSeries] CHECK CONSTRAINT [FK_PortfolioToReturnSeries_ReturnSeries]
 GO
-
-
