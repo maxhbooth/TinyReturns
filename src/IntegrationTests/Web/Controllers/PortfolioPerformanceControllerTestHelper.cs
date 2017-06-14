@@ -96,7 +96,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             return new PortfolioPerformanceController(
                 publicWebReportFacade,
                 new ClockStub(CurrentDate),
-                _countriesDataTableGateway);
+                _countriesDataTableGateway,
+                _portfolioDataTableGateway);
         }
 
         public void InsertPortfolioDto(

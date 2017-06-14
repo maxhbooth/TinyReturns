@@ -49,7 +49,7 @@ INSERT INTO [Portfolio].[Portfolio]
             const string sql = @"
 UPDATE [Portfolio].[Portfolio]
         SET
-           ,[Name] = @Name
+           [Name] = @Name
            ,[CountryId] = @CountryId
            ,[InceptionDate] = @InceptionDate
            ,[CloseDate] = @CloseDate

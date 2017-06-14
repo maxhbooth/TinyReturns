@@ -79,7 +79,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 portfolioModel = new PortfolioModel()
                 {
                     Number = portfolioWithPerformance.Number,
-                    Country = portfolioWithPerformance.GetCountry(),
+                    Country = portfolioWithPerformance.Country,
                     Name = portfolioWithPerformance.Name,
                     OneMonth = PercentHelper.AsPercent(portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear)),
                     ThreeMonth =

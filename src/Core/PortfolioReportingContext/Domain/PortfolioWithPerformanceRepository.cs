@@ -89,7 +89,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
                 
                 var withPerformances = benchmarkWithPerformances.Where(b => benchmarkNumbers.Any(n => n == b.Number)).ToArray();
 
-                portfolioModels.Add(new PortfolioWithPerformance(portfolioDto.Number, portfolioDto.Name, netReturnSeries, grossReturnSeries, withPerformances, inceptionDate, countryName, closeDate));
+                portfolioModels.Add(new PortfolioWithPerformance(portfolioDto.Number, portfolioDto.Name, netReturnSeries,
+                                      grossReturnSeries, withPerformances, inceptionDate, countryName, closeDate));
             }
 
             return portfolioModels.ToArray();

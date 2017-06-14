@@ -12,7 +12,7 @@
     <div class="form-inline">
 
         <div class="form-group">
-            @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new {@class = "form-control", onchange = "this.form.submit()"})
+            @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new {@class = "form-control"})
         </div>
         <div class="form-group">
             @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new {@class = "form-control"})
@@ -53,10 +53,20 @@
 
                 <td>
                     <div class="form-group">
-                        @Html.DropDownListFor(x => x.PortfolioCountries[i], Model.Countries, null, new {@class = "form-control", onchange = "this.form.submit()"})
+                        @foreach (var country in Model.Countries)
+                        {
+                            if (country.Value == Model.PortfolioCountries[i])
+                            {
+                                country.Selected = true;
+                            }
+                            else
+                            {
+                                country.Selected = false;
+                            }
+                        }
+                        @Html.DropDownListFor(x => x.PortfolioCountries[i], Model.Countries, null, new {@class = "form-control"})
+
                     </div>
-                    
-                    
 
                     @{
                         i++;

@@ -42,7 +42,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
         {
             var previousMonth = new MonthYear(_clock.GetCurrentDate()).AddMonths(-1);
 
-            var selectListItems = CreateLetterSelectItems();
+            var selectListItems = WebHelper.CreateLetterSelectItems();
 
             var model = new PortfolioPerformanceIndexModel()
             {
@@ -62,15 +62,20 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public ActionResult Index(
             PortfolioPerformanceIndexModel model)
         {
-            //insert portfolio countries into the database
-            new WebDatabaseHelper().UpdatePortfolios(_portfolioDataTableGateWay, model.Portfolios);
-
 
             var previousMonth = new MonthYear(_clock.GetCurrentDate()).AddMonths(-1);
             var monthYearArray = model.MonthYear.Split('/');
             var monthYear = new MonthYear(int.Parse(monthYearArray[1]), int.Parse(monthYearArray[0]));
 
-            var selectListItems = CreateLetterSelectItems();
+
+            //insert portfolio countries into the database
+
+            new WebDatabaseHelper().UpdatePortfolios(_portfolioDataTableGateWay,
+                _countriesDataTableGateway,
+                 _publicWebReportFacade.GetPortfolioPerformance(),
+                 model.PortfolioCountries);
+
+            var selectListItems = WebHelper.CreateLetterSelectItems();
 
             string select;
 
@@ -90,6 +95,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 throw new InvalidOperationException();
             }
 
+
             var resultModel = new PortfolioPerformanceIndexModel()
             {
                 Portfolios = portfolioPerformance,
@@ -102,24 +108,6 @@ namespace Dimensional.TinyReturns.Web.Controllers
             };
 
             return View(resultModel);
-        }
-
-        private SelectListItem[] CreateLetterSelectItems()
-        {
-            var selectListItems = new SelectListItem[2];
-
-            selectListItems[0] = new SelectListItem()
-            {
-                Value = "0",
-                Text = "Net"
-            };
-            selectListItems[1] = new SelectListItem()
-            {
-                Value = "1",
-                Text = "Gross"
-            };
-
-            return selectListItems;
         }
 
         public static class WebHelper
@@ -143,6 +131,23 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
                 return countries;
             }
+            public static SelectListItem[] CreateLetterSelectItems()
+            {
+                var selectListItems = new SelectListItem[2];
+
+                selectListItems[0] = new SelectListItem()
+                {
+                    Value = "0",
+                    Text = "Net"
+                };
+                selectListItems[1] = new SelectListItem()
+                {
+                    Value = "1",
+                    Text = "Gross"
+                };
+
+                return selectListItems;
+            }
         }
 
         public class WebDatabaseHelper
@@ -165,13 +170,19 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
             public void UpdatePortfolios(IPortfolioDataTableGateway portfolioDataTableGateway,
                                          ICountriesDataTableGateway countriesDataTableGateway,
-                                         PublicWebReportFacade.PortfolioModel[] portfolios)
+                                         PublicWebReportFacade.PortfolioModel[] portfolios,
+                                         string[] portfolioCountries)
             {
+                if (portfolios == null || portfolioCountries == null)
+                {
+                    return;
+                }
+
                 var countryDtos = countriesDataTableGateway.GetAll();
 
-                foreach (var portfolio in portfolios)
+                for(var i=0; i<portfolios.Length;i++)
                 {
-                    var country = countryDtos.FirstOrDefault(c => c.CountryName == portfolio.Country);
+                    var country = countryDtos.FirstOrDefault(c => c.CountryName == portfolioCountries[i]);
 
                     int countryId=0;
 
@@ -180,21 +191,17 @@ namespace Dimensional.TinyReturns.Web.Controllers
                         countryId = country.CountryId;
                     }
 
-
                     portfolioDataTableGateway.Update(new PortfolioDto()
                     {
-                        Number = portfolio.Number,
-                        Name = portfolio.Name,
+                        Number = portfolios[i].Number,
+                        Name = portfolios[i].Name,
                         CountryId = countryId,
-                        InceptionDate = portfolio.InceptionDate,
-                        CloseDate = portfolio.CloseDate
+                        InceptionDate = portfolios[i].InceptionDate,
+                        CloseDate = portfolios[i].CloseDate
                     });
 
-                    
 
                 }
-
-
 
             }
         }
