@@ -5,68 +5,197 @@
     ViewBag.Title = "Portfolio Performance";
 }
 
-<div>
+<head>
     <br/>
     <div class="form-inline">
         @using (Html.BeginForm())
         {
             <div class="form-group">
+   
                 @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
             </div>
             <div class="form-group">
                 @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new { @class = "form-control" })
             </div>
-
+            
             <input type="submit" value="Go" class="btn btn-default" />
         }
     </div>
-    <table class="table table-condensed">
-        <thead>
-        <tr>
-            <th>Number</th>
-            <th>Name</th>
-            <th>1 Month</th>
-            <th>3 Month</th>
+    
+     <style>
+        div.outer {
+            position: absolute;
+            padding: 20px;
+        }
+
+        div.Myporfolios {
+            align-content: center;
+            overflow: auto;
+            padding: 10px;
+            height: 30vh;
+            width: 70vw;
+            border-style: solid;
+            border-width: medium;
+            border-color: black;
+        }
+
+        div.ScollPanel {
+            align-content: center;
+            overflow: auto;
+        }
+
+        div.Edit {
+            position: relative;
+            text-align: left;
+            padding: 10px;
+            width: 70vw;
+            border-style: solid;
+            border-width: medium;
+            border-color: black;
+        }
+
+        div.searchbar {
+            position: fixed;
+        }
+
+        input[type=text] {
+            background-color: pink;
+        }
+
+        #header {
+            position: fixed;
+        }
+    </style>
+
+   
+
+</head>
+
+
+<div class="outer">
+    <br>
+    <br>
+    <div class="Myporfolios">
+        <div id="header"><h2 style="position: relative;">Portfolios</h2></div>
+        <div class="ScollPanel">
+            <table class="table table-condensed" style="margin-top: 70px">
+                <thead>
+                <tr>
+                    <th scope="col">Number</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">1 Month</th>
+                    <th scope="col">3 Month</th>
+                    <th scope="col">6 Month</th>
+                    <th scope="col">Quarter to Date</th>
+                    <th scope="col">Year to Date</th>
+                    <th scope="col">First Full Month</th>
+                    <th scope="col">Standard Deviation</th>
+                    <th scope="col">Mean</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody style="margin-top: 50px">
+                @*
+                    <tr id="myDrag" draggable="true" ondragstart="drag(event)">
+                        <td>Draggable to Edit panel</td>
+                    </tr>*@
+
+                @foreach (var portfolio in Model)
+                {
+                    <tr style="background: lavenderblush">
+                        <td>@portfolio.Number</td>
+                        <td>@portfolio.Name</td>
+                        <td>@portfolio.OneMonth</td>
+                        <td>@portfolio.ThreeMonth</td>
+                        <td>@portfolio.SixMonth</td>
+                        <td>@portfolio.QuarterToDate</td>
+                        <td>@portfolio.YearToDate</td>
+                        <td>@portfolio.FirstFullMonth</td>
+                        <td>@portfolio.StandardDeviation</td>
+                        <td>@portfolio.Mean</td>
+                        @*                            <td><p id="filler" onclick="myEdit(@portfolio)">Edit</p></td>*@
+                        <td>Edit</td>
+                    </tr>
+
+                    foreach (var benchmark in portfolio.Benchmarks)
+                    {
+                        <tr>
+                            <td></td>
+                            <td style="padding-left: 20px;">@benchmark.Name</td>
+                            <td>@benchmark.OneMonth</td>
+                            <td>@benchmark.ThreeMonth</td>
+                            <td>@benchmark.SixMonth</td>
+                            <td>@benchmark.QuarterToDate</td>
+                            <td>@benchmark.YearToDate</td>
+                            <td>@portfolio.FirstFullMonth</td>
+                        </tr>
+                    }
+                }
+
+                </tbody>
+            </table>
+        </div>
+        <div class="searchbar">
+            <form>
+                <input type="text" name="search" placeholder="Search..">
+            </form>
+        </div>
+    </div>
+    <br>
+
+    <div class="Edit">
+        <h2>Edit Portfolio</h2>
+
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th>Number</th>
+                <th>Name</th>
+                <th>1 Month</th>
+                <th>3 Month</th>
                 <th>6 Month</th>
                 <th>Quarter to Date</th>
-            <th>Year to Date</th>
+                <th>Year to Date</th>
                 <th>First Full Month</th>
                 <th>Standard Deviation</th>
                 <th>Mean</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        @foreach (var portfolio in Model.Portfolios)
-        {
-            <tr style="background: lavenderblush">
-                <td>@portfolio.Number</td>
-                <td>@portfolio.Name</td>
-                <td>@portfolio.OneMonth</td>
-                <td>@portfolio.ThreeMonth</td>
-                    <td>@portfolio.SixMonth</td>
-                    <td>@portfolio.QuarterToDate</td>
-                <td>@portfolio.YearToDate</td>
-                    <td>@portfolio.FirstFullMonth</td>
-                    <td>@portfolio.StandardDeviation</td>
-                    <td>@portfolio.Mean</td>
             </tr>
+            </thead>
+            <tbody style="margin-top: 50px">
 
-            foreach (var benchmark in portfolio.Benchmarks)
-            {
-                <tr>
-                    <td></td>
-                    <td style="padding-left: 20px;">@benchmark.Name</td>
-                    <td>@benchmark.OneMonth</td>
-                    <td>@benchmark.ThreeMonth</td>
-                        <td>@benchmark.SixMonth</td>
-                        <td>@benchmark.QuarterToDate</td>
-                    <td>@benchmark.YearToDate</td>
-                        <td>@portfolio.FirstFullMonth</td>
-                </tr>
-            }
-        }
-
-        </tbody>
-    </table>
+            <tr id="dropZone" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <th><input id="filled"></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="result">
+        
+    </div>
 </div>
+
+<script>
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+    }
+
+    function myEdit(values) {
+        document.getElementById("filled").value = values.Name;
+    }
+
+    function EditPortfolio() {
+        document.getElementById("filled").value = document.getElementById("filler").value;
+    }
+      
+            
+</script>
