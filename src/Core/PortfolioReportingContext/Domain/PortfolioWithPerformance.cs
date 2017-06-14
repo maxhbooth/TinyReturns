@@ -11,6 +11,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
         private BenchmarkWithPerformance[] _benchmarkWithPerformances;
         private MonthYear _inceptionMonth;
         private readonly String _country;
+        private readonly System.DateTime _closeDate;
 
         public PortfolioWithPerformance(
             int number,
@@ -19,7 +20,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             ReturnSeries grossReturnSeries,
             BenchmarkWithPerformance[] benchmarks, 
             System.DateTime inceptionDate,
-            String country)
+            String country,
+            System.DateTime closeDate)
         {
             _benchmarkWithPerformances = benchmarks;
             _grossReturnSeries = grossReturnSeries;
@@ -29,6 +31,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             InceptionDate = inceptionDate;
             _inceptionMonth = new MonthYear(InceptionDate);
             _country = country;
+            _closeDate = closeDate;
         }
 
         public int Number { get; private set; }

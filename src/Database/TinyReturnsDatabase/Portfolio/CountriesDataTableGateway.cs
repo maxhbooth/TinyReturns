@@ -20,10 +20,10 @@ namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio
             const string sql = @"
     INSERT INTO [Portfolio].[Countries]
            ([CountryId]
-           ,[CountryName]
+           ,[CountryName])
      VALUES
            (@CountryId
-           ,@CountryName
+           ,@CountryName)
 ";
 
             ConnectionExecuteWithLog(
@@ -32,6 +32,26 @@ namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio
                     connection.Execute(sql, dtos);
                 },
                 sql);
+        }
+
+        public void Insert(CountryDto dto)
+        {
+            const string sql = @"
+    INSERT INTO [Portfolio].[Countries]
+           ([CountryId]
+           ,[CountryName])
+     VALUES
+           (@CountryId
+           ,@CountryName)
+";
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    connection.Execute(sql, dto);
+                },
+                sql,
+                dto);
         }
 
         public CountryDto[] GetAll()

@@ -4,6 +4,7 @@ using System.Security.AccessControl;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Portfolio;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport
 {
@@ -94,7 +95,10 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                             portfolioWithPerformance.CalculateNetReturnAsDecimal(quarterToDateCalculationRequest)),
                     FirstFullMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetReturnAsDecimal(firstFullMonthCalculationRequest)),
                     StandardDeviation = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetStandardDeviation()),  
-                    Mean = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetMean())
+                    Mean = PercentHelper.AsPercent(portfolioWithPerformance.CalculateNetMean()),
+
+                    InceptionDate = portfolioWithPerformance.InceptionDate,
+                    CloseDate = portfolioWithPerformance.CloseDate
                 };
             }
             else if(!netReturn)
@@ -158,6 +162,10 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public string Country { get; set; }
 
             public BenchmarkModel[] Benchmarks { get; set; }
+
+            public int CountryId { get; set; }
+            public DateTime InceptionDate { get; set; }
+            public DateTime? CloseDate { get; set; }
         }
 
         public class BenchmarkModel

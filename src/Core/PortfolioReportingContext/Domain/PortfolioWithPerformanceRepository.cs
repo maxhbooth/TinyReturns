@@ -62,6 +62,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 
                 var inceptionDate = portfolioDto.InceptionDate;
 
+                var closeDate = portfolioDto.CloseDate;
+
                 ReturnSeries netReturnSeries = null;
                 ReturnSeries grossReturnSeries = null;
 
@@ -87,7 +89,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
                 
                 var withPerformances = benchmarkWithPerformances.Where(b => benchmarkNumbers.Any(n => n == b.Number)).ToArray();
 
-                portfolioModels.Add(new PortfolioWithPerformance(portfolioDto.Number, portfolioDto.Name, netReturnSeries, grossReturnSeries, withPerformances, inceptionDate, countryName));
+                portfolioModels.Add(new PortfolioWithPerformance(portfolioDto.Number, portfolioDto.Name, netReturnSeries, grossReturnSeries, withPerformances, inceptionDate, countryName, closeDate));
             }
 
             return portfolioModels.ToArray();
