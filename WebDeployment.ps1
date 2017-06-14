@@ -72,18 +72,19 @@ Copy-Item "C:\temp\$ProjectName\*" $siteLocation -recurse
 #Set up Site using iis
 Import-Module WebAdministration
 
-$iisAppName = "$ProjectName"
+
 $directoryPath = "$siteLocation\Release\_PublishedWebsites\Web" #path where the website is at
 
 cd IIS:\Sites\
 
-if (Test-Path $iisAppName -pathType container)
+if (Test-Path $ProjectName -pathType container)
 {
     return
 }
 
-$iisApp = New-Item $iisAppName -bindings @{protocol="http";bindingInformation=":1704:"} -physicalPath $directoryPath
+$iisApp = New-Item $ProjectName -bindings @{protocol="http";bindingInformation=":1704:"} -physicalPath $directoryPath
 
+$iisApp | Set-ItemProperty -Name "applicationPool" -Value "TinyReturnsAppPool"
 
 }
 
