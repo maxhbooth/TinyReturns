@@ -65,7 +65,7 @@ Copy-Item "C:\temp\$ProjectName\*" $siteLocation -recurse
 	
 #populate returns
 
-	&"$siteLocationr\Release\Dimensional.TinyReturns.TestDataPopulatorConsole.exe" 
+	&"$siteLocation\Release\Dimensional.TinyReturns.TestDataPopulatorConsole.exe" 
 
 
 
