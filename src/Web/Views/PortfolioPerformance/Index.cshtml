@@ -37,15 +37,17 @@
             border-width: medium;
             border-color: black;
         }
+/*
 
         div.searchbar {
             position: fixed;
         }
 
+
         input[type=text] {
             background-color: pink;
         }
-
+*/
         #header {
             position: fixed;
         }
@@ -105,8 +107,7 @@
                                 <td>@portfolio.FirstFullMonth</td>
                                 <td>@portfolio.StandardDeviation</td>
                                 <td>@portfolio.Mean</td>
-                                @*<td><p id="filler" onclick="myEdit(@portfolio)">Edit</p></td>*@
-                                <td>Edit</td>
+                                <td id="pullToEdit" value="@portfolio.Name">Edit</td>
                             </tr>
 
                             foreach (var benchmark in portfolio.Benchmarks)
@@ -140,67 +141,33 @@
 
             <table class="table table-condensed">
                 <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Name</th>
-                        <th>1 Month</th>
-                        <th>3 Month</th>
-                        <th>6 Month</th>
-                        <th>Quarter to Date</th>
-                        <th>Year to Date</th>
-                        <th>First Full Month</th>
-                        <th>Standard Deviation</th>
-                        <th>Mean</th>
-                    </tr>
+                <tr>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th>1 Month</th>
+                    <th>3 Month</th>
+                    <th>6 Month</th>
+                    <th>Quarter to Date</th>
+                    <th>Year to Date</th>
+                    <th>First Full Month</th>
+                    <th>Standard Deviation</th>
+                    <th>Mean</th>
+                </tr>
                 </thead>
                 <tbody style="margin-top: 50px">
-                    @*
-                        <tr id="dropZone" ondrop="drop(event)" ondragover="allowDrop(event)">
-                            <th><input id="filled"></th>
-                        </tr>*@
+
                 </tbody>
             </table>
         </div>
-        <div id="result">
-            <p> Boo</p>
-        </div>
-
-        <div id='root'>"woo"</div>
+        <p id="changable">Hi there</p>
     </div>
 
-@*    <script src="~/Scripts/reactScript.js">"Goodbye"</script>*@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $("p").click(function(){
-            $(this).hide();
-        });
-    });
+ $(document).on('click','#pullToEdit', function() {
+         $('#changable').text($("#pullToEdit").attr("value"));
+     })
+ 
+
 </script>
-    <script>
-        function allowDrop(event) {
-            event.preventDefault();
-        }
-
-        function drag(ev) {
-            ev.dataTransfer.setData("text", ev.target.id);
-        }
-
-        function drop(ev) {
-            ev.preventDefault();
-            var data = ev.dataTransfer.getData("text");
-            ev.target.appendChild(document.getElementById(data));
-        }
-
-        function myEdit(values) {
-            document.getElementById("filled").value = values.Name;
-        }
-
-        function EditPortfolio() {
-            document.getElementById("filled").value = document.getElementById("filler").value;
-        }
-
-
-
-    </script>
 </body>
