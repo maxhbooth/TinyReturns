@@ -30,7 +30,7 @@ $ProjectName = $($args[0])
 $siteLocation = "C:\UtilityApps\$ProjectName"
 
 $dataFolder = "$sitelocation\data"
-$roundhouseExec = "$siteLocation\lib\roundhosue\rh.exe"
+$roundhouseExec = "$siteLocation\lib\roundhouse\rh.exe"
 $databaseName = $projectName
 
 $databaseServer = "(local)\sqlexpress"
