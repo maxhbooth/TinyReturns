@@ -1,16 +1,25 @@
-﻿@model Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport.PublicWebReportFacade.PortfolioModel[]
+﻿@model Dimensional.TinyReturns.Web.Models.PortfolioPerformanceIndexModel
+
 
 @{
     ViewBag.Title = "Portfolio Performance";
 }
 
 <head>
-    <style>
-        div.outer {
-            position: absolute;
-            padding: 20px;
-        }
+    <br/>
+    <div class="form-inline">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new { @class = "form-control" })
+            </div>
 
+            <input type="submit" value="Go" class="btn btn-default" />
+        }
+    </div>
         div.Myporfolios {
             align-content: center;
             overflow: auto;
@@ -63,7 +72,7 @@
         <div class="ScollPanel">
             <table class="table table-condensed" style="margin-top: 70px">
                 <thead>
-                <tr>
+        <tr>
                     <th scope="col">Number</th>
                     <th scope="col">Name</th>
                     <th scope="col">1 Month</th>
@@ -83,7 +92,7 @@
                         <td>Draggable to Edit panel</td>
                     </tr>*@
 
-                @foreach (var portfolio in Model)
+        @foreach (var portfolio in Model.Portfolios)
                 {
                     <tr style="background: lavenderblush">
                         <td>@portfolio.Number</td>
