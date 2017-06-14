@@ -5,6 +5,107 @@
     ViewBag.Title = "Portfolio Performance";
 }
 
+<<<<<<< HEAD
+<div>
+    <br/>
+@using (Html.BeginForm())
+{
+    <div class="form-inline">
+
+        <div class="form-group">
+            @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new {@class = "form-control"})
+        </div>
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new {@class = "form-control"})
+        </div>
+
+        <input type="submit" value="Go" class="btn btn-default"/>
+
+    </div>
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>1 Month</th>
+            <th>3 Month</th>
+            <th>6 Month</th>
+            <th>Quarter to Date</th>
+            <th>Year to Date</th>
+            <th>First Full Month</th>
+            <th>Standard Deviation</th>
+            <th>Mean</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @{
+            var i = 0;
+        }
+
+        @foreach (var portfolio in Model.Portfolios)
+        {
+
+            <tr style="background: lavenderblush">
+                <td>@portfolio.Number</td>
+                <td>@portfolio.Name</td>
+
+
+                <td>
+                    <div class="form-group">
+                        @foreach (var country in Model.Countries)
+                        {
+                            if (country.Value == Model.PortfolioCountries[i])
+                            {
+                                country.Selected = true;
+                            }
+                            else
+                            {
+                                country.Selected = false;
+                            }
+                        }
+                        @Html.DropDownListFor(x => x.PortfolioCountries[i], Model.Countries, null, new {@class = "form-control"})
+
+                    </div>
+
+                    @{
+                        i++;
+                    }
+
+                </td>
+
+                <td>@portfolio.OneMonth</td>
+                <td>@portfolio.ThreeMonth</td>
+                <td>@portfolio.SixMonth</td>
+                <td>@portfolio.QuarterToDate</td>
+                <td>@portfolio.YearToDate</td>
+                <td>@portfolio.FirstFullMonth</td>
+                <td>@portfolio.StandardDeviation</td>
+                <td>@portfolio.Mean</td>
+            </tr>
+
+            foreach (var benchmark in portfolio.Benchmarks)
+            {
+                <tr>
+                    <td></td>
+                    <td style="padding-left: 20px;">@benchmark.Name</td>
+                    <td></td>
+                    <td>@benchmark.OneMonth</td>
+                    <td>@benchmark.ThreeMonth</td>
+                    <td>@benchmark.SixMonth</td>
+                    <td>@benchmark.QuarterToDate</td>
+                    <td>@benchmark.YearToDate</td>
+                    <td>@benchmark.FirstFullMonth</td>
+                </tr>
+            }
+        }
+
+        </tbody>
+    </table>
+}
+</div>
+=======
 <head>
     <style>
         div.outer {
@@ -57,20 +158,19 @@
 
 
     <br />
-@using (Html.BeginForm())
-{
     <div class="form-inline">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
 
-        <div class="form-group">
+                @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new { @class = "form-control" })
+            </div>
 
-            @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new {@class = "form-control"})
-        </div>
-        <div class="form-group">
-            @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new {@class = "form-control"})
-        </div>
-
-        <input type="submit" value="Go" class="btn btn-default"/>
-
+            <input type="submit" value="Go" class="btn btn-default" />
+        }
     </div>
 
     <div class="outer">
@@ -84,7 +184,6 @@
                         <tr>
                             <th scope="col">Number</th>
                             <th scope="col">Name</th>
-            <th>Country</th>
                             <th scope="col">1 Month</th>
                             <th scope="col">3 Month</th>
                             <th scope="col">6 Month</th>
@@ -94,44 +193,14 @@
                             <th scope="col">Standard Deviation</th>
                             <th scope="col">Mean</th>
                             <th scope="col"></th>
-
                         </tr>
                     </thead>
                     <tbody style="margin-top: 50px">
-        @{
-            var i = 0;
-        }
                         @foreach (var portfolio in Model.Portfolios)
                         {
-
                             <tr style="background: lavenderblush">
                                 <td>@portfolio.Number</td>
                                 <td>@portfolio.Name</td>
-
-
-                <td>
-                    <div class="form-group">
-                        @foreach (var country in Model.Countries)
-                        {
-                            if (country.Value == Model.PortfolioCountries[i])
-                            {
-                                country.Selected = true;
-                            }
-                            else
-                            {
-                                country.Selected = false;
-                            }
-                        }
-                        @Html.DropDownListFor(x => x.PortfolioCountries[i], Model.Countries, null, new {@class = "form-control"})
-
-                    </div>
-
-                    @{
-                        i++;
-                    }
-
-                </td>
-
                                 <td>@portfolio.OneMonth</td>
                                 <td>@portfolio.ThreeMonth</td>
                                 <td>@portfolio.SixMonth</td>
@@ -149,7 +218,6 @@
                                 <tr>
                                     <td></td>
                                     <td style="padding-left: 20px;">@benchmark.Name</td>
-                    <td></td>
                                     <td>@benchmark.OneMonth</td>
                                     <td>@benchmark.ThreeMonth</td>
                                     <td>@benchmark.SixMonth</td>
@@ -162,7 +230,6 @@
 
                     </tbody>
                 </table>
-}
             </div>
             @*<div class="searchbar">
                     <form>
@@ -228,3 +295,4 @@
 
     </script>
 </body>
+>>>>>>> develop

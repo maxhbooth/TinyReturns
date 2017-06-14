@@ -12,14 +12,7 @@ CREATE TABLE [Portfolio].[Countries](
 
 GO
 
-ALTER TABLE [Portfolio].[Portflio]  WITH CHECK ADD  CONSTRAINT [FK_Portfolio_CountryId] FOREIGN KEY([CountryId])
-REFERENCES [Portfolio].[Countries] ([CountryId])
-GO
-
-ALTER TABLE [Portfolio].[Portflio] CHECK CONSTRAINT [FK_Portfolio_CountryId]
-GO
-
-ALTER TABLE [Portfolio].[Portfolio] ADD [CountryId] [nvarchar](255) NOT NULL DEFAULT 0
+ALTER TABLE [Portfolio].[Portfolio] ADD [CountryId] [int] NOT NULL DEFAULT 0
 GO
 
 INSERT [Portfolio].[Countries] ([CountryId], [CountryName]) VALUES (0, N'None selected')
@@ -30,3 +23,12 @@ INSERT [Portfolio].[Countries] ([CountryId], [CountryName]) VALUES (2, N'United 
 GO
 INSERT [Portfolio].[Countries] ([CountryId], [CountryName]) VALUES (3, N'United States')
 GO
+
+
+ALTER TABLE [Portfolio].[Portfolio]  WITH CHECK ADD CONSTRAINT [FK_Portfolio_Country] FOREIGN KEY([CountryId])
+REFERENCES [Portfolio].[Countries] ([CountryId])
+GO
+
+ALTER TABLE [Portfolio].[Portfolio] CHECK CONSTRAINT [FK_Portfolio_Country]
+GO
+
