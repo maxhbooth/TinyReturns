@@ -60,17 +60,18 @@ Copy-Item "C:\temp\$ProjectName\*" $siteLocation -recurse
 	
 
 #rebuild databases
-{
+
     &$roundhouseExec /d=$databaseName /f=$dbFileDir /s=$databaseServer /vf=$versionFile /vx='//buildInfo/version' /env=$enviornment /simple /silent
-}	
+	
 #populate returns
-{
+
 	&"$siteLocationr\Release\Dimensional.TinyReturns.TestDataPopulatorConsole.exe" 
-}
+
 
 
 #Set up Site using iis
 Import-Module WebAdministration
+
 $iisAppName = "$ProjectName"
 $directoryPath = "$siteLocation\Release\_PublishedWebsites\Web" #path where the website is at
 
