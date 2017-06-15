@@ -1,11 +1,11 @@
 param(
-	[string]$buildEnv="local",
-	[Int32]$buildNumber=0,
-	[String]$branchName="localBuild",
-	[String]$gitCommitHash="unknownHash",
-	[Switch]$isMainBranch=$False)
+	[String]$projectVersion=$(throw "-projectVersion is required.")
+)
 
 cls
+
+# Sample Call...
+#	.\TeamCity.featurebranch.ps1 -projectVersion 1.0.0.1
 
 $nugetExe = (get-childItem (".\src\.NuGet\NuGet.exe")).FullName
 &$nugetExe "restore" ".\src\build\packages.config" "-outputDirectory" ".\src\packages"
@@ -20,8 +20,11 @@ Import-Module $psakeModule
 
 # you can write statements in multiple lines using `
 Invoke-psake -buildFile .\src\Build\default.ps1 `
-			 -taskList default `
-			 -framework 4.6
+			-taskList teamcity `
+             -parameters @{
+                "projectVersion" = $projectVersion
+                } `
+			-framework 4.6
 
 Write-Host "Build exit code:" $LastExitCode
 
