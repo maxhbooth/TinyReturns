@@ -79,10 +79,10 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
                 MonthYears = WebHelper.GetDesiredMonths(previousMonth),
                 MonthYear = previousMonth.Stringify(),
-                Selected = "0",
+                SelectedTypeOfReturn = "0",
                 NetGrossList = selectListItems,
                 Countries = new WebDatabaseHelper().GetAllCountries(_countriesDataTableGateway),
-                PortfolioCountries = WebHelper.GetPortolioCountries(_publicWebReportFacade.GetPortfolioPerformance())
+
             };
 
             return View(model);
@@ -97,44 +97,40 @@ namespace Dimensional.TinyReturns.Web.Controllers
             var monthYearArray = model.MonthYear.Split('/');
             var monthYear = new MonthYear(int.Parse(monthYearArray[1]), int.Parse(monthYearArray[0]));
 
-
-            //insert portfolio countries into the database
-
-            new WebDatabaseHelper().UpdatePortfolios(_portfolioDataTableGateWay,
-                _countriesDataTableGateway,
-                 _publicWebReportFacade.GetPortfolioPerformance(),
-                 model.PortfolioCountries);
-
             var selectListItems = WebHelper.CreateLetterSelectItems();
 
-            string select;
-
             PublicWebReportFacade.PortfolioModel[] portfolioPerformance;
-            if (model.Selected == "0")
+            if (model.SelectedTypeOfReturn == "0")
             {
                 portfolioPerformance = _publicWebReportFacade.GetPortfolioPerformance(monthYear);
-                select = "0";
             }
-            else if (model.Selected == "1")
+            else if (model.SelectedTypeOfReturn == "1")
             {
-                portfolioPerformance = _publicWebReportFacade.GetGrossPortfolioPerforance(monthYear);
-                select = "1";
+                portfolioPerformance = _publicWebReportFacade.GetGrossPortfolioPerformance(monthYear);
             }
             else
             {
                 throw new InvalidOperationException();
             }
 
+            if (model.SelectedCountry == null || model.SelectedCountry == "Show All")
+            {
+                //do nothing
+            }
+            else
+            {
+                portfolioPerformance = portfolioPerformance.Where(x => x.Country == model.SelectedCountry).ToArray();
+            }
 
             var resultModel = new PortfolioPerformanceIndexModel()
             {
                 Portfolios = portfolioPerformance,
                 NetGrossList = selectListItems,
-                Selected = select,
+                SelectedTypeOfReturn = model.SelectedTypeOfReturn,
                 MonthYears = WebHelper.GetDesiredMonths(previousMonth),
                 MonthYear = monthYear.Stringify(),
                 Countries = new WebDatabaseHelper().GetAllCountries(_countriesDataTableGateway),
-                PortfolioCountries = model.PortfolioCountries
+                SelectedCountry = model.SelectedCountry
             };
 
             return View(resultModel);
@@ -185,6 +181,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
             public SelectListItem[] GetAllCountries(ICountriesDataTableGateway countriesDataTableGateway)
             {
                 var countries = new List<SelectListItem>();
+
+                countries.Add(new SelectListItem()
+                {
+                    Value = "Show All",
+                    Text = "Show All"
+                });
 
                 foreach (var country in countriesDataTableGateway.GetAll())
                 {

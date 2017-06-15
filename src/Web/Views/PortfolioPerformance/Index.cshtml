@@ -70,13 +70,15 @@
             @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new {@class = "form-control"})
         </div>
         <div class="form-group">
-            @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new {@class = "form-control"})
+            @Html.DropDownListFor(m => m.SelectedTypeOfReturn, Model.NetGrossList, null, new {@class = "form-control"})
         </div>
-
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.SelectedCountry, Model.Countries, null, new {@class = "form-control"})
+        </div>
         <input type="submit" value="Go" class="btn btn-default"/>
 
     </div>
-
+}
     <div class="outer">
         <br>
         <br>
@@ -116,33 +118,7 @@
                             <td>@portfolio.Number</td>
                             <td>@Html.ActionLink(portfolio.Name, "GrowthOfWealth","PortfolioPerformance",
                                routeValues: new {portfolioId=  portfolio.Number.ToString()}, htmlAttributes: new { target = "_blank" })
-                                
-                            </td>
-
-
-                            <td>
-                                <div class="form-group">
-                                    @foreach (var country in Model.Countries)
-                                    {
-                                        if (country.Value == Model.PortfolioCountries[i])
-                                        {
-                                            country.Selected = true;
-                                        }
-                                        else
-                                        {
-                                            country.Selected = false;
-                                        }
-                                    }
-                                    @Html.DropDownListFor(x => x.PortfolioCountries[i], Model.Countries, null, new {@class = "form-control"})
-
-                                </div>
-
-                                @{
-                                    i++;
-                                }
-
-                            </td>
-
+                            <td>@portfolio.Country</td>
                             <td>@portfolio.OneMonth</td>
                             <td>@portfolio.ThreeMonth</td>
                             <td>@portfolio.SixMonth</td>
@@ -239,5 +215,4 @@
         }
 
     </script>
-}
 </body>

@@ -216,17 +216,17 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         public void AssertSelectItemDefaultsNet(
             PortfolioPerformanceIndexModel resultModel)
         {
-            resultModel.Selected.Should().Be("0");
+            resultModel.SelectedTypeOfReturn.Should().Be("0");
         }
 
         internal void AssertModelIsNet(PortfolioPerformanceIndexModel model)
         {
-            model.Selected.Should().Be("0");
+            model.SelectedTypeOfReturn.Should().Be("0");
         }
 
         internal void AssertModelIsGross(PortfolioPerformanceIndexModel model)
         {
-            model.Selected.Should().Be("1");
+            model.SelectedTypeOfReturn.Should().Be("1");
         }
     }
 
