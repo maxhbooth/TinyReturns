@@ -94,12 +94,11 @@
                         </tr>
                     </thead>
                     <tbody style="margin-top: 50px">
-                        @{ int index = 0;
-                            var identity = "";}
+                        @{ int index = 0;}
                         @foreach (var portfolio in Model.Portfolios)
                         {
                             index = index + 1;
-                            identity = "pullToEdit" + @portfolio.Number;
+                            var identity = "pullToEdit" + @portfolio.Number;
                             <tr style="background: lavenderblush">
                                 <td>@portfolio.Number</td>
                                 <td>@portfolio.Name</td>
@@ -179,9 +178,7 @@
                 var eventEl = e.srcElement || e.target,
                     parent = eventEl.parentNode;
                 //pull portfolio and benchmarks to edit panel
-
                 clickedEdit(parent);
-
                 /*if (isPortfolio(parent) && confirm("Do you want to edit this porfolio?")) {
                     //make editable form
                     var row = '<tr style="background: lavenderblush">';
