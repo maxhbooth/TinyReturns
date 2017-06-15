@@ -238,6 +238,16 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultPortfolio.ThreeMonth.Should().HaveValue();
 
 
+                var expectedGrowthofWealth1 = (1 - 0.01m) * (1 + 0.01m) - 1;
+                var expectedGrowthofWealth2 = (1 - 0.01m) * (1 + 0.01m) * (1 + 0.04m) - 1;
+                var expectedGrowthofWealth3 = (1 - 0.01m) * (1 + 0.01m) * (1 + 0.04m) * (1 - 0.02m) - 1;
+
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.MonthlyGrowthOfWealthReturn[0].Value.Should().Be(-0.01m);
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.MonthlyGrowthOfWealthReturn[1].Value.Should().Be(expectedGrowthofWealth1);
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.MonthlyGrowthOfWealthReturn[2].Value.Should().Be(expectedGrowthofWealth2);
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.MonthlyGrowthOfWealthReturn[3].Value.Should().Be(expectedGrowthofWealth3);
+
+
             });
         }
 

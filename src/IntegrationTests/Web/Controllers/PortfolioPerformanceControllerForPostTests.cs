@@ -144,6 +144,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 resultModel.Portfolios.Length.Should().Be(1);
                 resultModel.Portfolios[0].OneMonth.Should().Be(2.00m);
                 testHelper.AssertModelIsGross(resultModel);
+
+
+                resultModel.Portfolios[0].NetGrowthOfWealth.Should().BeNull();
+                resultModel.Portfolios[0].GrossGrowthOfWealth.MonthlyGrowthOfWealthReturn[0].Value.Should().Be(0.02m);
+
+
             });
         }
     }

@@ -68,6 +68,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 viewResultPortfolio.Length.Should().Be(1);
 
+
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.Should().BeNull();
+                viewResultModel.Portfolios[0].GrossGrowthOfWealth.Should().BeNull();
+
                 viewResultPortfolio[0].Number.Should().Be(100);
                 viewResultPortfolio[0].Name.Should().Be("Portfolio 100");
                 viewResultPortfolio[0].Benchmarks.Should().BeEmpty();
@@ -87,7 +91,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var monthYear = new MonthYear(2017, 6);
                 var nextMonth = monthYear.AddMonths(1);
-                var previousMonthYear = monthYear.AddMonths(-1);
 
                 testHelper.CurrentDate = new DateTime(
                     monthYear.Year,
@@ -150,6 +153,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultPortfolio[0].Benchmarks.Should().BeEmpty();
 
                 viewResultPortfolio[0].OneMonth.Should().BeApproximately(0.02m.AsPercent(), 0.00001m);
+
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.Should().NotBeNull();
+                viewResultModel.Portfolios[0].GrossGrowthOfWealth.Should().BeNull();
+
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.MonthlyGrowthOfWealthReturn[0].Value.Should().Be(0.02m);
+
                 viewResultPortfolio[0].ThreeMonth.Should().NotHaveValue();
                 viewResultPortfolio[0].YearToDate.Should().NotHaveValue();
 
@@ -185,7 +194,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 testHelper.InsertCountryDto(new CountryDto()
                 {
                     CountryId = 0,
-                    CountryName = "None SelectedTypeOfReturn"
+                    CountryName = "None Selected"
                 });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
@@ -281,6 +290,20 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultPortfolio[0].OneMonth.Should().BeApproximately(0.02m.AsPercent(), 0.00000001m);
                 viewResultPortfolio[0].ThreeMonth.Should().BeApproximately(0.039584m.AsPercent(), 0.00000001m);
                 viewResultPortfolio[0].YearToDate.Should().BeApproximately(0.0394800416m.AsPercent(), 0.00000001m);
+
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.Should().NotBeNull();
+                viewResultModel.Portfolios[0].GrossGrowthOfWealth.Should().BeNull();
+
+                var expectedGrowthofWealth1 = (1 - 0.01m) * (1 + 0.01m) - 1;
+                var expectedGrowthofWealth2 = (1 - 0.01m) * (1 + 0.01m) * (1+0.04m) - 1;
+                var expectedGrowthofWealth3 = (1 - 0.01m) * (1 + 0.01m) * (1 + 0.04m) * (1-0.02m) - 1;
+
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.MonthlyGrowthOfWealthReturn[0].Value.Should().Be(-0.01m);
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.MonthlyGrowthOfWealthReturn[1].Value.Should().Be(expectedGrowthofWealth1);
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.MonthlyGrowthOfWealthReturn[2].Value.Should().Be(expectedGrowthofWealth2);
+                viewResultModel.Portfolios[0].NetGrowthOfWealth.MonthlyGrowthOfWealthReturn[3].Value.Should().Be(expectedGrowthofWealth3);
+
+
             });
         }
 

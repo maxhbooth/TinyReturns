@@ -103,6 +103,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                     Number = portfolioWithPerformance.Number,
                     Name = portfolioWithPerformance.Name,
                     Country = portfolioWithPerformance.Country,
+                    NetGrowthOfWealth = portfolioWithPerformance.NetGrowthofWealthSeries,
+                    GrossGrowthOfWealth = portfolioWithPerformance.GrossGrowthofWealthSeries,
                     OneMonth = portfolioWithPerformance.GetGrossMonthlyReturn(previousMonthYear).AsPercent(),
                     ThreeMonth = portfolioWithPerformance.CalculateGrossReturnAsDecimal(threeMonthCalculationRequest).AsPercent(),
                     SixMonth = portfolioWithPerformance.CalculateGrossReturnAsDecimal(sixMonthCalculationRequest).AsPercent(),
