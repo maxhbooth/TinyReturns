@@ -158,10 +158,9 @@
                         <th>Mean</th>
                     </tr>
                 </thead>
-                <tbody style="margin-top: 50px">
-                <tr id="putResult">
-                    
-                </tr>
+                <tbody id="putResult" style="margin-top: 50px">
+                   
+@*                purposely did not include </tr> *@
                 </tbody>
             </table>
         </div>
@@ -179,33 +178,31 @@
                 e = e || event;
                 var eventEl = e.srcElement || e.target,
                     parent = eventEl.parentNode;
-                alert('parent ' + parent + ' id ' + parent.rowIndex + ' cells ' + parent.cells[0].innerHTML + ' length ' + parent.cells.length);
+                //alert('parent ' + parent + ' id ' + parent.rowIndex + ' cells ' + parent.cells[0].innerHTML + ' length ' + parent.cells.length);
                 if (isPortfolio(parent)) {
                     //want pop up window asking if want to edit
 
-                    //pull row into edit panel
-                    var row = '';
+                    //pull row into edit panel NEED TO make editable form
+                    var row = '<tr>';
                     for (var i = 0; i < parent.cells.length-1; i++)
                         row += '<td>' + parent.cells[i].innerHTML + '</td>';
-                    $('#putResult').after(row);
+                    row += '</tr>'
                     //need to make edits unclickable so wont add more in same row
-                    //bring down benchmarks too
-                    //parent is at row parent.rowIndex
+                        //currently able to add multiple portfolios to edit panel
+                    //adds benchmarks
                     numRows = table.rows.length;
                     rowsAfter = numRows - parent.rowIndex;
-                    alert('numRows ' + numRows + ' rowsAfter ' + rowsAfter);
                     for (var slot = parent.rowIndex + 1; slot < numRows; slot++)
                         if (!isPortfolio(table.rows[slot])) {
                             var bench = '<tr>';
                             for (var i = 0; i < table.rows[slot].cells.length; i++)
                                 bench += '<td>' + table.rows[slot].cells[i].innerHTML + '</td>';
                             bench += '</tr>';
-                            $('#putResult').after(bench);
+                            row += bench;
                         } else {
                             break;
                         }
-                        
-                    //get next row table.rows[
+                    $('#putResult').after(row);
                 }
             }
 
