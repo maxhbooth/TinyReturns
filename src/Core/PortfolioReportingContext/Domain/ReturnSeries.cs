@@ -108,6 +108,11 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return PerformReturnCalculation(request, returnsInRange, result);
         }
 
+        public MonthlyReturn[] GetMonthlyReturns()
+        {
+            return this._monthlyReturns;
+        }
+
         public MonthlyReturn[] GetMonthsInRange(
             MonthYearRange monthYearRange)
         {

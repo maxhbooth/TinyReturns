@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
@@ -30,6 +31,14 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             _inceptionMonth = new MonthYear(InceptionDate);
             Country = country;
             CloseDate = closeDate;
+            if (netReturnSeries != null)
+            {
+                NetGrowthofWealthSeries = new GrowthofWealthSeries(netReturnSeries);
+            }
+            if (grossReturnSeries != null)
+            {
+                GrossGrowthofWealthSeries = new GrowthofWealthSeries(grossReturnSeries);
+            }
         }
 
         public int Number { get; private set; }
@@ -37,6 +46,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
         public System.DateTime InceptionDate { get; private set; }
         public String Country { get; private set; }
         public System.DateTime? CloseDate { get; private set; }
+
+        public GrowthofWealthSeries NetGrowthofWealthSeries { get; private set; }
+        public GrowthofWealthSeries GrossGrowthofWealthSeries { get; private set; }
 
         public decimal? GetNetMonthlyReturn(
             MonthYear monthYear)

@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,6 +46,7 @@
     <Compile Include="PortfolioReportingContext\Domain\CalculateReturnRequest.cs" />
     <Compile Include="PortfolioReportingContext\Domain\CalculateReturnRequestFactory.cs" />
     <Compile Include="PortfolioReportingContext\Services\OmniFileExport\OmniDataFileView.cs" />
+    <Compile Include="PortfolioReportingContext\Services\PublicWebReport\GrowthofWealthSeries.cs" />
     <Compile Include="SharedContext\Services\CitiFileImport\CitiMonthlyReturnsDataFileRecord.cs" />
     <Compile Include="SharedContext\Services\CitiFileImport\CitiMonthyReturnImporter.cs" />
     <Compile Include="SharedContext\Services\CitiFileImport\ICitiReturnsFileReader.cs" />

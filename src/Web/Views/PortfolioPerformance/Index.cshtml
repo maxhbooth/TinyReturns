@@ -56,7 +56,10 @@
 <body>
 
 
-    <br />
+<br />
+    
+    <img src="@Url.Action("CharterColumn")" alt="Chart" /> 
+
 @using (Html.BeginForm())
 {
     <div class="form-inline">
@@ -95,6 +98,7 @@
                         <th scope="col">First Full Month</th>
                         <th scope="col">Standard Deviation</th>
                         <th scope="col">Mean</th>
+                        <th scope="col"></th>
                         <th scope="col"></th>
 
                     </tr>
@@ -144,6 +148,7 @@
                             <td>@portfolio.Mean</td>
                             @*<td><p id="filler" onclick="myEdit(@portfolio)">Edit</p></td>*@
                             <td>Edit</td>
+                            <td>Growth of wealth</td>
                         </tr>
 
                         foreach (var benchmark in portfolio.Benchmarks)

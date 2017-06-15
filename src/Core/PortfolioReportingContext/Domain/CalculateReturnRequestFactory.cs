@@ -42,7 +42,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 
 
 
-            var diffMonths = endMonth - endMonth.getQuarterMonth() + 1;
+            var diffMonths = endMonth - endMonth.GetQuarterMonth() + 1;
 
             return new CalculateReturnRequest(
                 endMonth,diffMonths);

@@ -81,6 +81,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                     Number = portfolioWithPerformance.Number,
                     Country = portfolioWithPerformance.Country,
                     Name = portfolioWithPerformance.Name,
+                    NetGrowthOfWealth = portfolioWithPerformance.NetGrowthofWealthSeries,
+                    GrossGrowthOfWealth = portfolioWithPerformance.GrossGrowthofWealthSeries,
                     OneMonth = portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear).AsPercent(),
                     ThreeMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(threeMonthCalculationRequest).AsPercent(),
                     SixMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(sixMonthCalculationRequest).AsPercent(),
@@ -154,6 +156,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
             public string Country { get; set; }
 
+            public GrowthofWealthSeries NetGrowthOfWealth { get; set; }
+            public GrowthofWealthSeries GrossGrowthOfWealth { get; set; }
+
             public BenchmarkModel[] Benchmarks { get; set; }
 
             public DateTime InceptionDate { get; set; }
@@ -171,7 +176,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public decimal? FirstFullMonth { get; set; }
             public decimal? StandardDeviation { get; set; }
             public decimal? Mean { get; set; }
-
         }
     }
 
@@ -183,7 +187,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             {
                 return null;
             }
-            return decimal.Round(decimalToChange.Value * 100, 2, MidpointRounding.AwayFromZero);
+            return decimalToChange.Value.AsPercent();
         }
         public static decimal AsPercent(this decimal decimalToChange)
         {
