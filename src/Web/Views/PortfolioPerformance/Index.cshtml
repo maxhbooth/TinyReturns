@@ -174,7 +174,7 @@
         var table = document.getElementById('PortfolioTable');
     
         $('#PortfolioTable').find('tr td:last-child').on('click', $(this).find('td:last-child'), function () {
-            alert('You clicked ' + $(this).text());
+            //alert('You clicked ' + $(this).text());
             table.onclick = function (e) {
                 e = e || event;
                 var eventEl = e.srcElement || e.target,
@@ -184,12 +184,28 @@
                     //want pop up window asking if want to edit
 
                     //pull row into edit panel
-                    
                     var row = '';
                     for (var i = 0; i < parent.cells.length-1; i++)
                         row += '<td>' + parent.cells[i].innerHTML + '</td>';
-                    //row += '</tr>';
                     $('#putResult').after(row);
+                    //need to make edits unclickable so wont add more in same row
+                    //bring down benchmarks too
+                    //parent is at row parent.rowIndex
+                    numRows = table.rows.length;
+                    rowsAfter = numRows - parent.rowIndex;
+                    alert('numRows ' + numRows + ' rowsAfter ' + rowsAfter);
+                    for (var slot = parent.rowIndex + 1; slot < numRows; slot++)
+                        if (!isPortfolio(table.rows[slot])) {
+                            var bench = '<tr>';
+                            for (var i = 0; i < table.rows[slot].cells.length; i++)
+                                bench += '<td>' + table.rows[slot].cells[i].innerHTML + '</td>';
+                            bench += '</tr>';
+                            $('#putResult').after(bench);
+                        } else {
+                            break;
+                        }
+                        
+                    //get next row table.rows[
                 }
             }
 
@@ -198,7 +214,7 @@
        
 
         function isPortfolio(element) {
-            return (element.cells[0].innerHTML != undefined);
+            return (element.cells[0].innerHTML != '');
         }
         
     </script>
