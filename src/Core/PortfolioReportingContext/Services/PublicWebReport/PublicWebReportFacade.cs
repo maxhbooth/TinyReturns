@@ -183,7 +183,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             {
                 return null;
             }
-            return decimal.Round(decimalToChange.Value * 100, 2, MidpointRounding.AwayFromZero);
+            return decimalToChange.Value.AsPercent();
         }
         public static decimal AsPercent(this decimal decimalToChange)
         {
