@@ -158,7 +158,11 @@
                         <th>Mean</th>
                     </tr>
                 </thead>
-                <tbody style="margin-top: 50px"></tbody>
+                <tbody style="margin-top: 50px">
+                <tr id="putResult">
+                    
+                </tr>
+                </tbody>
             </table>
         </div>
         <p id="changable">Hi there</p>
@@ -175,10 +179,27 @@
                 e = e || event;
                 var eventEl = e.srcElement || e.target,
                     parent = eventEl.parentNode;
-                alert('parent ' + parent + ' id ' + parent.rowIndex + ' cells ' + parent.cells[0].innerHTML);
+                alert('parent ' + parent + ' id ' + parent.rowIndex + ' cells ' + parent.cells[0].innerHTML + ' length ' + parent.cells.length);
+                if (isPortfolio(parent)) {
+                    //want pop up window asking if want to edit
+
+                    //pull row into edit panel
+                    
+                    var row = '';
+                    for (var i = 0; i < parent.cells.length-1; i++)
+                        row += '<td>' + parent.cells[i].innerHTML + '</td>';
+                    //row += '</tr>';
+                    $('#putResult').after(row);
+                }
             }
 
         });
+
+       
+
+        function isPortfolio(element) {
+            return (element.cells[0].innerHTML != undefined);
+        }
         
     </script>
 </body>
