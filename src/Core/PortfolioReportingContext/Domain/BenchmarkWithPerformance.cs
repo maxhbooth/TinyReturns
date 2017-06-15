@@ -42,5 +42,14 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
 
             return null;
         }
+
+        public ReturnResult CalculateReturn(
+            CalculateReturnRequest request)
+        {
+            if (HasReturnSeries)
+                return _returnSeries.CalculateReturn(request);
+
+            return null;
+        }
     }
 }

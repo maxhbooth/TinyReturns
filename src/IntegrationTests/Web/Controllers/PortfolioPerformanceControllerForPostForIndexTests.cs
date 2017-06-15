@@ -119,9 +119,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
 
                 viewResultModel.MonthYears.Count().Should().Be(37);
-                viewResultPortfolio.ThreeMonth.Should().NotHaveValue();
-                viewResultPortfolio.QuarterToDate.Should().HaveValue();
-                viewResultPortfolio.YearToDate.Should().HaveValue();
+                viewResultPortfolio.ThreeMonth.Calculation.Should().BeNull();
+                viewResultPortfolio.QuarterToDate.Calculation.Should().NotBeNull();
+                viewResultPortfolio.YearToDate.Calculation.Should().NotBeNull();
             });
         }
 
@@ -235,7 +235,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultModelArray[1].Text.Should()
                     .Be(monthYearMinus1.Month.ToString() + "/" + monthYearMinus1.Year.ToString());
 
-                viewResultPortfolio.ThreeMonth.Should().HaveValue();
+                viewResultPortfolio.ThreeMonth.Calculation.Should().NotBeNull();
 
 
                 var expectedGrowthofWealth1 = (1 - 0.01m) * (1 + 0.01m) - 1;
@@ -366,7 +366,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 });
         }
     
-
     [Fact]
         public void ShouldReturnSameValuesForSubmittingUnchangedform()
         {

@@ -77,6 +77,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             return _netReturnSeries.CalculateReturnAsDecimal(request);
         }
 
+
         public decimal? CalculateGrossReturnAsDecimal(
             CalculateReturnRequest request)
         {

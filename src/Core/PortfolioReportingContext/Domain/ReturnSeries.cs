@@ -135,7 +135,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             result.SetValue(linkingResult.Value, linkingResult.Calculation);
 
             result = AnnaulizeIfNeeded(request, result);
-
+            
             return result;
         }
 
