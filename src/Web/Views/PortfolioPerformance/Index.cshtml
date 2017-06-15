@@ -7,6 +7,7 @@
 
 <head>
     <style>
+        
         div.outer {
             position: absolute;
             padding: 20px;
@@ -111,7 +112,7 @@
                                 <td>@portfolio.FirstFullMonth</td>
                                 <td>@portfolio.StandardDeviation</td>
                                 <td>@portfolio.Mean</td>
-                                <td id="@identity" value="@portfolio.Name">Edit</td>
+                                <td class="myClick" id="@identity" value="@portfolio.Name">Edit</td>
                             </tr>
 
                             foreach (var benchmark in portfolio.Benchmarks)
@@ -159,8 +160,8 @@
                     </tr>
                 </thead>
                 <tbody id="putResult" style="margin-top: 50px">
-                   
-@*                purposely did not include </tr> *@
+
+                    @*                purposely did not include </tr> *@
                 </tbody>
             </table>
         </div>
@@ -169,29 +170,26 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-      
+
+
         var table = document.getElementById('PortfolioTable');
-    
+
         $('#PortfolioTable').find('tr td:last-child').on('click', $(this).find('td:last-child'), function () {
-            //alert('You clicked ' + $(this).text());
             table.onclick = function (e) {
                 e = e || event;
                 var eventEl = e.srcElement || e.target,
                     parent = eventEl.parentNode;
                 //alert('parent ' + parent + ' id ' + parent.rowIndex + ' cells ' + parent.cells[0].innerHTML + ' length ' + parent.cells.length);
-                if (isPortfolio(parent)) {
-                    //want pop up window asking if want to edit
-
+                if (isPortfolio(parent) && confirm("Do you want to edit this porfolio?")) {
                     //pull row into edit panel NEED TO make editable form
-                    var row = '<tr>';
-                    for (var i = 0; i < parent.cells.length-1; i++)
+                    var row = '<tr style="background: lavenderblush">';
+                    for (var i = 0; i < parent.cells.length - 1; i++)
                         row += '<td>' + parent.cells[i].innerHTML + '</td>';
                     row += '</tr>'
                     //need to make edits unclickable so wont add more in same row
-                        //currently able to add multiple portfolios to edit panel
+                    //currently able to add multiple portfolios to edit panel
                     //adds benchmarks
-                    numRows = table.rows.length;
-                    rowsAfter = numRows - parent.rowIndex;
+                    var numRows = table.rows.length;
                     for (var slot = parent.rowIndex + 1; slot < numRows; slot++)
                         if (!isPortfolio(table.rows[slot])) {
                             var bench = '<tr>';
@@ -203,16 +201,28 @@
                             break;
                         }
                     $('#putResult').after(row);
+                    $(function () {
+                        $('.myClick').css('pointer-events', 'none');
+                        
+                    });
+
+                } else {
+                    throw "This should not be editable on its own.";
                 }
             }
 
         });
 
-       
+        $(function () {
+            $('td').css('pointer-events', 'none');
+        });
+        $(function () {
+            $('.myClick').css('pointer-events', 'auto');
+        });
 
         function isPortfolio(element) {
             return (element.cells[0].innerHTML != '');
         }
-        
+
     </script>
 </body>
