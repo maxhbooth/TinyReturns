@@ -58,8 +58,9 @@
 
 <br />
     
-    <img src="@Url.Action("CharterColumn")" alt="Chart" /> 
-
+    
+    
+    
 @using (Html.BeginForm())
 {
     <div class="form-inline">
@@ -107,12 +108,16 @@
                     @{
                         var i = 0;
                     }
+
                     @foreach (var portfolio in Model.Portfolios)
                     {
 
                         <tr style="background: lavenderblush">
                             <td>@portfolio.Number</td>
-                            <td>@portfolio.Name</td>
+                            <td>@Html.ActionLink(portfolio.Name, "GrowthOfWealth","PortfolioPerformance",
+                               routeValues: new {portfolioId=  portfolio.Number.ToString()}, htmlAttributes: new { target = "_blank" })
+                                
+                            </td>
 
 
                             <td>

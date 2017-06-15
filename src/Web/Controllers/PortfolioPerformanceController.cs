@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
@@ -39,15 +40,15 @@ namespace Dimensional.TinyReturns.Web.Controllers
             _portfolioDataTableGateWay = portfolioDataTableGateway;
         }
 
-        public ActionResult CharterColumn()
+        public ActionResult GrowthOfWealthChart(String portfolioId)
         {
 
-            var _context = _publicWebReportFacade.GetPortfolioPerformance();
+            var context = _publicWebReportFacade.GetPortfolioPerformance().First(x => x.Number == int.Parse(portfolioId));
 
             ArrayList xValue = new ArrayList();
             ArrayList yValue = new ArrayList();
 
-            var results = _context[0].NetGrowthOfWealth.MonthlyGrowthOfWealthReturn;
+            var results = context.NetGrowthOfWealth.MonthlyGrowthOfWealthReturn;
 
             results.ToList().ForEach(rs => xValue.Add(rs.MonthYear.Stringify()));
             results.ToList().ForEach(rs => yValue.Add(rs.Value));
@@ -61,6 +62,10 @@ namespace Dimensional.TinyReturns.Web.Controllers
             return null;
         }
 
+        public ActionResult GrowthOfWealth(String portfolioId)
+        {
+            return View("GrowthOfWealth", null , portfolioId);
+        }
 
         [HttpGet]
         public ActionResult Index()
