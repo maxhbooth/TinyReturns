@@ -141,29 +141,29 @@
         </div>
         <br>
 
-        <div class="Edit">
+        <div class="Edit" style="overflow: hidden;">
             <h2>Edit Portfolio</h2>
 
             <table class="table table-condensed">
                 <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Name</th>
-                        <th>1 Month</th>
-                        <th>3 Month</th>
-                        <th>6 Month</th>
-                        <th>Quarter to Date</th>
-                        <th>Year to Date</th>
-                        <th>First Full Month</th>
-                        <th>Standard Deviation</th>
-                        <th>Mean</th>
-                    </tr>
+                <tr>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th>1 Month</th>
+                    <th>3 Month</th>
+                    <th>6 Month</th>
+                    <th>Quarter to Date</th>
+                    <th>Year to Date</th>
+                    <th>First Full Month</th>
+                    <th>Standard Deviation</th>
+                    <th>Mean</th>
+                </tr>
                 </thead>
                 <tbody id="putResult" style="margin-top: 50px">
 
-                    @*                purposely did not include </tr> *@
                 </tbody>
             </table>
+            <button type="submit" style="float: right; display: none">Save</button>
         </div>
         <p id="changable">Hi there</p>
     </div>
@@ -205,6 +205,7 @@
                         $('.myClick').css('pointer-events', 'none');
                     });
                     $('.myClick').text('');
+                    $('button').css('display', 'initial');
 
                 } else {
                     throw "This should not be editable on its own.";
