@@ -7,7 +7,6 @@
 
 <head>
     <style>
-        
         div.outer {
             position: absolute;
             padding: 20px;
@@ -146,21 +145,21 @@
 
             <table class="table table-condensed">
                 <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Name</th>
-                    <th>1 Month</th>
-                    <th>3 Month</th>
-                    <th>6 Month</th>
-                    <th>Quarter to Date</th>
-                    <th>Year to Date</th>
-                    <th>First Full Month</th>
-                    <th>Standard Deviation</th>
-                    <th>Mean</th>
-                </tr>
+                    <tr>
+                        <th>Number</th>
+                        <th>Name</th>
+                        <th>1 Month</th>
+                        <th>3 Month</th>
+                        <th>6 Month</th>
+                        <th>Quarter to Date</th>
+                        <th>Year to Date</th>
+                        <th>First Full Month</th>
+                        <th>Standard Deviation</th>
+                        <th>Mean</th>
+                    </tr>
                 </thead>
                 <tbody id="putResult" style="margin-top: 50px">
-
+                    @*script fills this table*@
                 </tbody>
             </table>
             <button type="submit" style="float: right; display: none">Save</button>
@@ -179,16 +178,13 @@
                 e = e || event;
                 var eventEl = e.srcElement || e.target,
                     parent = eventEl.parentNode;
-                //alert('parent ' + parent + ' id ' + parent.rowIndex + ' cells ' + parent.cells[0].innerHTML + ' length ' + parent.cells.length);
+                //pull portfolio and benchmarks to edit panel
                 if (isPortfolio(parent) && confirm("Do you want to edit this porfolio?")) {
-                    //pull row into edit panel NEED TO make editable form
+                    //make editable form
                     var row = '<tr style="background: lavenderblush">';
                     for (var i = 0; i < parent.cells.length - 1; i++)
-                        row += '<td>' + parent.cells[i].innerHTML + '</td>';
-                    row += '</tr>'
-                    //need to make edits unclickable so wont add more in same row
-                    //currently able to add multiple portfolios to edit panel
-                    //adds benchmarks
+                        row += `<td>${parent.cells[i].innerHTML}</td>`;
+                    row += '</tr>';
                     var numRows = table.rows.length;
                     for (var slot = parent.rowIndex + 1; slot < numRows; slot++)
                         if (!isPortfolio(table.rows[slot])) {
@@ -200,12 +196,15 @@
                         } else {
                             break;
                         }
-                    $('#putResult').after(row);
+
+                    loadEdit(row);
+                    /*$('#putResult').after(row);
                     $(function () {
                         $('.myClick').css('pointer-events', 'none');
                     });
                     $('.myClick').text('');
                     $('button').css('display', 'initial');
+                    $('.form-inline').css('display', 'none');*/
 
                 } else {
                     throw "This should not be editable on its own.";
@@ -213,6 +212,16 @@
             }
 
         });
+
+        function loadEdit(row) {
+            $('#putResult').after(row);
+            $(function () {
+                $('.myClick').css('pointer-events', 'none');
+            });
+            $('.myClick').text('');
+            $('button').css('display', 'initial');
+            $('.form-inline').css('display', 'none');
+        }
 
         $(function () {
             $('td').css('pointer-events', 'none');
