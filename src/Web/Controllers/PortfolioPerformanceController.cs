@@ -40,7 +40,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
             _portfolioDataTableGateWay = portfolioDataTableGateway;
         }
 
-        public ActionResult GrowthOfWealthChart(String portfolioId)
+        public ActionResult GrowthOfWealthColumn(String portfolioId)
         {
 
             var context = _publicWebReportFacade.GetPortfolioPerformance().First(x => x.Number == int.Parse(portfolioId));
@@ -58,6 +58,68 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 .AddSeries("Default", chartType: "column", xValue: xValue, yValues: yValue)
                 .Write("bmp");
 
+            return null;
+        }
+
+        public ActionResult GrowthOfWealthSpline(String portfolioId)
+        {
+
+            var context = _publicWebReportFacade.GetPortfolioPerformance().First(x => x.Number == int.Parse(portfolioId));
+
+            ArrayList xValue = new ArrayList();
+            ArrayList yValue = new ArrayList();
+
+            var results = context.NetGrowthOfWealth.MonthlyGrowthOfWealthReturn;
+
+            results.ToList().ForEach(rs => xValue.Add(rs.MonthYear.Stringify()));
+            results.ToList().ForEach(rs => yValue.Add(rs.Value));
+
+            new Chart(width: 600, height: 400, theme: ChartTheme.Vanilla)
+                .AddTitle("Growth of Wealth")
+                .AddSeries("Default", chartType: "spline", xValue: xValue, yValues: yValue)
+                .Write("bmp");
+
+            return null;
+        }
+
+        public ActionResult GrowthOfWealthRenko(String portfolioId)
+        {
+
+            var context = _publicWebReportFacade.GetPortfolioPerformance().First(x => x.Number == int.Parse(portfolioId));
+
+            ArrayList xValue = new ArrayList();
+            ArrayList yValue = new ArrayList();
+
+            var results = context.NetGrowthOfWealth.MonthlyGrowthOfWealthReturn;
+
+            results.ToList().ForEach(rs => xValue.Add(rs.MonthYear.Stringify()));
+            results.ToList().ForEach(rs => yValue.Add(rs.Value));
+
+            new Chart(width: 600, height: 400, theme: ChartTheme.Vanilla)
+                .AddTitle("Growth of Wealth")
+                .AddSeries("Default", chartType: "renko", xValue: xValue, yValues: yValue)
+                .Write("bmp");
+
+            return null;
+        }
+
+        public ActionResult GrowthOfWealthLine(String portfolioId)
+        {
+
+            var context = _publicWebReportFacade.GetPortfolioPerformance().First(x => x.Number == int.Parse(portfolioId));
+
+            ArrayList xValue = new ArrayList();
+            ArrayList yValue = new ArrayList();
+
+            var results = context.NetGrowthOfWealth.MonthlyGrowthOfWealthReturn;
+
+            results.ToList().ForEach(rs => xValue.Add(rs.MonthYear.Stringify()));
+            results.ToList().ForEach(rs => yValue.Add(rs.Value));
+
+            new Chart(width: 600, height: 400, theme: ChartTheme.Vanilla)
+                .AddTitle("Growth of Wealth")
+                .AddSeries("Default", chartType: "line", xValue: xValue, yValues: yValue)
+                .Write("bmp");
 
             return null;
         }

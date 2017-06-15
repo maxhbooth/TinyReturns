@@ -13,7 +13,13 @@
 <body>
 <div>
     
-    <img src="@Url.Action("GrowthOfWealthChart", routeValues: new { portfolioId = Model})" alt="Chart" /> 
+    <img src="@Url.Action("GrowthOfWealthColumn", routeValues: new { portfolioId = Model})" alt="Chart" /> 
+    
+    <img src="@Url.Action("GrowthOfWealthLine", routeValues: new { portfolioId = Model})" alt="Chart" /> 
+    
+    <img src="@Url.Action("GrowthOfWealthRenko", routeValues: new { portfolioId = Model})" alt="Chart" /> 
+    
+    <img src="@Url.Action("GrowthOfWealthSpline", routeValues: new { portfolioId = Model})" alt="Chart" /> 
 </div>
 </body>
 </html>
