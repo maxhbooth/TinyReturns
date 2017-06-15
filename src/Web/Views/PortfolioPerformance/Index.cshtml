@@ -37,17 +37,17 @@
             border-width: medium;
             border-color: black;
         }
-/*
+        /*
 
-        div.searchbar {
-            position: fixed;
-        }
+                div.searchbar {
+                    position: fixed;
+                }
 
 
-        input[type=text] {
-            background-color: pink;
-        }
-*/
+                input[type=text] {
+                    background-color: pink;
+                }
+        */
         #header {
             position: fixed;
         }
@@ -77,7 +77,7 @@
         <div class="Myporfolios">
             <div id="header"><h2 style="position: relative;">Portfolios</h2></div>
             <div class="ScollPanel">
-                <table class="table table-condensed" style="margin-top: 70px">
+                <table id="PortfolioTable" class="table table-condensed" style="margin-top: 70px">
                     <thead>
                         <tr>
                             <th scope="col">Number</th>
@@ -94,8 +94,12 @@
                         </tr>
                     </thead>
                     <tbody style="margin-top: 50px">
+                        @{ int index = 0;
+                            var identity = "";}
                         @foreach (var portfolio in Model.Portfolios)
                         {
+                            index = index + 1;
+                            identity = "pullToEdit" + @portfolio.Number;
                             <tr style="background: lavenderblush">
                                 <td>@portfolio.Number</td>
                                 <td>@portfolio.Name</td>
@@ -107,7 +111,7 @@
                                 <td>@portfolio.FirstFullMonth</td>
                                 <td>@portfolio.StandardDeviation</td>
                                 <td>@portfolio.Mean</td>
-                                <td id="pullToEdit" value="@portfolio.Name">Edit</td>
+                                <td id="@identity" value="@portfolio.Name">Edit</td>
                             </tr>
 
                             foreach (var benchmark in portfolio.Benchmarks)
@@ -141,33 +145,40 @@
 
             <table class="table table-condensed">
                 <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Name</th>
-                    <th>1 Month</th>
-                    <th>3 Month</th>
-                    <th>6 Month</th>
-                    <th>Quarter to Date</th>
-                    <th>Year to Date</th>
-                    <th>First Full Month</th>
-                    <th>Standard Deviation</th>
-                    <th>Mean</th>
-                </tr>
+                    <tr>
+                        <th>Number</th>
+                        <th>Name</th>
+                        <th>1 Month</th>
+                        <th>3 Month</th>
+                        <th>6 Month</th>
+                        <th>Quarter to Date</th>
+                        <th>Year to Date</th>
+                        <th>First Full Month</th>
+                        <th>Standard Deviation</th>
+                        <th>Mean</th>
+                    </tr>
                 </thead>
-                <tbody style="margin-top: 50px">
-
-                </tbody>
+                <tbody style="margin-top: 50px"></tbody>
             </table>
         </div>
         <p id="changable">Hi there</p>
     </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
- $(document).on('click','#pullToEdit', function() {
-         $('#changable').text($("#pullToEdit").attr("value"));
-     })
- 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      
+        var table = document.getElementById('PortfolioTable');
+    
+        $('#PortfolioTable').find('tr td:last-child').on('click', $(this).find('td:last-child'), function () {
+            alert('You clicked ' + $(this).text());
+            table.onclick = function (e) {
+                e = e || event;
+                var eventEl = e.srcElement || e.target,
+                    parent = eventEl.parentNode;
+                alert('parent ' + parent + ' id ' + parent.rowIndex + ' cells ' + parent.cells[0].innerHTML);
+            }
 
-</script>
+        });
+        
+    </script>
 </body>
