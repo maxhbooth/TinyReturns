@@ -39,7 +39,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 testHelper.InsertCountryDto(new CountryDto()
                 {
                     CountryId = 0,
-                    CountryName = "None Selected"
+                    CountryName = "None SelectedTypeOfReturn"
                 });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
@@ -109,7 +109,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var requestModel = new PortfolioPerformanceIndexModel()
                 {
                     MonthYear = "2/2016",
-                    Selected = "0"
+                    SelectedTypeOfReturn = "0"
                 };
 
                 var actionResult = controller.Index(requestModel);
@@ -214,7 +214,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var requestModel = new PortfolioPerformanceIndexModel()
                 {
                     MonthYear = "4/2016",
-                    Selected = "0"
+                    SelectedTypeOfReturn = "0"
                 };
 
                 var actionResult = controller.Index(requestModel);
@@ -252,7 +252,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     testHelper.InsertCountryDto(new CountryDto()
                     {
                         CountryId = 0,
-                        CountryName = "None Selected"
+                        CountryName = "None SelectedTypeOfReturn"
                     });
 
                     testHelper.InsertCountryDto(new CountryDto()
@@ -340,24 +340,18 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     // Act
                     var actionResult = controller.Index(new PortfolioPerformanceIndexModel()
                     {
-                        PortfolioCountries = new string[]
-                        {
-                            "None Selected", "Country 2", "None Selected"
-                        },
+                        SelectedCountry = "None SelectedTypeOfReturn",
                         MonthYear = "4/2016",
-                        Selected = "0"
+                        SelectedTypeOfReturn = "0"
 
                     });
 
                     var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
 
-                    viewResultModel.Countries.Count().Should().Be(3);
-                    viewResultModel.PortfolioCountries[0].Should().Be("None Selected");
-                    viewResultModel.PortfolioCountries[1].Should().Be("Country 2");
-                    viewResultModel.PortfolioCountries[2].Should().Be("None Selected");
-                    viewResultModel.Portfolios[0].Country.Should().Be("None Selected");
-                    viewResultModel.Portfolios[1].Country.Should().Be("Country 2");
-                    viewResultModel.Portfolios[2].Country.Should().Be("None Selected");
+                    viewResultModel.Countries.Count().Should().Be(4);
+                    viewResultModel.Portfolios.Length.Should().Be(1);
+                    viewResultModel.Portfolios[0].Country.Should().Be("None SelectedTypeOfReturn");
+                    viewResultModel.Portfolios[0].Number.Should().Be(100);
 
                 });
         }
@@ -375,7 +369,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 testHelper.InsertCountryDto(new CountryDto()
                 {
                     CountryId = 0,
-                    CountryName = "None Selected"
+                    CountryName = "None SelectedTypeOfReturn"
                 });
 
                 testHelper.InsertCountryDto(new CountryDto()
@@ -484,24 +478,19 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 // Act
                 var actionResult = controller.Index(new PortfolioPerformanceIndexModel()
                 {
-                    PortfolioCountries = new string[]
-                    {
-                        "None Selected", "Country 2", "None Selected"
-                    },
+                    SelectedCountry = "Country 2",
                     MonthYear = "4/2016",
-                    Selected = "0"
+                    SelectedTypeOfReturn = "0"
 
                 });
 
                 var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
 
-                viewResultModel.Countries.Count().Should().Be(3);
-                viewResultModel.PortfolioCountries[0].Should().Be("None Selected");
-                viewResultModel.PortfolioCountries[1].Should().Be("Country 2");
-                viewResultModel.PortfolioCountries[2].Should().Be("None Selected");
-                viewResultModel.Portfolios[0].Country.Should().Be("None Selected");
-                viewResultModel.Portfolios[1].Country.Should().Be("Country 2");
-                viewResultModel.Portfolios[2].Country.Should().Be("None Selected");
+                viewResultModel.Countries.Count().Should().Be(4);
+                viewResultModel.Portfolios.Length.Should().Be(1);
+                viewResultModel.Portfolios[0].Country.Should().Be("Country 2");
+                viewResultModel.Portfolios[0].Number.Should().Be(102);
+
             });
         }
     }

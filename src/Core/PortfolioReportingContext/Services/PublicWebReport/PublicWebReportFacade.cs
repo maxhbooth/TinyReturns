@@ -46,7 +46,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             return portfolioModels.ToArray();
         }
 
-        public PortfolioModel[] GetGrossPortfolioPerforance(MonthYear currentMonthYear)
+        public PortfolioModel[] GetGrossPortfolioPerformance(MonthYear currentMonthYear)
         {
             var portfolios = _portfolioWithPerformanceRepository.GetAll();
 
@@ -79,8 +79,8 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 portfolioModel = new PortfolioModel()
                 {
                     Number = portfolioWithPerformance.Number,
-                    Country = portfolioWithPerformance.Country,
                     Name = portfolioWithPerformance.Name,
+                    Country = portfolioWithPerformance.Country,
                     OneMonth = portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear).AsPercent(),
                     ThreeMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(threeMonthCalculationRequest).AsPercent(),
                     SixMonth = portfolioWithPerformance.CalculateNetReturnAsDecimal(sixMonthCalculationRequest).AsPercent(),
@@ -100,12 +100,18 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 {
                     Number = portfolioWithPerformance.Number,
                     Name = portfolioWithPerformance.Name,
+                    Country = portfolioWithPerformance.Country,
                     OneMonth = portfolioWithPerformance.GetGrossMonthlyReturn(previousMonthYear).AsPercent(),
                     ThreeMonth = portfolioWithPerformance.CalculateGrossReturnAsDecimal(threeMonthCalculationRequest).AsPercent(),
                     SixMonth = portfolioWithPerformance.CalculateGrossReturnAsDecimal(sixMonthCalculationRequest).AsPercent(),
                     QuarterToDate = portfolioWithPerformance.CalculateGrossReturnAsDecimal(quarterToDateCalculationRequest).AsPercent(),
                     YearToDate = portfolioWithPerformance.CalculateGrossReturnAsDecimal(yearToDateCalculationRequest).AsPercent(),
-                    FirstFullMonth = portfolioWithPerformance.CalculateGrossReturnAsDecimal(firstFullMonthCalculationRequest).AsPercent()
+                    FirstFullMonth = portfolioWithPerformance.CalculateGrossReturnAsDecimal(firstFullMonthCalculationRequest).AsPercent(),
+                    StandardDeviation = portfolioWithPerformance.CalculateGrossStandardDeviation().AsPercent(),
+                    Mean = portfolioWithPerformance.CalculateGrossMean().AsPercent(),
+
+                    InceptionDate = portfolioWithPerformance.InceptionDate,
+                    CloseDate = portfolioWithPerformance.CloseDate
                 };
             }
             
