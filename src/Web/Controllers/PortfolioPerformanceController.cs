@@ -53,7 +53,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
             results.ToList().ForEach(rs => xValue.Add(rs.MonthYear.Stringify()));
             results.ToList().ForEach(rs => yValue.Add(rs.Value));
 
-            new Chart(width: 600, height: 400, theme: ChartTheme.Vanilla3D)
+            new Chart(width: 600, height: 400, theme: ChartTheme.Vanilla)
                 .AddTitle("Growth of Wealth")
                 .AddSeries("Default", chartType: "column", xValue: xValue, yValues: yValue)
                 .Write("bmp");
