@@ -55,11 +55,7 @@
 
 <body>
 
-
 <br />
-    
-    
-    
     
 @using (Html.BeginForm())
 {
@@ -106,13 +102,9 @@
                     </tr>
                     </thead>
                     <tbody style="margin-top: 50px">
-                    @{
-                        var i = 0;
-                    }
 
                     @foreach (var portfolio in Model.Portfolios)
                     {
-
                         <tr style="background: lavenderblush">
                             <td>@portfolio.Number</td>
                             <td>@Html.ActionLink(portfolio.Name, "GrowthOfWealth","PortfolioPerformance",
@@ -145,7 +137,6 @@
                             </tr>
                         }
                     }
-
                     </tbody>
                 </table>
                 }
