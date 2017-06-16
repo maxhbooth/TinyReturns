@@ -179,7 +179,7 @@
                 var eventEl = e.srcElement || e.target,
                     parent = eventEl.parentNode;
                 //pull portfolio and benchmarks to edit panel
-                
+
                 clickedEdit(parent);
                 /*if (isPortfolio(parent) && confirm("Do you want to edit this porfolio?")) {
                     //make editable form
@@ -218,26 +218,30 @@
 
         function clickedEdit(parent) {
             if (isPortfolio(parent) && confirm("Do you want to edit this porfolio?")) {
-                
+
                 //make editable form
                 var row = '<tr style="background: lavenderblush">';
                 for (var i = 0; i < parent.cells.length - 1; i++)
                     row += `<td>${parent.cells[i].innerHTML}</td>`;
                 row += '</tr>';
-                $('#changable').text(row);
                 //make Number and Name editable forms
                 row = makeNumberEditable(row);
+                row = makeNameEditable(row);
+
                 var numRows = table.rows.length;
-                for (var slot = parent.rowIndex + 1; slot < numRows; slot++)
+                for (var slot = parent.rowIndex + 1; slot < numRows; slot++)  //benchmark is in the slot'th row
                     if (!isPortfolio(table.rows[slot])) {
                         var bench = '<tr>';
-                        for (var j = 0; j < table.rows[slot].cells.length; j++)
+                        for (var j = 0; j < table.rows[slot].cells.length; j++)     //j is the column
                             bench += '<td>' + table.rows[slot].cells[j].innerHTML + '</td>';
                         bench += '</tr>';
+                        bench = makeBenchmarkEditable(bench, slot-parent.rowIndex);
                         row += bench;
                     } else {
+                        //stop looking for benchmarks when find another portfolio
                         break;
                     }
+
 
                 loadEdit(row);
 
@@ -250,14 +254,43 @@
             //find first and second <td>
             var firstStart = row.search("<td>");
             var firstEnd = row.search("</td>");
-            var beginString = row.substr(0, firstStart+4);
+            var beginString = row.substr(0, firstStart + 4);
             var endString = row.substring(firstEnd, row.length);
             var number = row.substring(firstStart + 4, firstEnd);
             var newNumber = '<input type="text" name = "number" value = "' + number + '">';
 
             var newRow = beginString + newNumber + endString;
-            $('#changable2').text(`newRow ${newRow}`);
             return newRow;
+        }
+
+        function makeNameEditable(row) {
+            var startPosition = getPosition(row, "<td>", 2);
+            var endPosition = getPosition(row, "</td>", 2);
+            var beginString = row.substr(0, startPosition + 4);
+            var endString = row.substring(endPosition, row.length);
+            var name = row.substring(startPosition + 4, endPosition);
+            var newName = '<input type="text" name = "name" value = "' + name + '">';
+
+            var newRow = beginString + newName + endString;
+            return newRow;
+        }
+
+        function makeBenchmarkEditable(benchRow, b) {
+            //no number in first column
+            var benchNameStart = getPosition(benchRow, "<td>", 2);
+            var benchNameEnd = getPosition(benchRow, "</td>", 2);
+            var benchBegin = benchRow.substring(0, benchNameStart+4);
+            var benchEnd = benchRow.substring(benchNameEnd, benchRow.length);
+
+            var benchName = benchRow.substring(benchNameStart + 4, benchNameEnd);
+            var newBenchName = '<input type="text" name = "benchmark' + b + '" value = "' + benchName + '">';
+
+            var newBenchRow = benchBegin + newBenchName + benchEnd;
+            return newBenchRow;
+        }
+
+        function getPosition(string, subString, index) {
+            return string.split(subString, index).join(subString).length;
         }
 
         function loadEdit(row) {
