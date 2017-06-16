@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Dimensional.TinyReturns.Core;
+using Newtonsoft.Json;
 
 namespace Dimensional.TinyReturns.Web.Controllers
 {
@@ -14,11 +15,11 @@ namespace Dimensional.TinyReturns.Web.Controllers
         // GET api/values
         public IHttpActionResult Get()
         {
-            var result = MasterFactory.GetPublicWebReportFacade().GetPortfolioPerformance().Select(x => new FirstFullMonthModel()
+            var result = MasterFactory.GetPublicWebReportFacade().GetPortfolioPerformance().Select(x => JsonConvert.SerializeObject(new FirstFullMonthModel()
                 {
                     id = x.Number,
                     FirstFullMonth = x.FirstFullMonth
-                });
+                }));
 
             if (result == null)
             {
