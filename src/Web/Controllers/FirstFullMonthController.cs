@@ -14,7 +14,11 @@ namespace Dimensional.TinyReturns.Web.Controllers
         // GET api/values
         public IHttpActionResult Get()
         {
-            var result = MasterFactory.GetPublicWebReportFacade().GetPortfolioPerformance().Select(x => x.FirstFullMonth);
+            var result = MasterFactory.GetPublicWebReportFacade().GetPortfolioPerformance().Select(x => new FirstFullMonthModel()
+                {
+                    id = x.Number,
+                    FirstFullMonth = x.FirstFullMonth
+                });
 
             if (result == null)
             {
@@ -41,6 +45,13 @@ namespace Dimensional.TinyReturns.Web.Controllers
         // POST api/values
         public void Post([FromBody]string value)
         {
+        }
+
+        public class FirstFullMonthModel
+        {
+            public decimal? FirstFullMonth;
+            public int id;
+
         }
 
     }

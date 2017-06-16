@@ -68,12 +68,14 @@
                 <input type="submit" value="Go" class="btn btn-default" />
         }
     </div>
+    
+<div id="header"><h2>Portfolios</h2></div>
+<div class="outer">
+        <br>
+        <br>
 
-    <div class="outer">
-        <br>
-        <br>
+
         <div class="Myporfolios">
-            <div id="header"><h2 style="position: relative;">Portfolios</h2></div>
             <div class="ScollPanel">
                 <table class="table table-condensed" style="margin-top: 70px">
                     <thead>
@@ -105,6 +107,9 @@
                                 <td>@portfolio.FirstFullMonth</td>
                                 <td>@portfolio.StandardDeviation</td>
                                 <td>@portfolio.Mean</td>
+                                
+                                
+
                                 @*<td><p id="filler" onclick="myEdit(@portfolio)">Edit</p></td>*@
                                 <td>Edit</td>
                             </tr>
@@ -163,10 +168,8 @@
         </div>
     </div>
 
-    <script>
-        function allowDrop(event) {
-            event.preventDefault();
-        }
+
+<script>
 
         function drag(ev) {
             ev.dataTransfer.setData("text", ev.target.id);

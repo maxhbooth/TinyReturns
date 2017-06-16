@@ -14,14 +14,18 @@ namespace Dimensional.TinyReturns.Web.Controllers
         // GET api/values
         public IHttpActionResult Get()
         {
-            var result = MasterFactory.GetPublicWebReportFacade().GetPortfolioPerformance().Select(x => x.SixMonth);
+            var result = MasterFactory.GetPublicWebReportFacade().GetPortfolioPerformance().Select(x => new SixMonthModel()
+            {
+                id = x.Number,
+                SixMonth = x.SixMonth
+            });
 
             if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(result);
         }
 
         // GET api/values/5
@@ -43,6 +47,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
         {
         }
 
+        public class SixMonthModel
+        {
+            public decimal? SixMonth;
+            public int id;
+
+        }
 
     }
 }
