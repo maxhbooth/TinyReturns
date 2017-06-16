@@ -230,6 +230,7 @@
                 row = makeNameEditable(row);
 
                 var numRows = table.rows.length;
+
                 for (var slot = parent.rowIndex + 1; slot < numRows; slot++) {  //benchmark is in the slot'th row
                     if (!isPortfolio(table.rows[slot])) {
                         var bench = '<tr>';
@@ -298,12 +299,20 @@
             //have to override something
             rowElement.removeAttribute('style');
             rowElement.style.background = '#ffa4c2';
-            $("#changable").text(rowElement);
             //benchmarks
             var numRows = table.rows.length;
             for (var slot = parent.rowIndex + 1; slot < numRows; slot++) {  //benchmark is in the slot'th row
                 if (!isPortfolio(table.rows[slot])) {
-                    $("#changable2").text(table.rows[slot]);
+                    var diff = (table.rows[parent.rowIndex].cells.length - table.rows[slot].cells.length);
+                    //make sure  correct number of cells
+                    if (diff > 0) {
+                        for (let k = 0; k < diff; k++) {
+                            $("#changable").text(table.rows[slot]);
+                            table.rows[slot].insertCell(-1);
+                        }
+                        $("#changable2").text(table.rows[slot].cells);
+                    }
+                    table.rows[slot].style.background = '#ffa4c2';
 
                 } else {
                     //stop looking for benchmarks when find another portfolio
@@ -313,6 +322,8 @@
 
 
         }
+
+
 
         function loadEdit(row) {
             $('#putResult').after(row);
