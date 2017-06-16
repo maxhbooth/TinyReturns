@@ -164,6 +164,7 @@
             <button type="submit" style="float: right; display: none">Save</button>
         </div>
         <p id="changable">Hi there</p>
+        <p id="changable2">Hi there</p>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -178,6 +179,7 @@
                 var eventEl = e.srcElement || e.target,
                     parent = eventEl.parentNode;
                 //pull portfolio and benchmarks to edit panel
+                
                 clickedEdit(parent);
                 /*if (isPortfolio(parent) && confirm("Do you want to edit this porfolio?")) {
                     //make editable form
@@ -216,11 +218,15 @@
 
         function clickedEdit(parent) {
             if (isPortfolio(parent) && confirm("Do you want to edit this porfolio?")) {
+                
                 //make editable form
                 var row = '<tr style="background: lavenderblush">';
                 for (var i = 0; i < parent.cells.length - 1; i++)
                     row += `<td>${parent.cells[i].innerHTML}</td>`;
                 row += '</tr>';
+                $('#changable').text(row);
+                //make Number and Name editable forms
+                row = makeNumberEditable(row);
                 var numRows = table.rows.length;
                 for (var slot = parent.rowIndex + 1; slot < numRows; slot++)
                     if (!isPortfolio(table.rows[slot])) {
@@ -238,6 +244,20 @@
             } else {
                 throw "This should not be editable on its own.";
             }
+        }
+
+        function makeNumberEditable(row) {
+            //find first and second <td>
+            var firstStart = row.search("<td>");
+            var firstEnd = row.search("</td>");
+            var beginString = row.substr(0, firstStart+4);
+            var endString = row.substring(firstEnd, row.length);
+            var number = row.substring(firstStart + 4, firstEnd);
+            var newNumber = '<input type="text" name = "number" value = "' + number + '">';
+
+            var newRow = beginString + newNumber + endString;
+            $('#changable2').text(`newRow ${newRow}`);
+            return newRow;
         }
 
         function loadEdit(row) {
