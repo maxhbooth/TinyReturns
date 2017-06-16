@@ -179,7 +179,7 @@
                 var eventEl = e.srcElement || e.target,
                     parent = eventEl.parentNode;
                 //pull portfolio and benchmarks to edit panel
-
+                //parent is just the portfolio row HTML between <tr..> and </tr>
                 clickedEdit(parent);
                 /*if (isPortfolio(parent) && confirm("Do you want to edit this porfolio?")) {
                     //make editable form
@@ -218,6 +218,7 @@
 
         function clickedEdit(parent) {
             if (isPortfolio(parent) && confirm("Do you want to edit this porfolio?")) {
+                makeOld(parent);
 
                 //make editable form
                 var row = '<tr style="background: lavenderblush">';
@@ -229,20 +230,19 @@
                 row = makeNameEditable(row);
 
                 var numRows = table.rows.length;
-                for (var slot = parent.rowIndex + 1; slot < numRows; slot++)  //benchmark is in the slot'th row
+                for (var slot = parent.rowIndex + 1; slot < numRows; slot++) {  //benchmark is in the slot'th row
                     if (!isPortfolio(table.rows[slot])) {
                         var bench = '<tr>';
                         for (var j = 0; j < table.rows[slot].cells.length; j++)     //j is the column
                             bench += '<td>' + table.rows[slot].cells[j].innerHTML + '</td>';
                         bench += '</tr>';
-                        bench = makeBenchmarkEditable(bench, slot-parent.rowIndex);
+                        bench = makeBenchmarkEditable(bench, slot - parent.rowIndex);
                         row += bench;
                     } else {
                         //stop looking for benchmarks when find another portfolio
                         break;
                     }
-
-
+                }
                 loadEdit(row);
 
             } else {
@@ -279,7 +279,7 @@
             //no number in first column
             var benchNameStart = getPosition(benchRow, "<td>", 2);
             var benchNameEnd = getPosition(benchRow, "</td>", 2);
-            var benchBegin = benchRow.substring(0, benchNameStart+4);
+            var benchBegin = benchRow.substring(0, benchNameStart + 4);
             var benchEnd = benchRow.substring(benchNameEnd, benchRow.length);
 
             var benchName = benchRow.substring(benchNameStart + 4, benchNameEnd);
@@ -291,6 +291,27 @@
 
         function getPosition(string, subString, index) {
             return string.split(subString, index).join(subString).length;
+        }
+
+        function makeOld(parent) {
+            var rowElement = document.getElementById("PortfolioTable").rows[parent.rowIndex];
+            //have to override something
+            rowElement.removeAttribute('style');
+            rowElement.style.background = '#ffa4c2';
+            $("#changable").text(rowElement);
+            //benchmarks
+            var numRows = table.rows.length;
+            for (var slot = parent.rowIndex + 1; slot < numRows; slot++) {  //benchmark is in the slot'th row
+                if (!isPortfolio(table.rows[slot])) {
+                    $("#changable2").text(table.rows[slot]);
+
+                } else {
+                    //stop looking for benchmarks when find another portfolio
+                    break;
+                }
+            }
+
+
         }
 
         function loadEdit(row) {
