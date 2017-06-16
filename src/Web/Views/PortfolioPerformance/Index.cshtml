@@ -157,11 +157,10 @@
                         <th>Mean</th>
                     </tr>
                 </thead>
-                <tbody id="putResult" style="margin-top: 50px">
-                    @*script fills this table*@
-                </tbody>
+                <tbody id="putResult" style="margin-top: 50px"></tbody>
+                @*script somehow adds rows here*@
             </table>
-            <button type="submit" style="float: right; display: none">Save</button>
+            <button type="submit" onclick="updateDatabase()" style="float: right; display: none">Save</button>
         </div>
         <p id="changable">Hi there</p>
         <p id="changable2">Hi there</p>
@@ -181,41 +180,10 @@
                 //pull portfolio and benchmarks to edit panel
                 //parent is just the portfolio row HTML between <tr..> and </tr>
                 clickedEdit(parent);
-                /*if (isPortfolio(parent) && confirm("Do you want to edit this porfolio?")) {
-                    //make editable form
-                    var row = '<tr style="background: lavenderblush">';
-                    for (var i = 0; i < parent.cells.length - 1; i++)
-                        row += `<td>${parent.cells[i].innerHTML}</td>`;
-                    row += '</tr>';
-                    var numRows = table.rows.length;
-                    for (var slot = parent.rowIndex + 1; slot < numRows; slot++)
-                        if (!isPortfolio(table.rows[slot])) {
-                            var bench = '<tr>';
-                            for (var i = 0; i < table.rows[slot].cells.length; i++)
-                                bench += '<td>' + table.rows[slot].cells[i].innerHTML + '</td>';
-                            bench += '</tr>';
-                            row += bench;
-                        } else {
-                            break;
-                        }
-
-                    loadEdit(row);
-                    /*$('#putResult').after(row);
-                    $(function () {
-                        $('.myClick').css('pointer-events', 'none');
-                    });
-                    $('.myClick').text('');
-                    $('button').css('display', 'initial');
-                    $('.form-inline').css('display', 'none');#1#
-
-                } else {
-                    throw "This should not be editable on its own.";
-                }*/
             }
-
         });
 
-
+        /************   Get    ************/
         function clickedEdit(parent) {
             if (isPortfolio(parent) && confirm("Do you want to edit this porfolio?")) {
                 makeOld(parent);
@@ -258,7 +226,7 @@
             var beginString = row.substr(0, firstStart + 4);
             var endString = row.substring(firstEnd, row.length);
             var number = row.substring(firstStart + 4, firstEnd);
-            var newNumber = '<input type="text" name = "number" value = "' + number + '">';
+            var newNumber = '<input type="text" id = "number" value = "' + number + '">';
 
             var newRow = beginString + newNumber + endString;
             return newRow;
@@ -270,7 +238,7 @@
             var beginString = row.substr(0, startPosition + 4);
             var endString = row.substring(endPosition, row.length);
             var name = row.substring(startPosition + 4, endPosition);
-            var newName = '<input type="text" name = "name" value = "' + name + '">';
+            var newName = '<input type="text" id = "name" value = "' + name + '">';
 
             var newRow = beginString + newName + endString;
             return newRow;
@@ -284,7 +252,7 @@
             var benchEnd = benchRow.substring(benchNameEnd, benchRow.length);
 
             var benchName = benchRow.substring(benchNameStart + 4, benchNameEnd);
-            var newBenchName = '<input type="text" name = "benchmark' + b + '" value = "' + benchName + '">';
+            var newBenchName = '<input type="text" id = "benchmark' + b + '" value = "' + benchName + '">';
 
             var newBenchRow = benchBegin + newBenchName + benchEnd;
             return newBenchRow;
@@ -323,8 +291,6 @@
 
         }
 
-
-
         function loadEdit(row) {
             $('#putResult').after(row);
             $(function () {
@@ -334,6 +300,50 @@
             $('button').css('display', 'initial');
             $('.form-inline').css('display', 'none');
         }
+
+        /************   Post    ************/
+
+        function updateDatabase() {
+            //$("#changable2").text(document.getElementById('name').value);
+            var portfolioName = document.getElementById('name').value;
+            $("#changable2").text(portfolioName);
+            var portfolioNumber = document.getElementById('number').value;
+
+            var numRows = document.getElementById('PortfolioTable').rows.length;
+            var benchmarkIds = new Array();
+            var blaahhh = "";
+            //associative array id: value 
+            var newResults = new Array();
+
+            for (var i = 1; i < numRows; i++) {
+                var id = "benchmark" + i;
+                try {
+                    var value = document.getElementById(id).value;
+                    benchmarkIds[id] = value;
+                } catch (e) {
+                    break;
+                }
+            }
+            //THIS DOESSSNNNTTT WOOORKKSDAFDF
+            newResults['name'] = "hi";
+
+            for (key in benchmarkIds) {
+               newResults[key] = benchmarkIds[key];
+            }
+            for (key in newResults) {
+                blaahhh += " key " + key + ": " + benchmarkIds[key]+"        ";
+            }
+
+            $("#changable").text(blaahhh);
+        }
+
+
+
+
+
+
+
+        /************   Other    ************/
 
         $(function () {
             $('td').css('pointer-events', 'none');
