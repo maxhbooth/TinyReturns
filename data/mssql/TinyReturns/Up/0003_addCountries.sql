@@ -24,12 +24,12 @@ GO
 INSERT [Portfolio].[Countries] ([CountryId], [CountryName]) VALUES (3, N'United States')
 GO
 
-/*
+
 ALTER TABLE [Portfolio].[Portfolio]  WITH CHECK ADD CONSTRAINT [FK_Portfolio_Country] FOREIGN KEY([CountryId])
 REFERENCES [Portfolio].[Countries] ([CountryId])
 GO
 
 ALTER TABLE [Portfolio].[Portfolio] CHECK CONSTRAINT [FK_Portfolio_Country]
 GO
-*/
+
 

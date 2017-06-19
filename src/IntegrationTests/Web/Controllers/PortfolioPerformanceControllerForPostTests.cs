@@ -45,6 +45,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var currentMonthYear = new MonthYear(testHelper.CurrentDate);
                 var previousMonthYear = currentMonthYear.AddMonths(-1);
 
+                testHelper.InsertCountryDto(new CountryDto()
+                {
+                    CountryId = 0,
+                    CountryName = "Westeros"
+                });
+
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
                     Number = 100,
@@ -101,11 +107,18 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var currentMonthYear = new MonthYear(testHelper.CurrentDate);
                 var previousMonthYear = currentMonthYear.AddMonths(-1);
 
+                testHelper.InsertCountryDto(new CountryDto()
+                {
+                    CountryId = 0,
+                    CountryName = "Westeros"
+                });
+
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
                     Number = 100,
                     Name = "Portfolio 100",
-                    InceptionDate = new DateTime(2010, 1, 1)
+                    InceptionDate = new DateTime(2010, 1, 1),
+
                 });
 
                 // Act

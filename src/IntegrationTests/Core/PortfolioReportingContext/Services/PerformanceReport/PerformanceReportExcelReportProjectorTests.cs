@@ -86,6 +86,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 return _returnSeriesDataTableGateway.Insert(dto);
             }
 
+            public void InsertCountryDto(
+                CountryDto dto)
+            {
+                _countriesDataTableGateway.Insert(dto);
+            }
+
             public void InsertMonthlyReturnDtos(MonthlyReturnDto[] dtos)
             {
                 _monthlyReturnDataTableGateway.Insert(dtos);
@@ -167,6 +173,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
             {
                 var presenter = testHelper.CreatePresenter();
 
+                testHelper.InsertCountryDto(new CountryDto()
+                {
+                    CountryId = 0,
+                    CountryName = "Westeros"
+                });
+
                 var portfolioNumber = 100;
                 var portfolioName = "Portfolio 100";
 
@@ -240,6 +252,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 var portfolioName = "Portfolio 100";
 
                 var monthYear = new MonthYear(2016, 5);
+
+                testHelper.InsertCountryDto(new CountryDto()
+                {
+                    CountryId = 0,
+                    CountryName = "Westeros"
+                });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
@@ -375,6 +393,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 var portfolioName = "Portfolio 100";
 
                 var monthYear = new MonthYear(2016, 5);
+
+                testHelper.InsertCountryDto(new CountryDto()
+                {
+                    CountryId = 0,
+                    CountryName = "Westeros"
+                });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
@@ -519,6 +543,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 var portfolioName = "Portfolio 100";
 
                 var monthYear = new MonthYear(2016, 5);
+
+                testHelper.InsertCountryDto(new CountryDto()
+                {
+                    CountryId = 0,
+                    CountryName = "Westeros"
+                });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
