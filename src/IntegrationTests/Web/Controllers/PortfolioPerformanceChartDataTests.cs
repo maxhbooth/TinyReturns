@@ -218,7 +218,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 testHelper.AssertSelectItemsArePopulated(resultModel);
 
                 resultModel.Portfolios.Length.Should().Be(1);
-                resultModel.Portfolios[0].OneMonth.Should().Be(2.00m);
+                resultModel.Portfolios[0].OneMonth.Value.Should().Be(2.00m);
                 testHelper.AssertModelIsGross(resultModel);
 
                 var ChartData = testHelper.CreateChartData();
