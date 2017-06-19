@@ -81,9 +81,7 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                 {
                     Number = portfolioWithPerformance.Number,
                     Name = portfolioWithPerformance.Name,
-                    Country = portfolioWithPerformance.Country,
-                    NetGrowthOfWealth = portfolioWithPerformance.NetGrowthofWealthSeries,
-                    GrossGrowthOfWealth = portfolioWithPerformance.GrossGrowthofWealthSeries,
+                    Country = portfolioWithPerformance.Country,   
                     OneMonth = portfolioWithPerformance.CalculateNetReturn(oneMonthCalculationRequest).AsPercent(),
                     ThreeMonth = portfolioWithPerformance.CalculateNetReturn(threeMonthCalculationRequest).AsPercent(),
                     SixMonth = portfolioWithPerformance.CalculateNetReturn(sixMonthCalculationRequest).AsPercent(),
@@ -104,8 +102,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
                     Number = portfolioWithPerformance.Number,
                     Name = portfolioWithPerformance.Name,
                     Country = portfolioWithPerformance.Country,
-                    NetGrowthOfWealth = portfolioWithPerformance.NetGrowthofWealthSeries,
-                    GrossGrowthOfWealth = portfolioWithPerformance.GrossGrowthofWealthSeries,
                     OneMonth = portfolioWithPerformance.CalculateGrossReturn(oneMonthCalculationRequest).AsPercent(),
                     ThreeMonth = portfolioWithPerformance.CalculateGrossReturn(threeMonthCalculationRequest).AsPercent(),
                     SixMonth = portfolioWithPerformance.CalculateGrossReturn(sixMonthCalculationRequest).AsPercent(),
@@ -165,9 +161,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public decimal? Mean { get; set; }
 
             public string Country { get; set; }
-
-            public GrowthofWealthSeries NetGrowthOfWealth { get; set; }
-            public GrowthofWealthSeries GrossGrowthOfWealth { get; set; }
 
             public BenchmarkModel[] Benchmarks { get; set; }
 

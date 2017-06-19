@@ -19,11 +19,6 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             MonthlyGrowthOfWealthReturn = TransformIntoGrowthOfWealthReturns(returnSeries.GetMonthlyReturns());
         }
 
-        public static implicit operator GrowthofWealthSeries(ReturnSeries returnSeries)
-        {
-            return new GrowthofWealthSeries(returnSeries);
-        }
-
         private MonthlyGrowthOfWealth[] TransformIntoGrowthOfWealthReturns(ReturnSeries.MonthlyReturn[] monthlyReturns)
         {
             var monthlyGrowthOfWealthReturns = new List<MonthlyGrowthOfWealth>();

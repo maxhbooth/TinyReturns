@@ -105,7 +105,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 {
                     Number = 100,
                     Name = "Portfolio 100",
-                    InceptionDate = new DateTime(2010, 1, 1)
+                    InceptionDate = new DateTime(2010, 1, 1),
+
                 });
 
                 // Act
@@ -144,11 +145,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 resultModel.Portfolios.Length.Should().Be(1);
                 resultModel.Portfolios[0].OneMonth.Value.Should().Be(2.00m);
                 testHelper.AssertModelIsGross(resultModel);
-
-
-                resultModel.Portfolios[0].NetGrowthOfWealth.Should().BeNull();
-                resultModel.Portfolios[0].GrossGrowthOfWealth.MonthlyGrowthOfWealthReturn[0].Value.Should().Be(0.02m);
-
 
             });
         }

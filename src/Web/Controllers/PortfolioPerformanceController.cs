@@ -20,20 +20,26 @@ namespace Dimensional.TinyReturns.Web.Controllers
         private readonly IClock _clock;
         private readonly ICountriesDataTableGateway _countriesDataTableGateway;
         private IPortfolioDataTableGateway _portfolioDataTableGateWay;
+        private PublicWebChartFacade _publicwebchartfacade;
 
         public PortfolioPerformanceController()
         {
             _publicWebReportFacade = MasterFactory.GetPublicWebReportFacade();
+            _publicwebchartfacade = MasterFactory.GetWebChartFacade();
             _countriesDataTableGateway = MasterFactory.CountriesDataTableGateway;
             _portfolioDataTableGateWay = MasterFactory.PortfolioDataTableGateway;
+
             _clock = new Clock();
         }
 
         // Used for tests
         public PortfolioPerformanceController(
-            PublicWebReportFacade publicWebReportFacade, IClock clock,
-            ICountriesDataTableGateway countriesDataTableGateway, IPortfolioDataTableGateway portfolioDataTableGateway)
+            PublicWebReportFacade publicWebReportFacade,
+            PublicWebChartFacade publicWebChartFacade, IClock clock,
+            ICountriesDataTableGateway countriesDataTableGateway,
+            IPortfolioDataTableGateway portfolioDataTableGateway)
         {
+            _publicwebchartfacade = publicWebChartFacade;
             _publicWebReportFacade = publicWebReportFacade;
             _clock = clock;
             _countriesDataTableGateway = countriesDataTableGateway;
@@ -43,12 +49,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public ActionResult GrowthOfWealthColumn(String portfolioId)
         {
 
-            var context = _publicWebReportFacade.GetPortfolioPerformance().First(x => x.Number == int.Parse(portfolioId));
+            var context = _publicwebchartfacade.GetNetChartData().First(x => x.Number == int.Parse(portfolioId) && x.GrowthOfWealth != null);
 
             ArrayList xValue = new ArrayList();
             ArrayList yValue = new ArrayList();
 
-            var results = context.NetGrowthOfWealth.MonthlyGrowthOfWealthReturn;
+            var results = context.GrowthOfWealth.MonthlyGrowthOfWealthReturn;
 
             results.ToList().ForEach(rs => xValue.Add(rs.MonthYear.Stringify()));
             results.ToList().ForEach(rs => yValue.Add(rs.Value));
@@ -64,12 +70,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public ActionResult GrowthOfWealthSpline(String portfolioId)
         {
 
-            var context = _publicWebReportFacade.GetPortfolioPerformance().First(x => x.Number == int.Parse(portfolioId));
+            var context = _publicwebchartfacade.GetNetChartData().First(x => x.Number == int.Parse(portfolioId) && x.GrowthOfWealth != null);
 
             ArrayList xValue = new ArrayList();
             ArrayList yValue = new ArrayList();
 
-            var results = context.NetGrowthOfWealth.MonthlyGrowthOfWealthReturn;
+            var results = context.GrowthOfWealth.MonthlyGrowthOfWealthReturn;
 
             results.ToList().ForEach(rs => xValue.Add(rs.MonthYear.Stringify()));
             results.ToList().ForEach(rs => yValue.Add(rs.Value));
@@ -85,12 +91,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public ActionResult GrowthOfWealthRenko(String portfolioId)
         {
 
-            var context = _publicWebReportFacade.GetPortfolioPerformance().First(x => x.Number == int.Parse(portfolioId));
+            var context = _publicwebchartfacade.GetNetChartData().First(x => x.Number == int.Parse(portfolioId) && x.GrowthOfWealth != null);
 
             ArrayList xValue = new ArrayList();
             ArrayList yValue = new ArrayList();
 
-            var results = context.NetGrowthOfWealth.MonthlyGrowthOfWealthReturn;
+            var results = context.GrowthOfWealth.MonthlyGrowthOfWealthReturn;
 
             results.ToList().ForEach(rs => xValue.Add(rs.MonthYear.Stringify()));
             results.ToList().ForEach(rs => yValue.Add(rs.Value));
@@ -106,12 +112,12 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public ActionResult GrowthOfWealthLine(String portfolioId)
         {
 
-            var context = _publicWebReportFacade.GetPortfolioPerformance().First(x => x.Number == int.Parse(portfolioId));
+            var context = _publicwebchartfacade.GetNetChartData().First(x => x.Number == int.Parse(portfolioId));
 
             ArrayList xValue = new ArrayList();
             ArrayList yValue = new ArrayList();
 
-            var results = context.NetGrowthOfWealth.MonthlyGrowthOfWealthReturn;
+            var results = context.GrowthOfWealth.MonthlyGrowthOfWealthReturn;
 
             results.ToList().ForEach(rs => xValue.Add(rs.MonthYear.Stringify()));
             results.ToList().ForEach(rs => yValue.Add(rs.Value));

@@ -33,11 +33,11 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             CloseDate = closeDate;
             if (netReturnSeries != null)
             {
-                NetGrowthofWealthSeries = (GrowthofWealthSeries) netReturnSeries;
+                NetGrowthofWealthSeries = new GrowthofWealthSeries(netReturnSeries);
             }
             if (grossReturnSeries != null)
             {
-                GrossGrowthofWealthSeries = (GrowthofWealthSeries) grossReturnSeries;
+                GrossGrowthofWealthSeries = new GrowthofWealthSeries(grossReturnSeries);
             }
         }
 
