@@ -52,12 +52,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var monthYear = new MonthYear(testHelper.CurrentDate);
                 var prevMonthYear = monthYear.AddMonths(-1);
 
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
-
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
                     Number = 100,
@@ -108,12 +102,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     nextMonth.Year,
                     nextMonth.Month,
                     5);
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
@@ -195,12 +183,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var monthYearMinus3 = monthYear.AddMonths(-3);
                 var monthYearMinus4 = monthYear.AddMonths(-4);
                 var nextMonth = monthYear.AddMonths(1);
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
 
                 testHelper.CurrentDate = new DateTime(
                     nextMonth.Year,
@@ -332,12 +314,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     nextMonth.Year,
                     nextMonth.Month,
                     5);
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
@@ -495,12 +471,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 // **
 
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
-
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
                     Number = portfolioNumber,
@@ -649,12 +619,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     5);
 
                 // **
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
@@ -806,12 +770,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 // **
 
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
-
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
                     Number = portfolioNumber,
@@ -962,12 +920,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     5);
 
                 // **
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {

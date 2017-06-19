@@ -106,11 +106,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             _portfolioDataTableGateway.Insert(dto);
         }
 
-        public void InsertCountryDto(
-            CountryDto dto)
-        {
-            _countriesDataTableGateway.Insert(dto);
-        }
+//        public void InsertCountryDto(
+//            CountryDto dto)
+//        {
+//            _countriesDataTableGateway.Insert(dto);
+//        }
 
         public void InsertBenchmarkDto(
             BenchmarkDto dto)
@@ -152,19 +152,24 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         public void DatabaseDataDeleter(
             Action act)
         {
+            var tablesToSkip = new[]
+            {
+                new AllTablesDeleter.TableInfoDto("Portfolio", "Countries")
+            };
+
             var databaseSettings = new DatabaseSettings();
 
             _allTablesDeleter.DeleteAllDataFromTables(
                 databaseSettings.TinyReturnsDatabaseConnectionString,
-                new AllTablesDeleter.TableInfoDto[0]);
+                tablesToSkip);
 
             act();
 
             _allTablesDeleter.DeleteAllDataFromTables(
-                databaseSettings.TinyReturnsDatabaseConnectionString,
-                new AllTablesDeleter.TableInfoDto[0]);
+                databaseSettings.TinyReturnsDatabaseConnectionString, tablesToSkip);
         }
 
+        
         public PublicWebReportFacade.PortfolioModel[] GetPortfoliosFromActionResult(
             ActionResult actionResult)
         {

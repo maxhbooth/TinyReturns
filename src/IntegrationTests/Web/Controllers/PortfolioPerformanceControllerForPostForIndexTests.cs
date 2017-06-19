@@ -36,12 +36,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     nextMonth.Month,
                     5);
 
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "None SelectedTypeOfReturn"
-                });
-
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
                     Number = portfolioNumber,
@@ -148,11 +142,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     nextMonth.Month,
                     5);
 
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
@@ -255,24 +244,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             testHelper.DatabaseDataDeleter(() =>
                 {
 
-                    testHelper.InsertCountryDto(new CountryDto()
-                    {
-                        CountryId = 0,
-                        CountryName = "None SelectedTypeOfReturn"
-                    });
-
-                    testHelper.InsertCountryDto(new CountryDto()
-                    {
-                        CountryId = 1,
-                        CountryName = "Country 1"
-                    });
-
-                    testHelper.InsertCountryDto(new CountryDto()
-                    {
-                        CountryId = 2,
-                        CountryName = "Country 2"
-                    });
-
                     var portfolioNumber1 = 100;
                     var portfolioName1 = "Portfolio 100";
 
@@ -346,7 +317,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     // Act
                     var actionResult = controller.Index(new PortfolioPerformanceIndexModel()
                     {
-                        SelectedCountry = "None SelectedTypeOfReturn",
+                        SelectedCountry = "None Selected",
                         MonthYear = "4/2016",
                         SelectedTypeOfReturn = "0"
 
@@ -354,9 +325,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                     var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
 
-                    viewResultModel.Countries.Count().Should().Be(4);
+                    viewResultModel.Countries.Count().Should().Be(5);
                     viewResultModel.Portfolios.Length.Should().Be(1);
-                    viewResultModel.Portfolios[0].Country.Should().Be("None SelectedTypeOfReturn");
+                    viewResultModel.Portfolios[0].Country.Should().Be("None Selected");
                     viewResultModel.Portfolios[0].Number.Should().Be(100);
 
                 });
@@ -371,25 +342,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             testHelper.DatabaseDataDeleter(() =>
             {
                 var monthYear = new MonthYear(2016, 8);
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "None SelectedTypeOfReturn"
-                });
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 1,
-                    CountryName = "Country 1"
-                });
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 2,
-                    CountryName = "Country 2"
-                });
-
                 var portfolioNumber1 = 100;
                 var portfolioName1 = "Portfolio 100";
 
@@ -484,7 +436,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 // Act
                 var actionResult = controller.Index(new PortfolioPerformanceIndexModel()
                 {
-                    SelectedCountry = "Country 2",
+                    SelectedCountry = "United Kingdom",
                     MonthYear = "4/2016",
                     SelectedTypeOfReturn = "0"
 
@@ -492,9 +444,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
                 var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
 
-                viewResultModel.Countries.Count().Should().Be(4);
+                viewResultModel.Countries.Count().Should().Be(5);
                 viewResultModel.Portfolios.Length.Should().Be(1);
-                viewResultModel.Portfolios[0].Country.Should().Be("Country 2");
+                viewResultModel.Portfolios[0].Country.Should().Be("United Kingdom");
                 viewResultModel.Portfolios[0].Number.Should().Be(102);
 
             });

@@ -15,7 +15,7 @@ GO
 ALTER TABLE [Portfolio].[Portfolio] ADD [CountryId] [int] NOT NULL DEFAULT 0
 GO
 
-INSERT [Portfolio].[Countries] ([CountryId], [CountryName]) VALUES (0, N'None selected')
+INSERT [Portfolio].[Countries] ([CountryId], [CountryName]) VALUES (0, N'None Selected')
 GO
 INSERT [Portfolio].[Countries] ([CountryId], [CountryName]) VALUES (1, N'Australia')
 GO

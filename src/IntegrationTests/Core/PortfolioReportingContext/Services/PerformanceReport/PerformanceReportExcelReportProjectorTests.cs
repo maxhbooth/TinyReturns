@@ -86,12 +86,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 return _returnSeriesDataTableGateway.Insert(dto);
             }
 
-            public void InsertCountryDto(
-                CountryDto dto)
-            {
-                _countriesDataTableGateway.Insert(dto);
-            }
-
             public void InsertMonthlyReturnDtos(MonthlyReturnDto[] dtos)
             {
                 _monthlyReturnDataTableGateway.Insert(dtos);
@@ -105,17 +99,21 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
             public void DatabaseDataDeleter(
                 Action act)
             {
+                var tablesToSkip = new[]
+                {
+                    new AllTablesDeleter.TableInfoDto("Portfolio", "Countries")
+                };
+
                 var databaseSettings = new DatabaseSettings();
 
                 _allTablesDeleter.DeleteAllDataFromTables(
                     databaseSettings.TinyReturnsDatabaseConnectionString,
-                    new AllTablesDeleter.TableInfoDto[0]);
+                    tablesToSkip);
 
                 act();
 
                 _allTablesDeleter.DeleteAllDataFromTables(
-                    databaseSettings.TinyReturnsDatabaseConnectionString,
-                    new AllTablesDeleter.TableInfoDto[0]);
+                    databaseSettings.TinyReturnsDatabaseConnectionString, tablesToSkip);
             }
 
             public PerformanceReportExcelReportPresenter CreatePresenter()
@@ -172,12 +170,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
             testHelper.DatabaseDataDeleter(() =>
             {
                 var presenter = testHelper.CreatePresenter();
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
 
                 var portfolioNumber = 100;
                 var portfolioName = "Portfolio 100";
@@ -252,12 +244,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 var portfolioName = "Portfolio 100";
 
                 var monthYear = new MonthYear(2016, 5);
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
@@ -393,12 +379,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 var portfolioName = "Portfolio 100";
 
                 var monthYear = new MonthYear(2016, 5);
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
@@ -543,12 +523,6 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 var portfolioName = "Portfolio 100";
 
                 var monthYear = new MonthYear(2016, 5);
-
-                testHelper.InsertCountryDto(new CountryDto()
-                {
-                    CountryId = 0,
-                    CountryName = "Westeros"
-                });
 
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
