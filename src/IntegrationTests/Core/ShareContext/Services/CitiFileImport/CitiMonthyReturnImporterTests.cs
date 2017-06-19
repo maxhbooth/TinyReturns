@@ -68,11 +68,16 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.ShareContext.Services.Ci
 
             public void DeleteAllDataInDatabase()
             {
+                var tablesToSkip = new[]
+                {
+                    new AllTablesDeleter.TableInfoDto("Portfolio", "Countries")
+                };
+
                 var databaseSettings = new DatabaseSettings();
 
                 _allTablesDeleter.DeleteAllDataFromTables(
                     databaseSettings.TinyReturnsDatabaseConnectionString,
-                    new AllTablesDeleter.TableInfoDto[0]);
+                    tablesToSkip);
             }
         }
 

@@ -24,13 +24,37 @@ namespace Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio
 INSERT INTO [Portfolio].[Portfolio]
            ([Number]
            ,[Name]
+           ,[CountryId]
            ,[InceptionDate]
            ,[CloseDate])
      VALUES
            (@Number
            ,@Name
+           ,@CountryId
            ,@InceptionDate
            ,@CloseDate)
+";
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    connection.Execute(sql, dto);
+                },
+                sql,
+                dto);
+        }
+
+        public void Update(PortfolioDto dto)
+        {
+            const string sql = @"
+UPDATE [Portfolio].[Portfolio]
+        SET
+           [Name] = @Name
+           ,[CountryId] = @CountryId
+           ,[InceptionDate] = @InceptionDate
+           ,[CloseDate] = @CloseDate
+        Where
+           [Number] = @Number
 ";
 
             ConnectionExecuteWithLog(
@@ -47,6 +71,7 @@ INSERT INTO [Portfolio].[Portfolio]
             const string sql = @"
 SELECT
         [Number]
+        ,[CountryId]
         ,[Name]
         ,[InceptionDate]
         ,[CloseDate]

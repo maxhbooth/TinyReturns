@@ -24,6 +24,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
             private readonly PortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
             private readonly PerformanceReportExcelReportViewSpy _performanceReportExcelReportViewSpy;
             private readonly PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
+            private readonly CountriesDataTableGateway _countriesDataTableGateway;
             private readonly BenchmarkDataTableGateway _benchmarkDataTableGateway;
             private readonly BenchmarkToReturnSeriesDataTableGateway _benchmarkToReturnSeriesDataTableGateway;
 
@@ -47,6 +48,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                     systemLogForIntegrationTests);
 
                 _portfolioToReturnSeriesDataTableGateway = new PortfolioToReturnSeriesDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
+                _countriesDataTableGateway = new CountriesDataTableGateway(
                     databaseSettings,
                     systemLogForIntegrationTests);
 
@@ -94,17 +99,21 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
             public void DatabaseDataDeleter(
                 Action act)
             {
+                var tablesToSkip = new[]
+                {
+                    new AllTablesDeleter.TableInfoDto("Portfolio", "Countries")
+                };
+
                 var databaseSettings = new DatabaseSettings();
 
                 _allTablesDeleter.DeleteAllDataFromTables(
                     databaseSettings.TinyReturnsDatabaseConnectionString,
-                    new AllTablesDeleter.TableInfoDto[0]);
+                    tablesToSkip);
 
                 act();
 
                 _allTablesDeleter.DeleteAllDataFromTables(
-                    databaseSettings.TinyReturnsDatabaseConnectionString,
-                    new AllTablesDeleter.TableInfoDto[0]);
+                    databaseSettings.TinyReturnsDatabaseConnectionString, tablesToSkip);
             }
 
             public PerformanceReportExcelReportPresenter CreatePresenter()
@@ -122,6 +131,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                     _portfolioDataTableGateway,
                     _portfolioToReturnSeriesDataTableGateway,
                     _portfolioToBenchmarkDataTableGateway,
+                    _countriesDataTableGateway,
                     returnSeriesRepository,
                     benchmarkWithPerformanceRepository);
 

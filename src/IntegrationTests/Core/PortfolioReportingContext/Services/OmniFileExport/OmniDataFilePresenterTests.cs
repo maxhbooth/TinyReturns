@@ -20,6 +20,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
             private readonly ReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
             private readonly MonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
             private readonly PortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
+            private readonly CountriesDataTableGateway _countriesDataTableGateway;
             private readonly FlatFileIoSpy _flatFileIoSpy;
             private readonly PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
             private readonly BenchmarkDataTableGateway _benchmarkDataTableGateway;
@@ -56,6 +57,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                     databaseSettings,
                     systemLogForIntegrationTests);
 
+                _countriesDataTableGateway = new CountriesDataTableGateway(
+                    databaseSettings,
+                    systemLogForIntegrationTests);
+
                 _benchmarkToReturnSeriesDataTableGateway = new BenchmarkToReturnSeriesDataTableGateway(
                     databaseSettings,
                     systemLogForIntegrationTests);
@@ -84,6 +89,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 _monthlyReturnDataTableGateway.Insert(dtos);
             }
 
+//            public void InsertCountryDto(
+//                CountryDto dto)
+//            {
+//                _countriesDataTableGateway.Insert(dto);
+//            }
+
             public void InsertPortfolioToReturnSeriesDto(PortfolioToReturnSeriesDto dto)
             {
                 _portfolioToReturnSeriesDataTableGateway.Insert(new[] { dto });
@@ -92,17 +103,21 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
             public void DatabaseDataDeleter(
                 Action act)
             {
+                var tablesToSkip = new[]
+                {
+                    new AllTablesDeleter.TableInfoDto("Portfolio", "Countries")
+                };
+
                 var databaseSettings = new DatabaseSettings();
 
                 _allTablesDeleter.DeleteAllDataFromTables(
                     databaseSettings.TinyReturnsDatabaseConnectionString,
-                    new AllTablesDeleter.TableInfoDto[0]);
+                    tablesToSkip);
 
                 act();
 
                 _allTablesDeleter.DeleteAllDataFromTables(
-                    databaseSettings.TinyReturnsDatabaseConnectionString,
-                    new AllTablesDeleter.TableInfoDto[0]);
+                    databaseSettings.TinyReturnsDatabaseConnectionString, tablesToSkip);
             }
 
 
@@ -121,6 +136,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                     _portfolioDataTableGateway,
                     _portfolioToReturnSeriesDataTableGateway,
                     _portfolioToBenchmarkDataTableGateway,
+                    _countriesDataTableGateway,
                     returnSeriesRepository,
                     benchmarkWithPerformanceRepository);
 

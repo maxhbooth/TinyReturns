@@ -6,6 +6,7 @@ namespace Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabas
     {
         public int Number { get; set; }
         public string Name { get; set; }
+        public int CountryId { get; set; }
         public DateTime InceptionDate { get; set; }
         public DateTime? CloseDate { get; set; }
     }
