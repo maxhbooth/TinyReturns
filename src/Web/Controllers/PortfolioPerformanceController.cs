@@ -25,8 +25,10 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public PortfolioPerformanceController()
         {
             _publicWebReportFacade = MasterFactory.GetPublicWebReportFacade();
+            _publicwebchartfacade = MasterFactory.GetWebChartFacade();
             _countriesDataTableGateway = MasterFactory.CountriesDataTableGateway;
             _portfolioDataTableGateWay = MasterFactory.PortfolioDataTableGateway;
+
             _clock = new Clock();
         }
 
@@ -47,7 +49,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public ActionResult GrowthOfWealthColumn(String portfolioId)
         {
 
-            var context = _publicwebchartfacade.GetNetChartData().First(x => x.Number == int.Parse(portfolioId));
+            var context = _publicwebchartfacade.GetNetChartData().First(x => x.Number == int.Parse(portfolioId) && x.GrowthOfWealth != null);
 
             ArrayList xValue = new ArrayList();
             ArrayList yValue = new ArrayList();
@@ -68,7 +70,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public ActionResult GrowthOfWealthSpline(String portfolioId)
         {
 
-            var context = _publicwebchartfacade.GetNetChartData().First(x => x.Number == int.Parse(portfolioId));
+            var context = _publicwebchartfacade.GetNetChartData().First(x => x.Number == int.Parse(portfolioId) && x.GrowthOfWealth != null);
 
             ArrayList xValue = new ArrayList();
             ArrayList yValue = new ArrayList();
@@ -89,7 +91,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
         public ActionResult GrowthOfWealthRenko(String portfolioId)
         {
 
-            var context = _publicwebchartfacade.GetNetChartData().First(x => x.Number == int.Parse(portfolioId));
+            var context = _publicwebchartfacade.GetNetChartData().First(x => x.Number == int.Parse(portfolioId) && x.GrowthOfWealth != null);
 
             ArrayList xValue = new ArrayList();
             ArrayList yValue = new ArrayList();

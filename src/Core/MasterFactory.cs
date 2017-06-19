@@ -66,6 +66,15 @@ namespace Dimensional.TinyReturns.Core
                 new Clock());
         }
 
+        public static PublicWebChartFacade GetWebChartFacade()
+        {
+            var portfolioWithPerformanceRepository = CreatePortfolioWithPerformanceRepository();
+
+            return new PublicWebChartFacade(
+                portfolioWithPerformanceRepository,
+                new Clock());
+        }
+
         private static PortfolioWithPerformanceRepository CreatePortfolioWithPerformanceRepository()
         {
             var returnSeriesRepository = new ReturnSeriesRepository(
@@ -85,6 +94,5 @@ namespace Dimensional.TinyReturns.Core
                 returnSeriesRepository,
                 benchmarkWithPerformanceRepository);
         }
-      
     }
 }
