@@ -42,6 +42,26 @@ INSERT INTO [Portfolio].[Portfolio]
                 dto);
         }
 
+        public void Update(PortfolioDto dto)
+        {
+            const string sql = @"
+Update [Portfolio].[Portfolio]
+       set       
+           [Name] = @Name
+           [InceptionDate] = @InceptionDate
+           [CloseDate] =  @CloseDate
+     where [Number] = @Number
+";
+
+            ConnectionExecuteWithLog(
+                connection =>
+                {
+                    connection.Execute(sql, dto);
+                },
+                sql,
+                dto);
+        }
+
         public PortfolioDto[] GetAll()
         {
             const string sql = @"

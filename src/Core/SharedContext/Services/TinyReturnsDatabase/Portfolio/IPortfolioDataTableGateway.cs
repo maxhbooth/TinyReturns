@@ -3,6 +3,7 @@
     public interface IPortfolioDataTableGateway
     {
         void Insert(PortfolioDto dto);
+        void Update(PortfolioDto dto);
 
         PortfolioDto[] GetAll();
     }

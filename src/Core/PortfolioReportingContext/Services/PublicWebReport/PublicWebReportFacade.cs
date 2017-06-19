@@ -4,6 +4,7 @@ using System.Security.AccessControl;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Portfolio;
 
 namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport
 {
@@ -72,14 +73,18 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             var quarterToDateCalculationRequest = CalculateReturnRequestFactory.QuarterToDate(previousMonthYear);
             var yearToDateCalculationRequest = CalculateReturnRequestFactory.YearToDate(previousMonthYear);
             var firstFullMonthCalculationRequest = CalculateReturnRequestFactory.FirstFullMonth(previousMonthYear, fullMonthsSinceInception);
-            PortfolioModel portfolioModel = null;
 
+            PortfolioModel portfolioModel = null;
+            var inceptionDate = portfolioWithPerformance.InceptionDate;
+            var closeDate = portfolioWithPerformance.CloseDate;
             if (netReturn)
             {
-                portfolioModel = new PortfolioModel()
+                portfolioModel = new PortfolioModel(inceptionDate, closeDate)
                 {
+
                     Number = portfolioWithPerformance.Number,
                     Name = portfolioWithPerformance.Name,
+                    
                     OneMonth = PercentHelper.AsPercent(portfolioWithPerformance.GetNetMonthlyReturn(previousMonthYear)),
                     ThreeMonth =
                         PercentHelper.AsPercent(
@@ -99,10 +104,11 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             }
             else if(!netReturn)
             {
-                portfolioModel = new PortfolioModel()
+                portfolioModel = new PortfolioModel(inceptionDate, closeDate)
                 {
                     Number = portfolioWithPerformance.Number,
                     Name = portfolioWithPerformance.Name,
+                    
                     OneMonth = PercentHelper.AsPercent(portfolioWithPerformance.GetGrossMonthlyReturn(previousMonthYear)),
                     ThreeMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateGrossReturnAsDecimal(threeMonthCalculationRequest)),
                     SixMonth = PercentHelper.AsPercent(portfolioWithPerformance.CalculateGrossReturnAsDecimal(sixMonthCalculationRequest)),
@@ -133,6 +139,9 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
 
             portfolioModel.Benchmarks = benchmarkModels.ToArray();
 
+
+
+
             return portfolioModel;
         }
        
@@ -142,6 +151,20 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             {
                 Benchmarks = new BenchmarkModel[0];
             }
+
+            public PortfolioModel(DateTime inceptionDate, DateTime? closeDate)
+            {
+                InceptionDate = inceptionDate;
+                CloseDate = closeDate;
+                Benchmarks = new BenchmarkModel[0];
+            }
+
+
+            private int ReturnSeriesId { get; set; }
+            private char SeriesTypeCode { get; set; }
+
+            private DateTime InceptionDate { get; set; }
+            private DateTime? CloseDate {  get; set; }
 
             public int Number { get; set; }
             public string Name { get; set; }
@@ -156,10 +179,23 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.Public
             public decimal? Mean { get; set; }
 
             public BenchmarkModel[] Benchmarks { get; set; }
+
+            public static implicit operator PortfolioDto(PortfolioModel portfolioModel)
+            {
+                return new PortfolioDto()
+                {
+                    Name= portfolioModel.Name,
+                    Number= portfolioModel.Number,
+                    InceptionDate = portfolioModel.InceptionDate,
+                    CloseDate = portfolioModel.CloseDate
+                };
+            }
         }
 
         public class BenchmarkModel
         {
+            private int BenchmarkNumber { get; set; }
+
             public string Name { get; set; }
             public decimal? OneMonth { get; set; }
             public decimal? ThreeMonth { get; set; }

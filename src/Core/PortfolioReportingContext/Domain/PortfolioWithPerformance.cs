@@ -17,20 +17,27 @@ namespace Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain
             ReturnSeries netReturnSeries,
             ReturnSeries grossReturnSeries,
             BenchmarkWithPerformance[] benchmarks, 
-            System.DateTime inceptionDate)
+            System.DateTime inceptionDate,
+            DateTime? closeDate
+            )
         {
             _benchmarkWithPerformances = benchmarks;
             _grossReturnSeries = grossReturnSeries;
             _netReturnSeries = netReturnSeries;
             Name = name;
             Number = number;
+            CloseDate = closeDate;
             InceptionDate = inceptionDate;
             _inceptionMonth = new MonthYear(InceptionDate);
         }
 
         public int Number { get; private set; }
         public string Name { get; private set; }
+
         public System.DateTime InceptionDate { get; private set; }
+        public System.DateTime? CloseDate { get; private set; }
+        public int ReturnSeriesId { get; private set; }
+        public char SeriesTypeCode { get; private set; }
 
         public decimal? GetNetMonthlyReturn(
             MonthYear monthYear)

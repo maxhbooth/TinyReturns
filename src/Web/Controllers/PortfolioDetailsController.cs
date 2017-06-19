@@ -8,6 +8,8 @@ using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Newtonsoft.Json;
 using System.Data;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Portfolio;
+using Dimensional.TinyReturns.Database.TinyReturnsDatabase.Portfolio;
 using WebGrease.Css.Extensions;
 
 namespace Dimensional.TinyReturns.Web.Controllers
@@ -15,15 +17,18 @@ namespace Dimensional.TinyReturns.Web.Controllers
     public class PortfolioDetailsController : ApiController
     {
         private readonly PublicWebReportFacade _publicWebReportFacade;
+        private readonly IPortfolioDataTableGateway _portfolioDataTableGateway;
 
         public PortfolioDetailsController()
         {
             _publicWebReportFacade =  MasterFactory.GetPublicWebReportFacade();
+            _portfolioDataTableGateway = MasterFactory.PortfolioDataTableGateway;
         }
 
-        public PortfolioDetailsController(PublicWebReportFacade publicWebReportFacade)
+        public PortfolioDetailsController(PublicWebReportFacade publicWebReportFacade, PortfolioDataTableGateway portfolioDataTableGateway)
         {
             _publicWebReportFacade = publicWebReportFacade;
+            _portfolioDataTableGateway = portfolioDataTableGateway;
         }
 
         public object Get(string attribute=null)
@@ -112,15 +117,15 @@ namespace Dimensional.TinyReturns.Web.Controllers
         [HttpPost]
         public void Post([FromBody]string value)
         {
+            _portfolioDataTableGateway.Insert(_portfolioDataTableGateway);
         }
 
         [HttpPatch]
         [HttpPut]
         public void Put([FromBody]PublicWebReportFacade.PortfolioModel portfolio)
         {
-
+            portfolio.Update(_portfolioDataTableGateway);
         }
-
     }
 
     public class FirstFullMonthModel
@@ -176,32 +181,16 @@ namespace Dimensional.TinyReturns.Web.Controllers
             };
         }
     }
+    public static class DatabaseUpdater{
 
-    public static class ModelHelper
-    {
-
-        public static OneMonthModel CastAsOneMonthModel(this PublicWebReportFacade.PortfolioModel portfolio)
+        public static void Update(this PublicWebReportFacade.PortfolioModel portfolio, IPortfolioDataTableGateway portfolioDataTableGateway)
         {
-            if (portfolio == null)
-                return null;
-
-            return new OneMonthModel()
-            {
-                id = portfolio.Number,
-                OneMonth = portfolio.OneMonth
-            };
+               portfolioDataTableGateway.Insert((PortfolioDto) portfolio);
         }
 
-        public static FirstFullMonthModel CastAsFirstFullMonthModel(this PublicWebReportFacade.PortfolioModel portfolio)
+        public static void Insert(this PublicWebReportFacade.PortfolioModel portfolio, IPortfolioDataTableGateway portfolioDataTableGateway)
         {
-            if (portfolio == null)
-                return null;
-
-            return new FirstFullMonthModel()
-            {
-                id = portfolio.Number,
-                FirstFullMonth = portfolio.FirstFullMonth
-            };
+            portfolioDataTableGateway.Update((PortfolioDto)portfolio);
         }
     }
 }
