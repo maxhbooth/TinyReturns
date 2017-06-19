@@ -19,7 +19,7 @@ namespace Dimensional.TinyReturns.Web
             config.Routes.MapHttpRoute(
                 name: "PortfolioPerformanceApi",
                 routeTemplate: "portfolioDetails/{attribute}/{id}",
-                defaults: new { controller="PortfolioDetails", attribute="", id = RouteParameter.Optional }
+                defaults: new { controller="PortfolioDetails", attribute= RouteParameter.Optional, id = RouteParameter.Optional }
             );
 
             config.Routes.MapHttpRoute(

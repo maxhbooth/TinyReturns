@@ -158,14 +158,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\FirstFullMonthController.cs" />
-    <Compile Include="Controllers\GrowthOfWealthController.cs" />
-    <Compile Include="Controllers\OneMonthController.cs" />
     <Compile Include="Controllers\PortfolioPerformanceController.cs" />
     <Compile Include="Controllers\PortfolioDetailsController.cs" />
-    <Compile Include="Controllers\SixMonthController.cs" />
-    <Compile Include="Controllers\ThreeYearController.cs" />
-    <Compile Include="Controllers\UpdatePortfolioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
