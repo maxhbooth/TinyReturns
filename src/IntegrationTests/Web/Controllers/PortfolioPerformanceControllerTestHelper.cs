@@ -21,6 +21,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         private readonly ReturnSeriesDataTableGateway _returnSeriesDataTableGateway;
         private readonly MonthlyReturnDataTableGateway _monthlyReturnDataTableGateway;
         private readonly PortfolioToReturnSeriesDataTableGateway _portfolioToReturnSeriesDataTableGateway;
+        private readonly CountriesDataTableGateway _countriesDataTableGateway;
         private readonly BenchmarkDataTableGateway _benchmarkDataTableGateway;
         private readonly BenchmarkToReturnSeriesDataTableGateway _benchmarkToReturnSeriesDataTableGateway;
         private readonly PortfolioToBenchmarkDataTableGateway _portfolioToBenchmarkDataTableGateway;
@@ -54,6 +55,10 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 databaseSettings,
                 systemLogForIntegrationTests);
 
+            _countriesDataTableGateway = new CountriesDataTableGateway(
+                databaseSettings,
+                systemLogForIntegrationTests);
+
             _benchmarkToReturnSeriesDataTableGateway = new BenchmarkToReturnSeriesDataTableGateway(
                 databaseSettings,
                 systemLogForIntegrationTests);
@@ -80,6 +85,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 _portfolioDataTableGateway,
                 _portfolioToReturnSeriesDataTableGateway,
                 _portfolioToBenchmarkDataTableGateway,
+                _countriesDataTableGateway,
                 returnSeriesRepository,
                 benchmarkWithPerformanceRepository);
 
@@ -89,7 +95,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             return new PortfolioPerformanceController(
                 publicWebReportFacade,
-                new ClockStub(CurrentDate));
+                new ClockStub(CurrentDate),
+                _countriesDataTableGateway,
+                _portfolioDataTableGateway);
         }
 
         public void InsertPortfolioDto(
@@ -97,6 +105,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         {
             _portfolioDataTableGateway.Insert(dto);
         }
+
+//        public void InsertCountryDto(
+//            CountryDto dto)
+//        {
+//            _countriesDataTableGateway.Insert(dto);
+//        }
 
         public void InsertBenchmarkDto(
             BenchmarkDto dto)
@@ -138,19 +152,24 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         public void DatabaseDataDeleter(
             Action act)
         {
+            var tablesToSkip = new[]
+            {
+                new AllTablesDeleter.TableInfoDto("Portfolio", "Countries")
+            };
+
             var databaseSettings = new DatabaseSettings();
 
             _allTablesDeleter.DeleteAllDataFromTables(
                 databaseSettings.TinyReturnsDatabaseConnectionString,
-                new AllTablesDeleter.TableInfoDto[0]);
+                tablesToSkip);
 
             act();
 
             _allTablesDeleter.DeleteAllDataFromTables(
-                databaseSettings.TinyReturnsDatabaseConnectionString,
-                new AllTablesDeleter.TableInfoDto[0]);
+                databaseSettings.TinyReturnsDatabaseConnectionString, tablesToSkip);
         }
 
+        
         public PublicWebReportFacade.PortfolioModel[] GetPortfoliosFromActionResult(
             ActionResult actionResult)
         {
@@ -202,17 +221,17 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         public void AssertSelectItemDefaultsNet(
             PortfolioPerformanceIndexModel resultModel)
         {
-            resultModel.Selected.Should().Be("0");
+            resultModel.SelectedTypeOfReturn.Should().Be("0");
         }
 
         internal void AssertModelIsNet(PortfolioPerformanceIndexModel model)
         {
-            model.Selected.Should().Be("0");
+            model.SelectedTypeOfReturn.Should().Be("0");
         }
 
         internal void AssertModelIsGross(PortfolioPerformanceIndexModel model)
         {
-            model.Selected.Should().Be("1");
+            model.SelectedTypeOfReturn.Should().Be("1");
         }
     }
 

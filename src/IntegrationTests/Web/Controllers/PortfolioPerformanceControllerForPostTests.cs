@@ -56,7 +56,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var requestModel = new PortfolioPerformanceIndexModel()
                 {
                     MonthYear = previousMonthYear.Stringify(),
-                    Selected = "0"
+                    SelectedTypeOfReturn = "0"
                 };
                 int returnId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
@@ -105,14 +105,15 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 {
                     Number = 100,
                     Name = "Portfolio 100",
-                    InceptionDate = new DateTime(2010, 1, 1)
+                    InceptionDate = new DateTime(2010, 1, 1),
+
                 });
 
                 // Act
                 var requestModel = new PortfolioPerformanceIndexModel()
                 {
                     MonthYear = previousMonthYear.Stringify(),
-                    Selected = "1"
+                    SelectedTypeOfReturn = "1"
                 };
 
                 int returnId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()

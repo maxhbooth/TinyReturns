@@ -29,10 +29,13 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     // Assert
                     var viewResultPortfolio = testHelper.GetPortfoliosFromActionResult(actionResult);
                     var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
+                    var countryArray = viewResultModel.Countries.ToArray();
 
                     viewResultModel.MonthYears.Count().Should().Be(37);
                     viewResultModel.MonthYear.Should().NotBeEmpty();
                     viewResultPortfolio.Length.Should().Be(0);
+
+                    countryArray.Length.Should().Be(5);
                 });
         }
 
@@ -44,6 +47,7 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
             testHelper.DatabaseDataDeleter(() =>
             {
+
                 testHelper.InsertPortfolioDto(new PortfolioDto()
                 {
                     Number = 100,
@@ -95,7 +99,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 {
                     Number = portfolioNumber,
                     Name = portfolioName,
-                    InceptionDate = new DateTime(2010, 1, 1)
+                    InceptionDate = new DateTime(2010, 1, 1),
+                    CountryId = 0
                 });
 
                 var returnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
@@ -139,9 +144,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultPortfolio[0].Name.Should().Be(portfolioName);
                 viewResultPortfolio[0].Benchmarks.Should().BeEmpty();
 
-                viewResultPortfolio[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00001m);
+                viewResultPortfolio[0].OneMonth.Should().BeApproximately(0.02m.AsPercent(), 0.00001m);
                 viewResultPortfolio[0].ThreeMonth.Should().NotHaveValue();
                 viewResultPortfolio[0].YearToDate.Should().NotHaveValue();
+
+                viewResultPortfolio[0].Country.Should().Be("None Selected");
+                
             });
         }
 
@@ -173,14 +181,15 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 {
                     Number = portfolioNumber,
                     Name = portfolioName,
-                    InceptionDate = new DateTime(2010, 1, 1)
+                    InceptionDate = new DateTime(2010, 1, 1),
+                    CountryId = 0
                 });
 
                 var returnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
                     Name = "Return Series for Portfolio 100"
                 });
-
+          
                 testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
                 {
                     PortfolioNumber = portfolioNumber,
@@ -258,9 +267,9 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultPortfolio[0].Name.Should().Be(portfolioName);
                 viewResultPortfolio[0].Benchmarks.Should().BeEmpty();
 
-                viewResultPortfolio[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00000001m);
-                viewResultPortfolio[0].ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(0.039584m), 0.00000001m);
-                viewResultPortfolio[0].YearToDate.Should().BeApproximately(PercentHelper.AsPercent(0.0394800416m), 0.00000001m);
+                viewResultPortfolio[0].OneMonth.Should().BeApproximately(0.02m.AsPercent(), 0.00000001m);
+                viewResultPortfolio[0].ThreeMonth.Should().BeApproximately(0.039584m.AsPercent(), 0.00000001m);
+                viewResultPortfolio[0].YearToDate.Should().BeApproximately(0.0394800416m.AsPercent(), 0.00000001m);
             });
         }
 
@@ -297,6 +306,8 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                     Name = portfolioName,
                     InceptionDate = new DateTime(2010, 1, 1)
                 });
+
+
 
                 var returnSeriesId = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
                 {
@@ -409,12 +420,13 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 var expectedYearToDateResult = (1.02m) * (.98m) * (1.04m) * (1.01m)
                                                 * (.99m) * (1.03m) * (1.02m) * (1.01m)- 1;
 
-                viewResultPortfolio[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(0.02m), 0.00000001m);
-                viewResultPortfolio[0].ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedThreeMonthResult), 0.00000001m);
+                viewResultPortfolio[0].OneMonth.Should().BeApproximately(0.02m.AsPercent(), 0.00000001m);
+                viewResultPortfolio[0].ThreeMonth.Should().BeApproximately(expectedThreeMonthResult.AsPercent(), 0.00000001m);
                 viewResultPortfolio[0].SixMonth.Should().BeApproximately(
-                    PercentHelper.AsPercent(expectedSixMonthResult), 0.00000001m);
-		        viewResultPortfolio[0].QuarterToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedQuarterToDateResult), 0.00000001m);
-                viewResultPortfolio[0].YearToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedYearToDateResult), 0.00000001m);
+                    expectedSixMonthResult.AsPercent(), 0.00000001m);
+		        viewResultPortfolio[0].QuarterToDate.Should().BeApproximately(expectedQuarterToDateResult.AsPercent(), 0.00000001m);
+                viewResultPortfolio[0].YearToDate.Should().BeApproximately(expectedYearToDateResult.AsPercent(), 0.00000001m);
+
             });
         }
 
@@ -533,11 +545,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 viewResultPortfolio[0].Number.Should().Be(portfolioNumber);
                 viewResultPortfolio[0].Name.Should().Be(portfolioName);
 
-                viewResultPortfolio[0].OneMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedViewOneMonth), 0.00000001m);
-                viewResultPortfolio[0].ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedViewThreeMonth), 0.00000001m);
-                viewResultPortfolio[0].SixMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedViewSixMonth), 0.00000001m);
-                viewResultPortfolio[0].QuarterToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedViewQuarterToDate), 0.00000001m);
-                viewResultPortfolio[0].YearToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedViewYearToDate), 0.00000001m);
+                viewResultPortfolio[0].OneMonth.Should().BeApproximately(expectedViewOneMonth.AsPercent(), 0.00000001m);
+                viewResultPortfolio[0].ThreeMonth.Should().BeApproximately(expectedViewThreeMonth.AsPercent(), 0.00000001m);
+                viewResultPortfolio[0].SixMonth.Should().BeApproximately(expectedViewSixMonth.AsPercent(), 0.00000001m);
+                viewResultPortfolio[0].QuarterToDate.Should().BeApproximately(expectedViewQuarterToDate.AsPercent(), 0.00000001m);
+                viewResultPortfolio[0].YearToDate.Should().BeApproximately(expectedViewYearToDate.AsPercent(), 0.00000001m);
 
                 viewResultPortfolio[0].Benchmarks.Should().HaveCount(1);
 
@@ -552,14 +564,108 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                                               * (1 - 0.2802m)  - 1;
 
                 benchmarkModel.Name.Should().Be(benchmarkName);
-                benchmarkModel.OneMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchOneMonth), 0.00000001m);
-                benchmarkModel.ThreeMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchThreeMonth), 0.00000001m);
-                benchmarkModel.SixMonth.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchSixMonth), 0.00000001m);
-                benchmarkModel.QuarterToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchQuarterToDate), 0.00000001m);
-                benchmarkModel.YearToDate.Should().BeApproximately(PercentHelper.AsPercent(expectedBenchYearToDate), 0.00000001m);
+                benchmarkModel.OneMonth.Should().BeApproximately(expectedBenchOneMonth.AsPercent(), 0.00000001m);
+                benchmarkModel.ThreeMonth.Should().BeApproximately(expectedBenchThreeMonth.AsPercent(), 0.00000001m);
+                benchmarkModel.SixMonth.Should().BeApproximately(expectedBenchSixMonth.AsPercent(), 0.00000001m);
+                benchmarkModel.QuarterToDate.Should().BeApproximately(expectedBenchQuarterToDate.AsPercent(), 0.00000001m);
+                benchmarkModel.YearToDate.Should().BeApproximately(expectedBenchYearToDate.AsPercent(), 0.00000001m);
             });
         }
 
+        [Fact]
+        public void ShouldBeAbleToGetCountryForMultiplePortfolios()
+        {
+            var testHelper = new TestHelper();
 
+            testHelper.DatabaseDataDeleter(() =>
+            {
+                var portfolioNumber1 = 100;
+                var portfolioName1 = "Portfolio 100";
+
+                testHelper.InsertPortfolioDto(new PortfolioDto()
+                {
+                    Number = portfolioNumber1,
+                    Name = portfolioName1,
+                    InceptionDate = new DateTime(2016, 1, 1),
+                });
+
+                var returnSeriesIdNet = testHelper.InsertReturnSeriesDto(new ReturnSeriesDto()
+                {
+                    Name = "Net Return Series for Portfolio 100"
+                });
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber1,
+                    ReturnSeriesId = returnSeriesIdNet,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+
+
+                var portfolioNumber2 = 101;
+                var portfolioName2 = "Portfolio 101";
+
+                testHelper.InsertPortfolioDto(new PortfolioDto()
+                {
+                    Number = portfolioNumber2,
+                    Name = portfolioName2,
+                    InceptionDate = new DateTime(2016, 1, 1),
+                    CountryId= 1
+                });
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber2,
+                    ReturnSeriesId = returnSeriesIdNet,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+
+                var portfolioNumber3 = 102;
+                var portfolioName3 = "Portfolio 102";
+
+                testHelper.InsertPortfolioDto(new PortfolioDto()
+                {
+                    Number = portfolioNumber3,
+                    Name = portfolioName3,
+                    InceptionDate = new DateTime(2016, 1, 1),
+                    CountryId = 2
+                });
+
+                testHelper.InsertPortfolioToReturnSeriesDto(new PortfolioToReturnSeriesDto()
+                {
+                    PortfolioNumber = portfolioNumber3,
+                    ReturnSeriesId = returnSeriesIdNet,
+                    SeriesTypeCode = PortfolioToReturnSeriesDto.NetSeriesTypeCode
+                });
+           
+
+                var controller = testHelper.CreateController();
+
+                // Act
+                var actionResult = controller.Index();
+
+                // Assert
+                var viewResultModel = testHelper.GetModelFromActionResult(actionResult);
+                var countryArray = viewResultModel.Countries.ToArray();
+
+                countryArray.Length.Should().Be(5);
+
+                countryArray[0].Text.Should().Be("Show All");
+                countryArray[0].Value.Should().Be("Show All");
+
+
+                countryArray[1].Text.Should().Be("None Selected");
+                countryArray[1].Value.Should().Be("None Selected");
+                viewResultModel.Portfolios[0].Country.Should().Be("None Selected");
+
+                countryArray[2].Text.Should().Be("Australia");
+                countryArray[2].Value.Should().Be("Australia");
+                viewResultModel.Portfolios[1].Country.Should().Be("Australia");
+
+                countryArray[3].Text.Should().Be("United Kingdom");
+                countryArray[3].Value.Should().Be("United Kingdom");
+                viewResultModel.Portfolios[2].Country.Should().Be("United Kingdom");
+            });
+        }
     }
 }

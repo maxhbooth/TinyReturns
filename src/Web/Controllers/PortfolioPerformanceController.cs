@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using Dimensional.TinyReturns.Core;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Services.PublicWebReport;
 using Dimensional.TinyReturns.Core.SharedContext.Services;
 using Dimensional.TinyReturns.Core.SharedContext.Services.DateExtend;
+using Dimensional.TinyReturns.Core.SharedContext.Services.TinyReturnsDatabase.Portfolio;
 using Dimensional.TinyReturns.Web.Models;
 
 namespace Dimensional.TinyReturns.Web.Controllers
@@ -13,92 +15,92 @@ namespace Dimensional.TinyReturns.Web.Controllers
     {
         private readonly PublicWebReportFacade _publicWebReportFacade;
         private readonly IClock _clock;
+        private readonly ICountriesDataTableGateway _countriesDataTableGateway;
+        private IPortfolioDataTableGateway _portfolioDataTableGateWay;
 
         public PortfolioPerformanceController()
         {
             _publicWebReportFacade = MasterFactory.GetPublicWebReportFacade();
+            _countriesDataTableGateway = MasterFactory.CountriesDataTableGateway;
+            _portfolioDataTableGateWay = MasterFactory.PortfolioDataTableGateway;
             _clock = new Clock();
         }
 
         // Used for tests
         public PortfolioPerformanceController(
-            PublicWebReportFacade publicWebReportFacade, IClock clock)
+            PublicWebReportFacade publicWebReportFacade, IClock clock,
+            ICountriesDataTableGateway countriesDataTableGateway, IPortfolioDataTableGateway portfolioDataTableGateway)
         {
             _publicWebReportFacade = publicWebReportFacade;
             _clock = clock;
+            _countriesDataTableGateway = countriesDataTableGateway;
+            _portfolioDataTableGateWay = portfolioDataTableGateway;
         }
-
 
         [HttpGet]
         public ActionResult Index()
         {
             var previousMonth = new MonthYear(_clock.GetCurrentDate()).AddMonths(-1);
 
-            var selectListItems = CreateLetterSelectItems();
+            var selectListItems = WebHelper.CreateLetterSelectItems();
 
             var model = new PortfolioPerformanceIndexModel()
             {
                 Portfolios = _publicWebReportFacade.GetPortfolioPerformance(),
                 MonthYears = WebHelper.GetDesiredMonths(previousMonth),
                 MonthYear = previousMonth.Stringify(),
-                Selected = "0",
-                NetGrossList = selectListItems
+                SelectedTypeOfReturn = "0",
+                NetGrossList = selectListItems,
+                Countries = new WebDatabaseHelper().GetAllCountries(_countriesDataTableGateway),
+
             };
 
             return View(model);
-        }
-
-        private SelectListItem[] CreateLetterSelectItems()
-        {
-            var selectListItems = new SelectListItem[2];
-
-            selectListItems[0] = new SelectListItem()
-            {
-                Value = "0",
-                Text = "Net"
-            };
-            selectListItems[1] = new SelectListItem()
-            {
-                Value = "1",
-                Text = "Gross"
-            };
-
-            return selectListItems;
         }
 
         [HttpPost]
         public ActionResult Index(
             PortfolioPerformanceIndexModel model)
         {
+
+            var previousMonth = new MonthYear(_clock.GetCurrentDate()).AddMonths(-1);
             var monthYearArray = model.MonthYear.Split('/');
             var monthYear = new MonthYear(int.Parse(monthYearArray[1]), int.Parse(monthYearArray[0]));
 
-            var selectListItems = CreateLetterSelectItems();
-            string select;
+            var selectListItems = WebHelper.CreateLetterSelectItems();
 
-            PublicWebReportFacade.PortfolioModel[] portfolioPerforance;
-            if (model.Selected == "0")
+            PublicWebReportFacade.PortfolioModel[] portfolioPerformance;
+            if (model.SelectedTypeOfReturn == "0")
             {
-                portfolioPerforance = _publicWebReportFacade.GetPortfolioPerformance(monthYear);
-                select = "0";
+                portfolioPerformance = _publicWebReportFacade.GetPortfolioPerformance(monthYear);
             }
-            else if (model.Selected == "1")
+            else if (model.SelectedTypeOfReturn == "1")
             {
-                portfolioPerforance = _publicWebReportFacade.GetGrossPortfolioPerforance(monthYear);
-                select = "1";
+                portfolioPerformance = _publicWebReportFacade.GetGrossPortfolioPerformance(monthYear);
             }
             else
             {
                 throw new InvalidOperationException();
             }
 
+            if (model.SelectedCountry == null || model.SelectedCountry == "Show All")
+            {
+                //do nothing
+            }
+            else
+            {
+                portfolioPerformance = portfolioPerformance.Where(x => x.Country == model.SelectedCountry).ToArray();
+            }
+
             var resultModel = new PortfolioPerformanceIndexModel()
             {
-                Portfolios = portfolioPerforance,
+                Portfolios = portfolioPerformance,
                 NetGrossList = selectListItems,
-                Selected = select,
-                MonthYears = WebHelper.GetDesiredMonths(monthYear),
-                MonthYear = monthYear.Stringify()
+                SelectedTypeOfReturn = model.SelectedTypeOfReturn,
+                MonthYears = WebHelper.GetDesiredMonths(previousMonth),
+                MonthYear = monthYear.Stringify(),
+                Countries = new WebDatabaseHelper().GetAllCountries(_countriesDataTableGateway),
+                SelectedCountry = model.SelectedCountry
             };
 
             return View(resultModel);
@@ -118,6 +120,93 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
                 return monthYears;
             }
+
+            public static String[] GetPortolioCountries(PublicWebReportFacade.PortfolioModel[] portfolios)
+            {
+                var countries = portfolios.Select(x => x.Country).ToArray();
+
+                return countries;
+            }
+            public static SelectListItem[] CreateLetterSelectItems()
+            {
+                var selectListItems = new SelectListItem[2];
+
+                selectListItems[0] = new SelectListItem()
+                {
+                    Value = "0",
+                    Text = "Net"
+                };
+                selectListItems[1] = new SelectListItem()
+                {
+                    Value = "1",
+                    Text = "Gross"
+                };
+
+                return selectListItems;
+            }
         }
+
+        public class WebDatabaseHelper
+        {
+            public SelectListItem[] GetAllCountries(ICountriesDataTableGateway countriesDataTableGateway)
+            {
+                var countries = new List<SelectListItem>();
+
+                countries.Add(new SelectListItem()
+                {
+                    Value = "Show All",
+                    Text = "Show All"
+                });
+
+                foreach (var country in countriesDataTableGateway.GetAll())
+                {
+                    countries.Add(new SelectListItem()
+                    {
+                        Value= country.CountryName,
+                        Text = country.CountryName
+
+                    }); 
+                }
+                return countries.ToArray();
+            }
+
+            public void UpdatePortfolios(IPortfolioDataTableGateway portfolioDataTableGateway,
+                                         ICountriesDataTableGateway countriesDataTableGateway,
+                                         PublicWebReportFacade.PortfolioModel[] portfolios,
+                                         string[] portfolioCountries)
+            {
+                if (portfolios == null || portfolioCountries == null)
+                {
+                    return;
+                }
+
+                var countryDtos = countriesDataTableGateway.GetAll();
+
+                for(var i=0; i<portfolios.Length;i++)
+                {
+                    var country = countryDtos.FirstOrDefault(c => c.CountryName == portfolioCountries[i]);
+
+                    int countryId=0;
+
+                    if (country != null)
+                    {
+                        countryId = country.CountryId;
+                    }
+
+                    portfolioDataTableGateway.Update(new PortfolioDto()
+                    {
+                        Number = portfolios[i].Number,
+                        Name = portfolios[i].Name,
+                        CountryId = countryId,
+                        InceptionDate = portfolios[i].InceptionDate,
+                        CloseDate = portfolios[i].CloseDate
+                    });
+
+
+                }
+
+            }
+        }
+
     }
 }

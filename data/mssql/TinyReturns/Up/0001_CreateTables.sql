@@ -32,6 +32,7 @@ CREATE TABLE [Portfolio].[Portfolio](
 ) ON [PRIMARY]
 
 GO
+
 /****** Object:  Table [Portfolio].[PortfolioToBenchmark]    Script Date: 4/15/2017 7:37:24 AM ******/
 SET ANSI_NULLS ON
 GO
@@ -146,5 +147,3 @@ GO
 
 ALTER TABLE [Performance].[PortfolioToReturnSeries] CHECK CONSTRAINT [FK_PortfolioToReturnSeries_ReturnSeries]
 GO
-
-

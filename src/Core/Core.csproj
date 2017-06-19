@@ -81,7 +81,9 @@
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\BenchmarkDto.cs" />
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\Performance\BenchmarkToReturnSeriesDataTableGateway.cs" />
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\Performance\BenchmarkToReturnSeriesDto.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\CountryDto.cs" />
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\IBenchmarkDataTableGateway.cs" />
+    <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\ICountriesDataTableGateway.cs" />
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\IPortfolioDataTableGateway.cs" />
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\IPortfolioToBenchmarkDataTableGateway.cs" />
     <Compile Include="SharedContext\Services\TinyReturnsDatabase\Portfolio\PortfolioDto.cs" />
