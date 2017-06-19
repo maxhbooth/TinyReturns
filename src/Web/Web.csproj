@@ -162,6 +162,7 @@
     <Compile Include="Controllers\GrowthOfWealthController.cs" />
     <Compile Include="Controllers\OneMonthController.cs" />
     <Compile Include="Controllers\PortfolioPerformanceController.cs" />
+    <Compile Include="Controllers\PortfolioDetailsController.cs" />
     <Compile Include="Controllers\SixMonthController.cs" />
     <Compile Include="Controllers\ThreeYearController.cs" />
     <Compile Include="Controllers\UpdatePortfolioController.cs" />
