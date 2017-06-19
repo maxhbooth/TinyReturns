@@ -15,7 +15,7 @@
         div.Myporfolios {
             align-content: center;
             overflow: auto;
-            padding: 10px;
+            /*            padding: 10px;*/
             height: 30vh;
             width: 70vw;
             border-style: solid;
@@ -37,167 +37,139 @@
             border-width: medium;
             border-color: black;
         }
+        /*
 
-        div.searchbar {
-            position: fixed;
-        }
+                div.searchbar {
+                    position: fixed;
+                }
 
-        input[type=text] {
-            background-color: pink;
-        }
 
+                input[type=text] {
+                    background-color: pink;
+                }
+        */
         #header {
             position: fixed;
+            background-color: white;
+            //width: inherit;
         }
     </style>
 </head>
 
 <body>
-    <br />
-    <div class="form-inline">
-        @using (Html.BeginForm())
-            {
-            <div class="form-group">
+<br />
+<div class="form-inline">
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
 
-                @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new { @class = "form-control" })
-            </div>
-
-            <input type="submit" value="Go" class="btn btn-default" />
-        }
-    </div>
-
-    <div class="outer">
-        <br>
-        <br>
-        <div class="Myporfolios">
-            <div id="header"><h2 style="position: relative;">Portfolios</h2></div>
-            <div class="ScollPanel">
-                <table class="table table-condensed" style="margin-top: 70px">
-                    <thead>
-                        <tr>
-                            <th scope="col">Number</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">1 Month</th>
-                            <th scope="col">3 Month</th>
-                            <th scope="col">6 Month</th>
-                            <th scope="col">Quarter to Date</th>
-                            <th scope="col">Year to Date</th>
-                            <th scope="col">First Full Month</th>
-                            <th scope="col">Standard Deviation</th>
-                            <th scope="col">Mean</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody style="margin-top: 50px">
-                        @foreach (var portfolio in Model.Portfolios)
-                        {
-                            <tr style="background: lavenderblush">
-                                <td>@portfolio.Number</td>
-                                <td>@portfolio.Name</td>
-                                <td>@portfolio.OneMonth</td>
-                                <td>@portfolio.ThreeMonth</td>
-                                <td>@portfolio.SixMonth</td>
-                                <td>@portfolio.QuarterToDate</td>
-                                <td>@portfolio.YearToDate</td>
-                                <td>@portfolio.FirstFullMonth</td>
-                                <td>@portfolio.StandardDeviation</td>
-                                <td>@portfolio.Mean</td>
-                                @*<td><p id="filler" onclick="myEdit(@portfolio)">Edit</p></td>*@
-                                <td>Edit</td>
-                            </tr>
-
-                            foreach (var benchmark in portfolio.Benchmarks)
-                            {
-                                <tr>
-                                    <td></td>
-                                    <td style="padding-left: 20px;">@benchmark.Name</td>
-                                    <td>@benchmark.OneMonth</td>
-                                    <td>@benchmark.ThreeMonth</td>
-                                    <td>@benchmark.SixMonth</td>
-                                    <td>@benchmark.QuarterToDate</td>
-                                    <td>@benchmark.YearToDate</td>
-                                    <td>@portfolio.FirstFullMonth</td>
-                                </tr>
-                            }
-                        }
-
-                    </tbody>
-                </table>
-            </div>
-            @*<div class="searchbar">
-                    <form>
-                        <input type="text" name="search" placeholder="Search..">
-                    </form>
-                </div>*@
+            @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
         </div>
-        <br>
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new { @class = "form-control" })
+        </div>
 
-        <div class="Edit">
-            <h2>Edit Portfolio</h2>
+        <input type="submit" value="Go" class="btn btn-default" />
+    }
+</div>
 
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Name</th>
-                        <th>1 Month</th>
-                        <th>3 Month</th>
-                        <th>6 Month</th>
-                        <th>Quarter to Date</th>
-                        <th>Year to Date</th>
-                        <th>First Full Month</th>
-                        <th>Standard Deviation</th>
-                        <th>Mean</th>
-                    </tr>
+<div class="outer">
+    <br>
+    <br>
+    <div class="Myporfolios">
+        <div id="header"><h2>Portfolios</h2></div>
+        <div class="ScollPanel" style="margin-top: 70px">
+            <table id="PortfolioTable" class="table table-condensed" >
+                <thead style="background-color: white">
+                <tr>
+                    <th scope="col">Number</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">1 Month</th>
+                    <th scope="col">3 Month</th>
+                    <th scope="col">6 Month</th>
+                    <th scope="col">Quarter to Date</th>
+                    <th scope="col">Year to Date</th>
+                    <th scope="col">First Full Month</th>
+                    <th scope="col">Standard Deviation</th>
+                    <th scope="col">Mean</th>
+                    <th scope="col"></th>
+                </tr>
                 </thead>
-                <tbody style="margin-top: 50px">
+                <tbody style="margin-top: 10%">
+                @{ int index = 0;}
+                @foreach (var portfolio in Model.Portfolios)
+                {
+                    index = index + 1;
+                    var identity = "pullToEdit" + @portfolio.Number;
+                    <tr style="background: lavenderblush">
+                        <td>@portfolio.Number</td>
+                        <td>@portfolio.Name</td>
+                        <td>@portfolio.OneMonth</td>
+                        <td>@portfolio.ThreeMonth</td>
+                        <td>@portfolio.SixMonth</td>
+                        <td>@portfolio.QuarterToDate</td>
+                        <td>@portfolio.YearToDate</td>
+                        <td>@portfolio.FirstFullMonth</td>
+                        <td>@portfolio.StandardDeviation</td>
+                        <td>@portfolio.Mean</td>
+                        <td class="myClick" id="@identity" value="@portfolio.Name">Edit</td>
+                    </tr>
+
+                    foreach (var benchmark in portfolio.Benchmarks)
+                    {
+                        <tr>
+                            <td></td>
+                            <td style="padding-left: 20px;">@benchmark.Name</td>
+                            <td>@benchmark.OneMonth</td>
+                            <td>@benchmark.ThreeMonth</td>
+                            <td>@benchmark.SixMonth</td>
+                            <td>@benchmark.QuarterToDate</td>
+                            <td>@benchmark.YearToDate</td>
+                            <td>@portfolio.FirstFullMonth</td>
+                        </tr>
+                    }
+                }
 
                 </tbody>
             </table>
         </div>
-        <div id="result">
-            <p> Boo</p>
-        </div>
-
-        <div id='root'>"woo"</div>
+        @*<div class="searchbar">
+                    <form>
+                        <input type="text" name="search" placeholder="Search..">
+                    </form>
+                </div>*@
     </div>
+    <br>
 
-@*    <script src="~/Scripts/reactScript.js">"Goodbye"</script>*@
+    <div class="Edit" style="overflow: hidden;">
+        <h2>Edit Portfolio</h2>
+
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th>Number</th>
+                <th>Name</th>
+                <th>1 Month</th>
+                <th>3 Month</th>
+                <th>6 Month</th>
+                <th>Quarter to Date</th>
+                <th>Year to Date</th>
+                <th>First Full Month</th>
+                <th>Standard Deviation</th>
+                <th>Mean</th>
+            </tr>
+            </thead>
+            <tbody id="putResult" style="margin-top: 50px"></tbody>
+            @*script somehow adds rows here*@
+        </table>
+        <button type="submit" onclick="updateDatabase()" style="float: right; display: none">Save</button>
+    </div>
+    <p id="changable">Hi there</p>
+    <p id="changable2">Hi there</p>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $("p").click(function(){
-            $(this).hide();
-        });
-    });
+<script src="~/Scripts/porfolioEdit.js">
+    
 </script>
-    <script>
-        function allowDrop(event) {
-            event.preventDefault();
-        }
-
-        function drag(ev) {
-            ev.dataTransfer.setData("text", ev.target.id);
-        }
-
-        function drop(ev) {
-            ev.preventDefault();
-            var data = ev.dataTransfer.getData("text");
-            ev.target.appendChild(document.getElementById(data));
-        }
-
-        function myEdit(values) {
-            document.getElementById("filled").value = values.Name;
-        }
-
-        function EditPortfolio() {
-            document.getElementById("filled").value = document.getElementById("filler").value;
-        }
-
-
-
-    </script>
 </body>
