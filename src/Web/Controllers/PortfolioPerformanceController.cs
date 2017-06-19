@@ -16,25 +16,22 @@ namespace Dimensional.TinyReturns.Web.Controllers
         private readonly PublicWebReportFacade _publicWebReportFacade;
         private readonly IClock _clock;
         private readonly ICountriesDataTableGateway _countriesDataTableGateway;
-        private IPortfolioDataTableGateway _portfolioDataTableGateWay;
 
         public PortfolioPerformanceController()
         {
             _publicWebReportFacade = MasterFactory.GetPublicWebReportFacade();
             _countriesDataTableGateway = MasterFactory.CountriesDataTableGateway;
-            _portfolioDataTableGateWay = MasterFactory.PortfolioDataTableGateway;
             _clock = new Clock();
         }
 
         // Used for tests
         public PortfolioPerformanceController(
             PublicWebReportFacade publicWebReportFacade, IClock clock,
-            ICountriesDataTableGateway countriesDataTableGateway, IPortfolioDataTableGateway portfolioDataTableGateway)
+            ICountriesDataTableGateway countriesDataTableGateway)
         {
             _publicWebReportFacade = publicWebReportFacade;
             _clock = clock;
             _countriesDataTableGateway = countriesDataTableGateway;
-            _portfolioDataTableGateWay = portfolioDataTableGateway;
         }
 
         [HttpGet]
@@ -51,7 +48,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 MonthYear = previousMonth.Stringify(),
                 SelectedTypeOfReturn = "0",
                 NetGrossList = selectListItems,
-                Countries = new WebDatabaseHelper().GetAllCountries(_countriesDataTableGateway),
+                Countries = WebHelper.GetAllCountries(_countriesDataTableGateway),
 
             };
 
@@ -99,7 +96,7 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 SelectedTypeOfReturn = model.SelectedTypeOfReturn,
                 MonthYears = WebHelper.GetDesiredMonths(previousMonth),
                 MonthYear = monthYear.Stringify(),
-                Countries = new WebDatabaseHelper().GetAllCountries(_countriesDataTableGateway),
+                Countries = WebHelper.GetAllCountries(_countriesDataTableGateway),
                 SelectedCountry = model.SelectedCountry
             };
 
@@ -144,11 +141,8 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
                 return selectListItems;
             }
-        }
 
-        public class WebDatabaseHelper
-        {
-            public SelectListItem[] GetAllCountries(ICountriesDataTableGateway countriesDataTableGateway)
+            public static SelectListItem[] GetAllCountries(ICountriesDataTableGateway countriesDataTableGateway)
             {
                 var countries = new List<SelectListItem>();
 
@@ -162,51 +156,13 @@ namespace Dimensional.TinyReturns.Web.Controllers
                 {
                     countries.Add(new SelectListItem()
                     {
-                        Value= country.CountryName,
+                        Value = country.CountryName,
                         Text = country.CountryName
 
-                    }); 
+                    });
                 }
                 return countries.ToArray();
             }
-
-            public void UpdatePortfolios(IPortfolioDataTableGateway portfolioDataTableGateway,
-                                         ICountriesDataTableGateway countriesDataTableGateway,
-                                         PublicWebReportFacade.PortfolioModel[] portfolios,
-                                         string[] portfolioCountries)
-            {
-                if (portfolios == null || portfolioCountries == null)
-                {
-                    return;
-                }
-
-                var countryDtos = countriesDataTableGateway.GetAll();
-
-                for(var i=0; i<portfolios.Length;i++)
-                {
-                    var country = countryDtos.FirstOrDefault(c => c.CountryName == portfolioCountries[i]);
-
-                    int countryId=0;
-
-                    if (country != null)
-                    {
-                        countryId = country.CountryId;
-                    }
-
-                    portfolioDataTableGateway.Update(new PortfolioDto()
-                    {
-                        Number = portfolios[i].Number,
-                        Name = portfolios[i].Name,
-                        CountryId = countryId,
-                        InceptionDate = portfolios[i].InceptionDate,
-                        CloseDate = portfolios[i].CloseDate
-                    });
-
-
-                }
-
-            }
         }
-
     }
 }
