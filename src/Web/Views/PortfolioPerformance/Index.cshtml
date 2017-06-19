@@ -306,15 +306,15 @@
         function updateDatabase() {
             //$("#changable2").text(document.getElementById('name').value);
             var portfolioName = document.getElementById('name').value;
-            $("#changable2").text(portfolioName);
             var portfolioNumber = document.getElementById('number').value;
+
+            var portfolioId = new Array();
+            portfolioId['name'] = portfolioName;
+            portfolioId['number'] = portfolioNumber;
 
             var numRows = document.getElementById('PortfolioTable').rows.length;
             var benchmarkIds = new Array();
-            var blaahhh = "";
-            //associative array id: value 
-            var newResults = new Array();
-
+            //put benchmarks into benchmarkIds
             for (var i = 1; i < numRows; i++) {
                 var id = "benchmark" + i;
                 try {
@@ -324,17 +324,18 @@
                     break;
                 }
             }
-            //THIS DOESSSNNNTTT WOOORKKSDAFDF
-            newResults['name'] = "hi";
 
+
+            var myPorts = '';
+            var myBenchs = '';
+            for (key in portfolioId) {
+                myPorts += "key " + key + ": " + portfolioId[key] + " ~ ";
+            }
             for (key in benchmarkIds) {
-               newResults[key] = benchmarkIds[key];
+                myBenchs += "key " + key + ": " + benchmarkIds[key] + " ~ ";
             }
-            for (key in newResults) {
-                blaahhh += " key " + key + ": " + benchmarkIds[key]+"        ";
-            }
-
-            $("#changable").text(blaahhh);
+            $("#changable").text(myPorts);
+            $("#changable2").text(myBenchs);
         }
 
 
