@@ -115,9 +115,9 @@ namespace Dimensional.TinyReturns.Web.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]PublicWebReportFacade.PortfolioModel portfolio)
         {
-            _portfolioDataTableGateway.Insert(_portfolioDataTableGateway);
+            portfolio.Insert(_portfolioDataTableGateway);
         }
 
         [HttpPatch]
