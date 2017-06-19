@@ -50,12 +50,9 @@
             position: fixed;
         }
     </style>
-
 </head>
 
 <body>
-
-
     <br />
 @using (Html.BeginForm())
 {
@@ -171,18 +168,27 @@
                 </tr>
                 </thead>
                 <tbody style="margin-top: 50px">
+
                 @*
-                        <tr id="dropZone" ondrop="drop(event)" ondragover="allowDrop(event)">
-                            <th><input id="filled"></th>
-                        </tr>*@
                 </tbody>
             </table>
         </div>
         <div id="result">
-
+            <p> Boo</p>
         </div>
+
+        <div id='root'>"woo"</div>
     </div>
 
+@*    <script src="~/Scripts/reactScript.js">"Goodbye"</script>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("p").click(function(){
+            $(this).hide();
+        });
+    });
+</script>
     <script>
         function allowDrop(event) {
             event.preventDefault();
@@ -205,6 +211,8 @@
         function EditPortfolio() {
             document.getElementById("filled").value = document.getElementById("filler").value;
         }
+
+
 
     </script>
 </body>
