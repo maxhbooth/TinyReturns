@@ -37,17 +37,6 @@
             border-width: medium;
             border-color: black;
         }
-        /*
-
-                div.searchbar {
-                    position: fixed;
-                }
-
-
-                input[type=text] {
-                    background-color: pink;
-                }
-        */
         #header {
             position: fixed;
             background-color: white;
@@ -57,137 +46,130 @@
 </head>
 
 <body>
-<br />
+    <br />
 
-@using (Html.BeginForm())
-{
-    <div class="form-inline">
+    @using (Html.BeginForm())
+    {
+        <div class="form-inline">
 
-        <div class="form-group">
+            <div class="form-group">
 
-            @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
+                @Html.DropDownListFor(x => x.MonthYear, Model.MonthYears, null, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.SelectedTypeOfReturn, Model.NetGrossList, null, new { @class = "form-control" })
+            </div>
+            <input type="submit" value="Go" class="btn btn-default" />
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.SelectedCountry, Model.Countries, null, new { @class = "form-control" })
+            </div>
+            <input type="submit" value="Go" class="btn btn-default" />
+
         </div>
-        <div class="form-group">
-            @Html.DropDownListFor(m => m.Selected, Model.NetGrossList, null, new { @class = "form-control" })
-            @Html.DropDownListFor(m => m.SelectedTypeOfReturn, Model.NetGrossList, null, new {@class = "form-control"})
-        </div>
-        <div class="form-group">
-        <input type="submit" value="Go" class="btn btn-default" />
     }
-            @Html.DropDownListFor(m => m.SelectedCountry, Model.Countries, null, new {@class = "form-control"})
-        </div>
-        <input type="submit" value="Go" class="btn btn-default"/>
-
-    </div>
-}
-<div class="outer">
-    <br>
-    <br>
-    <div class="Myporfolios">
-        <div id="header"><h2>Portfolios</h2></div>
-        <div class="ScollPanel" style="margin-top: 70px">
-            <table id="PortfolioTable" class="table table-condensed" >
-                <thead style="background-color: white">
-                    <tr>
-                        <th scope="col">Number</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Country</th>
-                        <th scope="col">1 Month</th>
-                        <th scope="col">3 Month</th>
-                        <th scope="col">6 Month</th>
-                        <th scope="col">Quarter to Date</th>
-                        <th scope="col">Year to Date</th>
-                        <th scope="col">First Full Month</th>
-                        <th scope="col">Standard Deviation</th>
-                        <th scope="col">Mean</th>
-                        <th scope="col"></th>
-
-                </tr>
-                </thead>
-                <tbody style="margin-top: 10%">
-                    @{
-                        var i = 0;
-                    }
-                @foreach (var portfolio in Model.Portfolios)
-                {
-                    index = index + 1;
-                    var identity = "pullToEdit" + @portfolio.Number;
-                    <tr style="background: lavenderblush">
-                        <td>@portfolio.Number</td>
-                        <td>@portfolio.Name</td>
-                            <td>@portfolio.Country</td>
-                        <td>@portfolio.OneMonth</td>
-                        <td>@portfolio.ThreeMonth</td>
-                        <td>@portfolio.SixMonth</td>
-                        <td>@portfolio.QuarterToDate</td>
-                        <td>@portfolio.YearToDate</td>
-                        <td>@portfolio.FirstFullMonth</td>
-                        <td>@portfolio.StandardDeviation</td>
-                        <td>@portfolio.Mean</td>
-                        <td class="myClick" id="@identity" value="@portfolio.Name">Edit</td>
-                    </tr>
-
-                    foreach (var benchmark in portfolio.Benchmarks)
-                    {
+    <div class="outer">
+        <br>
+        <br>
+        <div class="Myporfolios">
+            <div id="header"><h2>Portfolios</h2></div>
+            <div class="ScollPanel" style="margin-top: 70px">
+                <table id="PortfolioTable" class="table table-condensed">
+                    <thead style="background-color: white">
                         <tr>
-                            <td></td>
-                            <td style="padding-left: 20px;">@benchmark.Name</td>
-                            <td>@benchmark.OneMonth</td>
-                            <td>@benchmark.ThreeMonth</td>
-                            <td>@benchmark.SixMonth</td>
-                            <td>@benchmark.QuarterToDate</td>
-                            <td>@benchmark.YearToDate</td>
-                            <td>@portfolio.FirstFullMonth</td>
-                            <td></td>
+                            <th scope="col">Number</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">1 Month</th>
+                            <th scope="col">3 Month</th>
+                            <th scope="col">6 Month</th>
+                            <th scope="col">Quarter to Date</th>
+                            <th scope="col">Year to Date</th>
+                            <th scope="col">First Full Month</th>
+                            <th scope="col">Standard Deviation</th>
+                            <th scope="col">Mean</th>
+                            <th scope="col"></th>
 
                         </tr>
-                    }
-                }
+                    </thead>
+                    <tbody style="margin-top: 10%">
+                    @foreach (var portfolio in Model.Portfolios)
+                        {
+                            var identity = "pullToEdit" + @portfolio.Number;
+                            <tr style="background: lavenderblush">
+                                <td>@portfolio.Number</td>
+                                <td>@portfolio.Name</td>
+                                <td>@portfolio.Country</td>
+                                <td>@portfolio.OneMonth</td>
+                                <td>@portfolio.ThreeMonth</td>
+                                <td>@portfolio.SixMonth</td>
+                                <td>@portfolio.QuarterToDate</td>
+                                <td>@portfolio.YearToDate</td>
+                                <td>@portfolio.FirstFullMonth</td>
+                                <td>@portfolio.StandardDeviation</td>
+                                <td>@portfolio.Mean</td>
+                                <td class="myClick" id="@identity" value="@portfolio.Name">Edit</td>
+                            </tr>
 
-                </tbody>
-            </table>
-                }
-        </div>
-        @*<div class="searchbar">
+                            foreach (var benchmark in portfolio.Benchmarks)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td style="padding-left: 20px;">@benchmark.Name</td>
+                                    <td>@benchmark.OneMonth</td>
+                                    <td>@benchmark.ThreeMonth</td>
+                                    <td>@benchmark.SixMonth</td>
+                                    <td>@benchmark.QuarterToDate</td>
+                                    <td>@benchmark.YearToDate</td>
+                                    <td>@portfolio.FirstFullMonth</td>
+                                    <td></td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+                
+            </div>
+            @*<div class="searchbar">
                     <form>
                         <input type="text" name="search" placeholder="Search..">
                     </form>
                 </div>*@
+        </div>
+        <br>
+
+        <div class="Edit" style="overflow: hidden;">
+            <h2>Edit Portfolio</h2>
+
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Name</th>
+                        <th>1 Month</th>
+                        <th>3 Month</th>
+                        <th>6 Month</th>
+                        <th>Country></th>
+                        <th>Quarter to Date</th>
+                        <th>Year to Date</th>
+                        <th>First Full Month</th>
+                        <th>Standard Deviation</th>
+                        <th>Mean</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="putResult" style="margin-top: 50px"></tbody>
+                @*script somehow adds rows here*@
+            </table>
+            <button type="submit" onclick="updateDatabase()" style="float: right; display: none">Save</button>
+        </div>
+        <p id="changable">Hi there</p>
+        <p id="changable2">Hi there</p>
     </div>
-    <br>
 
-    <div class="Edit" style="overflow: hidden;">
-        <h2>Edit Portfolio</h2>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="~/Scripts/porfolioEdit.js">
 
-        <table class="table table-condensed">
-            <thead>
-            <tr>
-                <th>Number</th>
-                <th>Name</th>
-                <th>1 Month</th>
-                <th>3 Month</th>
-                <th>6 Month</th>
-                    <th>Country></th>
-                <th>Quarter to Date</th>
-                <th>Year to Date</th>
-                <th>First Full Month</th>
-                <th>Standard Deviation</th>
-                <th>Mean</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody id="putResult" style="margin-top: 50px"></tbody>
-            @*script somehow adds rows here*@
-                @*
-        </table>
-        <button type="submit" onclick="updateDatabase()" style="float: right; display: none">Save</button>
-    </div>
-    <p id="changable">Hi there</p>
-    <p id="changable2">Hi there</p>
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="~/Scripts/porfolioEdit.js">
-    
-</script>
+    </script>
 </body>
