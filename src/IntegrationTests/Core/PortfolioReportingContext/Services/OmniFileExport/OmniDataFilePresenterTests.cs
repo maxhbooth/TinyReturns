@@ -89,6 +89,12 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
                 _monthlyReturnDataTableGateway.Insert(dtos);
             }
 
+//            public void InsertCountryDto(
+//                CountryDto dto)
+//            {
+//                _countriesDataTableGateway.Insert(dto);
+//            }
+
             public void InsertPortfolioToReturnSeriesDto(PortfolioToReturnSeriesDto dto)
             {
                 _portfolioToReturnSeriesDataTableGateway.Insert(new[] { dto });
@@ -97,17 +103,21 @@ namespace Dimensional.TinyReturns.IntegrationTests.Core.PortfolioReportingContex
             public void DatabaseDataDeleter(
                 Action act)
             {
+                var tablesToSkip = new[]
+                {
+                    new AllTablesDeleter.TableInfoDto("Portfolio", "Countries")
+                };
+
                 var databaseSettings = new DatabaseSettings();
 
                 _allTablesDeleter.DeleteAllDataFromTables(
                     databaseSettings.TinyReturnsDatabaseConnectionString,
-                    new AllTablesDeleter.TableInfoDto[0]);
+                    tablesToSkip);
 
                 act();
 
                 _allTablesDeleter.DeleteAllDataFromTables(
-                    databaseSettings.TinyReturnsDatabaseConnectionString,
-                    new AllTablesDeleter.TableInfoDto[0]);
+                    databaseSettings.TinyReturnsDatabaseConnectionString, tablesToSkip);
             }
 
 

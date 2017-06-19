@@ -1,4 +1,5 @@
 using System;
+using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
 using Dimensional.TinyReturns.Core.PortfolioReportingContext.Domain;
@@ -70,6 +71,29 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
 
         public DateTime CurrentDate { get; set; }
 
+        public PublicWebChartFacade CreateChartData()
+        {
+            var returnSeriesRepository = new ReturnSeriesRepository(
+                _returnSeriesDataTableGateway,
+                _monthlyReturnDataTableGateway);
+
+            var benchmarkWithPerformanceRepository = new BenchmarkWithPerformanceRepository(
+                _benchmarkDataTableGateway,
+                _benchmarkToReturnSeriesDataTableGateway,
+                returnSeriesRepository);
+
+            var portfolioWithPerformanceRepository = new PortfolioWithPerformanceRepository(
+                _portfolioDataTableGateway,
+                _portfolioToReturnSeriesDataTableGateway,
+                _portfolioToBenchmarkDataTableGateway,
+                _countriesDataTableGateway,
+                returnSeriesRepository,
+                benchmarkWithPerformanceRepository);
+
+            return  new PublicWebChartFacade(portfolioWithPerformanceRepository,
+                new ClockStub(CurrentDate));
+        }
+
         public PortfolioPerformanceController CreateController()
         {
             var returnSeriesRepository = new ReturnSeriesRepository(
@@ -93,8 +117,13 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
                 portfolioWithPerformanceRepository,
                 new ClockStub(CurrentDate));
 
+            var publicWebChartFacade = new PublicWebChartFacade(
+                portfolioWithPerformanceRepository,
+                new ClockStub(CurrentDate));
+
             return new PortfolioPerformanceController(
                 publicWebReportFacade,
+                publicWebChartFacade,
                 new ClockStub(CurrentDate),
                 _countriesDataTableGateway,
                 _portfolioDataTableGateway);
@@ -106,11 +135,11 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
             _portfolioDataTableGateway.Insert(dto);
         }
 
-        public void InsertCountryDto(
-            CountryDto dto)
-        {
-            _countriesDataTableGateway.Insert(dto);
-        }
+//        public void InsertCountryDto(
+//            CountryDto dto)
+//        {
+//            _countriesDataTableGateway.Insert(dto);
+//        }
 
         public void InsertBenchmarkDto(
             BenchmarkDto dto)
@@ -152,19 +181,24 @@ namespace Dimensional.TinyReturns.IntegrationTests.Web.Controllers
         public void DatabaseDataDeleter(
             Action act)
         {
+            var tablesToSkip = new[]
+            {
+                new AllTablesDeleter.TableInfoDto("Portfolio", "Countries")
+            };
+
             var databaseSettings = new DatabaseSettings();
 
             _allTablesDeleter.DeleteAllDataFromTables(
                 databaseSettings.TinyReturnsDatabaseConnectionString,
-                new AllTablesDeleter.TableInfoDto[0]);
+                tablesToSkip);
 
             act();
 
             _allTablesDeleter.DeleteAllDataFromTables(
-                databaseSettings.TinyReturnsDatabaseConnectionString,
-                new AllTablesDeleter.TableInfoDto[0]);
+                databaseSettings.TinyReturnsDatabaseConnectionString, tablesToSkip);
         }
 
+        
         public PublicWebReportFacade.PortfolioModel[] GetPortfoliosFromActionResult(
             ActionResult actionResult)
         {
